@@ -178,7 +178,7 @@ const CSS_LINES=[
   "img{display:block;max-width:100%;}",
   "::-webkit-scrollbar{width:2px;}",
   "::-webkit-scrollbar-thumb{background:var(--gold);}",
-  "[data-rv]{opacity:0;transition:opacity .7s var(--ease);}",
+  "[data-rv]{opacity:0;transition:opacity .55s ease;}",
   "[data-rv].vis{opacity:1;}",
   "[data-rv][data-d=\"1\"]{transition-delay:.1s;}",
   "[data-rv][data-d=\"2\"]{transition-delay:.2s;}",
@@ -351,7 +351,7 @@ const CSS_LINES=[
   ".detail-care-text{font-size:12px;color:var(--ink3);line-height:1.82;font-weight:300;}",
   ".detail-add{flex:1;padding:13px;font-family:var(--sans);font-size:8.5px;letter-spacing:.19em;text-transform:uppercase;background:var(--g);color:var(--cr);border:none;cursor:pointer;transition:background .28s;}",
   ".detail-add:hover{background:var(--gold);color:var(--g);}",
-  ".cart-overlay{position:fixed;top:64px;left:0;right:0;bottom:0;z-index:2000;background:rgba(3,15,9,.5);animation:fade-in .26s;}",
+  ".cart-overlay{position:fixed;top:64px;left:0;right:0;bottom:0;z-index:2000;background:rgba(3,15,9,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);animation:fade-in .26s;}",
   "@keyframes fade-in{from{opacity:0}to{opacity:1}}",
   ".cart-drawer{position:fixed;top:0;right:0;bottom:0;width:390px;background:var(--cr);z-index:2001;display:flex;flex-direction:column;animation:slide-right .38s var(--ease);box-shadow:-12px 0 40px rgba(6,35,24,.18);}",
   "@keyframes slide-right{from{transform:translateX(100%)}to{transform:none}}",
@@ -895,7 +895,54 @@ function CarePage({setPage,onA}){useRv();return(<div style={{paddingTop:64}}><di
 
 function StoryPage(){useRv();return(<div style={{paddingTop:64}}><div className="story-split"><div className="story-left"><span className="sec-label sec-label-dark" data-rv>The Name</span><div style={{fontFamily:"var(--serif)",fontSize:"clamp(42px,5.4vw,76px)",color:"var(--gold)",fontStyle:"italic",lineHeight:1,marginBottom:7}} data-rv data-d="1">Dorra</div><div style={{fontSize:8,letterSpacing:".36em",textTransform:"uppercase",color:"rgba(245,239,227,.22)",marginBottom:19}} data-rv data-d="1">Pearl - Egypt</div><p style={{fontSize:13,color:"rgba(245,239,227,.44)",lineHeight:2.0,maxWidth:360,marginBottom:22,fontWeight:300}} data-rv data-d="2">In Arabic, Dorra means pearl - not found in the earth, born from a living creature's patient response to discomfort. A grain of sand held for years, becoming luminous.</p><div data-rv data-d="3">{[{n:"01",t:"The stone is chosen",tx:"Every piece begins with a stone selected for what it carries, not just how it looks."},{n:"02",t:"The copper is shaped",tx:"Raw copper wire, wound by hand over 2-4 days. No molds. No machines."},{n:"03",t:"The piece is finished",tx:"Polished, paired with its stone card, wrapped in its pouch."},{n:"04",t:"It finds its wearer",tx:"Every Dorra piece is made to order, for one person."}].map(item=><div key={item.n} className="timeline-row"><div className="timeline-num">{item.n}</div><div><div className="timeline-title">{item.t}</div><p className="timeline-sub">{item.tx}</p></div></div>)}</div></div><div className="story-right">{IMGS.logo&&<img src={IMGS.logo} alt="" style={{height:44,width:"auto",opacity:.15}}/>}</div></div><div className="story-mid"><div className="story-dark"><span className="sec-label sec-label-dark" data-rv>Our Story</span><h2 className="sec-title sec-title-dark" style={{marginBottom:10}} data-rv data-d="1">Nature is the original artisan. We are her hands.</h2><div className="sec-rule"/><p style={{fontSize:13,color:"rgba(245,239,227,.44)",lineHeight:2.0,maxWidth:360,fontWeight:300}} data-rv data-d="2">Dorra was born from the belief that the earth holds more beauty than any factory could. Each piece carries a stone chosen for its meaning, set in copper shaped by hand.</p><blockquote className="blockquote" data-rv data-d="3">"A pearl is not made by a jeweler. It is made by the sea."</blockquote></div><div className="story-light"><div style={{textAlign:"center"}}>{IMGS.logo&&<img src={IMGS.logo} alt="" style={{height:44,width:"auto",opacity:.15,marginBottom:12}}/>}<p style={{fontSize:8,letterSpacing:".2em",textTransform:"uppercase",color:"var(--ink3)"}}>Made in Egypt</p></div></div></div></div>);}
 
-function ContactPage(){const[form,setForm]=useState({name:"",email:"",subject:"",message:""}),[sent,setSent]=useState(false);useRv();const send=()=>{if(!form.name||!form.email||!form.message)return;window.location.href="mailto:dorrastonejewelry@gmail.com?subject="+encodeURIComponent(form.subject||"Message from "+form.name)+"&body="+encodeURIComponent("Name: "+form.name+"\nEmail: "+form.email+"\n\n"+form.message);setSent(true);};return(<div style={{paddingTop:64}}><div className="contact-split"><div className="contact-dark"><span className="sec-label sec-label-dark" data-rv>Get in Touch</span><h1 className="sec-title sec-title-dark" data-rv data-d="1">We would love to hear from you</h1><div className="sec-rule"/>{[{l:"Email",v:"dorrastonejewelry@gmail.com"},{l:"Instagram",v:"@dorrastones"},{l:"Location",v:"Cairo"},{l:"WhatsApp",v:"+20 102 062 4266"}].map((d,i)=><div key={d.l} data-rv data-d={String(i+2)}><div className="contact-label">{d.l}</div><div className="contact-val">{d.v}</div></div>)}<blockquote className="blockquote" data-rv data-d="4">"The Luxury of Nature."</blockquote></div><div className="contact-light">{sent?<div className="success-block"><div className="success-icon">*</div><div className="success-title">Message Sent</div><p style={{fontSize:13,color:"var(--ink3)"}}>We reply within 24 hours.</p><button className="btn btn-dark" onClick={()=>setSent(false)}>Send Another</button></div>:<div data-rv><h2 style={{fontFamily:"var(--serif)",fontSize:23,fontWeight:300,color:"var(--ink)",marginBottom:20}}>Send a Message</h2><div className="field"><label className="field-label">Your Name</label><input className="field-input" placeholder="Full name" value={form.name} onChange={e=>setForm({...form,name:e.target.value})}/></div><div className="field"><label className="field-label">Email</label><input className="field-input" type="email" placeholder="your@email.com" value={form.email} onChange={e=>setForm({...form,email:e.target.value})}/></div><div className="field"><label className="field-label">Subject</label><input className="field-input" placeholder="Subject" value={form.subject} onChange={e=>setForm({...form,subject:e.target.value})}/></div><div className="field"><label className="field-label">Message</label><textarea className="field-textarea" style={{minHeight:96}} placeholder="Your message..." value={form.message} onChange={e=>setForm({...form,message:e.target.value})}/></div><button className="btn btn-dark btn-full" style={{padding:"13px",marginTop:4}} onClick={send}>Send Message</button></div>}</div></div></div>);}
+function ContactPage(){
+  useRv();
+  return(<div style={{paddingTop:64}}>
+    <div className="page-header">
+      <span className="page-header-tag" data-rv>Get in Touch</span>
+      <h1 className="page-header-title" data-rv data-d="1">Contact</h1>
+      <p className="page-header-sub" data-rv data-d="2">We are always happy to hear from you.</p>
+    </div>
+    <div className="section-cream" style={{maxWidth:520,margin:"0 auto"}}>
+      <div style={{display:"flex",flexDirection:"column",gap:20}}>
+        <a href="mailto:dorrastonejewelry@gmail.com" style={{display:"flex",alignItems:"center",gap:14,padding:"18px 20px",background:"var(--cr2)",textDecoration:"none",transition:"background .2s"}}
+          onMouseEnter={e=>e.currentTarget.style.background="var(--cr3)"}
+          onMouseLeave={e=>e.currentTarget.style.background="var(--cr2)"}>
+          <div style={{width:36,height:36,background:"var(--g)",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>
+            <span style={{color:"var(--gold)",fontSize:14}}>@</span>
+          </div>
+          <div>
+            <div style={{fontSize:8,letterSpacing:".2em",textTransform:"uppercase",color:"var(--gold)",marginBottom:3}}>Email</div>
+            <div style={{fontSize:13,color:"var(--ink)",fontWeight:300}}>dorrastonejewelry@gmail.com</div>
+          </div>
+        </a>
+        <a href="https://instagram.com/dorrastones" target="_blank" rel="noopener noreferrer" style={{display:"flex",alignItems:"center",gap:14,padding:"18px 20px",background:"var(--cr2)",textDecoration:"none",transition:"background .2s"}}
+          onMouseEnter={e=>e.currentTarget.style.background="var(--cr3)"}
+          onMouseLeave={e=>e.currentTarget.style.background="var(--cr2)"}>
+          <div style={{width:36,height:36,background:"var(--g)",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>
+            <span style={{color:"var(--gold)",fontSize:14}}>ig</span>
+          </div>
+          <div>
+            <div style={{fontSize:8,letterSpacing:".2em",textTransform:"uppercase",color:"var(--gold)",marginBottom:3}}>Instagram</div>
+            <div style={{fontSize:13,color:"var(--ink)",fontWeight:300}}>@dorrastones</div>
+          </div>
+        </a>
+        <a href="https://wa.me/201020624266" target="_blank" rel="noopener noreferrer" style={{display:"flex",alignItems:"center",gap:14,padding:"18px 20px",background:"var(--cr2)",textDecoration:"none",transition:"background .2s"}}
+          onMouseEnter={e=>e.currentTarget.style.background="var(--cr3)"}
+          onMouseLeave={e=>e.currentTarget.style.background="var(--cr2)"}>
+          <div style={{width:36,height:36,background:"var(--g)",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>
+            <span style={{color:"var(--gold)",fontSize:14}}>w</span>
+          </div>
+          <div>
+            <div style={{fontSize:8,letterSpacing:".2em",textTransform:"uppercase",color:"var(--gold)",marginBottom:3}}>WhatsApp</div>
+            <div style={{fontSize:13,color:"var(--ink)",fontWeight:300}}>01020624266</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>);
+}
+
 
 function CustomizePage({onAddCart,onGoCart}){
   const[pt,setPt]=useState("Bracelet");
@@ -1082,8 +1129,22 @@ function DetailPage({product,initStone,onBack,onA}){
 
           <span style={{fontSize:8,letterSpacing:".32em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:8}}>{product.type}</span>
           <h1 className="detail-name">{product.name}</h1>
-          <div className="detail-price">
-            {fmt(price)}{swapCount>0&&<span style={{fontSize:12,color:"var(--gold)",marginLeft:10,fontFamily:"var(--sans)",fontWeight:300}}>+{fmt(price-product.price)} customisation</span>}
+          <div style={{marginBottom:14}}>
+            {swapCount>0?(
+              <div style={{background:"var(--cr2)",padding:"10px 14px",borderLeft:"2px solid var(--gold)"}}>
+                <div style={{display:"flex",justifyContent:"space-between",fontSize:12,color:"var(--ink3)",marginBottom:3}}>
+                  <span>Base price</span><span>{fmt(product.price)}</span>
+                </div>
+                <div style={{display:"flex",justifyContent:"space-between",fontSize:12,color:"var(--gold)",marginBottom:6}}>
+                  <span>Stone upgrade ({swapCount} swap{swapCount>1?"s":""})</span><span>+{fmt(price-product.price)}</span>
+                </div>
+                <div style={{display:"flex",justifyContent:"space-between",fontSize:16,fontFamily:"var(--serif)",color:"var(--ink)",paddingTop:6,borderTop:"1px solid rgba(26,18,10,.08)"}}>
+                  <span>Total</span><span>{fmt(price)}</span>
+                </div>
+              </div>
+            ):(
+              <div className="detail-price">{fmt(price)}</div>
+            )}
           </div>
 
           <p className="detail-desc">{product.desc}</p>
@@ -1200,7 +1261,11 @@ function Checkout({cart,onClose,onOk,setLastOrder}){
   const dueNow=isCOD?customDep:(isFullOnline?tot:(customDep+standardSub+ship));
   const dueOnDelivery=isCOD?(standardSub+customBal+ship):(isFullOnline?0:customBal);
   const amountDue=dueNow;
-  const ok1=!!(name&&phone&&email&&email.includes("@")&&email.includes(".")&&address&&address.length>5);
+  const egyptPhone=/^(010|011|012|015)[0-9]{8}$/.test(phone.replace(/\s+/g,""));
+  const validEmail=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const ok1=!!(name.trim()&&egyptPhone&&validEmail&&address.trim().length>5);
+  const phoneError=phone.length>0&&!egyptPhone?"Must be Egyptian number starting with 010,011,012,015":"";
+  const emailError=email.length>0&&!validEmail?"Please enter a valid email":"";
   const needRef=(pay==="instapay"||pay==="instapay_full"||pay==="full_instapay");
   const needCard=(pay==="card"||pay==="card_full"||pay==="full_card");
   const ok2=pay==="full_cod"||(needRef&&instRef.length>3&&instScreenshot.length>0)||(needCard&&cardN.length===16&&cardE.length===5&&cardC.length===3)||pay==="apple"||pay==="full_apple"||pay==="apple_full";
@@ -1277,9 +1342,9 @@ function Checkout({cart,onClose,onOk,setLastOrder}){
             <Summary/>
             <div className="field-grid">
               <div className="field"><label className="field-label">Full Name *</label><input className="field-input" placeholder="Your name" value={name} onChange={e=>setName(e.target.value)}/></div>
-              <div className="field"><label className="field-label">Phone *</label><input className="field-input" placeholder="+20 1xx xxx xxxx" value={phone} onChange={e=>setPhone(e.target.value)}/></div>
+              <div className="field"><label className="field-label">Phone *</label><input className="field-input" placeholder="010xxxxxxxx" value={phone} onChange={e=>setPhone(e.target.value)}/>{phoneError&&<p style={{fontSize:10,color:"#c0392b",marginTop:3}}>{phoneError}</p>}</div>
             </div>
-            <div className="field"><label className="field-label">Email *</label><input className="field-input" type="email" placeholder="your@email.com" value={email} onChange={e=>setEmail(e.target.value)}/></div>
+            <div className="field"><label className="field-label">Email *</label><input className="field-input" type="email" placeholder="your@email.com" value={email} onChange={e=>setEmail(e.target.value)}/>{emailError&&<p style={{fontSize:10,color:"#c0392b",marginTop:3}}>{emailError}</p>}</div>
             <div className="field"><label className="field-label">Delivery Address *</label><input className="field-input" placeholder="Street, building, apartment" value={address} onChange={e=>setAddress(e.target.value)}/></div>
             <div className="field">
               <label className="field-label">City</label>
@@ -1514,7 +1579,13 @@ function ReviewsPage(){
         {sent?<div style={{textAlign:"center",padding:"32px 0"}}><div style={{fontFamily:"var(--serif)",fontSize:44,color:"var(--gold)",marginBottom:12}}>*</div><p style={{fontSize:13,color:"rgba(245,239,227,.55)"}}>Thank you for sharing your experience.</p><button className="btn btn-ghost" style={{marginTop:16}} onClick={()=>setSent(false)}>Write Another</button></div>
         :<div>
           <div className="field"><label className="field-label" style={{color:"rgba(245,239,227,.45)"}}>Your Name *</label><input className="field-input" style={{background:"rgba(245,239,227,.05)",color:"var(--cr)",borderBottomColor:"rgba(184,145,60,.2)"}} placeholder="Your name" value={form.name} onChange={e=>setForm({...form,name:e.target.value})}/></div>
-          <div className="field"><label className="field-label" style={{color:"rgba(245,239,227,.45)"}}>Which piece?</label><input className="field-input" style={{background:"rgba(245,239,227,.05)",color:"var(--cr)",borderBottomColor:"rgba(184,145,60,.2)"}} placeholder="e.g. Sinai Bracelet" value={form.piece} onChange={e=>setForm({...form,piece:e.target.value})}/></div>
+          <div className="field"><label className="field-label" style={{color:"rgba(245,239,227,.45)"}}>Which piece?</label>
+              <select className="field-select" value={form.piece} onChange={e=>setForm({...form,piece:e.target.value})} style={{background:"rgba(245,239,227,.06)",color:"var(--cr)",border:"none",borderBottom:"1px solid rgba(184,145,60,.2)"}}>
+                <option value="">Select a piece...</option>
+                <option value="Bespoke Piece">Bespoke Piece (custom made)</option>
+                {CATALOG.filter(p=>p.type!=="Care").map(p=><option key={p.id} value={p.name}>{p.name}</option>)}
+              </select>
+            </div>
           <div className="field"><label className="field-label" style={{color:"rgba(245,239,227,.45)"}}>Your Words *</label><textarea className="field-textarea" style={{background:"rgba(245,239,227,.05)",color:"var(--cr)",border:"1px solid rgba(184,145,60,.15)",minHeight:120}} placeholder="How does it feel to wear it?" value={form.text} onChange={e=>setForm({...form,text:e.target.value})}/></div>
           <div className="field"><label className="field-label" style={{color:"rgba(245,239,227,.45)"}}>A Photo (optional)</label><input type="file" accept="image/*" onChange={handleImg} style={{fontSize:12,color:"rgba(245,239,227,.35)",paddingTop:4}}/>{form.imgPreview&&<img src={form.imgPreview} alt="preview" style={{marginTop:12,maxHeight:160,maxWidth:"100%",objectFit:"contain",display:"block"}}/>}</div>
           <button className="btn btn-gold btn-full" style={{padding:"14px",marginTop:6}} onClick={submit} disabled={!form.name||!form.text}>Share Your Experience</button>
