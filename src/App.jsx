@@ -5,11 +5,15 @@ const API_BASE = "https://dorra-backend-1.onrender.com";
 
 async function apiPost(path, body) {
   try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 15000);
     const res = await fetch(API_BASE + path, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
+      signal: controller.signal,
     });
+    clearTimeout(timeout);
     return await res.json();
   } catch(e) {
     console.error("API error:", e);
@@ -1378,15 +1382,17 @@ function Checkout({cart,onClose,onOk,setLastOrder}){
       isCustom:hasFromScratch,deposit:customDep,balance:customBal,dueNow,dueOnDelivery,
       adminStatus:"new",createdAt:new Date().toISOString()};
     // Save to backend (real database + email)
-    const result = await apiPost("/api/orders", order);
-    if(result.error){
-      console.error("Order save failed:", result.error);
-    }
-    // Also save to localStorage as backup
+    // Save to localStorage immediately (primary)
     try{const ex=JSON.parse(localStorage.getItem("dorra_orders")||"[]");ex.push(order);localStorage.setItem("dorra_orders",JSON.stringify(ex));window.dispatchEvent(new Event("storage"));}catch(e){}
+    // Show confirmation immediately - don't wait for backend
     setSubmitting(false);
     setLastOrder(order);
     setTimeout(onOk,100);
+    // Save to backend in background (non-blocking)
+    apiPost("/api/orders", order).then(r=>{
+      if(r.error) console.error("Backend save failed:", r.error);
+      else console.log("Order saved to database:", r.ref);
+    }).catch(e=>console.error("Backend error:", e));
   };
 
   const Summary=()=>(
