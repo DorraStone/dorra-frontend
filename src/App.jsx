@@ -1,7 +1,7 @@
 import{useState,useEffect,useRef,useCallback}from"react";
 
 // -- Backend API URL - update after Railway deployment --
-const API_BASE = "https://dorra-backend-sznv.onrender.com";
+const API_BASE = "https://dorra-backend-3.onrender.com";
 
 async function apiPost(path, body) {
   try {
