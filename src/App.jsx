@@ -1450,11 +1450,11 @@ function Checkout({cart,onClose,onOk,setLastOrder}){
   const emailError=email.length>0&&!validEmail?"Please enter a valid email":"";
   const needRef=(pay==="instapay"||pay==="instapay_full"||pay==="full_instapay");
   const needCard=(pay==="card"||pay==="card_full"||pay==="full_card");
-  const ok2=pay==="full_cod"||(needRef&&instRef.length>3&&instScreenshot.length>0)||(needCard&&cardN.length===16&&cardE.length===5&&cardC.length===3)||pay==="apple"||pay==="full_apple"||pay==="apple_full";
+  const ok2=pay==="full_cod"||pay==="fawry"||(needRef&&instRef.length>3&&instScreenshot.length>0)||(needCard&&cardN.length===16&&cardE.length===5&&cardC.length===3)||pay==="apple"||pay==="full_apple"||pay==="apple_full";
   const cities=["Cairo","Giza","Alexandria","Al Sharkia","Luxor","Aswan","Hurghada","Other"];
   const payOptions=hasFromScratch
-    ?[{id:"instapay",label:"Instapay",sub:"Deposit "+fmt(customDep)+" now, "+fmt(dueOnDelivery)+" on delivery",group:"deposit"},{id:"instapay_full",label:"Instapay",sub:"Pay full "+fmt(tot)+" now",group:"full"},{id:"card",label:"Card",sub:"Deposit "+fmt(customDep)+" now",group:"deposit"},{id:"card_full",label:"Card",sub:"Pay full "+fmt(tot)+" now",group:"full"},{id:"full_cod",label:"Cash on Delivery",sub:"Pay on delivery",group:"full"}]
-    :[{id:"full_instapay",label:"Instapay",sub:"Pay "+fmt(tot)+" now"},{id:"full_card",label:"Card",sub:"Pay "+fmt(tot)+" now"},{id:"full_apple",label:"Apple Pay",sub:"Pay "+fmt(tot)+" now"},{id:"full_cod",label:"Cash on Delivery",sub:"Pay "+fmt(tot)+" on delivery"}];
+    ?[{id:"instapay",label:"Instapay",sub:"Deposit "+fmt(customDep)+" now, "+fmt(dueOnDelivery)+" on delivery",group:"deposit"},{id:"instapay_full",label:"Instapay",sub:"Pay full "+fmt(tot)+" now",group:"full"},{id:"fawry",label:"Fawry",sub:"Pay "+fmt(tot)+" at any Fawry point",group:"full"},{id:"full_cod",label:"Cash on Delivery",sub:"Pay on delivery",group:"full"}]
+    :[{id:"full_instapay",label:"Instapay",sub:"Pay "+fmt(tot)+" now"},{id:"fawry",label:"Fawry",sub:"Pay at any Fawry point near you"},{id:"full_cod",label:"Cash on Delivery",sub:"Pay "+fmt(tot)+" on delivery"}];
 
   const[submitting,setSubmitting]=useState(false);
   const submit=async()=>{
@@ -1544,6 +1544,16 @@ function Checkout({cart,onClose,onOk,setLastOrder}){
             <Summary/>
             <div className="field">
               <label className="field-label">Payment Method</label>
+              <div style={{display:"flex",gap:8,marginBottom:12,flexWrap:"wrap"}}>
+                <div style={{display:"flex",alignItems:"center",gap:6,padding:"7px 12px",background:"var(--cr3)",border:"1px solid rgba(26,18,10,.1)",opacity:.5}}>
+                  <span style={{fontSize:10}}>-</span>
+                  <span style={{fontSize:9,letterSpacing:".1em",textTransform:"uppercase",color:"var(--ink3)"}}>Visa / Mastercard - Coming Soon</span>
+                </div>
+                <div style={{display:"flex",alignItems:"center",gap:6,padding:"7px 12px",background:"var(--cr3)",border:"1px solid rgba(26,18,10,.1)",opacity:.5}}>
+                  <span style={{fontSize:10}}></span>
+                  <span style={{fontSize:9,letterSpacing:".1em",textTransform:"uppercase",color:"var(--ink3)"}}>Apple Pay - Coming Soon</span>
+                </div>
+              </div>
               {hasFromScratch&&<p style={{fontSize:8,letterSpacing:".14em",textTransform:"uppercase",color:"var(--ink3)",marginBottom:7,marginTop:4}}>Deposit Options (40% now)</p>}
               {hasFromScratch?<>{payOptions.filter(o=>o.group==="deposit").map(opt=><PayOpt key={opt.id} opt={opt}/>)}<p style={{fontSize:8,letterSpacing:".14em",textTransform:"uppercase",color:"var(--ink3)",marginBottom:7,marginTop:10}}>Pay Full Now</p>{payOptions.filter(o=>o.group==="full").map(opt=><PayOpt key={opt.id} opt={opt}/>)}</>:payOptions.map(opt=><PayOpt key={opt.id} opt={opt}/>)}
             </div>
