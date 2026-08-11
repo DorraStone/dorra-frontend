@@ -127,22 +127,22 @@ const IMGS={
 const CATALOG=[
   // -- BRACELETS (descending price) --
   {id:2,name:"Dahab",type:"Bracelet",price:599,sizes:["Small","Medium"],stones:["Blue Crystal Quartz","Tigers Eye","Pearl"],img:"sb_new4",img2:"sb_new2",img3:"sb_new1",img4:"sb_new5",img5:"sb_new6",desc:"A large raw Blue Crystal Quartz stone at the centre of a doubled copper spiral, with Tiger's Eye spheres and freshwater pearl clusters. Every detail shaped by hand over four days.",care:"Blue Crystal Quartz - handle gently. Pearl must not contact liquids. Dry cloth only."},
-  {id:14,name:"The Citadel",type:"Bracelet",price:579,sizes:["Small","Medium"],stones:["Blue Crystal Quartz","Pearl","Ruby Jade","Crystal"],img:"b6b",img2:"b6a",img3:"b6c",desc:"Blue Crystal Quartz anchors this piece, surrounded by freshwater pearls, ruby-dyed jade, and both blue and transparent crystal on a doubled copper wire base with gold accents.",care:"Blue Crystal Quartz - keep away from water. Remove before washing hands."},
-  {id:13,name:"Blue Mist",type:"Bracelet",price:459,sizes:["Small","Medium"],stones:["Pearl","Blue Crystal Quartz","Crystal"],img:"b5a",img2:"b5b",img3:"b5c",img4:"b5d",desc:"Freshwater pearls and graduated shades of Blue Crystal Quartz interwoven on a doubled copper wire base with silver-toned accents. Every bead placed by hand.",care:"Remove before water. Pearls are sensitive to oils and perfume - wear last."},
-    {id:3,name:"Sun & Salt",type:"Bracelet",price:429,sizes:["Small","Medium"],stones:["Tigers Eye","Pearl"],img:"at1",img2:"at2",img3:"at3",desc:"Tiger's Eye and freshwater pearls alternating on doubled twisted copper wire. Fire and water, held simultaneously. Renamed and reimagined.",care:"Keep away from water. Pearls always last on, first off.",delicateNote:"Artisanal Note: Designed with a single, delicate layer of pure copper. This piece possesses a flexible, delicate fluidity that contours elegantly to your form - handle with care as a true statement of minimalist luxury."},
-  {id:4,name:"Sahl Hasheesh",type:"Bracelet",price:389,sizes:["Small","Medium"],stones:["Tigers Eye","Crystal","Blue Crystal Quartz"],img:"bs_new1",img2:"bs_new2",img3:"bs_new3",desc:"Tiger's Eye, crystal and blue crystal quartz threaded across a copper wire structure, anchored by hand-wound spiral clasps for added strength. Textured, earthy, made to wear every day.",care:"Copper patinas naturally. Polish with a dry cloth or lemon juice.",durabilityNote:"Crafted with extra structural wire spirals for enhanced durability and a resilient shape."},
-  {id:1,name:"Rosetta",type:"Bracelet",price:359,sizes:["Small","Medium"],stones:["Rose Quartz","Agate","Pearl"],img:"ls1",img2:"ls2",img3:"ls_new2",desc:"Rose quartz at the heart of a hand-coiled copper spiral, with agate and freshwater pearl beads. Shaped over three days.",care:"Remove before washing hands. Apply products first, then wear.",delicateNote:"Artisanal Note: Designed with a single, delicate layer of pure copper. This piece possesses a flexible, delicate fluidity that contours elegantly to your form - handle with care as a true statement of minimalist luxury."},
+  {id:14,name:"The Citadel",type:"Bracelet",price:599,sizes:["Small","Medium"],stones:["Blue Crystal Quartz","Pearl","Ruby Jade","Crystal"],img:"b6b",img2:"b6a",img3:"b6c",desc:"Blue Crystal Quartz anchors this piece, surrounded by freshwater pearls, ruby-dyed jade, and both blue and transparent crystal on a doubled copper wire base with gold accents.",care:"Blue Crystal Quartz - keep away from water. Remove before washing hands."},
+  {id:13,name:"Blue Mist",type:"Bracelet",price:449,sizes:["Small","Medium"],stones:["Pearl","Blue Crystal Quartz","Crystal"],img:"b5a",img2:"b5b",img3:"b5c",img4:"b5d",desc:"Freshwater pearls and graduated shades of Blue Crystal Quartz interwoven on a doubled copper wire base with silver-toned accents. Every bead placed by hand.",care:"Remove before water. Pearls are sensitive to oils and perfume - wear last."},
+    {id:3,name:"Sun & Salt",type:"Bracelet",price:449,sizes:["Small","Medium"],stones:["Tigers Eye","Pearl"],img:"at1",img2:"at2",img3:"at3",desc:"Tiger's Eye and freshwater pearls alternating on doubled twisted copper wire. Fire and water, held simultaneously. Renamed and reimagined.",care:"Keep away from water. Pearls always last on, first off.",delicateNote:"Artisanal Note: Designed with a single, delicate layer of pure copper. This piece possesses a flexible, delicate fluidity that contours elegantly to your form - handle with care as a true statement of minimalist luxury."},
+  {id:4,name:"Sahl Hasheesh",type:"Bracelet",price:399,sizes:["Small","Medium"],stones:["Tigers Eye","Crystal","Blue Crystal Quartz"],img:"bs_new1",img2:"bs_new2",img3:"bs_new3",desc:"Tiger's Eye, crystal and blue crystal quartz threaded across a copper wire structure, anchored by hand-wound spiral clasps for added strength. Textured, earthy, made to wear every day.",care:"Copper patinas naturally. Polish with a dry cloth or lemon juice.",durabilityNote:"Crafted with extra structural wire spirals for enhanced durability and a resilient shape."},
+  {id:1,name:"Rosetta",type:"Bracelet",price:349,sizes:["Small","Medium"],stones:["Rose Quartz","Agate","Pearl"],img:"ls1",img2:"ls2",img3:"ls_new2",desc:"Rose quartz at the heart of a hand-coiled copper spiral, with agate and freshwater pearl beads. Shaped over three days.",care:"Remove before washing hands. Apply products first, then wear.",delicateNote:"Artisanal Note: Designed with a single, delicate layer of pure copper. This piece possesses a flexible, delicate fluidity that contours elegantly to your form - handle with care as a true statement of minimalist luxury."},
     // -- NECKLACES --
-  {id:16,name:"Fossil Coast",type:"Necklace",price:569,stones:["Amethyst","Blue Crystal Quartz","Green Crystal","Ruby Jade","Black Onyx","Rose Quartz"],img:"cs1",img2:"cs2",img3:"cs3",desc:"A richly layered necklace on a gold-toned stainless steel chain. Amethyst, blue and green crystal, ruby-dyed jade, onyx, and rose quartz - every colour the earth holds.",care:"Remove before water. Amethyst and rose quartz fade in prolonged sunlight."},
+  {id:16,name:"Fossil Coast",type:"Necklace",price:549,stones:["Amethyst","Blue Crystal Quartz","Green Crystal","Ruby Jade","Black Onyx","Rose Quartz"],img:"cs1",img2:"cs2",img3:"cs3",desc:"A richly layered necklace on a gold-toned stainless steel chain. Amethyst, blue and green crystal, ruby-dyed jade, onyx, and rose quartz - every colour the earth holds.",care:"Remove before water. Amethyst and rose quartz fade in prolonged sunlight."},
   {id:17,name:"Alexandria",type:"Necklace",price:549,stones:["Pearl","Ruby Jade","Blue Crystal Quartz","Crystal","Amethyst","Rose Quartz"],img:"pr1",img2:"pr2",img3:"pr3",desc:"Freshwater pearls at the heart of this necklace, joined by ruby-dyed jade, blue crystal, purple crystal, amethyst, and rose quartz on a gold-toned stainless steel chain.",care:"Pearl must not contact perfume, water, or oils. Put on last."},
   {id:12,name:"Mediterranean",type:"Necklace",price:549,stones:["Pearl","Blue Crystal Quartz"],img:"n1",img2:"n2",img3:"n3",desc:"Three luminous pearls cradled in hand-wound gold copper wire, flanked by soft Blue Crystal Quartz rondelles. A quiet statement on a gold stainless steel chain.",care:"Pearl must not contact perfume or water. Put on last, take off first."},
-  {id:5,name:"Wadi",type:"Necklace",price:550,stones:["Blue Crystal Quartz","Agate"],img:"sp_new1",img2:"sp_new2",img3:"sp_new3",desc:"A raw Blue Crystal Quartz stone and deep agate spheres on a stainless steel and copper chain.",care:"Blue Crystal Quartz is sensitive to moisture. Put on after applying perfume."},
+  {id:5,name:"Wadi",type:"Necklace",price:549,stones:["Blue Crystal Quartz","Agate"],img:"sp_new1",img2:"sp_new2",img3:"sp_new3",desc:"A raw Blue Crystal Quartz stone and deep agate spheres on a stainless steel and copper chain.",care:"Blue Crystal Quartz is sensitive to moisture. Put on after applying perfume."},
     // -- ANKLETS --
-  {id:7,name:"Reef Anklet",type:"Anklet",price:450,sizes:["Small","Medium"],stones:["Green Crystal","Blue Crystal Quartz"],img:"sg1",img2:"sg2",img3:"sg3",desc:"Silver-toned copper wire wound delicately with green and Blue Crystal Quartz beads. Lightweight and luminous, like the sea caught on your ankle.",care:"Remove before swimming. Wipe with a dry cloth after wear."},
+  {id:7,name:"Reef Anklet",type:"Anklet",price:449,sizes:["Small","Medium"],stones:["Green Crystal","Blue Crystal Quartz"],img:"sg1",img2:"sg2",img3:"sg3",desc:"Silver-toned copper wire wound delicately with green and Blue Crystal Quartz beads. Lightweight and luminous, like the sea caught on your ankle.",care:"Remove before swimming. Wipe with a dry cloth after wear."},
   // -- EARRINGS --
-  {id:9,name:"Onyx",type:"Earring",price:329,stones:["Pearl","Black Onyx","Blue Crystal Quartz"],img:"e3",img2:"e2",img3:"e1",desc:"Freshwater pearl, deep onyx, and Blue Crystal Quartz rondelles on gold stainless steel hooks. Three stones, one intention - worn light, felt deeply.",care:"Pearl must not contact perfume or water. Put on last, take off first."},
+  {id:9,name:"Onyx",type:"Earring",price:349,stones:["Pearl","Black Onyx","Blue Crystal Quartz"],img:"e3",img2:"e2",img3:"e1",desc:"Freshwater pearl, deep onyx, and Blue Crystal Quartz rondelles on gold stainless steel hooks. Three stones, one intention - worn light, felt deeply.",care:"Pearl must not contact perfume or water. Put on last, take off first."},
   // -- CARE --
-  {id:11,name:"Copper Care Kit",type:"Care",price:150,stones:[],img:"",img2:"",desc:"The same kit included with every Dorra piece. Copper polish liquid and a soft cloth. Use when your piece begins to darken.",care:"Apply a few drops to the cloth. Rub gently. Rinse. Dry immediately."},
+  {id:11,name:"Copper Care Kit",type:"Care",price:149,stones:[],img:"",img2:"",desc:"The same kit included with every Dorra piece. Copper polish liquid and a soft cloth. Use when your piece begins to darken.",care:"Apply a few drops to the cloth. Rub gently. Rinse. Dry immediately."},
 ];
 
 
@@ -288,7 +288,7 @@ const CSS_LINES=[
   ".nav-cart{background:none;border:1px solid rgba(184,145,60,.22);color:rgba(245,239,227,.75);cursor:pointer;padding:6px 14px;font-family:var(--sans);font-size:8.5px;letter-spacing:.15em;text-transform:uppercase;transition:all .22s;display:flex;align-items:center;gap:6px;white-space:nowrap;}",
   ".nav-cart:hover{border-color:var(--gold);color:var(--cr);}",
   ".cart-ct{background:var(--gold);color:var(--g);width:15px;height:15px;border-radius:50%;font-size:8px;display:flex;align-items:center;justify-content:center;font-weight:500;}",
-  ".ham{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:8px;align-items:flex-end;}",
+  ".ham{display:flex;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:8px;align-items:flex-end;}",
   ".ham span{display:block;height:1px;background:rgba(245,239,227,.65);transition:all .3s var(--ease);}",
   ".ham span:nth-child(1){width:20px;}",
   ".ham span:nth-child(2){width:14px;}",
@@ -585,7 +585,7 @@ const CSS_LINES=[
   ".care-step-text{font-size:11px;color:var(--ink3);line-height:1.75;font-weight:300;}",
   "@media(max-width:1024px){",
   ".nav-links{display:none!important;}",
-  ".ham{display:flex;}",
+  
   ".nav{padding:0 20px;height:56px;}",
   ".hero{grid-template-columns:1fr;}",
   ".hero-l{padding:80px 20px 48px;}",
@@ -1978,42 +1978,51 @@ export default function App(){
     {loading&&(
       <div style={{position:"fixed",inset:0,zIndex:99999,background:"#062318",display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column",gap:0}}>
         <style>{`
-          @keyframes crown-draw {
-            0% { stroke-dashoffset: 400; opacity: 0; }
-            20% { opacity: 1; }
-            100% { stroke-dashoffset: 0; opacity: 1; }
+          @keyframes symbol-pulse {
+            0% { opacity:0; transform:scale(.85); filter:drop-shadow(0 0 0px rgba(184,145,60,0)); }
+            40% { opacity:1; transform:scale(1); filter:drop-shadow(0 0 16px rgba(184,145,60,.5)); }
+            70% { filter:drop-shadow(0 0 8px rgba(184,145,60,.25)); }
+            100% { opacity:1; transform:scale(1); filter:drop-shadow(0 0 20px rgba(184,145,60,.6)); }
           }
-          @keyframes crown-glow {
-            0%, 100% { filter: drop-shadow(0 0 4px rgba(184,145,60,0)); }
-            50% { filter: drop-shadow(0 0 12px rgba(184,145,60,0.6)); }
+          @keyframes symbol-glow {
+            0%,100% { filter:drop-shadow(0 0 8px rgba(184,145,60,.3)); }
+            50% { filter:drop-shadow(0 0 24px rgba(184,145,60,.7)); }
           }
-          @keyframes gold-fill {
-            0% { stop-color: rgba(184,145,60,0); }
-            100% { stop-color: rgba(184,145,60,1); }
+          @keyframes loader-line-grow {
+            from { width:0; opacity:0; }
+            to { width:48px; opacity:1; }
           }
-          @keyframes loader-fade-in {
-            from { opacity:0; transform:translateY(8px); }
-            to { opacity:1; transform:translateY(0); }
-          }
-          @keyframes loader-line {
-            from { width:0; }
-            to { width:48px; }
+          @keyframes loader-tagline {
+            from { opacity:0; letter-spacing:.5em; }
+            to { opacity:1; letter-spacing:.32em; }
           }
         `}</style>
 
-        {/* Logo symbol - fades in with glow */}
-        {IMGS.logo_bi&&<img src={IMGS.logo_bi} alt="Dorra"
-          style={{
-            height:"clamp(80px,12vw,120px)",
-            width:"auto",
-            objectFit:"contain",
-            marginBottom:20,
-            animation:"crown-draw 1.2s cubic-bezier(.16,1,.3,1) forwards, crown-glow 2.4s 1.2s ease-in-out infinite",
-            opacity:0,
-          }}/>}
+        {IMGS.logo_bi&&(
+          <div style={{
+            width:"clamp(80px,14vw,130px)",
+            height:"clamp(80px,14vw,130px)",
+            overflow:"hidden",
+            display:"flex",
+            alignItems:"flex-start",
+            justifyContent:"center",
+            marginBottom:24,
+          }}>
+            <img src={IMGS.logo_bi} alt="Dorra"
+              style={{
+                width:"clamp(120px,20vw,200px)",
+                maxWidth:"none",
+                objectFit:"none",
+                objectPosition:"center top",
+                animation:"symbol-pulse 1s cubic-bezier(.16,1,.3,1) forwards, symbol-glow 2s 1.2s ease-in-out infinite",
+                opacity:0,
+                filter:"brightness(0) invert(1) sepia(1) saturate(2) hue-rotate(5deg)",
+              }}/>
+          </div>
+        )}
 
-        <div style={{height:1,background:"rgba(184,145,60,.4)",width:0,animation:"loader-line .8s 1.2s cubic-bezier(.16,1,.3,1) forwards"}}/>
-        <p style={{fontFamily:"Jost,sans-serif",fontSize:8,letterSpacing:".32em",textTransform:"uppercase",color:"rgba(184,145,60,.65)",marginTop:16,animation:"loader-fade-in .8s 1.4s ease both"}}>The Luxury of Nature</p>
+        <div style={{height:1,background:"rgba(184,145,60,.45)",width:0,animation:"loader-line-grow .7s 1s cubic-bezier(.16,1,.3,1) forwards"}}/>
+        <p style={{fontFamily:"Jost,sans-serif",fontSize:8,letterSpacing:".32em",textTransform:"uppercase",color:"rgba(184,145,60,.65)",marginTop:16,opacity:0,animation:"loader-tagline .8s 1.3s ease forwards"}}>The Luxury of Nature</p>
       </div>
     )}
     <Nav page={activePage} setPage={go} cc={cc} setCO={setCO}/>
