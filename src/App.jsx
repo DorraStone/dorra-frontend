@@ -1163,6 +1163,7 @@ function CustomizePage({onAddCart,onGoCart}){
   const handleInspo=e=>{
     const file=e.target.files[0];
     if(!file)return;
+    if(file.size>5*1024*1024){alert("Please upload an image under 5MB.");return;}
     const reader=new FileReader();
     reader.onload=ev=>{setInspoB64(ev.target.result);setInspoImg(file.name);};
     reader.readAsDataURL(file);
@@ -1202,7 +1203,7 @@ function CustomizePage({onAddCart,onGoCart}){
       wireColor:wire,
       inspoImg:inspoB64||null,
     };
-    if(onAddCart)onAddCart(customProduct,picked,est);
+    if(onAddCart)onAddCart(customProduct,picked,est,needsSize?size:"");
     if(onGoCart)onGoCart();
   };
 
@@ -1612,7 +1613,7 @@ function Checkout({cart,onClose,onOk,setLastOrder}){
   const emailError=email.length>0&&!validEmail?"Please enter a valid email":"";
   const needRef=(pay==="instapay"||pay==="instapay_full"||pay==="full_instapay");
   const needCard=(pay==="card"||pay==="card_full"||pay==="full_card");
-  const ok2=pay==="full_cod"||pay==="fawry"||(needRef&&instRef.length>3&&instScreenshot.length>0)||(needCard&&cardN.length===16&&cardE.length===5&&cardC.length===3)||pay==="apple"||pay==="full_apple"||pay==="apple_full";
+  const ok2=pay==="full_cod"||pay==="fawry"||(needRef&&instScreenshot.length>0)||(needCard&&cardN.length===16&&cardE.length===5&&cardC.length===3)||pay==="apple"||pay==="full_apple"||pay==="apple_full";
   const cities=["Cairo","Giza","Alexandria","Al Sharkia","Luxor","Aswan","Hurghada","Other"];
   const payOptions=hasFromScratch
     ?[
@@ -1953,13 +1954,13 @@ function ReviewsPage(){
   useRv();
   const submit=async()=>{
     if(!form.name||!form.text)return;
-    // Save to real backend
-    await apiPost("/api/reviews",{name:form.name,piece:form.piece,text:form.text,img:form.imgPreview});
-    // Backup to localStorage
+    // Save to localStorage immediately
     const reviews=JSON.parse(localStorage.getItem("dorra_reviews_pending")||"[]");
     reviews.push({id:"REV-"+Date.now(),date:new Date().toISOString(),name:form.name,piece:form.piece,text:form.text,img:form.imgPreview,approved:false});
     localStorage.setItem("dorra_reviews_pending",JSON.stringify(reviews));
     setSent(true);
+    // Send to backend non-blocking
+    apiPost("/api/reviews",{name:form.name,piece:form.piece,text:form.text,img:form.imgPreview}).catch(e=>console.error("Review save:",e));
   };
   const handleImg=e=>{const file=e.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=ev=>setForm(f=>({...f,imgPreview:ev.target.result}));reader.readAsDataURL(file);};
   const[published,setPublished]=useState([]);
