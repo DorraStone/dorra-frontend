@@ -126,21 +126,21 @@ const IMGS={
 
 const CATALOG=[
   // -- BRACELETS (descending price) --
-  {id:2,name:"Sinai Bracelet",type:"Bracelet",price:599,sizes:["Small","Medium"],stones:["Blue Crystal Quartz","Tigers Eye","Pearl"],img:"sb_new4",img2:"sb_new2",img3:"sb_new1",img4:"sb_new5",img5:"sb_new6",desc:"A large raw Blue Crystal Quartz stone at the centre of a doubled copper spiral, with Tiger's Eye spheres and freshwater pearl clusters. Every detail shaped by hand over four days.",care:"Blue Crystal Quartz - handle gently. Pearl must not contact liquids. Dry cloth only."},
-  {id:14,name:"Sinai Heritage Bracelet",type:"Bracelet",price:579,sizes:["Small","Medium"],stones:["Blue Crystal Quartz","Pearl","Ruby Jade","Crystal"],img:"b6b",img2:"b6a",img3:"b6c",desc:"Blue Crystal Quartz anchors this piece, surrounded by freshwater pearls, ruby-dyed jade, and both blue and transparent crystal on a doubled copper wire base with gold accents.",care:"Blue Crystal Quartz - keep away from water. Remove before washing hands."},
-  {id:13,name:"Blue Mist Bracelet",type:"Bracelet",price:459,sizes:["Small","Medium"],stones:["Pearl","Blue Crystal Quartz","Crystal"],img:"b5a",img2:"b5b",img3:"b5c",img4:"b5d",desc:"Freshwater pearls and graduated shades of Blue Crystal Quartz interwoven on a doubled copper wire base with silver-toned accents. Every bead placed by hand.",care:"Remove before water. Pearls are sensitive to oils and perfume - wear last."},
-    {id:3,name:"Aura Tide",type:"Bracelet",price:429,sizes:["Small","Medium"],stones:["Tigers Eye","Pearl"],img:"at1",img2:"at2",img3:"at3",desc:"Tiger's Eye and freshwater pearls alternating on doubled twisted copper wire. Fire and water, held simultaneously. Renamed and reimagined.",care:"Keep away from water. Pearls always last on, first off.",delicateNote:"Artisanal Note: Designed with a single, delicate layer of pure copper. This piece possesses a flexible, delicate fluidity that contours elegantly to your form - handle with care as a true statement of minimalist luxury."},
-  {id:4,name:"Beach Spirit",type:"Bracelet",price:389,sizes:["Small","Medium"],stones:["Tigers Eye","Crystal","Blue Crystal Quartz"],img:"bs_new1",img2:"bs_new2",img3:"bs_new3",desc:"Tiger's Eye, crystal and blue crystal quartz threaded across a copper wire structure, anchored by hand-wound spiral clasps for added strength. Textured, earthy, made to wear every day.",care:"Copper patinas naturally. Polish with a dry cloth or lemon juice.",durabilityNote:"Crafted with extra structural wire spirals for enhanced durability and a resilient shape."},
-  {id:1,name:"Love Spiral",type:"Bracelet",price:359,sizes:["Small","Medium"],stones:["Rose Quartz","Agate","Pearl"],img:"ls1",img2:"ls2",img3:"ls_new2",desc:"Rose quartz at the heart of a hand-coiled copper spiral, with agate and freshwater pearl beads. Shaped over three days.",care:"Remove before washing hands. Apply products first, then wear.",delicateNote:"Artisanal Note: Designed with a single, delicate layer of pure copper. This piece possesses a flexible, delicate fluidity that contours elegantly to your form - handle with care as a true statement of minimalist luxury."},
+  {id:2,name:"Dahab",type:"Bracelet",price:599,sizes:["Small","Medium"],stones:["Blue Crystal Quartz","Tigers Eye","Pearl"],img:"sb_new4",img2:"sb_new2",img3:"sb_new1",img4:"sb_new5",img5:"sb_new6",desc:"A large raw Blue Crystal Quartz stone at the centre of a doubled copper spiral, with Tiger's Eye spheres and freshwater pearl clusters. Every detail shaped by hand over four days.",care:"Blue Crystal Quartz - handle gently. Pearl must not contact liquids. Dry cloth only."},
+  {id:14,name:"The Citadel",type:"Bracelet",price:579,sizes:["Small","Medium"],stones:["Blue Crystal Quartz","Pearl","Ruby Jade","Crystal"],img:"b6b",img2:"b6a",img3:"b6c",desc:"Blue Crystal Quartz anchors this piece, surrounded by freshwater pearls, ruby-dyed jade, and both blue and transparent crystal on a doubled copper wire base with gold accents.",care:"Blue Crystal Quartz - keep away from water. Remove before washing hands."},
+  {id:13,name:"Blue Mist",type:"Bracelet",price:459,sizes:["Small","Medium"],stones:["Pearl","Blue Crystal Quartz","Crystal"],img:"b5a",img2:"b5b",img3:"b5c",img4:"b5d",desc:"Freshwater pearls and graduated shades of Blue Crystal Quartz interwoven on a doubled copper wire base with silver-toned accents. Every bead placed by hand.",care:"Remove before water. Pearls are sensitive to oils and perfume - wear last."},
+    {id:3,name:"Sun & Salt",type:"Bracelet",price:429,sizes:["Small","Medium"],stones:["Tigers Eye","Pearl"],img:"at1",img2:"at2",img3:"at3",desc:"Tiger's Eye and freshwater pearls alternating on doubled twisted copper wire. Fire and water, held simultaneously. Renamed and reimagined.",care:"Keep away from water. Pearls always last on, first off.",delicateNote:"Artisanal Note: Designed with a single, delicate layer of pure copper. This piece possesses a flexible, delicate fluidity that contours elegantly to your form - handle with care as a true statement of minimalist luxury."},
+  {id:4,name:"Sahl Hasheesh",type:"Bracelet",price:389,sizes:["Small","Medium"],stones:["Tigers Eye","Crystal","Blue Crystal Quartz"],img:"bs_new1",img2:"bs_new2",img3:"bs_new3",desc:"Tiger's Eye, crystal and blue crystal quartz threaded across a copper wire structure, anchored by hand-wound spiral clasps for added strength. Textured, earthy, made to wear every day.",care:"Copper patinas naturally. Polish with a dry cloth or lemon juice.",durabilityNote:"Crafted with extra structural wire spirals for enhanced durability and a resilient shape."},
+  {id:1,name:"Rosetta",type:"Bracelet",price:359,sizes:["Small","Medium"],stones:["Rose Quartz","Agate","Pearl"],img:"ls1",img2:"ls2",img3:"ls_new2",desc:"Rose quartz at the heart of a hand-coiled copper spiral, with agate and freshwater pearl beads. Shaped over three days.",care:"Remove before washing hands. Apply products first, then wear.",delicateNote:"Artisanal Note: Designed with a single, delicate layer of pure copper. This piece possesses a flexible, delicate fluidity that contours elegantly to your form - handle with care as a true statement of minimalist luxury."},
     // -- NECKLACES --
-  {id:16,name:"Celestial Strand",type:"Necklace",price:569,stones:["Amethyst","Blue Crystal Quartz","Green Crystal","Ruby Jade","Black Onyx","Rose Quartz"],img:"cs1",img2:"cs2",img3:"cs3",desc:"A richly layered necklace on a gold-toned stainless steel chain. Amethyst, blue and green crystal, ruby-dyed jade, onyx, and rose quartz - every colour the earth holds.",care:"Remove before water. Amethyst and rose quartz fade in prolonged sunlight."},
-  {id:17,name:"Pearl Reverie",type:"Necklace",price:549,stones:["Pearl","Ruby Jade","Blue Crystal Quartz","Crystal","Amethyst","Rose Quartz"],img:"pr1",img2:"pr2",img3:"pr3",img4:"pr4",desc:"Freshwater pearls at the heart of this necklace, joined by ruby-dyed jade, blue crystal, purple crystal, amethyst, and rose quartz on a gold-toned stainless steel chain.",care:"Pearl must not contact perfume, water, or oils. Put on last."},
-  {id:12,name:"Pearl Tide",type:"Necklace",price:549,stones:["Pearl","Blue Crystal Quartz"],img:"n1",img2:"n2",img3:"n3",desc:"Three luminous pearls cradled in hand-wound gold copper wire, flanked by soft Blue Crystal Quartz rondelles. A quiet statement on a gold stainless steel chain.",care:"Pearl must not contact perfume or water. Put on last, take off first."},
-  {id:5,name:"Sinai Pendant",type:"Necklace",price:550,stones:["Blue Crystal Quartz","Agate"],img:"sp_new1",img2:"sp_new2",img3:"sp_new3",desc:"A raw Blue Crystal Quartz stone and deep agate spheres on a stainless steel and copper chain.",care:"Blue Crystal Quartz is sensitive to moisture. Put on after applying perfume."},
+  {id:16,name:"Fossil Coast",type:"Necklace",price:569,stones:["Amethyst","Blue Crystal Quartz","Green Crystal","Ruby Jade","Black Onyx","Rose Quartz"],img:"cs1",img2:"cs2",img3:"cs3",desc:"A richly layered necklace on a gold-toned stainless steel chain. Amethyst, blue and green crystal, ruby-dyed jade, onyx, and rose quartz - every colour the earth holds.",care:"Remove before water. Amethyst and rose quartz fade in prolonged sunlight."},
+  {id:17,name:"Alexandria",type:"Necklace",price:549,stones:["Pearl","Ruby Jade","Blue Crystal Quartz","Crystal","Amethyst","Rose Quartz"],img:"pr1",img2:"pr2",img3:"pr3",img4:"pr4",desc:"Freshwater pearls at the heart of this necklace, joined by ruby-dyed jade, blue crystal, purple crystal, amethyst, and rose quartz on a gold-toned stainless steel chain.",care:"Pearl must not contact perfume, water, or oils. Put on last."},
+  {id:12,name:"Mediterranean",type:"Necklace",price:549,stones:["Pearl","Blue Crystal Quartz"],img:"n1",img2:"n2",img3:"n3",desc:"Three luminous pearls cradled in hand-wound gold copper wire, flanked by soft Blue Crystal Quartz rondelles. A quiet statement on a gold stainless steel chain.",care:"Pearl must not contact perfume or water. Put on last, take off first."},
+  {id:5,name:"Wadi",type:"Necklace",price:550,stones:["Blue Crystal Quartz","Agate"],img:"sp_new1",img2:"sp_new2",img3:"sp_new3",desc:"A raw Blue Crystal Quartz stone and deep agate spheres on a stainless steel and copper chain.",care:"Blue Crystal Quartz is sensitive to moisture. Put on after applying perfume."},
     // -- ANKLETS --
-  {id:7,name:"Sea Glass Anklet",type:"Anklet",price:450,sizes:["Small","Medium"],stones:["Green Crystal","Blue Crystal Quartz"],img:"sg1",img2:"sg2",img3:"sg3",desc:"Silver-toned copper wire wound delicately with green and Blue Crystal Quartz beads. Lightweight and luminous, like the sea caught on your ankle.",care:"Remove before swimming. Wipe with a dry cloth after wear."},
+  {id:7,name:"Reef Anklet",type:"Anklet",price:450,sizes:["Small","Medium"],stones:["Green Crystal","Blue Crystal Quartz"],img:"sg1",img2:"sg2",img3:"sg3",desc:"Silver-toned copper wire wound delicately with green and Blue Crystal Quartz beads. Lightweight and luminous, like the sea caught on your ankle.",care:"Remove before swimming. Wipe with a dry cloth after wear."},
   // -- EARRINGS --
-  {id:9,name:"Pearl Cascade",type:"Earring",price:329,stones:["Pearl","Black Onyx","Blue Crystal Quartz"],img:"e3",img2:"e2",img3:"e1",desc:"Freshwater pearl, deep onyx, and Blue Crystal Quartz rondelles on gold stainless steel hooks. Three stones, one intention - worn light, felt deeply.",care:"Pearl must not contact perfume or water. Put on last, take off first."},
+  {id:9,name:"Onyx",type:"Earring",price:329,stones:["Pearl","Black Onyx","Blue Crystal Quartz"],img:"e3",img2:"e2",img3:"e1",desc:"Freshwater pearl, deep onyx, and Blue Crystal Quartz rondelles on gold stainless steel hooks. Three stones, one intention - worn light, felt deeply.",care:"Pearl must not contact perfume or water. Put on last, take off first."},
   // -- CARE --
   {id:11,name:"Copper Care Kit",type:"Care",price:150,stones:[],img:"",img2:"",desc:"The same kit included with every Dorra piece. Copper polish liquid and a soft cloth. Use when your piece begins to darken.",care:"Apply a few drops to the cloth. Rub gently. Rinse. Dry immediately."},
 ];
@@ -650,36 +650,38 @@ function Nav({page,setPage,cc,setCO}){
   const results=q.length>1?CATALOG.filter(p=>p.type!=="Care"&&(p.name.toLowerCase().includes(q.toLowerCase())||p.stones.some(s=>s.toLowerCase().includes(q.toLowerCase())))):[];
   return(<>
     <nav className={"nav"+(scr?" scrolled":"")}>
+      {/* LEFT: hamburger menu */}
+      <div style={{display:"flex",alignItems:"center",gap:8,flex:1}}>
+        <button className={"ham"+(mob?" o":"")} onClick={()=>{setMob(m=>!m);setSs(false);}}><span/><span/><span/></button>
+      </div>
+
+      {/* CENTER: logo */}
       <button
         className="nav-logo"
+        style={{position:"absolute",left:"50%",transform:"translateX(-50%)"}}
         onClick={e=>{
-          e.preventDefault();
-          e.stopPropagation();
-          // Close ALL overlays first
-          setCO(false);
-          setMob(false);
-          setSs(false);
-          setQ("");
-          // Then navigate home
-          setPage("home");
-          window.scrollTo(0,0);
-          document.documentElement.scrollTop=0;
-          document.body.scrollTop=0;
+          e.preventDefault();e.stopPropagation();
+          setCO(false);setMob(false);setSs(false);setQ("");
+          setPage("home");window.scrollTo(0,0);
+          document.documentElement.scrollTop=0;document.body.scrollTop=0;
           setTimeout(()=>{window.scrollTo(0,0);document.documentElement.scrollTop=0;},50);
         }}
       >
         {IMGS.logo?<img src={IMGS.logo} alt="Dorra" style={{height:44,width:"auto",maxWidth:160,objectFit:"contain",display:"block"}} draggable={false}/>:<span className="nav-logo-text">Dorra</span>}
       </button>
+
+      {/* Desktop nav links - hidden on mobile */}
       <div className="nav-links">
         {links.map(l=><button key={l.id} className={"nl"+(page===l.id?" on":"")} onClick={()=>go(l.id)}>{l.l}</button>)}
         <button className="nl-cta" onClick={()=>go("customize")}>Design Your Dorra Piece</button>
       </div>
-      <div className="nav-right">
+
+      {/* RIGHT: search + cart */}
+      <div style={{display:"flex",alignItems:"center",gap:8,flex:1,justifyContent:"flex-end"}}>
         <button className="nav-icon" onClick={()=>{setSs(s=>!s);setMob(false);}}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
         </button>
         <button className="nav-cart" onClick={()=>setCO(true)}>Cart{cc>0&&<span className="cart-ct">{cc}</span>}</button>
-        <button className={"ham"+(mob?" o":"")} onClick={()=>{setMob(m=>!m);setSs(false);}}><span/><span/><span/></button>
       </div>
     </nav>
     {ss&&<div className="search-drop">
@@ -832,7 +834,7 @@ function HomePage({setPage,onV,onA}){
           <button className="btn btn-ghost" onClick={()=>setPage("customize")}>Design Your Dorra Piece</button>
         </div>
       </div>
-      <div className="hero-img">{IMGS.sb1&&<img src={IMGS.sb1} alt="Sinai Bracelet"/>}</div>
+      <div className="hero-img">{IMGS.sb1&&<img src={IMGS.sb1} alt="Dahab"/>}</div>
     </div>
 
     {/* -- DESIGN YOUR PIECE - Luxury editorial banner -- */}
@@ -1435,13 +1437,21 @@ function Checkout({cart,onClose,onOk,setLastOrder}){
   const standardSub=standardItems.reduce((s,i)=>s+i.price*i.qty,0);
   const sub=customSub+standardSub;
   const tot=sub+ship;
-  const customDep=Math.round(customSub*0.4);
-  const customBal=customSub-customDep;
+  const customDep=Math.round(customSub*0.4);   // 40% deposit on bespoke items only
+  const customBal=customSub-customDep;           // 60% balance on bespoke items
   const hasFromScratch=customItems.length>0;
+  // dueNow: for COD = only the bespoke deposit (standard paid on delivery)
+  //         for instapay = full standard + bespoke deposit + shipping
+  //         for full instapay = everything
   const isCOD=pay==="full_cod";
-  const isFullOnline=pay.endsWith("_full")||pay==="full_instapay"||pay==="full_card"||pay==="full_apple";
-  const dueNow=isCOD?customDep:(isFullOnline?tot:(customDep+standardSub+ship));
-  const dueOnDelivery=isCOD?(standardSub+customBal+ship):(isFullOnline?0:customBal);
+  const isFullOnline=pay==="full_instapay";
+  const dueNow=isCOD
+    ?(hasFromScratch?customDep:0)              // COD: only bespoke deposit due now (if any)
+    :(isFullOnline?tot                          // Full online: pay everything
+    :(customDep+standardSub+ship));             // Instapay deposit: standard + bespoke deposit + shipping
+  const dueOnDelivery=isCOD
+    ?(standardSub+customBal+ship)              // COD: standard + bespoke balance + shipping on delivery
+    :(isFullOnline?0:customBal);               // Online full: nothing on delivery
   const amountDue=dueNow;
   const egyptPhone=/^(010|011|012|015)[0-9]{8}$/.test(phone.replace(/\s+/g,""));
   const validEmail=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -1453,8 +1463,15 @@ function Checkout({cart,onClose,onOk,setLastOrder}){
   const ok2=pay==="full_cod"||pay==="fawry"||(needRef&&instRef.length>3&&instScreenshot.length>0)||(needCard&&cardN.length===16&&cardE.length===5&&cardC.length===3)||pay==="apple"||pay==="full_apple"||pay==="apple_full";
   const cities=["Cairo","Giza","Alexandria","Al Sharkia","Luxor","Aswan","Hurghada","Other"];
   const payOptions=hasFromScratch
-    ?[{id:"instapay",label:"Instapay",sub:"Deposit "+fmt(customDep)+" now, "+fmt(dueOnDelivery)+" on delivery",group:"deposit"},{id:"instapay_full",label:"Instapay",sub:"Pay full "+fmt(tot)+" now",group:"full"},{id:"fawry",label:"Fawry",sub:"Pay "+fmt(tot)+" at any Fawry point",group:"full"},{id:"full_cod",label:"Cash on Delivery",sub:"Pay on delivery",group:"full"}]
-    :[{id:"full_instapay",label:"Instapay",sub:"Pay "+fmt(tot)+" now"},{id:"fawry",label:"Fawry",sub:"Pay at any Fawry point near you"},{id:"full_cod",label:"Cash on Delivery",sub:"Pay "+fmt(tot)+" on delivery"}];
+    ?[
+        {id:"instapay",label:"Instapay - Deposit Now",sub:"Pay "+fmt(customDep+standardSub+ship)+" now, "+fmt(customBal)+" on delivery"},
+        {id:"full_instapay",label:"Instapay - Pay in Full",sub:"Pay "+fmt(tot)+" now, nothing on delivery"},
+        {id:"full_cod",label:"Cash on Delivery",sub:"Pay "+fmt(customDep)+" deposit now via Instapay, "+fmt(standardSub+customBal+ship)+" on delivery"},
+      ]
+    :[
+        {id:"full_instapay",label:"Instapay",sub:"Pay "+fmt(tot)+" now"},
+        {id:"full_cod",label:"Cash on Delivery",sub:"Pay "+fmt(tot)+" when your piece arrives"},
+      ];
 
   const[submitting,setSubmitting]=useState(false);
   const submit=async()=>{
@@ -1559,11 +1576,11 @@ function Checkout({cart,onClose,onOk,setLastOrder}){
             </div>
             {needRef&&<div className="pay-box">
               <div style={{background:"var(--cr)",padding:"13px 15px",borderLeft:"2px solid var(--gold)",marginBottom:11}}>
-                <p style={{fontSize:11,color:"var(--ink3)",marginBottom:4}}>Send {fmt(amountDue)} to Instapay:</p>
-                <p style={{fontFamily:"var(--serif)",fontSize:24,color:"var(--ink)",letterSpacing:".04em",marginBottom:4}}>01020624266</p>
-                <p style={{fontSize:10,color:"var(--gold)",fontWeight:400}}>Your order will NOT be processed until payment is confirmed and approved.</p>
+                <p style={{fontSize:11,color:"var(--ink3)",marginBottom:6}}>Transfer {fmt(amountDue)} via Instapay to:</p>
+                <p style={{fontFamily:"var(--serif)",fontSize:28,color:"var(--ink)",letterSpacing:".04em",marginBottom:4}}>01020624266</p>
+                <p style={{fontSize:10,color:"var(--ink3)",lineHeight:1.7,marginBottom:4}}>Instapay is Egypt's instant bank transfer service. Open your banking app - Instapay - send to mobile number above.</p>
+                <p style={{fontSize:10,color:"var(--gold)",fontWeight:400}}>Your order will be confirmed once we receive your payment.</p>
               </div>
-              <div className="field"><label className="field-label">Reference Number *</label><input className="field-input" placeholder="e.g. TXN123456789" value={instRef} onChange={e=>setInstRef(e.target.value)}/></div>
               <div className="field" style={{marginBottom:0}}>
                 <label className="field-label">Payment Screenshot * <span style={{fontSize:9,color:"var(--ink3)",fontWeight:300,letterSpacing:0,textTransform:"none"}}>(required)</span></label>
                 <p style={{fontSize:10,color:"var(--ink3)",marginBottom:8,lineHeight:1.65}}>Upload a screenshot of your transfer. Your order is processed after we verify it.</p>
@@ -1872,6 +1889,10 @@ function Footer({setPage}){
               Handcrafted copper jewelry with natural gemstones. Made entirely by hand in Egypt.
             </p>
             <p style={{fontFamily:"var(--serif)",fontStyle:"italic",fontSize:12,color:"rgba(184,145,60,.4)",marginTop:16}}>The Luxury of Nature</p>
+            <a href="https://www.instagram.com/dorrastones?igsh=MXNiM3MzenNqNjZkZg%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" style={{display:"inline-flex",alignItems:"center",gap:8,marginTop:20,background:"none",border:"none",cursor:"pointer",textDecoration:"none"}}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(184,145,60,.6)" strokeWidth="1.5" strokeLinecap="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="rgba(184,145,60,.6)" stroke="none"/></svg>
+              <span style={{fontFamily:"var(--sans)",fontSize:11,fontWeight:300,color:"rgba(184,145,60,.6)"}}>@dorrastones</span>
+            </a>
           </div>
 
           {/* Shop */}
@@ -1947,13 +1968,59 @@ export default function App(){
   return(<>
     <InjectCSS/>
     {loading&&(
-      <div style={{position:"fixed",inset:0,zIndex:99999,background:"#062318",display:"flex",alignItems:"center",justifyContent:"center"}}>
-        <div style={{textAlign:"center",display:"flex",flexDirection:"column",alignItems:"center",gap:0}}>
-          {IMGS.logo?<img src={IMGS.logo} alt="Dorra" style={{height:"clamp(52px,9vw,88px)",width:"auto",objectFit:"contain",marginBottom:16,animation:"fade-in .8s ease both"}}/>
-            :<div style={{fontFamily:"Cormorant Garamond,serif",fontSize:"clamp(48px,8vw,88px)",fontWeight:300,color:"#f5efe3",letterSpacing:".04em"}}>Dorra</div>}
-          <div style={{height:1,background:"rgba(184,145,60,.5)",width:60,animation:"line-grow 1s .3s cubic-bezier(.16,1,.3,1) both"}}/>
-          <p style={{fontFamily:"Jost,sans-serif",fontSize:8,letterSpacing:".44em",textTransform:"uppercase",color:"rgba(184,145,60,.6)",marginTop:12,animation:"fade-in .9s .7s ease both"}}>The Luxury of Nature</p>
-        </div>
+      <div style={{position:"fixed",inset:0,zIndex:99999,background:"#062318",display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column",gap:0}}>
+        <style>{`
+          @keyframes crown-draw {
+            0% { stroke-dashoffset: 400; opacity: 0; }
+            20% { opacity: 1; }
+            100% { stroke-dashoffset: 0; opacity: 1; }
+          }
+          @keyframes crown-glow {
+            0%, 100% { filter: drop-shadow(0 0 4px rgba(184,145,60,0)); }
+            50% { filter: drop-shadow(0 0 12px rgba(184,145,60,0.6)); }
+          }
+          @keyframes gold-fill {
+            0% { stop-color: rgba(184,145,60,0); }
+            100% { stop-color: rgba(184,145,60,1); }
+          }
+          @keyframes loader-fade-in {
+            from { opacity:0; transform:translateY(8px); }
+            to { opacity:1; transform:translateY(0); }
+          }
+          @keyframes loader-line {
+            from { width:0; }
+            to { width:48px; }
+          }
+        `}</style>
+
+        {/* Crown SVG - drawn stroke animation */}
+        <svg width="90" height="70" viewBox="0 0 90 70" fill="none" xmlns="http://www.w3.org/2000/svg"
+          style={{animation:"crown-glow 2.4s 1s ease-in-out infinite", marginBottom:20}}>
+          <path
+            d="M10 55 L10 25 L30 40 L45 10 L60 40 L80 25 L80 55 Z"
+            stroke="#b8913c"
+            strokeWidth="2.2"
+            strokeLinejoin="round"
+            strokeLinecap="round"
+            fill="none"
+            strokeDasharray="400"
+            strokeDashoffset="400"
+            style={{animation:"crown-draw 1.4s cubic-bezier(.16,1,.3,1) forwards"}}
+          />
+          <line x1="10" y1="60" x2="80" y2="60" stroke="#b8913c" strokeWidth="1.5"
+            strokeDasharray="70" strokeDashoffset="70"
+            style={{animation:"crown-draw 0.8s 0.9s cubic-bezier(.16,1,.3,1) forwards"}}/>
+          {/* Crown gems */}
+          <circle cx="45" cy="10" r="3" fill="none" stroke="#b8913c" strokeWidth="1.5"
+            style={{animation:"crown-draw 0.5s 1.2s ease forwards", strokeDasharray:20, strokeDashoffset:20}}/>
+          <circle cx="10" cy="25" r="2.5" fill="none" stroke="rgba(184,145,60,.6)" strokeWidth="1.2"
+            style={{animation:"crown-draw 0.5s 1.4s ease forwards", strokeDasharray:20, strokeDashoffset:20}}/>
+          <circle cx="80" cy="25" r="2.5" fill="none" stroke="rgba(184,145,60,.6)" strokeWidth="1.2"
+            style={{animation:"crown-draw 0.5s 1.4s ease forwards", strokeDasharray:20, strokeDashoffset:20}}/>
+        </svg>
+
+        <div style={{height:1,background:"rgba(184,145,60,.4)",width:0,animation:"loader-line .8s 1.2s cubic-bezier(.16,1,.3,1) forwards"}}/>
+        <p style={{fontFamily:"Jost,sans-serif",fontSize:8,letterSpacing:".32em",textTransform:"uppercase",color:"rgba(184,145,60,.65)",marginTop:16,animation:"loader-fade-in .8s 1.4s ease both"}}>The Luxury of Nature</p>
       </div>
     )}
     <Nav page={activePage} setPage={go} cc={cc} setCO={setCO}/>
