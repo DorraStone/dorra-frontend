@@ -561,7 +561,7 @@ const CSS_LINES=[
   ".stone-pill.picked .stone-pill-name{color:var(--gold);}",
   ".stone-pill-meaning{font-size:6.5px;color:var(--ink3);opacity:.6;}",
   ".stone-pill.picked .stone-pill-meaning{color:rgba(184,145,60,.44);}",
-  ".estimate-box{background:var(--cr2);padding:15px;margin-bottom:14px;border-left:2px solid var(--gold);}",
+  ".estimate-box{background:var(--g);padding:22px 20px;margin-bottom:14px;border-left:2px solid var(--gold);}",
   ".estimate-row{display:flex;justify-content:space-between;font-size:12px;padding:4px 0;border-bottom:1px solid rgba(26,18,10,.07);}",
   ".estimate-key{color:var(--ink3);font-weight:300;}",
   ".estimate-val{color:var(--ink);}",
@@ -1172,7 +1172,7 @@ function CustomizePage({onAddCart,onGoCart}){
   // Base prices (include 2 stones)
   const BASE={"Bracelet":299,"Statement Bracelet":399,"Necklace":419,"Anklet":299,"Earring":199};
   // Wire add-on
-  const WIRE_COST={"silver":0,"gold":0,"double_thick":80};
+  const WIRE_COST={"silver":0,"gold":0,"double_thick":80,"none":0};
   // Extra stones beyond 2
   const STONE_EXTRA={"Pearl":60,"Rose Quartz":45,"Amethyst":45,"Ruby Jade":45,"Black Onyx":40,"Blue Crystal Quartz":35,"Green Crystal":35,"Purple Agate":35,"Agate":30,"Tigers Eye":30,"Crystal":25};
   
@@ -1238,12 +1238,13 @@ function CustomizePage({onAddCart,onGoCart}){
             {/* WIRE COLOR */}
             <span style={{fontSize:8.5,letterSpacing:".2em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:10}}>Decorative Wire Color</span>
             <div className="sec-rule" style={{marginBottom:10}}/>
-            <p style={{fontSize:10,color:"var(--ink3)",lineHeight:1.7,marginBottom:12}}>All pieces are wound with copper wire. The thin decorative wire around it comes in two finishes, or you can opt for a doubled thick copper wire.</p>
+            <p style={{fontSize:10,color:"var(--ink3)",lineHeight:1.7,marginBottom:12}}>All pieces are wound with copper wire. The thin decorative wire comes in two finishes. You can also opt for a doubled thick copper wire, or no decorative wire at all - just raw copper.</p>
             <div style={{display:"flex",flexWrap:"wrap",gap:8,marginBottom:24}}>
               {[
                 {id:"silver",label:"Silver-Toned",sub:"Thin, light finish",extra:0},
                 {id:"gold",label:"Gold-Toned",sub:"Thin, warm finish",extra:0},
                 {id:"double_thick",label:"Doubled Thick Copper",sub:"Bold, raw texture - harder to work with",extra:80},
+                {id:"none",label:"Raw Copper Only",sub:"No decorative wire - base thick copper wrap only",extra:0},
               ].map(w=>(
                 <button key={w.id} onClick={()=>setWire(w.id)}
                   style={{padding:"10px 14px",textAlign:"left",
@@ -1606,7 +1607,7 @@ function Checkout({cart,onClose,onOk,setLastOrder}){
   const amountDue=dueNow;
   const egyptPhone=/^(010|011|012|015)[0-9]{8}$/.test(phone.replace(/\s+/g,""));
   const validEmail=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  const ok1=!(name.trim()&&egyptPhone&&validEmail&&address.trim().length>5);
+  const ok1=!!(name.trim()&&egyptPhone&&validEmail&&address.trim().length>5);
   const phoneError=phone.length>0&&!egyptPhone?"Must be Egyptian number starting with 010,011,012,015":"";
   const emailError=email.length>0&&!validEmail?"Please enter a valid email":"";
   const needRef=(pay==="instapay"||pay==="instapay_full"||pay==="full_instapay");
