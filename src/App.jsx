@@ -1978,51 +1978,36 @@ export default function App(){
     {loading&&(
       <div style={{position:"fixed",inset:0,zIndex:99999,background:"#062318",display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column",gap:0}}>
         <style>{`
-          @keyframes symbol-pulse {
-            0% { opacity:0; transform:scale(.85); filter:drop-shadow(0 0 0px rgba(184,145,60,0)); }
-            40% { opacity:1; transform:scale(1); filter:drop-shadow(0 0 16px rgba(184,145,60,.5)); }
-            70% { filter:drop-shadow(0 0 8px rgba(184,145,60,.25)); }
-            100% { opacity:1; transform:scale(1); filter:drop-shadow(0 0 20px rgba(184,145,60,.6)); }
+          @keyframes logo-pulse {
+            0% { opacity:0; transform:scale(.92); }
+            100% { opacity:1; transform:scale(1); }
           }
-          @keyframes symbol-glow {
-            0%,100% { filter:drop-shadow(0 0 8px rgba(184,145,60,.3)); }
-            50% { filter:drop-shadow(0 0 24px rgba(184,145,60,.7)); }
+          @keyframes logo-glow {
+            0%,100% { filter:drop-shadow(0 0 8px rgba(184,145,60,.2)); }
+            50% { filter:drop-shadow(0 0 28px rgba(184,145,60,.55)); }
           }
-          @keyframes loader-line-grow {
-            from { width:0; opacity:0; }
-            to { width:48px; opacity:1; }
+          @keyframes line-grow {
+            from { width:0; }
+            to { width:48px; }
           }
-          @keyframes loader-tagline {
-            from { opacity:0; letter-spacing:.5em; }
-            to { opacity:1; letter-spacing:.32em; }
+          @keyframes tag-in {
+            from { opacity:0; }
+            to { opacity:1; }
           }
         `}</style>
-
-        {IMGS.logo_bi&&(
-          <div style={{
-            width:"clamp(80px,14vw,130px)",
-            height:"clamp(80px,14vw,130px)",
-            overflow:"hidden",
-            display:"flex",
-            alignItems:"flex-start",
-            justifyContent:"center",
-            marginBottom:24,
-          }}>
-            <img src={IMGS.logo_bi} alt="Dorra"
-              style={{
-                width:"clamp(120px,20vw,200px)",
-                maxWidth:"none",
-                objectFit:"none",
-                objectPosition:"center top",
-                animation:"symbol-pulse 1s cubic-bezier(.16,1,.3,1) forwards, symbol-glow 2s 1.2s ease-in-out infinite",
-                opacity:0,
-                filter:"brightness(0) invert(1) sepia(1) saturate(2) hue-rotate(5deg)",
-              }}/>
-          </div>
-        )}
-
-        <div style={{height:1,background:"rgba(184,145,60,.45)",width:0,animation:"loader-line-grow .7s 1s cubic-bezier(.16,1,.3,1) forwards"}}/>
-        <p style={{fontFamily:"Jost,sans-serif",fontSize:8,letterSpacing:".32em",textTransform:"uppercase",color:"rgba(184,145,60,.65)",marginTop:16,opacity:0,animation:"loader-tagline .8s 1.3s ease forwards"}}>The Luxury of Nature</p>
+        {IMGS.logo
+          ?<img src={IMGS.logo} alt="Dorra" style={{
+              height:"clamp(56px,9vw,90px)",
+              width:"auto",
+              objectFit:"contain",
+              marginBottom:20,
+              animation:"logo-pulse .9s cubic-bezier(.16,1,.3,1) forwards, logo-glow 2.4s 1s ease-in-out infinite",
+              opacity:0,
+            }}/>
+          :<div style={{fontFamily:"Cormorant Garamond,serif",fontSize:"clamp(48px,8vw,88px)",fontWeight:300,color:"#f5efe3",letterSpacing:".04em",animation:"logo-pulse .9s ease forwards",opacity:0}}>Dorra</div>
+        }
+        <div style={{height:1,background:"rgba(184,145,60,.5)",width:0,animation:"line-grow .8s .6s cubic-bezier(.16,1,.3,1) forwards"}}/>
+        <p style={{fontFamily:"Jost,sans-serif",fontSize:8,letterSpacing:".32em",textTransform:"uppercase",color:"rgba(184,145,60,.6)",marginTop:16,opacity:0,animation:"tag-in .8s .9s ease forwards"}}>The Luxury of Nature</p>
       </div>
     )}
     <Nav page={activePage} setPage={go} cc={cc} setCO={setCO}/>
