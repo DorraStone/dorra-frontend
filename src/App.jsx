@@ -280,7 +280,7 @@ const CSS_LINES=[
   ".nav-right{display:flex;align-items:center;gap:8px;}",
   ".nav-icon{background:none;border:none;color:rgba(245,239,227,.45);cursor:pointer;width:36px;height:36px;display:flex;align-items:center;justify-content:center;transition:color .2s;}",
   ".nav-icon:hover{color:var(--gold);}",
-  ".nav-cart{background:none;border:1px solid rgba(184,145,60,.22);color:rgba(245,239,227,.75);cursor:pointer;padding:6px 14px;font-family:var(--sans);font-size:8.5px;letter-spacing:.15em;text-transform:uppercase;transition:all .22s;display:flex;align-items:center;gap:6px;white-space:nowrap;}",
+  ".nav-cart{background:none;border:1px solid rgba(184,145,60,.3);color:rgba(245,239,227,.8);cursor:pointer;padding:6px 14px;font-family:var(--sans);font-size:8.5px;letter-spacing:.15em;text-transform:uppercase;transition:all .22s;display:flex;align-items:center;gap:6px;white-space:nowrap;}",
   ".nav-cart:hover{border-color:var(--gold);color:var(--cr);}",
   ".cart-ct{background:var(--gold);color:var(--g);width:15px;height:15px;border-radius:50%;font-size:8px;display:flex;align-items:center;justify-content:center;font-weight:500;}",
   ".ham{display:flex;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:8px;align-items:flex-end;}",
@@ -311,7 +311,7 @@ const CSS_LINES=[
   ".hero-l{display:flex;flex-direction:column;justify-content:center;padding:0 72px;z-index:2;}",
   ".hero-tag{font-size:8.5px;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;opacity:0;animation:fade-up .9s .3s forwards;}",
   "@keyframes fade-up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}",
-  ".hero-title{font-family:var(--serif);font-size:clamp(40px,5vw,80px);font-weight:300;line-height:.96;color:var(--cr);margin-bottom:18px;}",
+  ".hero-title{font-family:var(--serif);font-size:clamp(48px,6vw,96px);font-weight:300;line-height:.92;color:var(--cr);margin-bottom:22px;letter-spacing:-.01em;}",
   ".hero-title em{font-style:italic;color:var(--gold);}",
   ".hero-line{display:block;overflow:hidden;}",
   ".hero-line span{display:block;animation:line-up 1.1s var(--ease) both;}",
@@ -320,9 +320,9 @@ const CSS_LINES=[
   ".hero-line:nth-child(3) span{animation-delay:.62s;}",
   "@keyframes line-up{from{transform:translateY(105%)}to{transform:none}}",
   ".hero-rule{width:32px;height:1px;background:var(--gold);margin-bottom:18px;opacity:0;animation:fade-up .8s .78s forwards;}",
-  ".hero-sub{font-size:13px;line-height:2.0;color:rgba(245,239,227,.45);max-width:300px;margin-bottom:32px;opacity:0;animation:fade-up .8s .88s forwards;font-weight:300;}",
+  ".hero-sub{font-size:13px;line-height:2.0;color:rgba(245,239,227,.55);max-width:320px;margin-bottom:36px;opacity:0;animation:fade-up .8s .88s forwards;font-weight:300;}",
   ".hero-btns{display:flex;gap:10px;flex-wrap:wrap;opacity:0;animation:fade-up .8s 1s forwards;}",
-  ".hero-img{display:none;}",
+  ".hero-img{display:none!important;}",
   ".hero-img img{width:100%;height:100%;object-fit:cover;object-position:center top;}",
   "@keyframes slow-zoom{from{transform:scale(1.07)}to{transform:scale(1.01)}}",
   ".hero-img::before{content:'';position:absolute;left:0;top:0;bottom:0;width:160px;background:linear-gradient(to right,var(--g),transparent);z-index:1;}",
@@ -337,6 +337,8 @@ const CSS_LINES=[
   ".btn-outline:hover{background:var(--gold);color:var(--g);}",
   ".btn-full{width:100%;justify-content:center;}",
   ".btn:disabled{opacity:.22;pointer-events:none;}",
+  ".page-fade-in{animation:page-in .4s cubic-bezier(.16,1,.3,1) both;}",
+  "@keyframes page-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}",
   ".page-header{background:var(--g);padding:72px 72px 44px;position:relative;overflow:hidden;}",
   ".page-header::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(184,145,60,.04),transparent 60%);pointer-events:none;}",
   ".page-header-tag{font-size:8.5px;letter-spacing:.44em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:10px;}",
@@ -361,7 +363,7 @@ const CSS_LINES=[
   ".pc{background:var(--cr2);position:relative;overflow:hidden;cursor:pointer;transition:box-shadow .3s;}",
   ".pc:hover{box-shadow:0 12px 40px rgba(6,35,24,.1);}",
   ".pc-img{aspect-ratio:4/5;overflow:hidden;position:relative;background:var(--cr2);}",
-  ".pc-img img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;}",
+  ".pc-img img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;transition:transform .6s cubic-bezier(.16,1,.3,1);}",".pc:hover .pc-img img{transform:scale(1.04);}",
   ".pc-badge{position:absolute;top:11px;left:11px;z-index:3;font-size:7.5px;letter-spacing:.18em;text-transform:uppercase;padding:3px 9px;}",
   ".badge-new{background:var(--gold);color:var(--g);}",
   ".pc-ov{position:absolute;inset:0;background:rgba(6,35,24,.44);opacity:0;transition:opacity .34s;display:flex;align-items:center;justify-content:center;}",
@@ -584,7 +586,9 @@ const CSS_LINES=[
   ".nav{padding:0 20px;height:56px;}",
   ".hero{grid-template-columns:1fr;}",
   ".hero-l{padding:80px 20px 48px;}",
-  ".hero-img{display:none;}",
+  ".hero-img{display:none!important;}",
+  ".page-fade-in{animation:page-in .4s cubic-bezier(.16,1,.3,1) both;}",
+  "@keyframes page-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}",
   ".page-header{padding:90px 20px 44px;}",
   ".section,.section-cream,.section-cream2,.section-dark,.section-dark2{padding:48px 20px;}",
   "@media(max-width:680px){.detail-layout{grid-template-columns:1fr;}}",
@@ -838,13 +842,13 @@ function HomePage({setPage,onV,onA}){
         <span style={{fontSize:8,letterSpacing:".6em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:18}}>Bespoke</span>
         <h2 style={{fontFamily:"var(--serif)",fontSize:"clamp(26px,3.2vw,52px)",fontWeight:300,color:"var(--ink)",lineHeight:1.04,marginBottom:16}}>Nothing made only for you<br/>exists anywhere else.</h2>
         <div style={{width:36,height:1,background:"var(--gold)",margin:"0 auto 18px",opacity:.5}}/>
-        <p style={{fontSize:13,color:"var(--ink3)",lineHeight:2.0,maxWidth:420,margin:"0 auto 28px",fontWeight:300}}>Choose your form, your stones, your intention. We craft it entirely by hand in Egypt within four days.</p>
+        <p style={{fontSize:13,color:"var(--ink3)",lineHeight:2.0,maxWidth:420,margin:"0 auto 28px",fontWeight:300}}>Your vision. Your stones. Your piece  crafted by hand in Egypt.</p>
         <button className="btn btn-dark" style={{padding:"15px 40px",fontSize:9,letterSpacing:".28em"}} onClick={()=>setPage("customize")}>Design Your Dorra Piece</button>
       </div>
     </div>
     <div className="section-cream" style={{paddingTop:60,paddingBottom:52}}>
       <div style={{textAlign:"center",padding:"0 0 52px",maxWidth:560,margin:"0 auto"}} data-rv>
-        <p style={{fontFamily:"var(--serif)",fontSize:"clamp(18px,2.2vw,26px)",fontWeight:300,color:"var(--ink2)",lineHeight:1.68,fontStyle:"italic",letterSpacing:".01em"}}>"Every stone carries an intention. Find the piece that already speaks to you."</p>
+        <p style={{fontFamily:"var(--serif)",fontSize:"clamp(18px,2.2vw,26px)",fontWeight:300,color:"var(--ink2)",lineHeight:1.68,fontStyle:"italic",letterSpacing:".01em"}}>"Every stone carries an intention. Find the one that already knows you."</p>
       </div>
       <BraceletSection onV={onV} onA={onA} setPage={setPage}/>
     </div>
@@ -2144,6 +2148,17 @@ export default function App(){
   useEffect(()=>{
     // Wake up backend on page load (Render free tier sleeps)
     fetch(API_BASE+"/").catch(()=>{});
+    // Custom cursor
+    const dot=document.getElementById("cursor-dot");
+    if(dot&&window.matchMedia("(pointer:fine)").matches){
+      dot.style.display="block";
+      const move=e=>{dot.style.left=e.clientX+"px";dot.style.top=e.clientY+"px";};
+      const over=e=>{if(e.target.closest("button,a,.pc,.nl"))dot.style.transform="translate(-50%,-50%) scale(2.5)";};
+      const out=()=>{dot.style.transform="translate(-50%,-50%) scale(1)";};
+      window.addEventListener("mousemove",move);
+      window.addEventListener("mouseover",over);
+      window.addEventListener("mouseout",out);
+    }
     const hide=()=>setLoading(false);
     if(document.readyState==='complete'){
       const t=setTimeout(hide,800);return()=>clearTimeout(t);
@@ -2212,6 +2227,9 @@ export default function App(){
         <p style={{fontFamily:"Jost,sans-serif",fontSize:8,letterSpacing:".32em",textTransform:"uppercase",color:"rgba(184,145,60,.6)",marginTop:16,opacity:0,animation:"tag-in .8s .9s ease forwards"}}>The Luxury of Nature</p>
       </div>
     )}
+    <div style={{position:"fixed",pointerEvents:"none",zIndex:99999,left:0,top:0}} id="cursor-wrap">
+      <div id="cursor-dot" style={{position:"absolute",width:8,height:8,background:"var(--cr)",borderRadius:"50%",transform:"translate(-50%,-50%)",transition:"transform .15s ease",display:"none"}}/>
+    </div>
     <Nav page={activePage} setPage={go} cc={cc} setCO={setCO}/>
     <div id="app-root" className="main-layout-wrapper" style={{position:"relative"}}>
       {activePage==="_detail"&&detail
