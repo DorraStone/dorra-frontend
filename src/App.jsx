@@ -134,7 +134,7 @@ const CATALOG=[
   {id:1,name:"Rosetta",type:"Bracelet",price:359,sizes:["Small","Medium"],stones:["Rose Quartz","Agate","Pearl"],img:"ls1",img2:"ls2",img3:"ls_new2",desc:"Rose quartz at the heart of a hand-coiled copper spiral, with agate and freshwater pearl beads. Shaped over three days.",care:"Remove before washing hands. Apply products first, then wear.",delicateNote:"Artisanal Note: Designed with a single, delicate layer of pure copper. This piece possesses a flexible, delicate fluidity that contours elegantly to your form - handle with care as a true statement of minimalist luxury."},
     // -- NECKLACES --
   {id:16,name:"Fossil Coast",type:"Necklace",price:569,stones:["Amethyst","Blue Crystal Quartz","Green Crystal","Ruby Jade","Black Onyx","Rose Quartz"],img:"cs1",img2:"cs2",img3:"cs3",desc:"A richly layered necklace on a gold-toned stainless steel chain. Amethyst, blue and green crystal, ruby-dyed jade, onyx, and rose quartz - every colour the earth holds.",care:"Remove before water. Amethyst and rose quartz fade in prolonged sunlight."},
-  {id:17,name:"Alexandria",type:"Necklace",price:549,stones:["Pearl","Ruby Jade","Blue Crystal Quartz","Crystal","Amethyst","Rose Quartz"],img:"pr1",img2:"pr2",img3:"pr3",img4:"pr4",desc:"Freshwater pearls at the heart of this necklace, joined by ruby-dyed jade, blue crystal, purple crystal, amethyst, and rose quartz on a gold-toned stainless steel chain.",care:"Pearl must not contact perfume, water, or oils. Put on last."},
+  {id:17,name:"Alexandria",type:"Necklace",price:549,stones:["Pearl","Ruby Jade","Blue Crystal Quartz","Crystal","Amethyst","Rose Quartz"],img:"pr1",img2:"pr2",img3:"pr3",desc:"Freshwater pearls at the heart of this necklace, joined by ruby-dyed jade, blue crystal, purple crystal, amethyst, and rose quartz on a gold-toned stainless steel chain.",care:"Pearl must not contact perfume, water, or oils. Put on last."},
   {id:12,name:"Mediterranean",type:"Necklace",price:549,stones:["Pearl","Blue Crystal Quartz"],img:"n1",img2:"n2",img3:"n3",desc:"Three luminous pearls cradled in hand-wound gold copper wire, flanked by soft Blue Crystal Quartz rondelles. A quiet statement on a gold stainless steel chain.",care:"Pearl must not contact perfume or water. Put on last, take off first."},
   {id:5,name:"Wadi",type:"Necklace",price:550,stones:["Blue Crystal Quartz","Agate"],img:"sp_new1",img2:"sp_new2",img3:"sp_new3",desc:"A raw Blue Crystal Quartz stone and deep agate spheres on a stainless steel and copper chain.",care:"Blue Crystal Quartz is sensitive to moisture. Put on after applying perfume."},
     // -- ANKLETS --
@@ -270,12 +270,12 @@ const CSS_LINES=[
   "[data-rv][data-d=\"2\"]{transition-delay:.2s;}",
   "[data-rv][data-d=\"3\"]{transition-delay:.3s;}",
   "[data-rv][data-d=\"4\"]{transition-delay:.4s;}",
-  ".nav{position:fixed;top:0;left:0;right:0;height:64px;z-index:9000;display:flex;align-items:center;justify-content:space-between;padding:0 52px;background:var(--g);border-bottom:1px solid rgba(184,145,60,.12);transition:background .4s,box-shadow .4s;}",
+  ".nav{position:fixed;top:0;left:0;right:0;height:64px;z-index:9000;display:flex;align-items:center;justify-content:space-between;padding:0 32px;background:var(--g);border-bottom:1px solid rgba(184,145,60,.12);transition:background .4s,box-shadow .4s;}",
   ".nav.scrolled{background:rgba(6,35,24,.97);backdrop-filter:blur(16px);box-shadow:0 1px 32px rgba(0,0,0,.3);}",
-  ".nav-logo{border:none;background:transparent !important;cursor:pointer;padding:0;line-height:0;pointer-events:all;-webkit-tap-highlight-color:transparent;user-select:none;}",
+  ".nav-logo{border:none;background:transparent !important;cursor:pointer;padding:0;line-height:0;pointer-events:all;z-index:10;-webkit-tap-highlight-color:transparent;user-select:none;}",
   ".nav-logo img{height:40px;width:auto;object-fit:contain;}",
   ".nav-logo-text{font-family:var(--serif);font-size:26px;color:var(--gold);font-weight:300;font-style:italic;letter-spacing:.04em;}",
-  ".nav-links{display:flex;align-items:center;gap:2px;}",
+  ".nav-links{display:none;align-items:center;gap:2px;}",
   ".nl{font-family:var(--sans);font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;color:rgba(245,239,227,.5);background:none;border:none;cursor:pointer;padding:8px 13px;transition:color .25s;white-space:nowrap;position:relative;}",
   ".nl::after{content:'';position:absolute;bottom:4px;left:13px;right:13px;height:1px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .3s var(--ease);}",
   ".nl:hover,.nl.on{color:rgba(245,239,227,.9);}",
@@ -834,7 +834,7 @@ function HomePage({setPage,onV,onA}){
           <button className="btn btn-ghost" onClick={()=>setPage("customize")}>Design Your Dorra Piece</button>
         </div>
       </div>
-      <div className="hero-img">{IMGS.sb1&&<img src={IMGS.sb1} alt="Dahab"/>}</div>
+      <div className="hero-img">{IMGS.logo_bi&&<img src={IMGS.logo_bi} alt="Dorra" style={{opacity:.12,filter:"invert(1)"}}/>}</div>
     </div>
 
     {/* -- DESIGN YOUR PIECE - Luxury editorial banner -- */}
@@ -1941,7 +1941,15 @@ export default function App(){
   const[lastOrder,setLastOrder]=useState(null);
   const[toast,setToast]=useState(null);
   const[loading,setLoading]=useState(true);
-  useEffect(()=>{const t=setTimeout(()=>setLoading(false),1900);return()=>clearTimeout(t);},[]);
+  useEffect(()=>{
+    const hide=()=>setLoading(false);
+    if(document.readyState==='complete'){
+      const t=setTimeout(hide,800);return()=>clearTimeout(t);
+    }
+    window.addEventListener('load',()=>setTimeout(hide,800));
+    const maxT=setTimeout(hide,8000); // max 8s no matter what
+    return()=>{clearTimeout(maxT);window.removeEventListener('load',hide);};
+  },[]);
   const scrollTop=()=>{try{document.documentElement.scrollTop=0;document.body.scrollTop=0;window.scrollTo(0,0);const r=document.getElementById("app-root");if(r)r.scrollTop=0;}catch(e){}};
   const go=useCallback(p=>{setCO(false);setPage(p);setDetail(null);scrollTop();setTimeout(scrollTop,80);},[]);
   const showDetail=useCallback((product,stone)=>{setDetail(product);setDetailStone(stone||product.stones[0]||"");setPage("_detail");scrollTop();setTimeout(scrollTop,80);},[]);
@@ -1993,31 +2001,16 @@ export default function App(){
           }
         `}</style>
 
-        {/* Crown SVG - drawn stroke animation */}
-        <svg width="90" height="70" viewBox="0 0 90 70" fill="none" xmlns="http://www.w3.org/2000/svg"
-          style={{animation:"crown-glow 2.4s 1s ease-in-out infinite", marginBottom:20}}>
-          <path
-            d="M10 55 L10 25 L30 40 L45 10 L60 40 L80 25 L80 55 Z"
-            stroke="#b8913c"
-            strokeWidth="2.2"
-            strokeLinejoin="round"
-            strokeLinecap="round"
-            fill="none"
-            strokeDasharray="400"
-            strokeDashoffset="400"
-            style={{animation:"crown-draw 1.4s cubic-bezier(.16,1,.3,1) forwards"}}
-          />
-          <line x1="10" y1="60" x2="80" y2="60" stroke="#b8913c" strokeWidth="1.5"
-            strokeDasharray="70" strokeDashoffset="70"
-            style={{animation:"crown-draw 0.8s 0.9s cubic-bezier(.16,1,.3,1) forwards"}}/>
-          {/* Crown gems */}
-          <circle cx="45" cy="10" r="3" fill="none" stroke="#b8913c" strokeWidth="1.5"
-            style={{animation:"crown-draw 0.5s 1.2s ease forwards", strokeDasharray:20, strokeDashoffset:20}}/>
-          <circle cx="10" cy="25" r="2.5" fill="none" stroke="rgba(184,145,60,.6)" strokeWidth="1.2"
-            style={{animation:"crown-draw 0.5s 1.4s ease forwards", strokeDasharray:20, strokeDashoffset:20}}/>
-          <circle cx="80" cy="25" r="2.5" fill="none" stroke="rgba(184,145,60,.6)" strokeWidth="1.2"
-            style={{animation:"crown-draw 0.5s 1.4s ease forwards", strokeDasharray:20, strokeDashoffset:20}}/>
-        </svg>
+        {/* Logo symbol - fades in with glow */}
+        {IMGS.logo_bi&&<img src={IMGS.logo_bi} alt="Dorra"
+          style={{
+            height:"clamp(80px,12vw,120px)",
+            width:"auto",
+            objectFit:"contain",
+            marginBottom:20,
+            animation:"crown-draw 1.2s cubic-bezier(.16,1,.3,1) forwards, crown-glow 2.4s 1.2s ease-in-out infinite",
+            opacity:0,
+          }}/>}
 
         <div style={{height:1,background:"rgba(184,145,60,.4)",width:0,animation:"loader-line .8s 1.2s cubic-bezier(.16,1,.3,1) forwards"}}/>
         <p style={{fontFamily:"Jost,sans-serif",fontSize:8,letterSpacing:".32em",textTransform:"uppercase",color:"rgba(184,145,60,.65)",marginTop:16,animation:"loader-fade-in .8s 1.4s ease both"}}>The Luxury of Nature</p>
