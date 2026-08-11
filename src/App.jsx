@@ -1579,7 +1579,7 @@ function Checkout({cart,onClose,onOk,setLastOrder}){
   const[cardN,setCardN]=useState("");
   const[cardE,setCardE]=useState("");
   const[cardC,setCardC]=useState("");
-  const ref=useRef("DRR-"+Math.random().toString(36).slice(2,8).toUpperCase()).current;
+  const ref=useRef("DRRA-"+Math.random().toString(36).slice(2,8).toUpperCase()).current;
 
   const ship=70;
   const boxFee=0;
