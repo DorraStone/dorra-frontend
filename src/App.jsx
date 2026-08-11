@@ -1152,33 +1152,55 @@ function CustomizePage({onAddCart,onGoCart}){
   const[pt,setPt]=useState("Bracelet");
   const[picked,setPicked]=useState([]);
   const[note,setNote]=useState("");
+  const[wire,setWire]=useState("gold");
+  const[size,setSize]=useState("Medium");
+  const[inspoImg,setInspoImg]=useState(null);
+  const[inspoB64,setInspoB64]=useState(null);
   useRv();
 
-  const tog=(s)=>{
-    setPicked(p=>p.includes(s)?p.filter(x=>x!==s):[...p,s]);
+  const tog=(s)=>{setPicked(p=>p.includes(s)?p.filter(x=>x!==s):[...p,s]);};
+
+  const handleInspo=e=>{
+    const file=e.target.files[0];
+    if(!file)return;
+    const reader=new FileReader();
+    reader.onload=ev=>{setInspoB64(ev.target.result);setInspoImg(file.name);};
+    reader.readAsDataURL(file);
   };
 
-  const BASE={"Bracelet":320,"Statement Bracelet":400,"Necklace":420,"Anklet":340,"Earring":220};
-  const STONE_P={"Pearl":70,"Rose Quartz":55,"Tigers Eye":50,"Amethyst":50,"Ruby Jade":50,"Blue Crystal Quartz":40,"Green Crystal":40,"Crystal":40,"Agate":40,"Purple Agate":40,"Black Onyx":45};
-  const base=BASE[pt]||320;
-  const stoneTotal=picked.reduce((s,st)=>s+(STONE_P[st]||40),0);
-  const complexity=picked.length>5?100:picked.length>3?40:0;
-  const est=Math.ceil((base+stoneTotal+complexity)/10)*10-1;
+  // PRICING
+  // Base prices (include 2 stones)
+  const BASE={"Bracelet":299,"Statement Bracelet":399,"Necklace":419,"Anklet":299,"Earring":199};
+  // Wire add-on
+  const WIRE_COST={"silver":0,"gold":0,"double_thick":80};
+  // Extra stones beyond 2
+  const STONE_EXTRA={"Pearl":60,"Rose Quartz":45,"Amethyst":45,"Ruby Jade":45,"Black Onyx":40,"Blue Crystal Quartz":35,"Green Crystal":35,"Purple Agate":35,"Agate":30,"Tigers Eye":30,"Crystal":25};
+  
+  const base=BASE[pt]||299;
+  const wireCost=WIRE_COST[wire]||0;
+  const extraStones=Math.max(0,picked.length-2);
+  const stoneExtra=picked.slice(2).reduce((s,st)=>s+(STONE_EXTRA[st]||30),0);
+  const raw=base+wireCost+stoneExtra;
+  const est=Math.ceil(raw/50)*50-1;
   const dep=Math.round(est*0.4);
+
+  const needsSize=pt==="Bracelet"||pt==="Statement Bracelet"||pt==="Anklet";
 
   const addToCartAndCheckout=()=>{
     if(!picked.length)return;
     const customProduct={
       id:Date.now(),
       name:"Bespoke "+pt,
-      type:pt,
+      type:pt.includes("Bracelet")?"Bracelet":pt==="Anklet"?"Anklet":pt==="Necklace"?"Necklace":"Earring",
       price:est,
       stones:picked,
-      img:"",
-      img2:"",
-      desc:"Bespoke "+pt+" designed from scratch. Stones: "+picked.join(", ")+"."+(note?" Notes: "+note:""),
-      care:"Handle with care. See individual stone care guides.",
-      isFromScratch:true
+      img:"",img2:"",img3:"",
+      desc:"Bespoke "+pt+". Wire: "+wire+". Stones: "+picked.join(", ")+"."+(note?" Notes: "+note:""),
+      care:"Handle with care per individual stone care guides.",
+      isFromScratch:true,
+      size:needsSize?size:"",
+      wireColor:wire,
+      inspoImg:inspoB64||null,
     };
     if(onAddCart)onAddCart(customProduct,picked,est);
     if(onGoCart)onGoCart();
@@ -1186,91 +1208,164 @@ function CustomizePage({onAddCart,onGoCart}){
 
   return(
     <div style={{paddingTop:64}}>
-      <div style={{padding:"6px 40px",background:"var(--cr)",borderBottom:"1px solid rgba(26,18,10,.08)",position:"sticky",top:64,zIndex:500}}>
+      <div style={{padding:"8px 40px",background:"var(--cr)",borderBottom:"1px solid rgba(26,18,10,.08)",position:"sticky",top:64,zIndex:500}}>
         <BackBtn label="Back to Home" onClick={()=>window.history.back()}/>
       </div>
       <div className="page-header">
         <span className="page-header-tag" data-rv>Bespoke</span>
         <h1 className="page-header-title" data-rv data-d="1">Design Your Dorra Piece</h1>
-        <p className="page-header-sub" data-rv data-d="2">Choose your form and stones. Your contact details will be collected at checkout.</p>
+        <p className="page-header-sub" data-rv data-d="2">Every detail chosen by you, made entirely by hand in Egypt.</p>
       </div>
 
       <div className="section-cream">
         <div className="customize-grid">
-
           <div data-rv>
+
+            {/* PIECE TYPE */}
             <span style={{fontSize:8.5,letterSpacing:".2em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:10}}>Piece Type</span>
-            <div className="sec-rule"/>
-            <div style={{display:"flex",flexWrap:"wrap",gap:6,marginBottom:20}}>
+            <div className="sec-rule" style={{marginBottom:14}}/>
+            <div style={{display:"flex",flexWrap:"wrap",gap:6,marginBottom:24}}>
               {["Bracelet","Statement Bracelet","Necklace","Anklet","Earring"].map(t=>(
-                <button key={t} onClick={()=>setPt(t)} style={{padding:"7px 16px",fontFamily:"var(--sans)",fontSize:9,letterSpacing:".1em",background:pt===t?"var(--g)":"transparent",color:pt===t?"var(--cr)":"var(--ink3)",border:"1px solid",borderColor:pt===t?"var(--g)":"rgba(26,18,10,.15)",cursor:"pointer",transition:"all .2s"}}>{t}</button>
+                <button key={t} onClick={()=>{setPt(t);if(t!=="Bracelet"&&t!=="Statement Bracelet"&&t!=="Anklet")setSize("N/A");else setSize("Medium");}}
+                  style={{padding:"7px 16px",fontFamily:"var(--sans)",fontSize:9,letterSpacing:".1em",
+                    background:pt===t?"var(--g)":"transparent",color:pt===t?"var(--cr)":"var(--ink3)",
+                    border:"1px solid",borderColor:pt===t?"var(--g)":"rgba(26,18,10,.15)",cursor:"pointer",transition:"all .2s"}}>
+                  {t}
+                </button>
               ))}
             </div>
 
-            <span style={{fontSize:8.5,letterSpacing:".2em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:10}}>Choose Your Stones</span>
-            <div className="sec-rule"/>
+            {/* WIRE COLOR */}
+            <span style={{fontSize:8.5,letterSpacing:".2em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:10}}>Decorative Wire Color</span>
+            <div className="sec-rule" style={{marginBottom:10}}/>
+            <p style={{fontSize:10,color:"var(--ink3)",lineHeight:1.7,marginBottom:12}}>All pieces are wound with copper wire. The thin decorative wire around it comes in two finishes, or you can opt for a doubled thick copper wire.</p>
+            <div style={{display:"flex",flexWrap:"wrap",gap:8,marginBottom:24}}>
+              {[
+                {id:"silver",label:"Silver-Toned",sub:"Thin, light finish",extra:0},
+                {id:"gold",label:"Gold-Toned",sub:"Thin, warm finish",extra:0},
+                {id:"double_thick",label:"Doubled Thick Copper",sub:"Bold, raw texture - harder to work with",extra:80},
+              ].map(w=>(
+                <button key={w.id} onClick={()=>setWire(w.id)}
+                  style={{padding:"10px 14px",textAlign:"left",
+                    background:wire===w.id?"var(--g)":"transparent",
+                    color:wire===w.id?"var(--cr)":"var(--ink)",
+                    border:"1px solid",borderColor:wire===w.id?"var(--g)":"rgba(26,18,10,.15)",
+                    cursor:"pointer",transition:"all .2s",minWidth:140}}>
+                  <div style={{fontSize:10,fontFamily:"var(--serif)",marginBottom:2}}>{w.label}</div>
+                  <div style={{fontSize:8.5,opacity:.7}}>{w.sub}</div>
+                  {w.extra>0&&<div style={{fontSize:8,color:wire===w.id?"rgba(245,239,227,.6)":"var(--gold)",marginTop:4}}>+{w.extra} EGP</div>}
+                </button>
+              ))}
+            </div>
+
+            {/* STONES */}
+            <span style={{fontSize:8.5,letterSpacing:".2em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:4}}>Choose Your Stones</span>
+            <p style={{fontSize:9,color:"var(--ink3)",marginBottom:10}}>First 2 stones included in base price. Each additional stone adds to total.</p>
+            <div className="sec-rule" style={{marginBottom:14}}/>
 
             {picked.length>0&&(
               <div style={{display:"flex",flexWrap:"wrap",gap:8,marginBottom:14}}>
-                {picked.map(s=>(
-                  <div key={s} style={{position:"relative",width:72,height:72,overflow:"hidden",border:"1px solid var(--gold)"}}>
-                    {SP[s.replace("'","")]
-                      ?<img src={SP[s.replace("'","")]} alt={s} style={{width:"100%",height:"100%",objectFit:"cover"}}/>
-                      :<div style={{width:"100%",height:"100%",background:"var(--cr3)",display:"flex",alignItems:"center",justifyContent:"center"}}><span style={{fontSize:8,color:"var(--ink3)",textAlign:"center",padding:4}}>{s}</span></div>}
-                    <button onClick={()=>tog(s)} style={{position:"absolute",top:2,right:2,background:"rgba(6,35,24,.7)",border:"none",color:"var(--gold)",width:16,height:16,borderRadius:"50%",cursor:"pointer",fontSize:9,display:"flex",alignItems:"center",justifyContent:"center"}}>x</button>
+                {picked.map((s,i)=>(
+                  <div key={s} style={{position:"relative",width:64,height:64,overflow:"hidden",border:"2px solid",borderColor:i<2?"var(--g)":"var(--gold)"}}>
+                    {SP[s]?<img src={SP[s]} alt={s} style={{width:"100%",height:"100%",objectFit:"cover"}}/>
+                      :<div style={{width:"100%",height:"100%",background:"var(--cr3)",display:"flex",alignItems:"center",justifyContent:"center"}}><span style={{fontSize:7,color:"var(--ink3)",textAlign:"center",padding:2}}>{s}</span></div>}
+                    <button onClick={()=>tog(s)} style={{position:"absolute",top:2,right:2,background:"rgba(6,35,24,.8)",border:"none",color:"var(--gold)",width:16,height:16,borderRadius:"50%",cursor:"pointer",fontSize:9,display:"flex",alignItems:"center",justifyContent:"center",lineHeight:1}}>x</button>
+                    {i===1&&picked.length>2&&<div style={{position:"absolute",bottom:0,left:0,right:0,background:"rgba(184,145,60,.85)",fontSize:7,color:"#062318",textAlign:"center",padding:"1px 0"}}>+charge from here</div>}
                   </div>
                 ))}
               </div>
             )}
 
-            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(140px,1fr))",gap:8,marginBottom:20}}>
-              {STONES.map(s=>{
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(130px,1fr))",gap:8,marginBottom:24}}>
+              {STONES.map((s,stIdx)=>{
                 const sel=picked.includes(s);
+                const isExtra=sel&&picked.indexOf(s)>=2;
                 return(
-                  <button key={s} onClick={()=>tog(s)} style={{border:"2px solid",borderColor:sel?"var(--gold)":"rgba(26,18,10,.12)",background:sel?"rgba(184,145,60,.06)":"var(--cr2)",cursor:"pointer",padding:0,overflow:"hidden",textAlign:"left",transition:"all .2s",position:"relative"}}>
-                    {SP[s.replace("'","")]&&(
-                      <div style={{height:90,overflow:"hidden",background:"var(--g)"}}>
-                        <img src={SP[s.replace("'","")]} alt={s} style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}} onError={e=>e.currentTarget.style.display="none"}/>
+                  <button key={s} onClick={()=>tog(s)}
+                    style={{border:"2px solid",borderColor:sel?(isExtra?"var(--gold)":"var(--g)"):"rgba(26,18,10,.12)",
+                      background:sel?(isExtra?"rgba(184,145,60,.06)":"rgba(6,35,24,.04)"):"var(--cr2)",
+                      cursor:"pointer",padding:0,overflow:"hidden",textAlign:"left",transition:"all .2s",position:"relative"}}>
+                    {SP[s]&&(
+                      <div style={{height:80,overflow:"hidden",background:"var(--cr2)"}}>
+                        <img src={SP[s]} alt={s} style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}} onError={e=>e.currentTarget.style.display="none"}/>
                       </div>
                     )}
-                    {sel&&<div style={{position:"absolute",top:6,right:6,width:18,height:18,borderRadius:"50%",background:"var(--gold)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:10,color:"var(--g)"}}>v</div>}
+                    {sel&&<div style={{position:"absolute",top:6,right:6,width:18,height:18,borderRadius:"50%",background:isExtra?"var(--gold)":"var(--g)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:10,color:isExtra?"var(--g)":"var(--cr)"}}>-</div>}
                     <div style={{padding:"8px 10px"}}>
-                      <div style={{fontFamily:"var(--serif)",fontSize:13,color:"var(--ink)",marginBottom:2}}>{s}</div>
-                      <div style={{fontSize:9,color:"var(--ink3)",lineHeight:1.4}}>{(STONE_CARE[s]||"").slice(0,30)}...</div>
+                      <div style={{fontFamily:"var(--serif)",fontSize:12,color:"var(--ink)",marginBottom:2}}>{s}</div>
+                      {stIdx<3&&<div style={{fontSize:7.5,color:"var(--gold)",letterSpacing:".06em"}}>RARE</div>}
+                      {STONE_EXTRA[s]>45&&stIdx>=3&&<div style={{fontSize:7.5,color:"var(--ink3)"}}>premium</div>}
                     </div>
                   </button>
                 );
               })}
             </div>
 
+            {/* SIZE - only for bracelets/anklets */}
+            {needsSize&&(
+              <div style={{marginBottom:24}}>
+                <span style={{fontSize:8.5,letterSpacing:".2em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:10}}>Size</span>
+                <div className="sec-rule" style={{marginBottom:14}}/>
+                <div style={{display:"flex",gap:8}}>
+                  {["Small","Medium","Large"].map(sz=>(
+                    <button key={sz} onClick={()=>setSize(sz)}
+                      style={{flex:1,padding:"8px",fontSize:9,letterSpacing:".1em",textTransform:"uppercase",
+                        background:size===sz?"var(--g)":"transparent",color:size===sz?"var(--cr)":"var(--ink3)",
+                        border:"1px solid",borderColor:size===sz?"var(--g)":"rgba(26,18,10,.15)",cursor:"pointer",transition:"all .2s"}}>
+                      {sz}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* NOTES */}
             <div className="field">
               <label className="field-label">Additional Notes</label>
-              <textarea className="field-textarea" placeholder="Describe your vision, preferred colours, occasion..." value={note} onChange={e=>setNote(e.target.value)}/>
+              <textarea className="field-textarea" placeholder="Describe your vision, preferred colours, occasion, who it is for..." value={note} onChange={e=>setNote(e.target.value)}/>
             </div>
+
+            {/* INSPO PHOTO */}
+            <div className="field">
+              <label className="field-label">Inspiration Photo <span style={{fontSize:9,color:"var(--ink3)",fontWeight:300,letterSpacing:0,textTransform:"none"}}>(optional)</span></label>
+              <p style={{fontSize:10,color:"var(--ink3)",lineHeight:1.7,marginBottom:8}}>Share a reference image, mood board, or anything that captures the feeling you are after.</p>
+              <input type="file" accept="image/*" onChange={handleInspo} style={{fontSize:11,color:"var(--ink3)"}}/>
+              {inspoImg
+                ?<p style={{fontSize:10,color:"var(--gold)",marginTop:6}}>{inspoImg} uploaded -</p>
+                :<p style={{fontSize:10,color:"var(--ink3)",marginTop:6,fontStyle:"italic"}}>The image is not necessary - share only if it helps express your vision.</p>}
+            </div>
+
           </div>
 
+          {/* ESTIMATE BOX */}
           <div>
             <div className="estimate-box">
               <div style={{fontSize:8,letterSpacing:".24em",textTransform:"uppercase",color:"var(--gold)",marginBottom:10}}>Estimated Price</div>
               {picked.length===0
-                ?<p style={{fontSize:12,color:"rgba(245,239,227,.45)",lineHeight:1.75}}>Select your piece type and stones to see your estimated price.</p>
+                ?<p style={{fontSize:12,color:"rgba(245,239,227,.45)",lineHeight:1.75}}>Select your piece type and at least one stone to see your estimated price.</p>
                 :<div>
                   <div style={{fontFamily:"var(--serif)",fontSize:36,color:"var(--cr)",fontWeight:300,marginBottom:6}}>{est} EGP</div>
-                  <p style={{fontSize:10,color:"rgba(245,239,227,.5)",lineHeight:1.7,fontStyle:"italic"}}>Base {base} + stones {stoneTotal}{complexity>0?" + complexity "+complexity:""} EGP</p>
-                  <p style={{fontSize:10,color:"rgba(245,239,227,.4)",lineHeight:1.7,marginTop:4}}>Final price confirmed after our team reviews your design.</p>
+                  <div style={{fontSize:10,color:"rgba(245,239,227,.45)",lineHeight:1.8,marginBottom:8}}>
+                    <div>Base ({pt}) - {base} EGP</div>
+                    {wireCost>0&&<div>Double thick wire - +{wireCost} EGP</div>}
+                    {extraStones>0&&<div>{extraStones} extra stone{extraStones>1?"s":""} - +{stoneExtra} EGP</div>}
+                    {extraStones===0&&<div>Up to 2 stones included</div>}
+                  </div>
+                  <p style={{fontSize:10,color:"rgba(245,239,227,.35)",lineHeight:1.7}}>Final price confirmed after our team reviews your design.</p>
                   <div style={{marginTop:14,paddingTop:14,borderTop:"1px solid rgba(184,145,60,.15)"}}>
-                    <div style={{fontSize:8,letterSpacing:".2em",textTransform:"uppercase",color:"rgba(184,145,60,.6)",marginBottom:6}}>40% Deposit to Begin</div>
+                    <div style={{fontSize:8,letterSpacing:".2em",textTransform:"uppercase",color:"rgba(184,145,60,.6)",marginBottom:4}}>40% Deposit to Begin</div>
                     <div style={{fontFamily:"var(--serif)",fontSize:24,color:"var(--gold)"}}>{dep} EGP</div>
+                    <div style={{fontSize:9,color:"rgba(245,239,227,.3)",marginTop:4}}>Balance paid on delivery</div>
                   </div>
                 </div>}
             </div>
 
-            <button className="btn btn-gold btn-full" style={{padding:"15px",fontSize:9,letterSpacing:".28em",marginTop:16}} onClick={addToCartAndCheckout} disabled={!picked.length}>
-              Add to Cart and Proceed to Checkout
+            <button className="btn btn-gold btn-full" style={{padding:"15px",fontSize:9,letterSpacing:".28em",marginTop:16}}
+              onClick={addToCartAndCheckout} disabled={!picked.length}>
+              Add to Cart &amp; Checkout
             </button>
             {!picked.length&&<p style={{fontSize:10,color:"var(--ink3)",textAlign:"center",marginTop:8}}>Select at least one stone to continue.</p>}
           </div>
-
         </div>
       </div>
     </div>
@@ -1511,7 +1606,7 @@ function Checkout({cart,onClose,onOk,setLastOrder}){
   const amountDue=dueNow;
   const egyptPhone=/^(010|011|012|015)[0-9]{8}$/.test(phone.replace(/\s+/g,""));
   const validEmail=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  const ok1=!!(name.trim()&&egyptPhone&&validEmail&&address.trim().length>5);
+  const ok1=!(name.trim()&&egyptPhone&&validEmail&&address.trim().length>5);
   const phoneError=phone.length>0&&!egyptPhone?"Must be Egyptian number starting with 010,011,012,015":"";
   const emailError=email.length>0&&!validEmail?"Please enter a valid email":"";
   const needRef=(pay==="instapay"||pay==="instapay_full"||pay==="full_instapay");
@@ -1907,11 +2002,11 @@ function ReviewsPage(){
               </select>
             </div>
           <div className="field"><label className="field-label" style={{color:"rgba(245,239,227,.45)"}}>Your Words *</label><textarea className="field-textarea" style={{background:"rgba(245,239,227,.05)",color:"var(--cr)",border:"1px solid rgba(184,145,60,.15)",minHeight:120}} placeholder="How does it feel to wear it?" value={form.text} onChange={e=>setForm({...form,text:e.target.value})}/></div>
-          <div className="field"><label className="field-label" style={{color:"rgba(245,239,227,.45)"}}>A Photo (optional)</label><input type="file" accept="image/*" onChange={handleImg} style={{fontSize:12,color:"rgba(245,239,227,.35)",paddingTop:4}}/>{form.imgPreview&&<img src={form.imgPreview} alt="preview" style={{marginTop:12,maxHeight:160,maxWidth:"100%",objectFit:"contain",display:"block"}}/>}</div>
+          <div className="field"><label className="field-label" style={{color:"rgba(245,239,227,.45)"}}>A Photo of You Wearing It (optional)</label><input type="file" accept="image/*" onChange={handleImg} style={{fontSize:12,color:"rgba(245,239,227,.35)",paddingTop:4}}/>{form.imgPreview&&<img src={form.imgPreview} alt="preview" style={{marginTop:12,maxHeight:160,maxWidth:"100%",objectFit:"contain",display:"block"}}/>}</div>
           <div>
             {!form.imgPreview&&(
               <div style={{background:"rgba(184,145,60,.06)",border:"1px solid rgba(184,145,60,.2)",padding:"10px 14px",marginBottom:10}}>
-                <p style={{fontSize:11,color:"var(--ink3)",lineHeight:1.75,fontStyle:"italic"}}>No photo added - and that is perfectly fine. You are trusting the creator's vision, and we honour that completely.</p>
+                <p style={{fontSize:11,color:"var(--ink3)",lineHeight:1.75,fontStyle:"italic"}}>No photo added - that is perfectly fine.</p>
               </div>
             )}
             <button className="btn btn-gold btn-full" style={{padding:"14px",marginTop:0}} onClick={submit} disabled={!form.name||!form.text}>Share Your Experience</button>
