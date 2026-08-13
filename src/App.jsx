@@ -447,7 +447,7 @@ const CSS_LINES=[
   ".cart-thumb{width:60px;height:75px;background:var(--cr2);overflow:hidden;flex-shrink:0;}",
   ".cart-thumb img{width:100%;height:100%;object-fit:cover;}",
   ".cart-item-info{flex:1;}",
-  ".cart-item-name{font-family:var(--serif);font-size:15px;color:var(--ink);margin-bottom:2px;}",
+  ".cart-item-name{font-family:var(--serif);font-size:clamp(14px,3.5vw,15px);color:var(--ink);margin-bottom:2px;}",
   ".cart-item-stone{font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;opacity:.82;}",
   ".cart-item-foot{display:flex;align-items:center;justify-content:space-between;}",
   ".cart-item-price{font-family:var(--serif);font-size:15px;color:var(--ink);}",
@@ -533,7 +533,7 @@ const CSS_LINES=[
   ".footer-brand-logo{height:30px;width:auto;object-fit:contain;filter:brightness(0) invert(1);opacity:.75;display:block;margin-bottom:11px;}",
   ".footer-brand-text{font-size:12px;color:rgba(245,239,227,.42);line-height:1.9;max-width:185px;font-weight:300;}",
   ".footer-col-title{font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;opacity:1;}",
-  ".footer-link{display:block;font-size:13px;color:rgba(245,239,227,.58);background:none;border:none;text-align:left;cursor:pointer;margin-bottom:9px;transition:color .2s;text-decoration:none;font-weight:300;}",
+  ".footer-link{display:block;font-size:clamp(13px,3.2vw,14px);color:rgba(245,239,227,.58);background:none;border:none;text-align:left;cursor:pointer;margin-bottom:9px;transition:color .2s;text-decoration:none;font-weight:300;}",
   ".footer-link:hover{color:rgba(245,239,227,.9);}",
   ".footer-bottom{border-top:1px solid rgba(184,145,60,.07);padding-top:16px;display:flex;justify-content:space-between;align-items:center;}",
   ".footer-copy{font-size:10px;color:rgba(245,239,227,.35);letter-spacing:.06em;}",
@@ -605,6 +605,47 @@ const CSS_LINES=[
   ".cart-drawer{width:100%;}",
   ".search-drop{padding:13px 20px;}",
   ".field-grid{grid-template-columns:1fr;}",
+
+  /*  MOBILE TEXT SIZES  */
+  ".hero-title{font-size:clamp(38px,10vw,62px);}",
+  ".hero-sub{font-size:15px;line-height:1.85;color:rgba(245,239,227,.6);}",
+  ".hero-tag{font-size:10px;letter-spacing:.3em;}",
+
+  ".page-header-title{font-size:clamp(28px,7vw,42px);}",
+  ".page-header-sub{font-size:14px;line-height:1.85;}",
+  ".page-header-tag{font-size:10px;letter-spacing:.3em;}",
+
+  ".pc-name{font-size:15px;}",
+  ".pc-price{font-size:14px;}",
+  ".pc-tag{font-size:10px;}",
+  ".pc-add{font-size:10px;padding:13px 0;letter-spacing:.18em;}",
+
+  ".detail-name{font-size:clamp(22px,6vw,32px);}",
+  ".sec-label{font-size:10px;}",
+
+  ".field-label{font-size:12px;letter-spacing:.1em;}",
+  ".field-input,.field-textarea,.field-select{font-size:16px;padding:12px 14px;}",
+
+  ".estimate-box p{font-size:13px !important;}",
+
+  ".btn{font-size:10px;padding:14px 28px;letter-spacing:.2em;}",
+  ".btn-full{padding:16px 28px;}",
+  ".submit-btn{font-size:10px;padding:15px;letter-spacing:.2em;}",
+
+  ".section-label{font-size:10px;letter-spacing:.3em;}",
+  ".cart-item-name{font-size:14px;}",
+  ".cart-item-sub{font-size:12px;}",
+  ".cart-total{font-size:16px;}",
+
+  ".nav-cart{font-size:9px;padding:7px 14px;}",
+
+  /* Customize page mobile */
+  ".customize-grid > div:first-child{order:1;}",
+  ".customize-grid > div:last-child{order:2;}",
+  ".estimate-box{margin-top:0;}",
+
+  /* Stone grid - 2 columns on mobile */
+  ".pgrid{grid-template-columns:1fr 1fr;gap:1px;}",
   "}",
   "/* Horizontal carousel */",
   "div[style*='scrollSnapType']{-ms-overflow-style:none;scrollbar-width:none;}",
@@ -1232,7 +1273,7 @@ function CustomizePage({onAddCart,onGoCart}){
             <div style={{display:"flex",flexWrap:"wrap",gap:6,marginBottom:24}}>
               {["Bracelet","Statement Bracelet","Necklace","Anklet","Earring"].map(t=>(
                 <button key={t} onClick={()=>{setPt(t);if(t!=="Bracelet"&&t!=="Statement Bracelet"&&t!=="Anklet")setSize("N/A");else setSize("Medium");}}
-                  style={{padding:"7px 16px",fontFamily:"var(--sans)",fontSize:9,letterSpacing:".1em",
+                  style={{padding:"7px 16px",fontFamily:"var(--sans)",fontSize:"clamp(10px,2.5vw,11px)",letterSpacing:".08em",
                     background:pt===t?"var(--g)":"transparent",color:pt===t?"var(--cr)":"var(--ink3)",
                     border:"1px solid",borderColor:pt===t?"var(--g)":"rgba(26,18,10,.15)",cursor:"pointer",transition:"all .2s"}}>
                   {t}
@@ -1257,8 +1298,8 @@ function CustomizePage({onAddCart,onGoCart}){
                     color:wire===w.id?"var(--cr)":"var(--ink)",
                     border:"1px solid",borderColor:wire===w.id?"var(--g)":"rgba(26,18,10,.15)",
                     cursor:"pointer",transition:"all .2s",minWidth:140}}>
-                  <div style={{fontSize:10,fontFamily:"var(--serif)",marginBottom:2}}>{w.label}</div>
-                  <div style={{fontSize:8.5,opacity:.7}}>{w.sub}</div>
+                  <div style={{fontSize:"clamp(12px,3vw,14px)",fontFamily:"var(--serif)",marginBottom:2}}>{w.label}</div>
+                  <div style={{fontSize:"clamp(10px,2.5vw,11px)",opacity:.7}}>{w.sub}</div>
                   {w.extra>0&&<div style={{fontSize:8,color:wire===w.id?"rgba(245,239,227,.6)":"var(--gold)",marginTop:4}}>+{w.extra} EGP</div>}
                 </button>
               ))}
@@ -1282,7 +1323,7 @@ function CustomizePage({onAddCart,onGoCart}){
               </div>
             )}
 
-            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(130px,1fr))",gap:8,marginBottom:24}}>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(clamp(120px,28vw,150px),1fr))",gap:8,marginBottom:24}}>
               {STONES.map((s,stIdx)=>{
                 const sel=picked.includes(s);
                 const isExtra=sel&&picked.indexOf(s)>=2;
@@ -1298,7 +1339,7 @@ function CustomizePage({onAddCart,onGoCart}){
                     )}
                     {sel&&<div style={{position:"absolute",top:6,right:6,width:18,height:18,borderRadius:"50%",background:isExtra?"var(--gold)":"var(--g)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:10,color:isExtra?"var(--g)":"var(--cr)"}}>-</div>}
                     <div style={{padding:"8px 10px"}}>
-                      <div style={{fontFamily:"var(--serif)",fontSize:12,color:"var(--ink)",marginBottom:2}}>{s}</div>
+                      <div style={{fontFamily:"var(--serif)",fontSize:"clamp(13px,3.5vw,14px)",color:"var(--ink)",marginBottom:2}}>{s}</div>
                       {stIdx<3&&<div style={{fontSize:7.5,color:"var(--gold)",letterSpacing:".06em"}}>RARE</div>}
                       {STONE_EXTRA[s]>45&&stIdx>=3&&<div style={{fontSize:7.5,color:"var(--ink3)"}}>premium</div>}
                     </div>
@@ -1334,7 +1375,7 @@ function CustomizePage({onAddCart,onGoCart}){
             {/* INSPO PHOTO */}
             <div className="field">
               <label className="field-label">Inspiration Photo <span style={{fontSize:9,color:"var(--ink3)",fontWeight:300,letterSpacing:0,textTransform:"none"}}>(optional)</span></label>
-              <p style={{fontSize:10,color:"var(--ink3)",lineHeight:1.7,marginBottom:8}}>Share a reference image, mood board, or anything that captures the feeling you are after.</p>
+              <p style={{fontSize:"clamp(12px,3vw,13px)",color:"var(--ink3)",lineHeight:1.7,marginBottom:8}}>Share a reference image, mood board, or anything that captures the feeling you are after.</p>
               <input type="file" accept="image/*" onChange={handleInspo} style={{fontSize:11,color:"var(--ink3)"}}/>
               {inspoImg
                 ?<p style={{fontSize:10,color:"var(--gold)",marginTop:6}}>{inspoImg} uploaded -</p>
@@ -1350,7 +1391,7 @@ function CustomizePage({onAddCart,onGoCart}){
               {picked.length===0
                 ?<p style={{fontSize:12,color:"rgba(245,239,227,.45)",lineHeight:1.75}}>Select your piece type and at least one stone to see your estimated price.</p>
                 :<div>
-                  <div style={{fontFamily:"var(--serif)",fontSize:36,color:"var(--cr)",fontWeight:300,marginBottom:6}}>{est} EGP</div>
+                  <div style={{fontFamily:"var(--serif)",fontSize:"clamp(28px,7vw,36px)",color:"var(--cr)",fontWeight:300,marginBottom:6}}>{est} EGP</div>
                   <div style={{fontSize:10,color:"rgba(245,239,227,.45)",lineHeight:1.8,marginBottom:8}}>
                     <div>Base ({pt}) - {base} EGP</div>
                     {wireCost>0&&<div>Double thick wire - +{wireCost} EGP</div>}
@@ -1734,7 +1775,7 @@ function Checkout({cart,onClose,onOk,setLastOrder}){
             {needRef&&<div className="pay-box">
               <div style={{background:"var(--cr)",padding:"13px 15px",borderLeft:"2px solid var(--gold)",marginBottom:11}}>
                 <p style={{fontSize:11,color:"var(--ink3)",marginBottom:6}}>Transfer {fmt(amountDue)} via Instapay to:</p>
-                <p style={{fontFamily:"var(--serif)",fontSize:28,color:"var(--ink)",letterSpacing:".04em",marginBottom:4}}>01020624266</p>
+                <p style={{fontFamily:"var(--serif)",fontSize:"clamp(22px,5.5vw,28px)",color:"var(--ink)",letterSpacing:".04em",marginBottom:4}}>01020624266</p>
                 <p style={{fontSize:10,color:"var(--ink3)",lineHeight:1.7,marginBottom:4}}>Instapay is Egypt's instant bank transfer service. Open your banking app - Instapay - send to mobile number above.</p>
                 <p style={{fontSize:10,color:"var(--gold)",fontWeight:400}}>Your order will be confirmed once we receive your payment.</p>
               </div>
@@ -1791,7 +1832,7 @@ function OrderConfirm({order,onClose}){
           <p style={{fontSize:8,letterSpacing:".38em",textTransform:"uppercase",color:"rgba(184,145,60,.6)",marginTop:10}}>Order Confirmed</p>
         </div>
         <div style={{padding:"28px 24px",textAlign:"center"}}>
-          <span style={{fontSize:8,letterSpacing:".4em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:12}}>Order Confirmed</span>
+          <span style={{fontSize:"clamp(9px,2.2vw,10px)",letterSpacing:".32em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:12}}>Order Confirmed</span>
           <h2 style={{fontFamily:"var(--serif)",fontSize:28,fontWeight:300,color:"var(--ink)",marginBottom:8}}>Thank you, {order.customer.name.split(" ")[0]}.</h2>
           <p style={{fontSize:12,color:"var(--ink3)",lineHeight:1.85,marginBottom:16}}>Your order <strong style={{color:"var(--ink)"}}>{order.ref}</strong> has been received. We will confirm by email within 24 hours and begin preparing your piece by hand in Egypt.</p>
           <div style={{background:"var(--cr2)",padding:"12px 16px",marginBottom:16,textAlign:"left"}}>
