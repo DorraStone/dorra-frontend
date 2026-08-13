@@ -862,7 +862,7 @@ function HomePage({setPage,onV,onA}){
   return(<div>
     <div className="hero">
       <div className="hero-l">
-        <p className="hero-tag">Egypt — Handcrafted — Natural Stones</p>
+        <p className="hero-tag">Egypt  Handcrafted  Natural Stones</p>
         <h1 className="hero-title">
           <span className="hero-line"><span>The Luxury</span></span>
           <span className="hero-line"><span><em>of Nature</em></span></span>
@@ -1018,6 +1018,10 @@ function TypePage({type,title,sub,onV,onA,setPage}){
             </button>
           ))}
         </div>
+        <p style={{fontSize:11,color:"var(--ink3)",lineHeight:1.85,marginBottom:28,fontStyle:"italic",letterSpacing:".01em",maxWidth:560}}>
+          Each image is an inspiration  a reflection of the copper winding style and stone selection. As every piece is shaped entirely by hand, no two are exactly alike. What you receive will carry the same soul, never the same mark.
+        </p>
+        <p style={{fontSize:11,color:"var(--ink3)",lineHeight:1.85,marginBottom:28,fontStyle:"italic",maxWidth:560}}>Each image is an inspiration. A reflection of the copper style and stone selection. Every piece is shaped by hand  no two exactly alike. What you receive will carry the same soul, never the same mark.</p>
         <div className="pgrid" data-rv>
           {products.map(p=><PC key={p.id} product={p} onV={onV} onA={onA}/>)}
         </div>
@@ -1525,6 +1529,7 @@ function DetailPage({product,initStone,onBack,onA}){
             {product.type==="Necklace"?"Copper wire - stainless steel chain - natural stones":""}
             {product.type==="Earring"?"Stainless steel base - natural stones":""}
           </div>
+          <p style={{fontSize:10,color:"rgba(26,18,10,.32)",lineHeight:1.8,marginBottom:12,fontStyle:"italic",borderLeft:"1px solid rgba(184,145,60,.18)",paddingLeft:10}}>Shaped by hand  no two exactly alike.</p>
           <h1 className="detail-name">{product.name}</h1>
           <div style={{marginBottom:14}}>
             {swapCount>0?(
@@ -1939,9 +1944,13 @@ function AllPage({onV,onA,setPage}){
       </div>
 
       <div className="section-cream">
+        <p style={{fontSize:11,color:"var(--ink3)",lineHeight:1.85,marginBottom:28,fontStyle:"italic",maxWidth:560}}>Each image is an inspiration. A reflection of the copper style and stone selection. Every piece is shaped by hand  no two exactly alike. What you receive will carry the same soul, never the same mark.</p>
         <div className="pgrid">
           {products.map(p=><PC key={p.id} product={p} onV={onV} onA={onA}/>)}
         </div>
+        <p style={{fontSize:11,color:"var(--ink3)",lineHeight:1.85,marginBottom:28,fontStyle:"italic",letterSpacing:".01em",maxWidth:560}}>
+          Each image is an inspiration  a reflection of the copper winding style and stone selection. As every piece is shaped entirely by hand, no two are exactly alike. What you receive will carry the same soul, never the same mark.
+        </p>
         {products.length===0&&<p style={{textAlign:"center",color:"var(--ink3)",padding:"40px 0"}}>No pieces found.</p>}
       </div>
     </div>
@@ -2311,10 +2320,10 @@ export default function App(){
         ?<DetailPage product={detail} initStone={detailStone} onBack={()=>go(detail.type==="Bracelet"?"bracelets":detail.type==="Necklace"?"necklaces":detail.type==="Anklet"?"anklets":detail.type==="Earring"?"earrings":"home")} onA={addCart}/>
         :<>
           {activePage==="home"&&<HomePage setPage={go} onV={showDetail} onA={addCart}/>}
-          {activePage==="bracelets"&&<TypePage type="Bracelet" title="Bracelets" sub="Hand-wound copper with natural stones. Each piece is unique." onV={showDetail} onA={addCart} setPage={go}/>}
-          {activePage==="necklaces"&&<TypePage type="Necklace" title="Necklaces" sub="Stone and copper on stainless steel chain." onV={showDetail} onA={addCart} setPage={go}/>}
-          {activePage==="anklets"&&<TypePage type="Anklet" title="Anklets" sub="Delicate copper anklets with real stone beads." onV={showDetail} onA={addCart} setPage={go}/>}
-          {activePage==="earrings"&&<TypePage type="Earring" title="Earrings" sub="Copper hook earrings with real stone drops." onV={showDetail} onA={addCart} setPage={go}/>}
+          {activePage==="bracelets"&&<TypePage type="Bracelet" title="Bracelets" sub="Hand-wound copper with natural stones." onV={showDetail} onA={addCart} setPage={go}/>}
+          {activePage==="necklaces"&&<TypePage type="Necklace" title="Necklaces" sub="Copper wire and natural stones on stainless steel chain." onV={showDetail} onA={addCart} setPage={go}/>}
+          {activePage==="anklets"&&<TypePage type="Anklet" title="Anklets" sub="Delicate copper anklets with natural stone beads." onV={showDetail} onA={addCart} setPage={go}/>}
+          {activePage==="earrings"&&<TypePage type="Earring" title="Earrings" sub="Copper earrings with natural stone drops." onV={showDetail} onA={addCart} setPage={go}/>}
           {activePage==="all"&&<AllPage onV={showDetail} onA={addCart} setPage={go}/>}
           {activePage==="stones"&&<StonesPage onV={showDetail} onA={addCart} setPage={go}/>}
           {activePage==="care"&&<CarePage setPage={go} onA={addCart}/>}
