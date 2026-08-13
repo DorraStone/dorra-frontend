@@ -862,13 +862,13 @@ function HomePage({setPage,onV,onA}){
   return(<div>
     <div className="hero">
       <div className="hero-l">
-        <p className="hero-tag">Egypt - Handcrafted - Real Stones</p>
+        <p className="hero-tag">Egypt — Handcrafted — Natural Stones</p>
         <h1 className="hero-title">
           <span className="hero-line"><span>The Luxury</span></span>
           <span className="hero-line"><span><em>of Nature</em></span></span>
         </h1>
         <div className="hero-rule"/>
-        <p className="hero-sub">Real stones. No two pieces alike. Every piece shaped entirely by hand in Egypt.</p>
+        <p className="hero-sub">Natural stones. No two pieces alike. Every piece shaped entirely by hand in Egypt.</p>
         <div className="hero-btns">
           <button className="btn btn-gold" onClick={()=>setPage("all")}>Shop Now</button>
           <button className="btn btn-ghost" onClick={()=>setPage("customize")}>Design Your Dorra Piece</button>
@@ -978,7 +978,7 @@ function HomePage({setPage,onV,onA}){
 
     <div className="section-cream2">
       <div className="promise-strip" data-rv>
-        {[["Real Stones Only","No synthetics"],["Made in Egypt","One artisan per piece"],["Stone Card Included","Every order"],["Unique Every Time","No two pieces identical"]].map(([t,s])=>(
+        {[["Natural Stones","No synthetics, ever"],["Made in Egypt","One artisan per piece"],["Stone Card Included","Every order"],["Unique Every Time","No two pieces identical"]].map(([t,s])=>(
           <div key={t} className="promise-item"><div className="promise-title">{t}</div><p className="promise-sub">{s}</p></div>
         ))}
       </div>
@@ -2311,7 +2311,7 @@ export default function App(){
         ?<DetailPage product={detail} initStone={detailStone} onBack={()=>go(detail.type==="Bracelet"?"bracelets":detail.type==="Necklace"?"necklaces":detail.type==="Anklet"?"anklets":detail.type==="Earring"?"earrings":"home")} onA={addCart}/>
         :<>
           {activePage==="home"&&<HomePage setPage={go} onV={showDetail} onA={addCart}/>}
-          {activePage==="bracelets"&&<TypePage type="Bracelet" title="Bracelets" sub="Hand-wound copper with real stones. Each piece is unique." onV={showDetail} onA={addCart} setPage={go}/>}
+          {activePage==="bracelets"&&<TypePage type="Bracelet" title="Bracelets" sub="Hand-wound copper with natural stones. Each piece is unique." onV={showDetail} onA={addCart} setPage={go}/>}
           {activePage==="necklaces"&&<TypePage type="Necklace" title="Necklaces" sub="Stone and copper on stainless steel chain." onV={showDetail} onA={addCart} setPage={go}/>}
           {activePage==="anklets"&&<TypePage type="Anklet" title="Anklets" sub="Delicate copper anklets with real stone beads." onV={showDetail} onA={addCart} setPage={go}/>}
           {activePage==="earrings"&&<TypePage type="Earring" title="Earrings" sub="Copper hook earrings with real stone drops." onV={showDetail} onA={addCart} setPage={go}/>}
