@@ -135,9 +135,9 @@ const CATALOG=[
   {id:8,name:"Alexandria",type:"Necklace",price:549,stones:["Pearl","Ruby Jade","Blue Crystal Quartz","Crystal","Amethyst","Rose Quartz"],img:"pr1",img2:"pr2",img3:"pr3",desc:"Freshwater pearls at the heart of this necklace, joined by ruby-dyed jade, blue crystal, purple crystal, amethyst, and rose quartz on a gold-toned stainless steel chain.",care:"Pearl must not contact perfume, water, or oils. Put on last."},
   {id:9,name:"Fossil Coast",type:"Necklace",price:549,stones:["Amethyst","Blue Crystal Quartz","Green Crystal","Ruby Jade","Black Onyx","Rose Quartz"],img:"cs1",img2:"cs2",img3:"cs3",desc:"A richly layered necklace on a gold-toned stainless steel chain. Amethyst, blue and green crystal, ruby-dyed jade, onyx, and rose quartz - every colour the earth holds.",care:"Remove before water. Amethyst and rose quartz fade in prolonged sunlight."},
   {id:10,name:"Wadi",type:"Necklace",price:549,stones:["Blue Crystal Quartz","Agate"],img:"sp_new1",img2:"sp_new2",img3:"sp_new3",desc:"A raw Blue Crystal Quartz stone and deep agate spheres on a stainless steel and copper chain.",care:"Blue Crystal Quartz is sensitive to moisture. Put on after applying perfume."},
-  {id:11,name:"Reef Anklet",type:"Anklet",price:449,sizes:["Small","Medium","Large"],stones:["Green Crystal","Blue Crystal Quartz"],img:"sg1",img2:"sg2",img3:"sg3",desc:"Silver-toned copper wire wound delicately with green and Blue Crystal Quartz beads. Lightweight and luminous, like the sea caught on your ankle.",care:"Remove before swimming. Wipe with a dry cloth after wear."},
+  {id:11,name:"Reef Anklet",type:"Anklet",price:449,sizes:[],stones:["Green Crystal","Blue Crystal Quartz"],img:"sg1",img2:"sg2",img3:"sg3",desc:"Silver-toned copper wire wound delicately with green and Blue Crystal Quartz beads. Lightweight and luminous, like the sea caught on your ankle Adjustable clasp  fits all." ,care:"Remove before swimming. Wipe with a dry cloth after wear."},
   {id:12,name:"Onyx",type:"Earring",price:349,stones:["Pearl","Black Onyx","Blue Crystal Quartz"],img:"e3",img2:"e2",img3:"e1",desc:"Freshwater pearl, deep onyx, and Blue Crystal Quartz rondelles on gold stainless steel hooks. Three stones, one intention - worn light, felt deeply.",care:"Pearl must not contact perfume or water. Put on last, take off first."},
-  {id:13,name:"Copper Care Kit",type:"Care",price:149,stones:[],img:"",img2:"",desc:"The same kit included with every Dorra piece. Copper polish liquid and a soft cloth. Use when your piece begins to darken.",care:"Apply a few drops to the cloth. Rub gently. Rinse. Dry immediately."},
+  {id:13,name:"Copper Care Kit",type:"Care",price:149,stones:[],img:"",img2:"",desc:"Every Dorra order arrives with an anti-rust spray and a soft polishing cloth in a Dorra pouch. The Care Kit is a full replenishment set  an additional spray, cloth, and copper cleaning solution  to keep your piece exactly as you first received it.",care:"Apply a few drops to the cloth. Rub gently. Rinse. Dry immediately."},
 ];
 
 
@@ -896,6 +896,21 @@ function HomePage({setPage,onV,onA}){
 
     <div className="section-cream2" style={{paddingTop:52,paddingBottom:52}}>
       <NecklaceSection onV={onV} onA={onA} setPage={setPage}/>
+      </div>
+
+      {/* Care Kit Banner */}
+      <div style={{background:"var(--g)",padding:"48px 72px"}} data-rv>
+        <div style={{maxWidth:680,margin:"0 auto",textAlign:"center"}}>
+          <span style={{fontSize:8.5,letterSpacing:".32em",textTransform:"uppercase",color:"rgba(184,145,60,.6)",display:"block",marginBottom:12}}>Every Order</span>
+          <h2 style={{fontFamily:"var(--serif)",fontSize:"clamp(22px,3vw,32px)",fontWeight:300,color:"var(--cr)",marginBottom:12,lineHeight:1.3}}>Arrives with a care kit</h2>
+          <p style={{fontSize:14,color:"rgba(245,239,227,.5)",lineHeight:1.85,marginBottom:24,maxWidth:480,margin:"0 auto 24px"}}>Anti-rust spray, soft polishing cloth, Dorra pouch. Keep your piece exactly as you first received it.</p>
+          <button className="btn btn-outline-gold" onClick={()=>setPage("care")} style={{fontSize:9,letterSpacing:".24em",padding:"12px 32px"}}>Care Instructions</button>
+          &nbsp;&nbsp;
+          <button className="btn btn-gold" onClick={()=>onV(CATALOG.find(p=>p.name==="Copper Care Kit"),[])} style={{fontSize:9,letterSpacing:".24em",padding:"12px 32px"}}>Shop Care Kit  149 EGP</button>
+        </div>
+      </div>
+
+      <div style={{background:"var(--cr)"}}>
     </div>
 
     <div className="section-cream" style={{paddingTop:52,paddingBottom:52}}>
@@ -938,7 +953,7 @@ function HomePage({setPage,onV,onA}){
         {[{n:"01",t:"Browse",d:"Every piece is a design starting point. Find the shape you love."},
           {n:"02",t:"Choose your stones",d:"Swap stones for any stone you prefer. Price updates instantly."},
           {n:"03",t:"Confirm and pay deposit",d:"Place your order with a 40% deposit. We confirm within 24 hours."},
-          {n:"04",t:"Receive your piece",d:"Handcrafted in Egypt in 2-4 days, delivered with your stone card."}
+          {n:"04",t:"Receive your piece",d:"Handcrafted in Egypt in 2-4 days, delivered in a Dorra pouch with anti-rust spray and polishing cloth."}
         ].map(s=><div key={s.n} className="how-step"><div className="how-num">{s.n}</div><div className="how-title">{s.t}</div><p className="how-desc">{s.d}</p></div>)}
       </div>
     </div>
@@ -1119,7 +1134,7 @@ function StonesPage({onV,onA,setPage}){
   );
 }
 
-function CarePage({setPage,onA}){useRv();return(<div style={{paddingTop:64}}><div style={{padding:"8px 40px",background:"var(--cr)",borderBottom:"1px solid rgba(26,18,10,.08)",position:"sticky",top:64,zIndex:500}}><BackBtn label="Back to Home" onClick={()=>setPage("home")}/></div><div className="page-header"><span className="page-header-tag" data-rv>Care</span><h1 className="page-header-title" data-rv data-d="1">Keep your copper alive</h1><p className="page-header-sub" data-rv data-d="2">Every Dorra piece ships with a copper care kit - polish liquid and soft cloth. Use them when your piece begins to darken.</p></div><div className="section-cream"><div className="care-steps" data-rv>{[["Apply","A few drops of polish to the soft cloth."],["Rub","Gently along the copper wire in small circles."],["Rinse","Briefly with cool water."],["Dry","Pat dry immediately. Never leave wet."]].map((s,i)=><div key={s[0]} className="care-step"><div className="care-step-icon">0{i+1}</div><div className="care-step-title">{s[0]}</div><p className="care-step-text">{s[1]}</p></div>)}</div><div style={{maxWidth:560,margin:"40px auto 0",textAlign:"center"}} data-rv data-d="2"><p style={{fontSize:13,color:"var(--ink3)",lineHeight:2.0,marginBottom:20,fontWeight:300}}>The darkening of copper is a natural process called a patina - it is not damage. Your care kit lets you choose when to restore.</p><button className="btn btn-dark" onClick={()=>{
+function CarePage({setPage,onA}){useRv();return(<div style={{paddingTop:64}}><div style={{padding:"8px 40px",background:"var(--cr)",borderBottom:"1px solid rgba(26,18,10,.08)",position:"sticky",top:64,zIndex:500}}><BackBtn label="Back to Home" onClick={()=>setPage("home")}/></div><div className="page-header"><span className="page-header-tag" data-rv>Care</span><h1 className="page-header-title" data-rv data-d="1">Keep your copper alive</h1><p className="page-header-sub" data-rv data-d="2">Every Dorra order arrives with an anti-rust spray and a soft polishing cloth in a Dorra pouch  everything you need to keep your piece exactly as you first received it.</p></div><div className="section-cream"><div className="care-steps" data-rv>{[["Apply","A few drops of polish to the soft cloth."],["Rub","Gently along the copper wire in small circles."],["Rinse","Briefly with cool water."],["Dry","Pat dry immediately. Never leave wet."]].map((s,i)=><div key={s[0]} className="care-step"><div className="care-step-icon">0{i+1}</div><div className="care-step-title">{s[0]}</div><p className="care-step-text">{s[1]}</p></div>)}</div><div style={{maxWidth:560,margin:"40px auto 0",textAlign:"center"}} data-rv data-d="2"><p style={{fontSize:13,color:"var(--ink3)",lineHeight:2.0,marginBottom:20,fontWeight:300}}>The darkening of copper is a natural process called a patina - it is not damage. Your care kit lets you choose when to restore.</p><button className="btn btn-dark" onClick={()=>{
               const kit=CATALOG.find(p=>p.type==="Care");
               if(kit&&onA){onA(kit,[],kit.price);}
             }}>Add Copper Care Kit to Cart</button></div></div></div>);}
@@ -1230,7 +1245,7 @@ function CustomizePage({onAddCart,onGoCart}){
   const est=Math.ceil(raw/50)*50-1;
   const dep=Math.round(est*0.4);
 
-  const needsSize=pt==="Bracelet"||pt==="Statement Bracelet"||pt==="Anklet";
+  const needsSize=pt==="Bracelet"||pt==="Statement Bracelet";
 
   const addToCartAndCheckout=()=>{
     if(!picked.length)return;
@@ -1442,7 +1457,7 @@ function DetailPage({product,initStone,onBack,onA}){
 
                                         {/* LEFT - images */}
         <div className="detail-media"
-          style={{aspectRatio:(product.type==="Bracelet"||product.type==="Anklet")?"3/2":"1/1"}}
+          style={{aspectRatio:(product.type==="Bracelet")?"3/2":"1/1"}}
           onTouchStart={e=>setTx(e.touches[0].clientX)}
           onTouchEnd={e=>{
             if(tx===null)return;
@@ -1506,7 +1521,7 @@ function DetailPage({product,initStone,onBack,onA}){
 
           <span style={{fontSize:8,letterSpacing:".32em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:8}}>{product.type}</span>
           <div style={{fontSize:9,color:"var(--ink3)",letterSpacing:".12em",marginBottom:6}}>
-            {product.type==="Bracelet"||product.type==="Anklet"?"Hand-wound copper - natural stones":""}
+            {product.type==="Bracelet"?"Hand-wound copper - natural stones":""}
             {product.type==="Necklace"?"Copper wire - stainless steel chain - natural stones":""}
             {product.type==="Earring"?"Stainless steel base - natural stones":""}
           </div>
@@ -1535,7 +1550,14 @@ function DetailPage({product,initStone,onBack,onA}){
           {product.delicateNote&&<div style={{fontSize:11,color:"var(--gold)",lineHeight:1.8,padding:"10px 14px",background:"rgba(184,145,60,.05)",borderLeft:"2px solid rgba(184,145,60,.4)",marginBottom:8,fontStyle:"italic"}}>{product.delicateNote}</div>}
 
           {product.sizes&&product.sizes.length>0&&<div style={{marginBottom:10}}>
-            <div style={{fontSize:8,letterSpacing:".2em",textTransform:"uppercase",color:"var(--ink3)",marginBottom:7}}>Size</div>
+            <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:7}}>
+                <div style={{fontSize:8,letterSpacing:".2em",textTransform:"uppercase",color:"var(--ink3)"}}>Size</div>
+                {(product.type==="Bracelet")&&(
+                  <div style={{fontSize:8.5,color:"var(--gold)",letterSpacing:".05em",fontStyle:"italic"}}>
+                    S: 5cm &nbsp;&bull;&nbsp; M: 5.5cm &nbsp;&bull;&nbsp; L: 6.5cm
+                  </div>
+                )}
+              </div>
             <div style={{display:"flex",gap:6}}>
               {product.sizes.map(sz=><button key={sz} onClick={()=>setSelSize(sz)} style={{padding:"7px 20px",fontFamily:"var(--sans)",fontSize:8,letterSpacing:".14em",textTransform:"uppercase",background:selSize===sz?"var(--g)":"transparent",color:selSize===sz?"var(--cr)":"var(--ink3)",border:"1px solid",borderColor:selSize===sz?"var(--g)":"rgba(26,18,10,.2)",cursor:"pointer",transition:"all .2s"}}>{sz}</button>)}
             </div>
@@ -1861,7 +1883,7 @@ function AllPage({onV,onA,setPage}){
     {id:"Earring",label:"Earrings"},
   ];
 
-  let products=CATALOG.filter(p=>p.type!=="Care");
+  let products=CATALOG.filter(p=>true);
   if(filter!=="all") products=products.filter(p=>p.type===filter);
 
   if(sort==="price_asc") products=[...products].sort((a,b)=>a.price-b.price);
@@ -2268,6 +2290,18 @@ export default function App(){
         <p style={{fontFamily:"Jost,sans-serif",fontSize:8,letterSpacing:".32em",textTransform:"uppercase",color:"rgba(184,145,60,.6)",marginTop:16,opacity:0,animation:"tag-in .8s .9s ease forwards"}}>The Luxury of Nature</p>
       </div>
     )}
+    {/* WhatsApp floating button */}
+    <a href="https://wa.me/201020624266?text=Hi%20Dorra%2C%20I%27d%20like%20to%20know%20more%20about%20your%20pieces"
+      target="_blank" rel="noopener noreferrer"
+      style={{position:"fixed",bottom:24,right:24,zIndex:8000,width:52,height:52,borderRadius:"50%",
+        background:"#25D366",display:"flex",alignItems:"center",justifyContent:"center",
+        boxShadow:"0 4px 20px rgba(37,211,102,.35)",textDecoration:"none",transition:"transform .2s,box-shadow .2s"}}
+      onMouseEnter={e=>{e.currentTarget.style.transform="scale(1.1)";e.currentTarget.style.boxShadow="0 6px 28px rgba(37,211,102,.5)";}}
+      onMouseLeave={e=>{e.currentTarget.style.transform="scale(1)";e.currentTarget.style.boxShadow="0 4px 20px rgba(37,211,102,.35)";}}>
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="white">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+    </a>
     <div style={{position:"fixed",pointerEvents:"none",zIndex:99999,left:0,top:0}} id="cursor-wrap">
       <div id="cursor-dot" style={{position:"absolute",width:8,height:8,background:"var(--cr)",borderRadius:"50%",transform:"translate(-50%,-50%)",transition:"transform .15s ease",display:"none"}}/>
     </div>
