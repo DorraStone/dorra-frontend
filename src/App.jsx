@@ -1,3 +1,4 @@
+// build: 20260816-234410
 import{useState,useEffect,useRef,useCallback}from"react";
 
 // -- Backend API URL - update after Railway deployment --
@@ -689,6 +690,13 @@ function Nav({page,setPage,cc,setCO}){
   window.__dorraGo=go;
   const links=[{id:"all",l:"Shop All"},{id:"bracelets",l:"Bracelets"},{id:"necklaces",l:"Necklaces"},{id:"anklets",l:"Anklets"},{id:"earrings",l:"Earrings"},{id:"stones",l:"Stones"},{id:"care",l:"Care"},{id:"reviews",l:"Reviews"},{id:"returns",l:"Returns"},{id:"exchanges",l:"Exchanges"},{id:"story",l:"Our Story"},{id:"contact",l:"Contact"}];
   const results=q.length>1?CATALOG.filter(p=>p.type!=="Care"&&(p.name.toLowerCase().includes(q.toLowerCase())||p.stones.some(s=>s.toLowerCase().includes(q.toLowerCase())))):[];
+  useEffect(()=>{
+    if(!ss)return;
+    const close=e=>{if(!e.target.closest(".search-drop")&&!e.target.closest(".nav-icon")){setSs(false);setQ("");}};
+    document.addEventListener("mousedown",close);
+    document.addEventListener("touchstart",close);
+    return()=>{document.removeEventListener("mousedown",close);document.removeEventListener("touchstart",close);};
+  },[ss]);
   return(<>
     <nav className={"nav"+(scr?" scrolled":"")}>
       {/* LEFT: hamburger menu */}
