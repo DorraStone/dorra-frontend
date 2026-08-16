@@ -362,7 +362,7 @@ const CSS_LINES=[
   ".pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(272px,1fr));gap:1px;}",
   ".pc{background:var(--cr2);position:relative;overflow:hidden;cursor:pointer;transition:box-shadow .3s;}",
   ".pc:hover{box-shadow:0 12px 40px rgba(6,35,24,.1);}",
-  ".pc-img{aspect-ratio:4/5;overflow:hidden;position:relative;background:var(--cr2);}",
+  ".pc-img{aspect-ratio:4/5;overflow:hidden;position:relative;background:var(--cr2);min-height:300px;}",
   ".pc-img img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;transition:transform .6s cubic-bezier(.16,1,.3,1);}",".pc:hover .pc-img img{transform:scale(1.04);}",
   ".pc-badge{position:absolute;top:11px;left:11px;z-index:3;font-size:7.5px;letter-spacing:.18em;text-transform:uppercase;padding:3px 9px;}",
   ".badge-new{background:var(--gold);color:var(--g);}",
@@ -575,7 +575,7 @@ const CSS_LINES=[
   ".success-icon{font-family:var(--serif);font-size:40px;color:var(--gold);}",
   ".success-title{font-family:var(--serif);font-size:26px;font-weight:300;color:var(--ink);}",
   ".care-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;align-items:stretch;}",
-  ".care-step{background:var(--cr2);padding:22px 18px;border-top:2px solid transparent;transition:border-top-color .28s,transform .35s var(--ease);}",
+  ".care-step{background:var(--cr2);padding:22px 18px;border-top:2px solid transparent;display:flex;flex-direction:column;transition:border-top-color .28s,transform .35s var(--ease);}",
   ".care-step:hover{border-top-color:var(--gold);}",
   ".care-step-icon{font-family:var(--serif);font-size:17px;color:var(--gold);margin-bottom:9px;opacity:.6;}",
   ".care-step-title{font-family:var(--serif);font-size:13px;color:var(--ink);margin-bottom:4px;}",
@@ -685,7 +685,7 @@ function Nav({page,setPage,cc,setCO}){
   const[q,setQ]=useState("");
   const[scr,setScr]=useState(false);
   useEffect(()=>{const h=()=>setScr(window.scrollY>60);window.addEventListener("scroll",h,{passive:true});return()=>window.removeEventListener("scroll",h);},[]);
-  const go=id=>{setCO(false);setPage(id);setMob(false);setSs(false);setQ("");window.scrollTo(0,0);document.documentElement.scrollTop=0;setTimeout(()=>window.scrollTo(0,0),50);};
+  const go=id=>{setCO(false);setPage(id);window.__dorraGo=go;setMob(false);setSs(false);setQ("");window.scrollTo(0,0);document.documentElement.scrollTop=0;setTimeout(()=>window.scrollTo(0,0),50);};
   const links=[{id:"all",l:"Shop All"},{id:"bracelets",l:"Bracelets"},{id:"necklaces",l:"Necklaces"},{id:"anklets",l:"Anklets"},{id:"earrings",l:"Earrings"},{id:"stones",l:"Stones"},{id:"care",l:"Care"},{id:"reviews",l:"Reviews"},{id:"returns",l:"Returns"},{id:"exchanges",l:"Exchanges"},{id:"story",l:"Our Story"},{id:"contact",l:"Contact"}];
   const results=q.length>1?CATALOG.filter(p=>p.type!=="Care"&&(p.name.toLowerCase().includes(q.toLowerCase())||p.stones.some(s=>s.toLowerCase().includes(q.toLowerCase())))):[];
   return(<>
@@ -785,7 +785,7 @@ function CatalogGrid({type,onV,onA}){
 function BraceletSection({onV,onA,setPage}){
   const[showAll,setShowAll]=useState(false);
   const all=CATALOG.filter(p=>p.type==="Bracelet");
-  const visible=showAll?all:all.slice(0,3);
+  const visible=all;
   return(<>
     <div style={{display:"flex",alignItems:"flex-end",justifyContent:"space-between",marginBottom:28}} data-rv>
       <div>
@@ -866,7 +866,7 @@ function HeroCarousel({onV}){
   const imgs=[cur.img,cur.img2,cur.img3].filter(k=>k&&IMGS[k]);
   const imgSrc=imgs.length>0?IMGS[imgs[0]]:null;
   return(
-    <div style={{position:"relative",height:"70vh",minHeight:500,overflow:"hidden",background:"var(--g)",cursor:"pointer"}}
+    <div style={{position:"relative",height:"100%",minHeight:"100%",overflow:"hidden",background:"var(--g)",cursor:"pointer"}}
       onTouchStart={e=>setTx(e.touches[0].clientX)}
       onTouchEnd={e=>{if(tx===null)return;const d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>40)setIdx(i=>d<0?(i+1)%items.length:(i-1+items.length)%items.length);setTx(null);}}
       onClick={()=>onV(cur,cur.stones)}>
@@ -911,7 +911,11 @@ function HomePage({setPage,onV,onA}){
           <button className="btn btn-ghost" onClick={()=>setPage("customize")}>Design Your Dorra Piece</button>
         </div>
       </div>
-      <div className="hero-img"/>
+      <div className="hero-img" style={{overflow:"hidden",position:"relative"}}>
+        <div className="hero-carousel-wrap" style={{width:"100%",height:"100%"}}>
+          <HeroCarousel onV={onV}/>
+        </div>
+      </div>
     </div>
 
     {/* -- DESIGN YOUR PIECE - Luxury editorial banner -- */}
@@ -926,16 +930,12 @@ function HomePage({setPage,onV,onA}){
     </div>
     <div className="section-cream" style={{paddingTop:60,paddingBottom:52}}>
       <div style={{textAlign:"center",padding:"0 0 52px",maxWidth:620,margin:"0 auto"}} data-rv>
-        <div style={{background:"var(--g)",padding:"36px 48px",position:"relative"}}>
-          <div style={{position:"absolute",top:12,left:12,right:12,bottom:12,border:"1px solid rgba(184,145,60,.2)",pointerEvents:"none"}}/>
+        <div style={{background:"var(--g)",padding:"52px 64px",position:"relative"}}>
+          <div style={{position:"absolute",top:16,left:16,right:16,bottom:16,border:"1px solid rgba(184,145,60,.2)",pointerEvents:"none"}}/>
           <div style={{fontSize:32,color:"rgba(184,145,60,.25)",fontFamily:"var(--serif)",lineHeight:1,marginBottom:8}}>"</div>
           <p style={{fontFamily:"var(--serif)",fontSize:"clamp(18px,2.2vw,26px)",fontWeight:300,color:"var(--cr)",lineHeight:1.72,fontStyle:"italic",letterSpacing:".01em",margin:0}}>Every stone carries an intention.<br/>Find the one that already knows you.</p>
           <div style={{width:36,height:1,background:"rgba(184,145,60,.4)",margin:"20px auto 0"}}/>
         </div>
-      </div>
-      {/* Hero Carousel - desktop only */}
-      <div className="hero-carousel-wrap">
-        <HeroCarousel onV={onV}/>
       </div>
       <BraceletSection onV={onV} onA={onA} setPage={setPage}/>
     </div>
@@ -956,37 +956,7 @@ function HomePage({setPage,onV,onA}){
       </div>
     </div>
 
-    <div className="section-cream" style={{paddingTop:52,paddingBottom:52}}>
-      <div style={{display:"flex",alignItems:"baseline",justifyContent:"space-between",marginBottom:6}} data-rv>
-        <div>
-          <span className="sec-label sec-label-light">Anklets &amp; Earrings</span>
-          <h2 className="sec-title sec-title-light">More to discover</h2>
-        </div>
-        <span style={{fontSize:9,color:"var(--ink3)",letterSpacing:".08em",fontStyle:"italic"}}>Swipe</span>
-      </div>
-      <div className="sec-rule"/>
-      <div style={{display:"flex",gap:12,overflowX:"auto",WebkitOverflowScrolling:"touch",scrollSnapType:"x mandatory",paddingBottom:12,paddingRight:40}}>
-        {anklets.slice(0,2).map(p=>(
-          <div key={p.id} style={{flex:"0 0 300px",scrollSnapAlign:"start",minWidth:"300px"}}>
-            <div style={{padding:"0 0 8px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-              <span style={{fontSize:8,letterSpacing:".18em",textTransform:"uppercase",color:"var(--gold)"}}>Anklet</span>
-              <button className="btn btn-outline" style={{fontSize:7.5,padding:"4px 10px"}} onClick={()=>setPage("anklets")}>All</button>
-            </div>
-            <PC product={p} onV={onV} onA={onA}/>
-          </div>
-        ))}
-        {earrings.slice(0,1).map(p=>(
-          <div key={p.id} style={{flex:"0 0 300px",scrollSnapAlign:"start",minWidth:"300px"}}>
-            <div style={{padding:"0 0 8px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-              <span style={{fontSize:8,letterSpacing:".18em",textTransform:"uppercase",color:"var(--gold)"}}>Earrings</span>
-              <button className="btn btn-outline" style={{fontSize:7.5,padding:"4px 10px"}} onClick={()=>setPage("earrings")}>All</button>
-            </div>
-            <PC product={p} onV={onV} onA={onA}/>
-          </div>
-        ))}
-      </div>
-    </div>
-
+    
     <div className="section-dark">
       <div style={{textAlign:"center",marginBottom:36}} data-rv>
         <span className="sec-label sec-label-dark" style={{display:"block",marginBottom:8}}>How It Works</span>
@@ -1001,33 +971,7 @@ function HomePage({setPage,onV,onA}){
       </div>
     </div>
 
-    <div className="section-dark2">
-      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:52,alignItems:"center"}}>
-        <div data-rv>
-          <span className="sec-label sec-label-dark" style={{display:"block",marginBottom:8}}>In Every Package</span>
-          <h2 className="sec-title sec-title-dark">Your stone information card</h2>
-          <div className="sec-rule"/>
-          <p style={{fontSize:13,color:"rgba(245,239,227,.44)",lineHeight:2.0,fontWeight:300,marginBottom:16}}>Every Dorra piece arrives with a printed card - stone name, meaning, origin, birth sign, materials, and care instructions.</p>
-        </div>
-        <div style={{display:"flex",justifyContent:"center"}} data-rv data-d="1">
-          <div className="stone-card">
-            <div className="stone-card-top"><span className="stone-card-brand">Dorra</span><span className="stone-card-mark">Egypt</span></div>
-            {[["Stone","Tigers Eye"],["Meaning","Confidence"],["Origin","South Africa"],["Metal","Copper"],["Care","See reverse"]].map(([k,v])=><div key={k} className="stone-card-row"><span className="stone-card-key">{k}</span><span className="stone-card-val">{v}</span></div>)}
-            <div className="stone-card-foot">"Wear the earth with intention."</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div className="section-cream2">
-      <div className="promise-strip" data-rv>
-        {[["Natural Stones","No synthetics, ever"],["Made in Egypt","One artisan per piece"],["Stone Card Included","Every order"],["Unique Every Time","No two pieces identical"]].map(([t,s])=>(
-          <div key={t} className="promise-item"><div className="promise-title">{t}</div><p className="promise-sub">{s}</p></div>
-        ))}
-      </div>
-    </div>
-
-  </div>);
+    );
 }
 
 function TypePage({type,title,sub,onV,onA,setPage}){
@@ -1191,7 +1135,7 @@ function StoryPage({setPage}){useRv();return(<div style={{paddingTop:64}}><div s
 function ContactPage(){
   useRv();
   return(<div style={{paddingTop:64}}>
-    <div style={{padding:"6px 40px",background:"var(--cr)",borderBottom:"1px solid rgba(26,18,10,.08)",position:"sticky",top:64,zIndex:500}}><BackBtn label="Back to Home" onClick={()=>window.history.back()}/></div>
+    <div style={{padding:"6px 40px",background:"var(--cr)",borderBottom:"1px solid rgba(26,18,10,.08)",position:"sticky",top:64,zIndex:500}}><BackBtn label="Back to Home" onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");}}/></div>
     <div className="page-header">
       <span className="page-header-tag" data-rv>Get in Touch</span>
       <h1 className="page-header-title" data-rv data-d="1">Contact</h1>
@@ -1255,7 +1199,7 @@ function EstimateDisplay({form,picked}){
 }
 
 
-function CustomizePage({onAddCart,onGoCart}){
+function CustomizePage({onAddCart,onGoCart,setPage}){
   const[pt,setPt]=useState("Bracelet");
   const[picked,setPicked]=useState([]);
   const[note,setNote]=useState("");
@@ -1317,7 +1261,7 @@ function CustomizePage({onAddCart,onGoCart}){
   return(
     <div style={{paddingTop:64}}>
       <div style={{padding:"8px 40px",background:"var(--cr)",borderBottom:"1px solid rgba(26,18,10,.08)",position:"sticky",top:64,zIndex:500}}>
-        <BackBtn label="Back to Home" onClick={()=>window.history.back()}/>
+        <BackBtn label="Back to Home" onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");}}/>
       </div>
       <div className="page-header">
         <span className="page-header-tag" data-rv>Bespoke</span>
@@ -1501,7 +1445,7 @@ function DetailPage({product,initStone,onBack,onA}){
     <div style={{paddingTop:64,background:"var(--cr)"}}>
       {/* Back button - ABOVE image and info */}
       <div style={{padding:"8px 40px",background:"var(--cr)",borderBottom:"1px solid rgba(26,18,10,.08)",position:"sticky",top:64,zIndex:500}}>
-        <BackBtn label="Return to Collection" onClick={onBack}/>
+        <div style={{display:"flex",gap:16,alignItems:"center"}}><BackBtn label="Back to Home" onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");}}/><span style={{color:"rgba(26,18,10,.12)"}}>|</span><BackBtn label="Return to Collection" onClick={onBack}/></div>
       </div>
       <div className="detail-layout">
 
@@ -2015,7 +1959,7 @@ function ReturnsPage({setPage}){
     setSent(true);
   };
   return(<div style={{paddingTop:64}}>
-    <div style={{padding:"6px 40px",background:"var(--cr)",borderBottom:"1px solid rgba(26,18,10,.08)",position:"sticky",top:64,zIndex:500}}><BackBtn label="Back to Home" onClick={()=>window.history.back()}/></div>
+    <div style={{padding:"6px 40px",background:"var(--cr)",borderBottom:"1px solid rgba(26,18,10,.08)",position:"sticky",top:64,zIndex:500}}><BackBtn label="Back to Home" onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");}}/></div>
     <div className="page-header"><span className="page-header-tag" data-rv>After Your Order</span><h1 className="page-header-title" data-rv data-d="1">Returns</h1><p className="page-header-sub" data-rv data-d="2">We review every return request within 48 hours.</p></div>
     <div className="section-cream" style={{maxWidth:560,margin:"0 auto"}}>
       {sent?<div style={{textAlign:"center",padding:"40px 0"}}><div style={{fontFamily:"var(--serif)",fontSize:44,color:"var(--gold)",marginBottom:12}}>*</div><p style={{fontSize:13,color:"var(--ink3)"}}>Request sent. We will be in touch within 48 hours.</p><button className="btn btn-dark" style={{marginTop:12}} onClick={()=>setSent(false)}>Submit Another</button></div>
@@ -2045,7 +1989,7 @@ function ExchangesPage({setPage}){
     setSent(true);
   };
   return(<div style={{paddingTop:64}}>
-    <div style={{padding:"6px 40px",background:"var(--cr)",borderBottom:"1px solid rgba(26,18,10,.08)",position:"sticky",top:64,zIndex:500}}><BackBtn label="Back to Home" onClick={()=>window.history.back()}/></div>
+    <div style={{padding:"6px 40px",background:"var(--cr)",borderBottom:"1px solid rgba(26,18,10,.08)",position:"sticky",top:64,zIndex:500}}><BackBtn label="Back to Home" onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");}}/></div>
     <div className="page-header"><span className="page-header-tag" data-rv>After Your Order</span><h1 className="page-header-title" data-rv data-d="1">Exchanges</h1><p className="page-header-sub" data-rv data-d="2">Sizing or stone adjustments handled with care.</p></div>
     <div className="section-cream" style={{maxWidth:560,margin:"0 auto"}}>
       {sent?<div style={{textAlign:"center",padding:"40px 0"}}><div style={{fontFamily:"var(--serif)",fontSize:44,color:"var(--gold)",marginBottom:12}}>*</div><p style={{fontSize:13,color:"var(--ink3)"}}>Request sent. We will be in touch within 48 hours.</p><button className="btn btn-dark" style={{marginTop:12}} onClick={()=>setSent(false)}>Submit Another</button></div>
@@ -2094,7 +2038,7 @@ function ReviewsPage(){
     }).catch(()=>setPublished(JSON.parse(localStorage.getItem("dorra_reviews_published")||"[]")));
   },[]);
   return(<div style={{paddingTop:64}}>
-    <div style={{padding:"6px 40px",background:"var(--cr)",borderBottom:"1px solid rgba(26,18,10,.08)",position:"sticky",top:64,zIndex:500}}><BackBtn label="Back to Home" onClick={()=>window.history.back()}/></div>
+    <div style={{padding:"6px 40px",background:"var(--cr)",borderBottom:"1px solid rgba(26,18,10,.08)",position:"sticky",top:64,zIndex:500}}><BackBtn label="Back to Home" onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");}}/></div>
     <div className="page-header"><span className="page-header-tag" data-rv>Voices</span><h1 className="page-header-title" data-rv data-d="1">From Our Wearers</h1><p className="page-header-sub" data-rv data-d="2">Every Dorra piece finds the person it was meant for. Here is what they say.</p></div>
     {published.length>0&&<div style={{background:"var(--cr2)",padding:"52px 72px",borderBottom:"1px solid rgba(26,18,10,.06)"}}>
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))",gap:2,width:"100%",boxSizing:"border-box"}}>
@@ -2379,7 +2323,7 @@ export default function App(){
           {activePage==="returns"&&<ReturnsPage setPage={go}/>}
           {activePage==="exchanges"&&<ExchangesPage setPage={go}/>}
           {activePage==="reviews"&&<ReviewsPage/>}
-          {activePage==="customize"&&<CustomizePage onAddCart={addCart} onGoCart={()=>{scrollTop();setCO(true);}}/>}
+          {activePage==="customize"&&<CustomizePage onAddCart={addCart} onGoCart={()=>{scrollTop();setCO(true);}} setPage={go}/>}
         </>}
     </div>
     <Footer setPage={go}/>
