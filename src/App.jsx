@@ -141,7 +141,7 @@ const CATALOG=[
 ];
 
 
-const STONES=["Amethyst","Ruby Jade","Purple Agate","Rose Quartz","Black Onyx","Blue Crystal Quartz","Green Crystal","Agate","Tigers Eye","Pearl","Crystal"];
+const STONES=["Pearl","Amethyst","Ruby Jade","Purple Agate","Rose Quartz","Black Onyx","Blue Crystal Quartz","Green Crystal","Agate","Tigers Eye","Crystal"];
 const STONE_CARE={
   "Rose Quartz":"Avoid prolonged sunlight. Clean gently with cool water.",
   "Agate":"Rinse with cool water occasionally. Avoid harsh chemicals.",
