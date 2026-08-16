@@ -287,7 +287,7 @@ const CSS_LINES=[
   ".ham span{display:block;height:1.2px;background:rgba(245,239,227,.7);transition:all .3s var(--ease);border-radius:1px;}",
   ".ham span:nth-child(1){width:26px;}",
   ".ham span:nth-child(2){width:16px;}",
-  ".ham span:nth-child(3){width:22px;}",".hero-carousel-wrap{display:block;}","@media(max-width:768px){.hero-carousel-wrap{display:none;}}",
+  ".ham span:nth-child(3){width:22px;}",".hero-carousel-wrap{display:block;width:100%;height:100%;}","@media(max-width:768px){.hero-carousel-wrap{display:none;}}",
   ".ham.o span:nth-child(1){transform:rotate(45deg) translate(4px,4px);}",
   ".ham.o span:nth-child(2){opacity:0;}",
   ".ham.o span:nth-child(3){transform:rotate(-45deg) translate(4px,-4px);}",
@@ -748,10 +748,10 @@ function PC({product,onV,onA}){
         {IMGS[product.img]
           ?<img src={IMGS[product.img]} alt={product.name} loading="lazy"
               style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center",display:"block"}}/>
-          :<div style={{width:"100%",height:"100%",background:"var(--cr3)",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:8}}>
-            <div style={{width:24,height:1,background:"rgba(184,145,60,.3)"}}/>
-            <span style={{fontFamily:"var(--serif)",fontSize:12,color:"var(--ink3)",letterSpacing:".14em",textAlign:"center",padding:"0 16px"}}>Photo Coming Soon</span>
-            <div style={{width:24,height:1,background:"rgba(184,145,60,.3)"}}/>
+          :<div style={{width:"100%",height:"100%",background:"var(--g)",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:12}}>
+            <div style={{width:36,height:1,background:"rgba(184,145,60,.3)"}}/>
+            <span style={{fontFamily:"var(--serif)",fontSize:14,color:"var(--cr)",letterSpacing:".08em",textAlign:"center",padding:"0 16px",fontStyle:"italic"}}>{product.name}</span>
+            <div style={{width:36,height:1,background:"rgba(184,145,60,.3)"}}/>
           </div>}
         <div style={{position:"absolute",inset:0,background:"rgba(6,35,24,0)",transition:"background .5s",pointerEvents:"none",background:hover?"rgba(6,35,24,.28)":"rgba(6,35,24,0)"}}/>
         <div style={{position:"absolute",bottom:0,left:0,right:0,padding:"16px",opacity:hover?1:0,transition:"opacity .35s"}}>
@@ -942,6 +942,36 @@ function HomePage({setPage,onV,onA}){
 
     <div className="section-cream2" style={{paddingTop:52,paddingBottom:52}}>
       <NecklaceSection onV={onV} onA={onA} setPage={setPage}/>
+    </div>
+
+    {/* Anklets & Earrings */}
+    <div className="section-cream" style={{paddingTop:52,paddingBottom:52}}>
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:48,alignItems:"start"}}>
+        <div>
+          <div style={{display:"flex",alignItems:"flex-end",justifyContent:"space-between",marginBottom:20}} data-rv>
+            <div>
+              <span className="sec-label sec-label-light">Anklets</span>
+              <h2 className="sec-title sec-title-light" style={{fontSize:"clamp(18px,2vw,24px)"}}>For the shore</h2>
+            </div>
+            <button className="btn btn-outline" style={{fontSize:8,padding:"6px 14px"}} onClick={()=>setPage("anklets")}>View All</button>
+          </div>
+          <div className="pgrid" style={{gridTemplateColumns:"1fr"}} data-rv>
+            {CATALOG.filter(p=>p.type==="Anklet").slice(0,1).map(p=><PC key={p.id} product={p} onV={onV} onA={onA}/>)}
+          </div>
+        </div>
+        <div>
+          <div style={{display:"flex",alignItems:"flex-end",justifyContent:"space-between",marginBottom:20}} data-rv>
+            <div>
+              <span className="sec-label sec-label-light">Earrings</span>
+              <h2 className="sec-title sec-title-light" style={{fontSize:"clamp(18px,2vw,24px)"}}>Drop &amp; stone</h2>
+            </div>
+            <button className="btn btn-outline" style={{fontSize:8,padding:"6px 14px"}} onClick={()=>setPage("earrings")}>View All</button>
+          </div>
+          <div className="pgrid" style={{gridTemplateColumns:"1fr"}} data-rv>
+            {CATALOG.filter(p=>p.type==="Earring").slice(0,1).map(p=><PC key={p.id} product={p} onV={onV} onA={onA}/>)}
+          </div>
+        </div>
+      </div>
     </div>
 
     {/* Care Kit Banner */}
@@ -1807,7 +1837,7 @@ function Checkout({cart,onClose,onOk,setLastOrder}){
             {needCard&&<div className="pay-box">
               <div className="field"><label className="field-label">Card Number</label><input className="field-input" placeholder="1234 5678 9012 3456" maxLength={16} value={cardN} onChange={e=>setCardN(e.target.value.replace(/[^0-9]/g,""))}/></div>
               <div className="field-grid">
-                <div className="field"><label className="field-label">Expiry MM/YY</label><input className="field-input" placeholder="MM/YY" maxLength={5} value={cardE} onChange={e=>{let v=e.target.value.replace(/[^0-9]/g,"");if(v.length>2)v=v.slice(0,2)+"/"+v.slice(2);setCardE(v);}}/></div>
+                <div className="field"><label className="field-label">Expiry MM/YY</label><input className="field-input" placeholder="MM/YY" maxLength={5} value={cardE} onChange={e=>{let v=e.target.value.replace(/[^0-9]/g,"");if(v.length>=3)v=v.slice(0,2)+"/"+v.slice(2);setCardE(v);}}/></div>
                 <div className="field"><label className="field-label">CVV</label><input className="field-input" placeholder="123" maxLength={3} value={cardC} onChange={e=>setCardC(e.target.value.replace(/[^0-9]/g,""))}/></div>
               </div>
             </div>}
@@ -2143,7 +2173,7 @@ function Footer({setPage}){
 
         {/* Logo top */}
         <div style={{marginBottom:36,borderBottom:"1px solid rgba(184,145,60,.08)",paddingBottom:28}}>
-          <button onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");}} style={{background:"none",border:"none",cursor:"pointer",padding:0,lineHeight:0}}>{IMGS.logo&&<img src={IMGS.logo} alt="Dorra" style={{height:36,width:"auto",display:"block",objectFit:"contain"}}/>}</button>
+          <button onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");if(setPage)setPage("home");}} style={{background:"none",border:"none",cursor:"pointer",padding:0,lineHeight:0}}>{IMGS.logo&&<img src={IMGS.logo} alt="Dorra" style={{height:36,width:"auto",display:"block",objectFit:"contain"}}/>}</button>
         </div>
 
         {/* 3 columns below logo */}
