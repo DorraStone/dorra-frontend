@@ -322,7 +322,7 @@ const CSS_LINES=[
   ".hero-rule{width:32px;height:1px;background:var(--gold);margin-bottom:18px;opacity:0;animation:fade-up .8s .78s forwards;}",
   ".hero-sub{font-size:16px;line-height:2.0;color:rgba(245,239,227,.55);max-width:320px;margin-bottom:36px;opacity:0;animation:fade-up .8s .88s forwards;font-weight:300;}",
   ".hero-btns{display:flex;gap:10px;flex-wrap:wrap;opacity:0;animation:fade-up .8s 1s forwards;}",
-  ".hero-img{display:none!important;}",
+  ".hero-img{display:block;overflow:hidden;position:relative;}",
   ".hero-img img{width:100%;height:100%;object-fit:cover;object-position:center top;}",
   "@keyframes slow-zoom{from{transform:scale(1.07)}to{transform:scale(1.01)}}",
   ".hero-img::before{content:'';position:absolute;left:0;top:0;bottom:0;width:160px;background:linear-gradient(to right,var(--g),transparent);z-index:1;}",
@@ -586,7 +586,7 @@ const CSS_LINES=[
   ".nav{padding:0 20px;height:56px;}",
   ".hero{grid-template-columns:1fr;}",
   ".hero-l{padding:80px 20px 48px;}",
-  ".hero-img{display:none!important;}",
+  ".hero-img{display:block;overflow:hidden;position:relative;}",
   ".page-fade-in{animation:page-in .4s cubic-bezier(.16,1,.3,1) both;}",
   "@keyframes page-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}",
   ".page-header{padding:90px 20px 44px;}",
@@ -685,7 +685,8 @@ function Nav({page,setPage,cc,setCO}){
   const[q,setQ]=useState("");
   const[scr,setScr]=useState(false);
   useEffect(()=>{const h=()=>setScr(window.scrollY>60);window.addEventListener("scroll",h,{passive:true});return()=>window.removeEventListener("scroll",h);},[]);
-  const go=id=>{setCO(false);setPage(id);window.__dorraGo=go;setMob(false);setSs(false);setQ("");window.scrollTo(0,0);document.documentElement.scrollTop=0;setTimeout(()=>window.scrollTo(0,0),50);};
+  const go=id=>{setCO(false);setPage(id);window.__dorraGo=go;setMob(false);setSs(false);setQ("");window.scrollTo(0,0);document.documentElement.scrollTop=0;};
+  window.__dorraGo=go;
   const links=[{id:"all",l:"Shop All"},{id:"bracelets",l:"Bracelets"},{id:"necklaces",l:"Necklaces"},{id:"anklets",l:"Anklets"},{id:"earrings",l:"Earrings"},{id:"stones",l:"Stones"},{id:"care",l:"Care"},{id:"reviews",l:"Reviews"},{id:"returns",l:"Returns"},{id:"exchanges",l:"Exchanges"},{id:"story",l:"Our Story"},{id:"contact",l:"Contact"}];
   const results=q.length>1?CATALOG.filter(p=>p.type!=="Care"&&(p.name.toLowerCase().includes(q.toLowerCase())||p.stones.some(s=>s.toLowerCase().includes(q.toLowerCase())))):[];
   return(<>
@@ -2173,7 +2174,7 @@ function Footer({setPage}){
 
         {/* Logo top */}
         <div style={{marginBottom:36,borderBottom:"1px solid rgba(184,145,60,.08)",paddingBottom:28}}>
-          <button onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");if(setPage)setPage("home");}} style={{background:"none",border:"none",cursor:"pointer",padding:0,lineHeight:0}}>{IMGS.logo&&<img src={IMGS.logo} alt="Dorra" style={{height:36,width:"auto",display:"block",objectFit:"contain"}}/>}</button>
+          <button onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");if(setPage)setPage("home");}} onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");}} style={{background:"none",border:"none",cursor:"pointer",padding:0,lineHeight:0}}>{IMGS.logo&&<img src={IMGS.logo} alt="Dorra" style={{height:36,width:"auto",display:"block",objectFit:"contain"}}/>}</button>
         </div>
 
         {/* 3 columns below logo */}
