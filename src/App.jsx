@@ -854,10 +854,10 @@ function BackBtn({label,onClick}){
 
 
 function HeroCarousel({onV}){
-  const[idx,setIdx]=React.useState(0);
-  const[tx,setTx]=React.useState(null);
+  const[idx,setIdx]=useState(0);
+  const[tx,setTx]=useState(null);
   const items=CATALOG.filter(p=>["The Original","Mediterranean","Onyx"].includes(p.name));
-  React.useEffect(()=>{
+  useEffect(()=>{
     const t=setInterval(()=>setIdx(i=>(i+1)%items.length),4000);
     return()=>clearInterval(t);
   },[]);
@@ -942,21 +942,18 @@ function HomePage({setPage,onV,onA}){
 
     <div className="section-cream2" style={{paddingTop:52,paddingBottom:52}}>
       <NecklaceSection onV={onV} onA={onA} setPage={setPage}/>
-      </div>
+    </div>
 
-      {/* Care Kit Banner */}
-      <div style={{background:"var(--g)",padding:"48px 72px"}} data-rv>
-        <div style={{maxWidth:680,margin:"0 auto",textAlign:"center"}}>
+    {/* Care Kit Banner */}
+    <div style={{background:"var(--g)",padding:"48px 72px"}} data-rv>
+      <div style={{maxWidth:680,margin:"0 auto",textAlign:"center"}}>
           <span style={{fontSize:8.5,letterSpacing:".32em",textTransform:"uppercase",color:"rgba(184,145,60,.6)",display:"block",marginBottom:12}}>Every Order</span>
           <h2 style={{fontFamily:"var(--serif)",fontSize:"clamp(22px,3vw,32px)",fontWeight:300,color:"var(--cr)",marginBottom:12,lineHeight:1.3}}>Arrives with a care kit</h2>
           <p style={{fontSize:14,color:"rgba(245,239,227,.5)",lineHeight:1.85,marginBottom:24,maxWidth:480,margin:"0 auto 24px"}}>Anti-rust spray, soft polishing cloth, Dorra pouch. Keep your piece exactly as you first received it.</p>
           <button className="btn btn-outline-gold" onClick={()=>setPage("care")} style={{fontSize:9,letterSpacing:".24em",padding:"12px 32px"}}>Care Instructions</button>
           &nbsp;&nbsp;
           <button className="btn btn-gold" onClick={()=>onV(CATALOG.find(p=>p.name==="Copper Care Kit"),[])} style={{fontSize:9,letterSpacing:".24em",padding:"12px 32px"}}>Shop Care Kit  149 EGP</button>
-        </div>
       </div>
-
-      <div style={{background:"var(--cr)"}}>
     </div>
 
     <div className="section-cream" style={{paddingTop:52,paddingBottom:52}}>
@@ -2281,12 +2278,13 @@ export default function App(){
       window.addEventListener("mouseout",out);
     }
     const hide=()=>setLoading(false);
+    const maxT=setTimeout(hide,8000);
     if(document.readyState==='complete'){
-      const t=setTimeout(hide,800);return()=>clearTimeout(t);
+      setTimeout(hide,800);
+    } else {
+      window.addEventListener('load',()=>setTimeout(hide,800));
     }
-    window.addEventListener('load',()=>setTimeout(hide,800));
-    const maxT=setTimeout(hide,8000); // max 8s no matter what
-    return()=>{clearTimeout(maxT);window.removeEventListener('load',hide);};
+    return()=>{clearTimeout(maxT);};
   },[]);
   const scrollTop=()=>{try{document.documentElement.scrollTop=0;document.body.scrollTop=0;window.scrollTo(0,0);const r=document.getElementById("app-root");if(r)r.scrollTop=0;}catch(e){}};
   const go=useCallback(p=>{setCO(false);setPage(p);setDetail(null);scrollTop();setTimeout(scrollTop,80);},[]);
