@@ -440,7 +440,7 @@ const CSS_LINES=[
   "@keyframes slide-right{from{transform:translateX(100%)}to{transform:none}}",
   ".cart-head{padding:20px 22px 16px;border-bottom:1px solid rgba(26,18,10,.09);display:flex;align-items:center;justify-content:space-between;}",
   ".cart-title{font-family:var(--serif);font-size:22px;font-weight:300;color:var(--ink);}",
-  ".cart-close{background:none;border:none;color:var(--ink3);cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:15px;transition:color .2s;}",
+  ".cart-close{background:none;border:none;color:var(--ink3);cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:15px;transition:color .2s;;min-width:36px;min-height:36px;display:flex;align-items:center;justify-content:center;}",
   ".cart-close:hover{color:var(--ink);}",
   ".cart-items{flex:1;overflow-y:auto;padding:16px 22px;display:flex;flex-direction:column;gap:13px;}",
   ".cart-item{display:flex;gap:12px;padding-bottom:13px;border-bottom:1px solid rgba(26,18,10,.07);}",
@@ -585,7 +585,7 @@ const CSS_LINES=[
   
   ".nav{padding:0 20px;height:56px;}",
   ".hero{grid-template-columns:1fr;}",
-  ".hero-l{padding:80px 20px 48px;}",
+  ".hero-l{padding:80px 20px 48px;align-items:center;text-align:center;}",
   ".hero-img{display:block;overflow:hidden;position:relative;}",
   ".page-fade-in{animation:page-in .4s cubic-bezier(.16,1,.3,1) both;}",
   "@keyframes page-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}",
@@ -608,7 +608,7 @@ const CSS_LINES=[
 
   /*  MOBILE TEXT SIZES  */
   ".hero-title{font-size:clamp(38px,10vw,62px);}",
-  ".hero-sub{font-size:15px;line-height:1.85;color:rgba(245,239,227,.6);}",
+  ".hero-sub{font-size:15px;line-height:1.85;color:rgba(245,239,227,.6);max-width:100%;text-align:center;}",".hero-btns{justify-content:center;}",
   ".hero-tag{font-size:10px;letter-spacing:.3em;}",
 
   ".page-header-title{font-size:clamp(28px,7vw,42px);}",
@@ -871,8 +871,8 @@ function HeroCarousel({onV}){
       onTouchStart={e=>setTx(e.touches[0].clientX)}
       onTouchEnd={e=>{if(tx===null)return;const d=e.changedTouches[0].clientX-tx;const swiped=Math.abs(d)>=40;if(swiped)setIdx(i=>d<0?(i+1)%items.length:(i-1+items.length)%items.length);setTx(null);}}
       onClick={()=>onV(cur,cur.stones)}>
-      {imgSrc&&<img src={imgSrc} alt={cur.name} style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center",display:"block",opacity:.65,transition:"opacity .8s ease"}}/>}
-      <div style={{position:"absolute",inset:0,background:"linear-gradient(to bottom,rgba(6,35,24,.1) 0%,rgba(6,35,24,.5) 100%)"}}/>
+      {imgSrc&&<img src={imgSrc} alt={cur.name} style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center",display:"block",opacity:.92,transition:"opacity .8s ease"}}/>}
+      <div style={{position:"absolute",inset:0,background:"linear-gradient(to bottom,rgba(6,35,24,.05) 0%,rgba(6,35,24,.55) 100%)"}}/>
       <div style={{position:"absolute",bottom:"10%",left:"8%",right:"8%"}}>
         <span style={{fontSize:9,letterSpacing:".36em",textTransform:"uppercase",color:"rgba(184,145,60,.8)",display:"block",marginBottom:10}}>{cur.type}</span>
         <h2 style={{fontFamily:"var(--serif)",fontSize:"clamp(32px,5vw,64px)",fontWeight:300,color:"#f5efe3",lineHeight:1.05,marginBottom:12,letterSpacing:".01em"}}>{cur.name}</h2>
@@ -981,9 +981,10 @@ function HomePage({setPage,onV,onA}){
           <span style={{fontSize:8.5,letterSpacing:".32em",textTransform:"uppercase",color:"rgba(184,145,60,.6)",display:"block",marginBottom:12}}>Every Order</span>
           <h2 style={{fontFamily:"var(--serif)",fontSize:"clamp(22px,3vw,32px)",fontWeight:300,color:"var(--cr)",marginBottom:12,lineHeight:1.3}}>Arrives with a care kit</h2>
           <p style={{fontSize:14,color:"rgba(245,239,227,.5)",lineHeight:1.85,marginBottom:24,maxWidth:480,margin:"0 auto 24px"}}>Anti-rust spray, soft polishing cloth, Dorra pouch. Keep your piece exactly as you first received it.</p>
-          <button className="btn btn-outline-gold" onClick={()=>setPage("care")} style={{fontSize:9,letterSpacing:".24em",padding:"12px 32px"}}>Care Instructions</button>
-          &nbsp;&nbsp;
-          <button className="btn btn-gold" onClick={()=>onV(CATALOG.find(p=>p.name==="Copper Care Kit"),[])} style={{fontSize:9,letterSpacing:".24em",padding:"12px 32px"}}>Shop Care Kit  149 EGP</button>
+          <div style={{display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap",marginTop:8}}>
+            <button className="btn btn-outline-gold" onClick={()=>setPage("care")} style={{fontSize:9,letterSpacing:".24em",padding:"13px 32px",minWidth:200}}>Care Instructions</button>
+            <button className="btn btn-gold" onClick={()=>onV(CATALOG.find(p=>p.name==="Copper Care Kit"),[])} style={{fontSize:9,letterSpacing:".24em",padding:"13px 32px",minWidth:200}}>Shop Care Kit  149 EGP</button>
+          </div>
       </div>
     </div>
 
@@ -1984,17 +1985,18 @@ function ReturnsPage({setPage}){
   const[form,setForm]=useState({code:"",name:"",address:"",reason:""});
   const[sent,setSent]=useState(false);
   useRv();
-  const submit=()=>{
+  const submit=async()=>{
     if(!form.code||!form.name||!form.address||!form.reason)return;
-    const msg=["Return Request","Order Code: "+form.code,"Name: "+form.name,"Address: "+form.address,"Reason: "+form.reason].join("\n");
-    window.location.href="mailto:dorrastonejewelry@gmail.com?subject="+encodeURIComponent("Return Request - "+form.code)+"&body="+encodeURIComponent(msg);
+    try{
+      await apiPost("/api/orders/returns",{ref:form.code,name:form.name,address:form.address,reason:form.reason});
+    }catch(e){console.error(e);}
     setSent(true);
   };
   return(<div style={{paddingTop:64}}>
     <div style={{padding:"6px 40px",background:"var(--cr)",borderBottom:"1px solid rgba(26,18,10,.08)",position:"sticky",top:64,zIndex:500}}><BackBtn label="Back to Home" onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");}}/></div>
     <div className="page-header"><span className="page-header-tag" data-rv>After Your Order</span><h1 className="page-header-title" data-rv data-d="1">Returns</h1><p className="page-header-sub" data-rv data-d="2">We review every return request within 48 hours.</p></div>
     <div className="section-cream" style={{maxWidth:560,margin:"0 auto"}}>
-      {sent?<div style={{textAlign:"center",padding:"40px 0"}}><div style={{fontFamily:"var(--serif)",fontSize:44,color:"var(--gold)",marginBottom:12}}>*</div><p style={{fontSize:13,color:"var(--ink3)"}}>Request sent. We will be in touch within 48 hours.</p><button className="btn btn-dark" style={{marginTop:12}} onClick={()=>setSent(false)}>Submit Another</button></div>
+      {sent?<div style={{textAlign:"center",padding:"40px 0"}}><div style={{fontFamily:"var(--serif)",fontSize:44,color:"var(--gold)",marginBottom:12}}>*</div><p style={{fontSize:13,color:"var(--ink3)"}}>Your request has been received  this is not a confirmation. Our team will review and contact you within 2-3 business days.</p><button className="btn btn-dark" style={{marginTop:12}} onClick={()=>setSent(false)}>Submit Another</button></div>
       :<div>
         <div className="field"><label className="field-label">Order Reference Code *</label><input className="field-input" placeholder="e.g. DRR-ABC123" value={form.code} onChange={e=>setForm({...form,code:e.target.value})}/></div>
         <div className="field"><label className="field-label">Your Name *</label><input className="field-input" placeholder="Full name" value={form.name} onChange={e=>setForm({...form,name:e.target.value})}/></div>
@@ -2024,7 +2026,7 @@ function ExchangesPage({setPage}){
     <div style={{padding:"6px 40px",background:"var(--cr)",borderBottom:"1px solid rgba(26,18,10,.08)",position:"sticky",top:64,zIndex:500}}><BackBtn label="Back to Home" onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");}}/></div>
     <div className="page-header"><span className="page-header-tag" data-rv>After Your Order</span><h1 className="page-header-title" data-rv data-d="1">Exchanges</h1><p className="page-header-sub" data-rv data-d="2">Sizing or stone adjustments handled with care.</p></div>
     <div className="section-cream" style={{maxWidth:560,margin:"0 auto"}}>
-      {sent?<div style={{textAlign:"center",padding:"40px 0"}}><div style={{fontFamily:"var(--serif)",fontSize:44,color:"var(--gold)",marginBottom:12}}>*</div><p style={{fontSize:13,color:"var(--ink3)"}}>Request sent. We will be in touch within 48 hours.</p><button className="btn btn-dark" style={{marginTop:12}} onClick={()=>setSent(false)}>Submit Another</button></div>
+      {sent?<div style={{textAlign:"center",padding:"40px 0"}}><div style={{fontFamily:"var(--serif)",fontSize:44,color:"var(--gold)",marginBottom:12}}>*</div><p style={{fontSize:13,color:"var(--ink3)"}}>Your request has been received  this is not a confirmation. Our team will review and contact you within 2-3 business days.</p><button className="btn btn-dark" style={{marginTop:12}} onClick={()=>setSent(false)}>Submit Another</button></div>
       :<div>
         <div className="field"><label className="field-label">Order Reference Code *</label><input className="field-input" placeholder="e.g. DRR-ABC123" value={form.code} onChange={e=>setForm({...form,code:e.target.value})}/></div>
         <div className="field"><label className="field-label">Your Name *</label><input className="field-input" placeholder="Full name" value={form.name} onChange={e=>setForm({...form,name:e.target.value})}/></div>
