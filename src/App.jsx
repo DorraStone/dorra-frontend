@@ -868,7 +868,7 @@ function HeroCarousel({onV}){
   return(
     <div style={{position:"relative",height:"100%",minHeight:"100%",overflow:"hidden",background:"var(--g)",cursor:"pointer"}}
       onTouchStart={e=>setTx(e.touches[0].clientX)}
-      onTouchEnd={e=>{if(tx===null)return;const d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>40)setIdx(i=>d<0?(i+1)%items.length:(i-1+items.length)%items.length);setTx(null);}}
+      onTouchEnd={e=>{if(tx===null)return;const d=e.changedTouches[0].clientX-tx;const swiped=Math.abs(d)>=40;if(swiped)setIdx(i=>d<0?(i+1)%items.length:(i-1+items.length)%items.length);setTx(null);}}
       onClick={()=>onV(cur,cur.stones)}>
       {imgSrc&&<img src={imgSrc} alt={cur.name} style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center",display:"block",opacity:.65,transition:"opacity .8s ease"}}/>}
       <div style={{position:"absolute",inset:0,background:"linear-gradient(to bottom,rgba(6,35,24,.1) 0%,rgba(6,35,24,.5) 100%)"}}/>
@@ -971,6 +971,7 @@ function HomePage({setPage,onV,onA}){
       </div>
     </div>
 
+  </div>
     );
 }
 
