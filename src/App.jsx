@@ -1808,50 +1808,219 @@ function ReviewsPage(){
 }
 
 function AdminDashboard(){
-  const pw="dorra2026";
-  const[auth,setAuth]=useState(false);
-  const[inp,setInp]=useState("");
-  const[orders,setOrders]=useState(()=>{try{return JSON.parse(localStorage.getItem("dorra_orders")||"[]");}catch{return[];}});
-  const[pendingReviews,setPendingReviews]=useState(()=>{try{return JSON.parse(localStorage.getItem("dorra_reviews_pending")||"[]");}catch{return[];}});
-  const[publishedReviews,setPublishedReviews]=useState(()=>{try{return JSON.parse(localStorage.getItem("dorra_reviews_published")||"[]");}catch{return[];}});
-  useEffect(()=>{const h=()=>{try{setOrders(JSON.parse(localStorage.getItem("dorra_orders")||"[]"));setPendingReviews(JSON.parse(localStorage.getItem("dorra_reviews_pending")||"[]"));}catch{}};window.addEventListener("storage",h);return()=>window.removeEventListener("storage",h);},[]);
-  const G={bg:"#0a1a0e",card:"#0f2414",cream:"#f5efe3",gold:"#b8913c",ink:"rgba(245,239,227,.85)",faint:"rgba(245,239,227,.35)"};
-  const approveReview=(id)=>{const rev=pendingReviews.find(r=>r.id===id);if(!rev)return;const np=pendingReviews.filter(r=>r.id!==id);const npub=[...publishedReviews,{...rev,approved:true}];setPendingReviews(np);setPublishedReviews(npub);localStorage.setItem("dorra_reviews_pending",JSON.stringify(np));localStorage.setItem("dorra_reviews_published",JSON.stringify(npub));};
-  const rejectReview=(id)=>{const np=pendingReviews.filter(r=>r.id!==id);setPendingReviews(np);localStorage.setItem("dorra_reviews_pending",JSON.stringify(np));};
-  const updStatus=(ref,st)=>{const up=orders.map(o=>o.ref===ref?{...o,status:st}:o);setOrders(up);localStorage.setItem("dorra_orders",JSON.stringify(up));};
-  if(!auth)return(<div style={{minHeight:"100vh",background:G.bg,display:"flex",alignItems:"center",justifyContent:"center"}}><div style={{background:G.card,padding:"40px",textAlign:"center",minWidth:280}}><div style={{fontFamily:"Cormorant Garamond,serif",fontSize:32,color:G.cream,marginBottom:20}}>Dorra Admin</div><input type="password" placeholder="Password" value={inp} onChange={e=>setInp(e.target.value)} onKeyDown={e=>e.key==="Enter"&&inp===pw&&setAuth(true)} style={{width:"100%",background:"transparent",border:"none",borderBottom:"1px solid "+G.gold,color:G.cream,padding:"8px 0",fontSize:14,outline:"none",marginBottom:16,textAlign:"center"}}/><button onClick={()=>inp===pw&&setAuth(true)} style={{background:G.gold,color:"#fdfbf7",border:"none",padding:"10px 28px",cursor:"pointer",fontSize:12,letterSpacing:".2em",textTransform:"uppercase"}}>Enter</button></div></div>);
-  const stats={total:orders.length,pending:orders.filter(o=>o.status==="pending").length,revenue:orders.reduce((s,o)=>s+(o.dueNow||o.total||0),0)};
-  return(<div style={{minHeight:"100vh",background:G.bg,color:G.ink,fontFamily:"Jost,sans-serif",padding:"32px"}}>
-    <div style={{maxWidth:1100,margin:"0 auto"}}>
-      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:28}}><div style={{fontFamily:"Cormorant Garamond,serif",fontSize:28,color:G.cream}}>Dorra Admin</div><div style={{fontSize:10,letterSpacing:".2em",textTransform:"uppercase",color:G.faint}}>Orders: {stats.total} | Pending: {stats.pending} | Revenue: {fmt(stats.revenue)}</div></div>
-      {pendingReviews.length>0&&<div style={{marginBottom:24}}>
-        <div style={{fontSize:8,letterSpacing:".22em",textTransform:"uppercase",color:G.gold,marginBottom:12}}>Pending Reviews ({pendingReviews.length})</div>
-        {pendingReviews.map(rev=>(
-          <div key={rev.id} style={{background:G.card,padding:"13px 16px",marginBottom:6,display:"flex",alignItems:"flex-start",justifyContent:"space-between",gap:12}}>
-            <div style={{flex:1}}><div style={{display:"flex",gap:8,marginBottom:4}}><span style={{fontSize:12,color:G.cream}}>{rev.name}</span>{rev.piece&&<span style={{fontSize:9,letterSpacing:".1em",color:G.gold}}>{rev.piece}</span>}</div><p style={{fontSize:11,color:G.faint,lineHeight:1.7}}>{rev.text}</p></div>
-            <div style={{display:"flex",gap:6,flexShrink:0}}><button onClick={()=>approveReview(rev.id)} style={{background:"rgba(50,160,80,.15)",border:"1px solid rgba(50,160,80,.3)",color:"#6ecf8a",padding:"5px 10px",fontSize:8,letterSpacing:".1em",textTransform:"uppercase",cursor:"pointer"}}>Approve</button><button onClick={()=>rejectReview(rev.id)} style={{background:"rgba(200,70,70,.1)",border:"1px solid rgba(200,70,70,.25)",color:"#e08080",padding:"5px 10px",fontSize:8,letterSpacing:".1em",textTransform:"uppercase",cursor:"pointer"}}>Reject</button></div>
-          </div>
+  const[orders,setOrders]=useState([]);
+  const[reviews,setReviews]=useState([]);
+  const[returns,setReturns]=useState([]);
+  const[exchanges,setExchanges]=useState([]);
+  const[tab,setTab]=useState("orders");
+  const[loading,setLoading]=useState(true);
+  const[updating,setUpdating]=useState(null);
+  const ADMIN_SECRET="dorra2026admin";
+  const headers={"Content-Type":"application/json","x-admin-secret":ADMIN_SECRET};
+
+  const load=async()=>{
+    setLoading(true);
+    try{
+      const[oRes,rRes,retRes,excRes]=await Promise.all([
+        fetch(API_BASE+"/api/orders",{headers}),
+        fetch(API_BASE+"/api/reviews/pending",{headers}),
+        fetch(API_BASE+"/api/orders/returns-list",{headers}).catch(()=>({json:()=>[]})),
+        fetch(API_BASE+"/api/orders/exchanges-list",{headers}).catch(()=>({json:()=>[]})),
+      ]);
+      const o=await oRes.json();
+      const r=await rRes.json();
+      const ret=await retRes.json();
+      const exc=await excRes.json();
+      if(Array.isArray(o))setOrders(o);
+      if(Array.isArray(r))setReviews(r);
+      if(Array.isArray(ret))setReturns(ret);
+      if(Array.isArray(exc))setExchanges(exc);
+    }catch(e){console.error("Admin load:",e);}
+    setLoading(false);
+  };
+
+  useEffect(()=>{load();},[]);
+
+  const updateStatus=async(ref,status)=>{
+    setUpdating(ref);
+    try{
+      await fetch(API_BASE+"/api/orders/"+ref+"/status",{method:"PATCH",headers,body:JSON.stringify({status})});
+      setOrders(o=>o.map(x=>x.ref===ref?{...x,status}:x));
+    }catch(e){console.error(e);}
+    setUpdating(null);
+  };
+
+  const approveReview=async(id)=>{
+    try{
+      await fetch(API_BASE+"/api/reviews/"+id+"/approve",{method:"PATCH",headers});
+      setReviews(r=>r.filter(x=>x._id!==id));
+    }catch(e){console.error(e);}
+  };
+
+  const updateRequest=async(type,id,status)=>{
+    try{
+      await fetch(API_BASE+"/api/orders/"+type+"/"+id,{method:"PATCH",headers,body:JSON.stringify({status})});
+      if(type==="returns-list")setReturns(r=>r.map(x=>x._id===id?{...x,status}:x));
+      else setExchanges(r=>r.map(x=>x._id===id?{...x,status}:x));
+    }catch(e){console.error(e);}
+  };
+  const deleteReview=async(id)=>{
+    try{
+      await fetch(API_BASE+"/api/reviews/"+id,{method:"DELETE",headers});
+      setReviews(r=>r.filter(x=>x._id!==id));
+    }catch(e){console.error(e);}
+  };
+
+  const G={bg:"#062318",card:"#0a2d1a",cream:"#f5efe3",gold:"#b8913c",ink:"rgba(245,239,227,.9)",faint:"rgba(245,239,227,.4)"};
+  const fmt2=n=>"EGP "+Number(n||0).toLocaleString();
+  const statusColors={pending:"#b8913c",confirmed:"#4a9e6b",processing:"#4a7fb5",shipped:"#9b59b6",delivered:"#27ae60",cancelled:"#e74c3c"};
+
+  const tabs=["orders","reviews","returns","exchanges"];
+  
+  return(
+    <div style={{minHeight:"100vh",background:G.bg,color:G.ink,fontFamily:"'Helvetica Neue',Arial,sans-serif",padding:"0 0 60px"}}>
+      {/* Header */}
+      <div style={{background:"rgba(0,0,0,.3)",padding:"20px 32px",display:"flex",alignItems:"center",justifyContent:"space-between",borderBottom:"1px solid rgba(184,145,60,.15)"}}>
+        <div>
+          <div style={{fontFamily:"Georgia,serif",fontSize:22,fontWeight:300,color:G.cream,letterSpacing:".04em"}}>Dorra Admin</div>
+          <div style={{fontSize:11,color:G.faint,marginTop:2}}>dorrastone.shop</div>
+        </div>
+        <button onClick={load} style={{background:"none",border:"1px solid rgba(184,145,60,.3)",color:G.gold,fontSize:11,letterSpacing:".1em",padding:"8px 16px",cursor:"pointer"}}>
+          {loading?"Loading...":"Refresh"}
+        </button>
+      </div>
+
+      {/* Tabs */}
+      <div style={{display:"flex",gap:0,borderBottom:"1px solid rgba(184,145,60,.12)",padding:"0 32px"}}>
+        {tabs.map(t=>(
+          <button key={t} onClick={()=>setTab(t)} style={{background:"none",border:"none",borderBottom:tab===t?"2px solid "+G.gold:"2px solid transparent",color:tab===t?G.gold:G.faint,fontSize:12,letterSpacing:".1em",textTransform:"uppercase",padding:"16px 20px",cursor:"pointer",transition:"all .2s"}}>
+            {t==="orders"?"Orders ("+orders.length+")":t==="reviews"?"Reviews ("+reviews.length+")":t==="returns"?"Returns ("+returns.length+")":"Exchanges ("+exchanges.length+")"}
+          </button>
         ))}
-      </div>}
-      <div style={{overflowX:"auto"}}><table style={{width:"100%",borderCollapse:"collapse"}}>
-        <thead><tr>{["Ref","Date","Customer","Items","Total","Due Now","Payment","Status","Action"].map(h=><th key={h} style={{textAlign:"left",padding:"8px 10px",fontSize:8,letterSpacing:".18em",textTransform:"uppercase",color:G.gold,borderBottom:"1px solid rgba(184,145,60,.15)",fontWeight:400}}>{h}</th>)}</tr></thead>
-        <tbody>{orders.length===0?<tr><td colSpan={9} style={{padding:"32px",textAlign:"center",color:G.faint,fontSize:13}}>No orders yet.</td></tr>:orders.slice().reverse().map(o=>(
-          <tr key={o.ref} style={{borderBottom:"1px solid rgba(245,239,227,.04)"}}>
-            <td style={{padding:"10px",fontSize:11,color:G.cream}}>{o.ref}</td>
-            <td style={{padding:"10px",fontSize:10,color:G.faint}}>{new Date(o.date).toLocaleDateString("en-GB")}</td>
-            <td style={{padding:"10px",fontSize:11,color:G.ink}}>{o.customer?.name}<br/><span style={{fontSize:9,color:G.faint}}>{o.customer?.phone}</span></td>
-            <td style={{padding:"10px",fontSize:10,color:G.faint,maxWidth:160}}>{o.items?.map(i=>i.name+" x"+i.qty).join(", ")}</td>
-            <td style={{padding:"10px",fontSize:11,color:G.cream}}>{fmt(o.total)}</td>
-            <td style={{padding:"10px",fontSize:11,color:G.gold}}>{fmt(o.dueNow||0)}</td>
-            <td style={{padding:"10px",fontSize:10,color:G.faint}}>{o.payment}</td>
-            <td style={{padding:"10px"}}><span style={{fontSize:9,letterSpacing:".1em",textTransform:"uppercase",padding:"3px 7px",background:o.status==="pending"?"rgba(184,145,60,.15)":o.status==="shipped"?"rgba(50,160,80,.15)":"rgba(200,70,70,.1)",color:o.status==="pending"?G.gold:o.status==="shipped"?"#6ecf8a":"#e08080"}}>{o.status}</span></td>
-            <td style={{padding:"10px"}}><select onChange={e=>updStatus(o.ref,e.target.value)} value={o.status} style={{background:G.card,border:"1px solid rgba(184,145,60,.2)",color:G.ink,padding:"4px 6px",fontSize:10,cursor:"pointer"}}><option value="pending">Pending</option><option value="confirmed">Confirmed</option><option value="crafting">Crafting</option><option value="shipped">Shipped</option><option value="delivered">Delivered</option><option value="cancelled">Cancelled</option></select></td>
-          </tr>
-        ))}</tbody>
-      </table></div>
+      </div>
+
+      <div style={{padding:"24px 32px"}}>
+        {loading&&<p style={{color:G.faint,fontSize:14,textAlign:"center",padding:"40px 0"}}>Loading from database...</p>}
+
+        {/* ORDERS TAB */}
+        {!loading&&tab==="orders"&&(
+          <div>
+            {orders.length===0&&<p style={{color:G.faint,fontSize:14,textAlign:"center",padding:"40px 0"}}>No orders yet.</p>}
+            {orders.map(o=>(
+              <div key={o.ref||o._id} style={{background:G.card,marginBottom:12,padding:"18px 20px",borderLeft:"2px solid "+(statusColors[o.status]||G.gold)}}>
+                <div style={{display:"flex",alignItems:"flex-start",justifyContent:"space-between",flexWrap:"wrap",gap:12}}>
+                  <div>
+                    <div style={{fontSize:14,color:G.cream,fontWeight:500,marginBottom:4}}>{o.ref}</div>
+                    <div style={{fontSize:13,color:G.ink,marginBottom:2}}>{o.customer&&o.customer.name}  {o.customer&&o.customer.phone}</div>
+                    <div style={{fontSize:12,color:G.faint,marginBottom:2}}>{o.customer&&o.customer.email}</div>
+                    <div style={{fontSize:12,color:G.faint,marginBottom:6}}>{o.customer&&o.customer.address}</div>
+                    <div style={{fontSize:13,color:G.gold,fontFamily:"Georgia,serif"}}>{fmt2(o.total)}</div>
+                    {o.items&&o.items.map((item,i)=>(
+                      <div key={i} style={{fontSize:11,color:G.faint,marginTop:4}}>{item.name}{item.size?" ("+item.size+")":""} x{item.qty}</div>
+                    ))}
+                  </div>
+                  <div style={{textAlign:"right"}}>
+                    <div style={{fontSize:11,padding:"4px 10px",background:"rgba(0,0,0,.3)",color:statusColors[o.status]||G.gold,letterSpacing:".08em",textTransform:"uppercase",marginBottom:10,display:"inline-block"}}>{o.status||"pending"}</div>
+                    <div style={{fontSize:11,color:G.faint,marginBottom:10}}>{o.payment}</div>
+                    <div style={{display:"flex",flexDirection:"column",gap:6}}>
+                      {["confirmed","processing","shipped","delivered","cancelled"].map(s=>(
+                        <button key={s} onClick={()=>updateStatus(o.ref,s)}
+                          disabled={o.status===s||updating===o.ref}
+                          style={{background:o.status===s?"rgba(184,145,60,.15)":"none",border:"1px solid rgba(184,145,60,.2)",color:o.status===s?G.gold:G.faint,fontSize:10,letterSpacing:".08em",padding:"5px 12px",cursor:o.status===s?"default":"pointer",textTransform:"uppercase",opacity:updating===o.ref?.6:1}}>
+                          {s}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <div style={{fontSize:11,color:G.faint,marginTop:8,borderTop:"1px solid rgba(184,145,60,.08)",paddingTop:8}}>
+                  {new Date(o.createdAt).toLocaleString("en-GB")}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+
+        {/* RETURNS TAB */}
+        {!loading&&tab==="returns"&&(
+          <div>
+            {returns.length===0&&<p style={{color:G.faint,fontSize:14,textAlign:"center",padding:"40px 0"}}>No return requests.</p>}
+            {returns.map(r=>(
+              <div key={r._id} style={{background:G.card,marginBottom:12,padding:"18px 20px",borderLeft:"2px solid "+(r.status==="accepted"?"#4a9e6b":r.status==="denied"?"#e74c3c":G.gold)}}>
+                <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:12,flexWrap:"wrap"}}>
+                  <div>
+                    <div style={{fontSize:13,color:G.cream,fontWeight:500,marginBottom:4}}>{r.name}  <span style={{color:G.gold}}>{r.ref}</span></div>
+                    <div style={{fontSize:12,color:G.faint,marginBottom:4}}>{r.address}</div>
+                    <div style={{fontSize:13,color:G.ink,lineHeight:1.7,marginBottom:6}}>Reason: {r.reason}</div>
+                    <div style={{fontSize:11,color:G.faint}}>{new Date(r.createdAt).toLocaleString("en-GB")}</div>
+                    <div style={{fontSize:11,padding:"3px 10px",display:"inline-block",marginTop:6,background:"rgba(0,0,0,.3)",color:r.status==="accepted"?"#4a9e6b":r.status==="denied"?"#e74c3c":G.gold,textTransform:"uppercase",letterSpacing:".08em"}}>{r.status||"pending"}</div>
+                  </div>
+                  {(!r.status||r.status==="pending")&&<div style={{display:"flex",flexDirection:"column",gap:8}}>
+                    <button onClick={()=>updateRequest("returns-list",r._id,"accepted")} style={{background:"rgba(74,158,107,.15)",border:"1px solid rgba(74,158,107,.4)",color:"#4a9e6b",fontSize:11,letterSpacing:".08em",padding:"8px 16px",cursor:"pointer",textTransform:"uppercase"}}>Accept</button>
+                    <button onClick={()=>updateRequest("returns-list",r._id,"denied")} style={{background:"rgba(231,76,60,.08)",border:"1px solid rgba(231,76,60,.3)",color:"#e74c3c",fontSize:11,letterSpacing:".08em",padding:"8px 16px",cursor:"pointer",textTransform:"uppercase"}}>Deny</button>
+                  </div>}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* EXCHANGES TAB */}
+        {!loading&&tab==="exchanges"&&(
+          <div>
+            {exchanges.length===0&&<p style={{color:G.faint,fontSize:14,textAlign:"center",padding:"40px 0"}}>No exchange requests.</p>}
+            {exchanges.map(r=>(
+              <div key={r._id} style={{background:G.card,marginBottom:12,padding:"18px 20px",borderLeft:"2px solid "+(r.status==="accepted"?"#4a9e6b":r.status==="denied"?"#e74c3c":G.gold)}}>
+                <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:12,flexWrap:"wrap"}}>
+                  <div>
+                    <div style={{fontSize:13,color:G.cream,fontWeight:500,marginBottom:4}}>{r.name}  <span style={{color:G.gold}}>{r.ref}</span></div>
+                    <div style={{fontSize:12,color:G.faint,marginBottom:4}}>{r.address}</div>
+                    <div style={{fontSize:13,color:G.ink,lineHeight:1.7,marginBottom:6}}>Reason: {r.reason}</div>
+                    <div style={{fontSize:11,color:G.faint}}>{new Date(r.createdAt).toLocaleString("en-GB")}</div>
+                    <div style={{fontSize:11,padding:"3px 10px",display:"inline-block",marginTop:6,background:"rgba(0,0,0,.3)",color:r.status==="accepted"?"#4a9e6b":r.status==="denied"?"#e74c3c":G.gold,textTransform:"uppercase",letterSpacing:".08em"}}>{r.status||"pending"}</div>
+                  </div>
+                  {(!r.status||r.status==="pending")&&<div style={{display:"flex",flexDirection:"column",gap:8}}>
+                    <button onClick={()=>updateRequest("exchanges-list",r._id,"accepted")} style={{background:"rgba(74,158,107,.15)",border:"1px solid rgba(74,158,107,.4)",color:"#4a9e6b",fontSize:11,letterSpacing:".08em",padding:"8px 16px",cursor:"pointer",textTransform:"uppercase"}}>Accept</button>
+                    <button onClick={()=>updateRequest("exchanges-list",r._id,"denied")} style={{background:"rgba(231,76,60,.08)",border:"1px solid rgba(231,76,60,.3)",color:"#e74c3c",fontSize:11,letterSpacing:".08em",padding:"8px 16px",cursor:"pointer",textTransform:"uppercase"}}>Deny</button>
+                  </div>}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* REVIEWS TAB */}
+        {!loading&&tab==="reviews"&&(
+          <div>
+            {reviews.length===0&&<p style={{color:G.faint,fontSize:14,textAlign:"center",padding:"40px 0"}}>No pending reviews.</p>}
+            {reviews.map(r=>(
+              <div key={r._id} style={{background:G.card,marginBottom:12,padding:"18px 20px",borderLeft:"2px solid "+G.gold}}>
+                <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:12,flexWrap:"wrap"}}>
+                  <div style={{flex:1}}>
+                    <div style={{fontSize:14,color:G.cream,fontWeight:500,marginBottom:4}}>{r.name}{r.piece?"  "+r.piece:""}</div>
+                    <p style={{fontSize:13,color:G.ink,lineHeight:1.8,fontStyle:"italic",marginBottom:8}}>"{r.text}"</p>
+                    {r.img&&<div style={{fontSize:11,color:G.faint}}>Has photo</div>}
+                    <div style={{fontSize:11,color:G.faint}}>{new Date(r.createdAt).toLocaleString("en-GB")}</div>
+                  </div>
+                  <div style={{display:"flex",flexDirection:"column",gap:8}}>
+                    <button onClick={()=>approveReview(r._id)} style={{background:"rgba(74,158,107,.15)",border:"1px solid rgba(74,158,107,.4)",color:"#4a9e6b",fontSize:11,letterSpacing:".08em",padding:"8px 16px",cursor:"pointer",textTransform:"uppercase"}}>
+                      Approve
+                    </button>
+                    <button onClick={()=>deleteReview(r._id)} style={{background:"rgba(231,76,60,.08)",border:"1px solid rgba(231,76,60,.3)",color:"#e74c3c",fontSize:11,letterSpacing:".08em",padding:"8px 16px",cursor:"pointer",textTransform:"uppercase"}}>
+                      Reject
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
-  </div>);
+  );
 }
+
 
 function Footer({setPage}){
   const lnk={display:"block",background:"none",border:"none",cursor:"pointer",fontFamily:"var(--sans)",fontSize:12,fontWeight:300,color:"rgba(245,239,227,.52)",padding:0,textAlign:"left",transition:"color .2s",lineHeight:1};
