@@ -437,7 +437,7 @@ const CSS_LINES=[
   ".detail-add:hover{background:var(--gold);color:var(--g);}",
   ".cart-overlay{position:fixed;top:64px;left:0;right:0;bottom:0;z-index:9001;background:rgba(3,15,9,.7);animation:fade-in .22s;}",
   "@keyframes fade-in{from{opacity:0}to{opacity:1}}",
-  ".cart-drawer{position:fixed;top:64px;right:0;bottom:0;width:390px;z-index:9002;background:var(--cr);z-index:800;display:flex;flex-direction:column;animation:slide-right .38s var(--ease);box-shadow:-12px 0 40px rgba(6,35,24,.18);}",
+  ".cart-drawer{position:fixed;top:64px;right:0;bottom:0;width:390px;z-index:9002;background:var(--cr);display:flex;flex-direction:column;animation:slide-right .38s var(--ease);box-shadow:-12px 0 40px rgba(6,35,24,.18);}",
   "@keyframes slide-right{from{transform:translateX(100%)}to{transform:none}}",
   ".cart-head{padding:20px 22px 16px;border-bottom:1px solid rgba(26,18,10,.09);display:flex;align-items:center;justify-content:space-between;}",
   ".cart-title{font-family:var(--serif);font-size:22px;font-weight:300;color:var(--ink);}",
@@ -687,17 +687,20 @@ function Nav({page,setPage,cc,setCO}){
   const[scr,setScr]=useState(false);
   useEffect(()=>{const h=()=>setScr(window.scrollY>60);window.addEventListener("scroll",h,{passive:true});return()=>window.removeEventListener("scroll",h);},[]);
   const go=id=>{setCO(false);setPage(id);window.__dorraGo=go;setMob(false);setSs(false);setQ("");window.scrollTo(0,0);document.documentElement.scrollTop=0;
-    try{window.location.hash=id==="home"?"#":"#"+id;}catch(e){}
+    try{
+      const h="#page-"+id;
+      window.history.pushState({dorraPage:id},"",h);
+    }catch(e){}
   };
   window.__dorraGo=go;
   useEffect(()=>{
-    const onHash=()=>{
-      const h=window.location.hash.replace("#","").replace("/","").trim();
-      const pg=h&&h.length>0?h:"home";
-      setCO(false);setPage(pg);window.scrollTo(0,0);
+    const onPop=e=>{
+      if(e.state&&e.state.dorraPage){
+        setCO(false);setPage(e.state.dorraPage);window.scrollTo(0,0);
+      }
     };
-    window.addEventListener("hashchange",onHash);
-    return()=>window.removeEventListener("hashchange",onHash);
+    window.addEventListener("popstate",onPop);
+    return()=>window.removeEventListener("popstate",onPop);
   },[]);
   const links=[{id:"home",l:"Home"},{id:"all",l:"The Collection"},{id:"bracelets",l:"Bracelets"},{id:"necklaces",l:"Necklaces"},{id:"anklets",l:"Anklets"},{id:"earrings",l:"Earrings"},{id:"stones",l:"Stones"},{id:"care",l:"Care"},{id:"reviews",l:"Reviews"},{id:"returns",l:"Returns"},{id:"exchanges",l:"Exchanges"},{id:"story",l:"Our Story"},{id:"contact",l:"Contact"}];
   const results=q.length>1?CATALOG.filter(p=>p.type!=="Care"&&(p.name.toLowerCase().includes(q.toLowerCase())||p.stones.some(s=>s.toLowerCase().includes(q.toLowerCase())))):[];
@@ -1239,7 +1242,7 @@ function CustomizePage({onAddCart,onGoCart}){
             onClick={addToCartAndCheckout}
             disabled={!picked.length}
           >
-            Add to Cart and Proceed to Checkout
+            Add to Cart
           </button>
           {!picked.length&&(
             <p style={{fontSize:10,color:"var(--ink3)",textAlign:"center",marginTop:6}}>Choose at least one stone to continue.</p>
@@ -1336,8 +1339,12 @@ function CartDrawer({cart,onClose,onQty,onPkg,onCk}){
   const total=cart.reduce((s,i)=>s+i.price*i.qty,0);
   if(cart.length===0)return(
     <div className="cart-overlay" onClick={onClose}>
-      <div className="cart-panel" onClick={e=>e.stopPropagation()}>
-        <div className="cart-head"><span className="cart-title">Your Cart</span><button className="cart-close" onClick={onClose}>x</button></div>
+      <div className="cart-drawer" onClick={e=>e.stopPropagation()}>
+        <div className="cart-head">
+          <button onClick={onClose} style={{background:"none",border:"none",cursor:"pointer",fontSize:11,color:"var(--ink3)",letterSpacing:".1em",textTransform:"uppercase",display:"flex",alignItems:"center",gap:5,padding:0}}>&#8592; Shop</button>
+          <span className="cart-title">Cart</span>
+          <button className="cart-close" onClick={onClose} style={{fontSize:20,fontWeight:300,lineHeight:1}}>&#x2715;</button>
+        </div>
         <div style={{padding:"52px 24px",textAlign:"center"}}>
           <p style={{fontFamily:"var(--serif)",fontSize:22,fontWeight:300,color:"var(--ink)",marginBottom:8}}>Your cart is empty.</p>
           <p style={{fontSize:12,color:"var(--ink3)"}}>Add a piece to begin.</p>
@@ -1347,7 +1354,7 @@ function CartDrawer({cart,onClose,onQty,onPkg,onCk}){
   );
   return(
     <div className="cart-overlay" onClick={onClose}>
-      <div className="cart-panel" onClick={e=>e.stopPropagation()}>
+      <div className="cart-drawer" onClick={e=>e.stopPropagation()}>
         <div className="cart-head"><span className="cart-title">Your Cart ({cart.reduce((s,i)=>s+i.qty,0)})</span><button className="cart-close" onClick={onClose}>x</button></div>
         <div className="cart-items">
           {cart.map((item,i)=>(
@@ -1371,7 +1378,7 @@ function CartDrawer({cart,onClose,onQty,onPkg,onCk}){
         </div>
         <div className="cart-foot">
           <div className="cart-total-row"><span className="cart-total-label">Total</span><span className="cart-total-val">{fmt(total)}</span></div>
-          <button className="btn btn-gold btn-full" style={{padding:"14px",fontSize:9,letterSpacing:".22em",marginTop:12}} onClick={onCk}>Proceed to Checkout</button>
+          <button className="btn btn-gold btn-full" style={{padding:"14px",fontSize:9,letterSpacing:".22em",marginTop:12,padding:"15px",fontSize:10}} onClick={onCk}>Proceed to Checkout</button>
         </div>
       </div>
     </div>
