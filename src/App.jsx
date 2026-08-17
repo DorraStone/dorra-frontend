@@ -254,7 +254,7 @@ const CSS_LINES=[
   "@media(prefers-reduced-motion:no-preference){html{scroll-behavior:auto;}}",
   "html *{scroll-behavior:auto;}",
   "*{box-sizing:border-box;max-width:100%;}",
-  "body{overflow-x:hidden;width:100%;}",
+  "body{overflow-x:hidden;width:100%;;padding-top:64px;}",
   "html,body{overflow-x:hidden;max-width:100%;}",
   "body{font-family:var(--sans);background:var(--cr);color:var(--ink);font-weight:300;-webkit-font-smoothing:antialiased;overflow-x:hidden;}",
   "img{display:block;max-width:100%;}",
@@ -309,7 +309,7 @@ const CSS_LINES=[
   ".search-name{font-family:var(--serif);font-size:15px;color:var(--cr);display:block;}",
   ".search-meta{font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);display:block;opacity:.8;margin-top:1px;}",
   ".hero{height:100vh;min-height:580px;background:var(--g);display:grid;grid-template-columns:1fr 1fr;overflow:hidden;}",
-  ".hero-l{display:flex;flex-direction:column;justify-content:center;padding:0 72px;z-index:2;}",
+  ".hero-l{display:flex;flex-direction:column;justify-content:center;padding:0 72px;z-index:2;align-items:flex-start;}",
   ".hero-tag{font-size:8.5px;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;opacity:0;animation:fade-up .9s .3s forwards;}",
   "@keyframes fade-up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}",
   ".hero-title{font-family:var(--serif);font-size:clamp(52px,6.5vw,104px);font-weight:300;line-height:.92;color:var(--cr);margin-bottom:22px;letter-spacing:-.01em;}",
@@ -334,7 +334,7 @@ const CSS_LINES=[
   ".btn-ghost:hover{border-color:var(--gold);color:var(--cr);}",
   ".btn-dark{background:var(--g);color:var(--cr);padding:11px 24px;}",
   ".btn-dark:hover{background:var(--g2);}",
-  ".btn-outline-gold{background:none;border:1px solid rgba(184,145,60,.4);color:var(--g);transition:all .25s;}", ".btn-outline{background:transparent;border:1px solid rgba(184,145,60,.25);color:var(--gold);padding:7px 14px;font-size:8px;}",
+  ".btn-outline-gold{background:none;border:1px solid rgba(184,145,60,.4);color:var(--cr);transition:all .25s;}", ".btn-outline{background:transparent;border:1px solid rgba(184,145,60,.25);color:var(--gold);padding:7px 14px;font-size:8px;}",
   ".btn-outline:hover{background:var(--gold);color:var(--g);}",
   ".btn-full{width:100%;justify-content:center;}",
   ".btn:disabled{opacity:.22;pointer-events:none;}",
@@ -435,9 +435,9 @@ const CSS_LINES=[
   ".detail-care-text{font-size:12px;color:var(--ink3);line-height:1.82;font-weight:300;}",
   ".detail-add{flex:1;padding:13px;font-family:var(--sans);font-size:8.5px;letter-spacing:.19em;text-transform:uppercase;background:var(--g);color:var(--cr);border:none;cursor:pointer;transition:background .28s;}",
   ".detail-add:hover{background:var(--gold);color:var(--g);}",
-  ".cart-overlay{position:fixed;inset:0;z-index:9000;background:rgba(3,15,9,.7);animation:fade-in .22s;}",
+  ".cart-overlay{position:fixed;top:64px;left:0;right:0;bottom:0;z-index:9000;background:rgba(3,15,9,.7);animation:fade-in .22s;}",
   "@keyframes fade-in{from{opacity:0}to{opacity:1}}",
-  ".cart-drawer{position:fixed;top:0;right:0;bottom:0;width:390px;background:var(--cr);z-index:9001;display:flex;flex-direction:column;animation:slide-right .38s var(--ease);box-shadow:-12px 0 40px rgba(6,35,24,.18);}",
+  ".cart-drawer{position:fixed;top:64px;right:0;bottom:0;width:390px;background:var(--cr);z-index:9001;display:flex;flex-direction:column;animation:slide-right .38s var(--ease);box-shadow:-12px 0 40px rgba(6,35,24,.18);}",
   "@keyframes slide-right{from{transform:translateX(100%)}to{transform:none}}",
   ".cart-head{padding:20px 22px 16px;border-bottom:1px solid rgba(26,18,10,.09);display:flex;align-items:center;justify-content:space-between;}",
   ".cart-title{font-family:var(--serif);font-size:22px;font-weight:300;color:var(--ink);}",
@@ -486,7 +486,7 @@ const CSS_LINES=[
   ".field-select{appearance:none;background:var(--cr2);padding:8px;}",
   ".field-note{font-size:10px;color:var(--ink3);margin-top:4px;line-height:1.65;border-left:2px solid var(--gold);padding-left:8px;background:var(--cr2);padding:6px 8px;}",
   ".field-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}",
-  ".step-bar{display:flex;align-items:center;gap:7px;margin-top:5px;}",
+  ".step-bar{display:flex;align-items:center;gap:7px;padding:20px 0 16px;}",
   ".step-dot{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:500;transition:all .22s;}",
   ".step-done{background:var(--gold);color:var(--g);}",
   ".step-active{background:var(--g);color:var(--gold);border:2px solid var(--gold);}",
@@ -576,8 +576,8 @@ const CSS_LINES=[
   ".success-icon{font-family:var(--serif);font-size:40px;color:var(--gold);}",
   ".success-title{font-family:var(--serif);font-size:26px;font-weight:300;color:var(--ink);}",
   ".care-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;align-items:stretch;}",
-  ".care-step{background:var(--cr2);padding:22px 18px;border-top:2px solid transparent;display:flex;flex-direction:column;transition:border-top-color .28s,transform .35s var(--ease);}",
-  ".care-step:hover{border-top-color:var(--gold);}",
+  ".care-step{background:#062318;padding:22px 18px;border-top:2px solid rgba(184,145,60,.3);display:flex;flex-direction:column;transition:border-top-color .28s,transform .35s var(--ease);}",
+  ".care-step:hover{border-top-color:var(--gold);background:#041a0f;}",
   ".care-step-icon{font-family:var(--serif);font-size:17px;color:var(--gold);margin-bottom:9px;opacity:.6;}",
   ".care-step-title{font-family:var(--serif);font-size:13px;color:var(--ink);margin-bottom:4px;}",
   ".care-step-text{font-size:11px;color:var(--ink3);line-height:1.75;font-weight:300;}",
@@ -586,7 +586,7 @@ const CSS_LINES=[
   
   ".nav{padding:0 20px;height:56px;}",
   ".hero{grid-template-columns:1fr;}",
-  ".hero-l{padding:80px 20px 48px;align-items:center;text-align:center;}",
+  ".hero-l{padding:72px 24px 40px;}",
   ".hero-img{display:block;overflow:hidden;position:relative;}",
   ".page-fade-in{animation:page-in .4s cubic-bezier(.16,1,.3,1) both;}",
   "@keyframes page-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}",
@@ -609,7 +609,7 @@ const CSS_LINES=[
 
   /*  MOBILE TEXT SIZES  */
   ".hero-title{font-size:clamp(38px,10vw,62px);}",
-  ".hero-sub{font-size:15px;line-height:1.85;color:rgba(245,239,227,.6);max-width:100%;text-align:center;}",".hero-btns{justify-content:center;}",
+  ".hero-sub{font-size:15px;line-height:1.85;color:rgba(245,239,227,.6);max-width:360px;}",".hero-btns{justify-content:flex-start;}",
   ".hero-tag{font-size:10px;letter-spacing:.3em;}",
 
   ".page-header-title{font-size:clamp(28px,7vw,42px);}",
@@ -688,7 +688,7 @@ function Nav({page,setPage,cc,setCO}){
   useEffect(()=>{const h=()=>setScr(window.scrollY>60);window.addEventListener("scroll",h,{passive:true});return()=>window.removeEventListener("scroll",h);},[]);
   const go=id=>{setCO(false);setPage(id);window.__dorraGo=go;setMob(false);setSs(false);setQ("");window.scrollTo(0,0);document.documentElement.scrollTop=0;};
   window.__dorraGo=go;
-  const links=[{id:"all",l:"Shop All"},{id:"bracelets",l:"Bracelets"},{id:"necklaces",l:"Necklaces"},{id:"anklets",l:"Anklets"},{id:"earrings",l:"Earrings"},{id:"stones",l:"Stones"},{id:"care",l:"Care"},{id:"reviews",l:"Reviews"},{id:"returns",l:"Returns"},{id:"exchanges",l:"Exchanges"},{id:"story",l:"Our Story"},{id:"contact",l:"Contact"}];
+  const links=[{id:"home",l:"Home"},{id:"all",l:"The Collection"},{id:"bracelets",l:"Bracelets"},{id:"necklaces",l:"Necklaces"},{id:"anklets",l:"Anklets"},{id:"earrings",l:"Earrings"},{id:"stones",l:"Stones"},{id:"care",l:"Care"},{id:"reviews",l:"Reviews"},{id:"returns",l:"Returns"},{id:"exchanges",l:"Exchanges"},{id:"story",l:"Our Story"},{id:"contact",l:"Contact"}];
   const results=q.length>1?CATALOG.filter(p=>p.type!=="Care"&&(p.name.toLowerCase().includes(q.toLowerCase())||p.stones.some(s=>s.toLowerCase().includes(q.toLowerCase())))):[];
   useEffect(()=>{
     if(!ss)return;
@@ -1023,7 +1023,7 @@ function TypePage({type,title,sub,onV,onA,setPage}){
   if(tpSort==="price_asc") products=[...products].sort((a,b)=>a.price-b.price);
   else if(tpSort==="price_desc") products=[...products].sort((a,b)=>b.price-a.price);
   return(
-    <div style={{paddingTop:64}}>
+    <div>
       <div style={{padding:"8px 40px",background:"var(--cr)",borderBottom:"1px solid rgba(26,18,10,.08)",position:"sticky",top:64,zIndex:500}}>
         <BackBtn label="Back to Home" onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");}}/>
       </div>
@@ -1072,7 +1072,7 @@ function StonesPage({onV,onA,setPage}){
     else if(stoneSort==="price_desc") products=[...products].sort((a,b)=>b.price-a.price);
     const lore=STONE_LORE[active];
     return(
-      <div style={{paddingTop:64}}>
+      <div>
         <div style={{background:"var(--g)",width:"100%"}}>
           <div style={{maxWidth:1200,margin:"0 auto",padding:"28px 52px 52px"}}>
             <button onClick={()=>setActive(null)} style={{background:"none",border:"none",color:"rgba(245,239,227,.5)",fontSize:8.5,letterSpacing:".22em",textTransform:"uppercase",cursor:"pointer",marginBottom:24,display:"inline-flex",alignItems:"center",gap:8,transition:"color .2s",fontFamily:"var(--sans)"}} onMouseEnter={e=>e.currentTarget.style.color="var(--cr)"} onMouseLeave={e=>e.currentTarget.style.color="rgba(245,239,227,.5)"}><span style={{fontSize:18,lineHeight:1}}>&#8592;</span> Back to Stones</button>
@@ -1129,7 +1129,7 @@ function StonesPage({onV,onA,setPage}){
   }
 
   return(
-    <div style={{paddingTop:64}}>
+    <div>
       <div className="page-header">
         <span className="page-header-tag" data-rv>Stones</span>
         <h1 className="page-header-title" data-rv data-d="1">Every stone carries a story</h1>
@@ -1166,16 +1166,16 @@ function StonesPage({onV,onA,setPage}){
   );
 }
 
-function CarePage({setPage,onA}){useRv();return(<div style={{paddingTop:64}}><div style={{padding:"8px 40px",background:"var(--cr)",borderBottom:"1px solid rgba(26,18,10,.08)",position:"sticky",top:64,zIndex:500}}><BackBtn label="Back to Home" onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");}}/></div><div className="page-header"><span className="page-header-tag" data-rv>Care</span><h1 className="page-header-title" data-rv data-d="1">Keep your copper alive</h1><p className="page-header-sub" data-rv data-d="2">Every Dorra order arrives with an anti-rust spray and a soft polishing cloth in a Dorra pouch  everything you need to keep your piece exactly as you first received it.</p></div><div className="section-cream"><div className="care-steps" data-rv>{[["Apply","A few drops of polish to the soft cloth."],["Rub","Gently along the copper wire in small circles."],["Rinse","Briefly with cool water."],["Dry","Pat dry immediately. Never leave wet."]].map((s,i)=><div key={s[0]} className="care-step"><div className="care-step-icon">0{i+1}</div><div className="care-step-title">{s[0]}</div><p className="care-step-text">{s[1]}</p></div>)}</div><div style={{maxWidth:560,margin:"40px auto 0",textAlign:"center"}} data-rv data-d="2"><p style={{fontSize:13,color:"var(--ink3)",lineHeight:2.0,marginBottom:20,fontWeight:300}}>The darkening of copper is a natural process called a patina - it is not damage. Your care kit lets you choose when to restore.</p><button className="btn btn-dark" onClick={()=>{
+function CarePage({setPage,onA}){useRv();return(<div><div style={{padding:"8px 40px",background:"var(--cr)",borderBottom:"1px solid rgba(26,18,10,.08)",position:"sticky",top:64,zIndex:500}}><BackBtn label="Back to Home" onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");}}/></div><div className="page-header"><span className="page-header-tag" data-rv>Care</span><h1 className="page-header-title" data-rv data-d="1">Keep your copper alive</h1><p className="page-header-sub" data-rv data-d="2">Every Dorra order arrives with an anti-rust spray and a soft polishing cloth in a Dorra pouch  everything you need to keep your piece exactly as you first received it.</p></div><div className="section-cream"><div className="care-steps" data-rv>{[["Apply","A few drops of polish to the soft cloth."],["Rub","Gently along the copper wire in small circles."],["Rinse","Briefly with cool water."],["Dry","Pat dry immediately. Never leave wet."]].map((s,i)=><div key={s[0]} className="care-step"><div className="care-step-icon">0{i+1}</div><div className="care-step-title">{s[0]}</div><p className="care-step-text">{s[1]}</p></div>)}</div><div style={{maxWidth:560,margin:"40px auto 0",textAlign:"center"}} data-rv data-d="2"><p style={{fontSize:13,color:"var(--ink3)",lineHeight:2.0,marginBottom:20,fontWeight:300}}>The darkening of copper is a natural process called a patina - it is not damage. Your care kit lets you choose when to restore.</p><button className="btn btn-dark" onClick={()=>{
               const kit=CATALOG.find(p=>p.type==="Care");
               if(kit&&onA){onA(kit,[],kit.price);}
             }}>Add Copper Care Kit to Cart</button></div></div></div>);}
 
-function StoryPage({setPage}){useRv();return(<div style={{paddingTop:64}}><div style={{padding:"8px 40px",background:"var(--cr)",borderBottom:"1px solid rgba(26,18,10,.08)",position:"sticky",top:64,zIndex:500}}><BackBtn label="Back to Home" onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");}}/></div><div className="story-split"><div className="story-left"><span className="sec-label sec-label-dark" data-rv>The Name</span><div style={{fontFamily:"var(--serif)",fontSize:"clamp(42px,5.4vw,76px)",color:"var(--gold)",fontStyle:"italic",lineHeight:1,marginBottom:7}} data-rv data-d="1">Dorra</div><div style={{fontSize:8,letterSpacing:".36em",textTransform:"uppercase",color:"rgba(245,239,227,.22)",marginBottom:19}} data-rv data-d="1">Pearl - Egypt</div><p style={{fontSize:13,color:"rgba(245,239,227,.44)",lineHeight:2.0,maxWidth:360,marginBottom:22,fontWeight:300}} data-rv data-d="2">In Arabic, Dorra means pearl - not found in the earth, born from a living creature's patient response to discomfort. A grain of sand held for years, becoming luminous.</p><div data-rv data-d="3">{[{n:"01",t:"The stone is chosen",tx:"Every piece begins with a stone selected for what it carries, not just how it looks."},{n:"02",t:"The copper is shaped",tx:"Raw copper wire, wound by hand over 2-4 days. No molds. No machines."},{n:"03",t:"The piece is finished",tx:"Polished, paired with its stone card, wrapped in its pouch."},{n:"04",t:"It finds its wearer",tx:"Every Dorra piece is made to order, for one person."}].map(item=><div key={item.n} className="timeline-row"><div className="timeline-num">{item.n}</div><div><div className="timeline-title">{item.t}</div><p className="timeline-sub">{item.tx}</p></div></div>)}</div></div><div className="story-right">{IMGS.logo&&<img src={IMGS.logo} alt="" style={{height:44,width:"auto",opacity:.15}}/>}</div></div><div className="story-mid"><div className="story-dark"><span className="sec-label sec-label-dark" data-rv>Our Story</span><h2 className="sec-title sec-title-dark" style={{marginBottom:10}} data-rv data-d="1">Nature is the original artisan. We are her hands.</h2><div className="sec-rule"/><p style={{fontSize:13,color:"rgba(245,239,227,.44)",lineHeight:2.0,maxWidth:360,fontWeight:300}} data-rv data-d="2">Dorra was born from the belief that the earth holds more beauty than any factory could. Each piece carries a stone chosen for its meaning, set in copper shaped by hand.</p><blockquote className="blockquote" data-rv data-d="3">"A pearl is not made by a jeweler. It is made by the sea."</blockquote></div><div className="story-light"><div style={{textAlign:"center"}}>{IMGS.logo&&<img src={IMGS.logo} alt="" style={{height:44,width:"auto",opacity:.15,marginBottom:12}}/>}<p style={{fontSize:8,letterSpacing:".2em",textTransform:"uppercase",color:"var(--ink3)"}}>Made in Egypt</p></div></div></div></div>);}
+function StoryPage({setPage}){useRv();return(<div><div style={{padding:"8px 40px",background:"var(--cr)",borderBottom:"1px solid rgba(26,18,10,.08)",position:"sticky",top:64,zIndex:500}}><BackBtn label="Back to Home" onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");}}/></div><div className="story-split"><div className="story-left"><span className="sec-label sec-label-dark" data-rv>The Name</span><div style={{fontFamily:"var(--serif)",fontSize:"clamp(42px,5.4vw,76px)",color:"var(--gold)",fontStyle:"italic",lineHeight:1,marginBottom:7}} data-rv data-d="1">Dorra</div><div style={{fontSize:8,letterSpacing:".36em",textTransform:"uppercase",color:"rgba(245,239,227,.22)",marginBottom:19}} data-rv data-d="1">Pearl - Egypt</div><p style={{fontSize:13,color:"rgba(245,239,227,.44)",lineHeight:2.0,maxWidth:360,marginBottom:22,fontWeight:300}} data-rv data-d="2">In Arabic, Dorra means pearl - not found in the earth, born from a living creature's patient response to discomfort. A grain of sand held for years, becoming luminous.</p><div data-rv data-d="3">{[{n:"01",t:"The stone is chosen",tx:"Every piece begins with a stone selected for what it carries, not just how it looks."},{n:"02",t:"The copper is shaped",tx:"Raw copper wire, wound by hand over 2-4 days. No molds. No machines."},{n:"03",t:"The piece is finished",tx:"Polished, paired with its stone card, wrapped in its pouch."},{n:"04",t:"It finds its wearer",tx:"Every Dorra piece is made to order, for one person."}].map(item=><div key={item.n} className="timeline-row"><div className="timeline-num">{item.n}</div><div><div className="timeline-title">{item.t}</div><p className="timeline-sub">{item.tx}</p></div></div>)}</div></div><div className="story-right">{IMGS.logo&&<img src={IMGS.logo} alt="" style={{height:44,width:"auto",opacity:.15}}/>}</div></div><div className="story-mid"><div className="story-dark"><span className="sec-label sec-label-dark" data-rv>Our Story</span><h2 className="sec-title sec-title-dark" style={{marginBottom:10}} data-rv data-d="1">Nature is the original artisan. We are her hands.</h2><div className="sec-rule"/><p style={{fontSize:13,color:"rgba(245,239,227,.44)",lineHeight:2.0,maxWidth:360,fontWeight:300}} data-rv data-d="2">Dorra was born from the belief that the earth holds more beauty than any factory could. Each piece carries a stone chosen for its meaning, set in copper shaped by hand.</p><blockquote className="blockquote" data-rv data-d="3">"A pearl is not made by a jeweler. It is made by the sea."</blockquote></div><div className="story-light"><div style={{textAlign:"center"}}>{IMGS.logo&&<img src={IMGS.logo} alt="" style={{height:44,width:"auto",opacity:.15,marginBottom:12}}/>}<p style={{fontSize:8,letterSpacing:".2em",textTransform:"uppercase",color:"var(--ink3)"}}>Made in Egypt</p></div></div></div></div>);}
 
 function ContactPage(){
   useRv();
-  return(<div style={{paddingTop:64}}>
+  return(<div>
     <div style={{padding:"6px 40px",background:"var(--cr)",borderBottom:"1px solid rgba(26,18,10,.08)",position:"sticky",top:64,zIndex:500}}><BackBtn label="Back to Home" onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");}}/></div>
     <div className="page-header">
       <span className="page-header-tag" data-rv>Get in Touch</span>
@@ -1300,7 +1300,7 @@ function CustomizePage({onAddCart,onGoCart,setPage}){
   };
 
   return(
-    <div style={{paddingTop:64}}>
+    <div>
       <div style={{padding:"8px 40px",background:"var(--cr)",borderBottom:"1px solid rgba(26,18,10,.08)",position:"sticky",top:64,zIndex:500}}>
         <BackBtn label="Back to Home" onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");}}/>
       </div>
@@ -1784,8 +1784,11 @@ function Checkout({cart,onClose,onOk,setLastOrder}){
       <div className="modal">
         <div className="modal-head">
           <div>
-            <h2 className="modal-title">Checkout</h2>
-            <div className="step-bar">
+            <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:4}}>
+              <h2 className="modal-title">Checkout</h2>
+              <button onClick={onClose} style={{background:"none",border:"none",cursor:"pointer",fontSize:11,color:"var(--ink3)",letterSpacing:".1em",textTransform:"uppercase",display:"flex",alignItems:"center",gap:5,padding:0}}>&#8592; Keep Shopping</button>
+            </div>
+            <div className="step-bar" style={{paddingTop:16}}>
               {["Details","Payment","Confirm"].map((s,i)=>[
                 <div key={s} className={"step-dot "+(step>i+1?"step-done":step===i+1?"step-active":"step-idle")}>{step>i+1?"v":i+1}</div>,
                 <span key={s+"l"} className={"step-label"+(step===i+1?" active-label":"")}>{s}</span>,
@@ -1928,7 +1931,7 @@ function AllPage({onV,onA,setPage}){
   // "best" keeps catalog order
 
   return(
-    <div style={{paddingTop:64}}>
+    <div>
       <div style={{padding:"8px 40px",background:"var(--cr)",borderBottom:"1px solid rgba(26,18,10,.08)",position:"sticky",top:64,zIndex:500}}>
         <BackBtn label="Back to Home" onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");}}/>
       </div>
@@ -2001,7 +2004,7 @@ function ReturnsPage({setPage}){
     }catch(e){console.error(e);}
     setSent(true);
   };
-  return(<div style={{paddingTop:64}}>
+  return(<div>
     <div style={{padding:"6px 40px",background:"var(--cr)",borderBottom:"1px solid rgba(26,18,10,.08)",position:"sticky",top:64,zIndex:500}}><BackBtn label="Back to Home" onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");}}/></div>
     <div className="page-header"><span className="page-header-tag" data-rv>After Your Order</span><h1 className="page-header-title" data-rv data-d="1">Returns</h1><p className="page-header-sub" data-rv data-d="2">We review every return request within 48 hours.</p></div>
     <div className="section-cream" style={{maxWidth:560,margin:"0 auto"}}>
@@ -2031,7 +2034,7 @@ function ExchangesPage({setPage}){
     window.location.href="mailto:dorrastonejewelry@gmail.com?subject="+encodeURIComponent("Exchange Request - "+form.code)+"&body="+encodeURIComponent(msg);
     setSent(true);
   };
-  return(<div style={{paddingTop:64}}>
+  return(<div>
     <div style={{padding:"6px 40px",background:"var(--cr)",borderBottom:"1px solid rgba(26,18,10,.08)",position:"sticky",top:64,zIndex:500}}><BackBtn label="Back to Home" onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");}}/></div>
     <div className="page-header"><span className="page-header-tag" data-rv>After Your Order</span><h1 className="page-header-title" data-rv data-d="1">Exchanges</h1><p className="page-header-sub" data-rv data-d="2">Sizing or stone adjustments handled with care.</p></div>
     <div className="section-cream" style={{maxWidth:560,margin:"0 auto"}}>
@@ -2080,7 +2083,7 @@ function ReviewsPage(){
       else setPublished(JSON.parse(localStorage.getItem("dorra_reviews_published")||"[]"));
     }).catch(()=>setPublished(JSON.parse(localStorage.getItem("dorra_reviews_published")||"[]")));
   },[]);
-  return(<div style={{paddingTop:64}}>
+  return(<div>
     <div style={{padding:"6px 40px",background:"var(--cr)",borderBottom:"1px solid rgba(26,18,10,.08)",position:"sticky",top:64,zIndex:500}}><BackBtn label="Back to Home" onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");}}/></div>
     <div className="page-header"><span className="page-header-tag" data-rv>Voices</span><h1 className="page-header-title" data-rv data-d="1">From Our Wearers</h1><p className="page-header-sub" data-rv data-d="2">Every Dorra piece finds the person it was meant for. Here is what they say.</p></div>
     {published.length>0&&<div style={{background:"var(--cr2)",padding:"52px 72px",borderBottom:"1px solid rgba(26,18,10,.06)"}}>
