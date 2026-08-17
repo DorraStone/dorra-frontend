@@ -323,7 +323,7 @@ const CSS_LINES=[
   ".hero-rule{width:32px;height:1px;background:var(--gold);margin-bottom:18px;opacity:0;animation:fade-up .8s .78s forwards;}",
   ".hero-sub{font-size:16px;line-height:2.0;color:rgba(245,239,227,.55);max-width:320px;margin-bottom:36px;opacity:0;animation:fade-up .8s .88s forwards;font-weight:300;}",
   ".hero-btns{display:flex;gap:10px;flex-wrap:wrap;opacity:0;animation:fade-up .8s 1s forwards;}",
-  ".hero-img{display:block;overflow:hidden;position:relative;}",
+  ".hero-img{display:block;overflow:hidden;position:relative;height:100%;}",
   ".hero-img img{width:100%;height:100%;object-fit:cover;object-position:center top;}",
   "@keyframes slow-zoom{from{transform:scale(1.07)}to{transform:scale(1.01)}}",
   ".hero-img::before{content:'';position:absolute;left:0;top:0;bottom:0;width:160px;background:linear-gradient(to right,var(--g),transparent);z-index:1;}",
@@ -435,7 +435,7 @@ const CSS_LINES=[
   ".detail-care-text{font-size:12px;color:var(--ink3);line-height:1.82;font-weight:300;}",
   ".detail-add{flex:1;padding:13px;font-family:var(--sans);font-size:8.5px;letter-spacing:.19em;text-transform:uppercase;background:var(--g);color:var(--cr);border:none;cursor:pointer;transition:background .28s;}",
   ".detail-add:hover{background:var(--gold);color:var(--g);}",
-  ".cart-overlay{position:fixed;top:64px;left:0;right:0;bottom:0;z-index:799;background:rgba(3,15,9,.7);animation:fade-in .22s;}",
+  ".cart-overlay{position:fixed;top:64px;left:0;right:0;bottom:0;top:64px;left:0;right:0;bottom:0;z-index:799;background:rgba(3,15,9,.7);animation:fade-in .22s;}",
   "@keyframes fade-in{from{opacity:0}to{opacity:1}}",
   ".cart-drawer{position:fixed;top:64px;right:0;bottom:0;width:390px;background:var(--cr);z-index:800;display:flex;flex-direction:column;animation:slide-right .38s var(--ease);box-shadow:-12px 0 40px rgba(6,35,24,.18);}",
   "@keyframes slide-right{from{transform:translateX(100%)}to{transform:none}}",
@@ -605,7 +605,7 @@ const CSS_LINES=[
   ".footer-bottom{flex-direction:column;gap:5px;}",
   ".cart-drawer{width:100%;}",
   ".search-drop{padding:13px 20px;}",
-  ".field-grid{grid-template-columns:1fr;}",
+  ".field-grid{grid-template-columns:1fr;}",".section-cream{padding:36px 16px;}",".section-cream2{padding:36px 16px;}",".section-dark{padding:36px 16px;}",".section-dark2{padding:36px 16px;}",".section-pale{padding:36px 16px;}",
 
   /*  MOBILE TEXT SIZES  */
   ".hero-title{font-size:clamp(38px,10vw,62px);}",
@@ -755,7 +755,7 @@ function Nav({page,setPage,cc,setCO}){
 
 function PC({product,onV,onA}){
   const[hover,setHover]=useState(false);
-  const[selSize,setSelSize]=useState(()=>product.sizes&&product.sizes.length>0?product.sizes[0]:"");
+  const[selSize,setSelSize]=useState("");const[sizeErr,setSizeErr]=useState(false);
   const price=product.price;
 
   return(
@@ -784,7 +784,7 @@ function PC({product,onV,onA}){
             ))}
           </div>
         )}
-        <button className="pc-add" style={{marginTop:8}} onClick={()=>onA(product,product.stones,price,selSize)}>Add to Cart</button>
+        <button className="pc-add" style={{marginTop:8}} onClick={()=>{if(product.sizes&&product.sizes.length>0&&!selSize){setSizeErr(true);setTimeout(()=>setSizeErr(false),3000);return;}onA(product,product.stones,price,selSize);}}>Add to Cart</button>
       </div>
     </div>
   );
@@ -1065,3 +1065,854 @@ function TypePage({type,title,sub,onV,onA,setPage}){
   );
 }
 
+function StonesPage({onV,onA}){
+  const[active,setActive]=useState(null);
+  useRv();
+  const used=[...new Set(CATALOG.filter(p=>p.type!=="Care").flatMap(p=>p.stones))].sort();
+
+  if(active){
+    const products=CATALOG.filter(p=>p.type!=="Care"&&p.stones.includes(active));
+    const lore=STONE_LORE[active];
+    return(
+      <div style={{paddingTop:64}}>
+        <div style={{background:"var(--g)",width:"100%"}}>
+          <div style={{maxWidth:1200,margin:"0 auto",padding:"28px 52px 52px"}}>
+            <button onClick={()=>setActive(null)} style={{background:"none",border:"none",color:"rgba(245,239,227,.5)",fontSize:8.5,letterSpacing:".16em",textTransform:"uppercase",cursor:"pointer",marginBottom:24,display:"flex",alignItems:"center",gap:5}}>Back to Stones</button>
+            <span style={{fontSize:8,letterSpacing:".5em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:14}}>{active}</span>
+            <h1 style={{fontFamily:"var(--serif)",fontSize:"clamp(36px,5vw,72px)",fontWeight:300,color:"var(--cr)",lineHeight:1.03,marginBottom:32}}>{active}</h1>
+            {lore?(
+              <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))",gap:0,width:"100%",borderTop:"1px solid rgba(184,145,60,.1)"}}>
+                {[
+                  {k:"Birthstone",v:lore.birth},
+                  {k:"Symbolism",v:lore.symbol},
+                  {k:"Formation",v:lore.formation},
+                  {k:"Energy",v:lore.energy},
+                ].map(({k,v})=>(
+                  <div key={k} style={{padding:"22px 24px",borderRight:"1px solid rgba(184,145,60,.08)"}}>
+                    <div style={{fontSize:8,letterSpacing:".28em",textTransform:"uppercase",color:"var(--gold)",marginBottom:8,opacity:.7}}>{k}</div>
+                    <p style={{fontSize:12,color:"rgba(245,239,227,.55)",lineHeight:1.88,fontWeight:300}}>{v}</p>
+                  </div>
+                ))}
+              </div>
+            ):(
+              <p style={{fontSize:13,color:"rgba(245,239,227,.4)",lineHeight:2,borderTop:"1px solid rgba(184,145,60,.1)",paddingTop:20}}>{STONE_CARE[active]||"Natural stone."}</p>
+            )}
+          </div>
+        </div>
+        <div style={{background:"var(--cr)",padding:"40px 72px"}}>
+          <div style={{marginBottom:24}} data-rv>
+            <span style={{fontSize:8.5,letterSpacing:".3em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:6}}>{products.length} {products.length===1?"piece":"pieces"} featuring {active}</span>
+            <p style={{fontSize:12,color:"var(--ink3)",fontWeight:300}}>Each piece can be further customised with any stone of your choice.</p>
+          </div>
+          {products.length>0
+            ?<div className="pgrid" data-rv>{products.map(p=><PC key={p.id} product={p} onV={onV} onA={onA}/>)}</div>
+            :<div style={{textAlign:"center",padding:"52px 0"}}>
+              <p style={{fontSize:13,color:"var(--ink3)",marginBottom:12}}>No pieces currently feature {active} as a default stone.</p>
+              <p style={{fontSize:12,color:"var(--ink3)",fontStyle:"italic"}}>You can add {active} to any piece using the stone swap on any product.</p>
+            </div>}
+        </div>
+      </div>
+    );
+  }
+
+  return(
+    <div style={{paddingTop:64}}>
+      <div className="page-header">
+        <span className="page-header-tag" data-rv>Stones</span>
+        <h1 className="page-header-title" data-rv data-d="1">Every stone carries a story</h1>
+        <p className="page-header-sub" data-rv data-d="2">Tap any stone to discover its lore, meaning, and every piece it inhabits.</p>
+      </div>
+      <div className="section-cream">
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(240px,1fr))",gap:1}} data-rv>
+          {used.map(stone=>{
+            const pcs=CATALOG.filter(p=>p.type!=="Care"&&p.stones.includes(stone));
+            const lore=STONE_LORE[stone];
+            return(
+              <button key={stone} onClick={()=>setActive(stone)} style={{background:"var(--cr2)",padding:"22px 20px",textAlign:"left",border:"none",cursor:"pointer",transition:"background .22s",borderTop:"2px solid transparent"}}
+                onMouseEnter={e=>{e.currentTarget.style.background="var(--cr3)";e.currentTarget.style.borderTopColor="var(--gold)";}}
+                onMouseLeave={e=>{e.currentTarget.style.background="var(--cr2)";e.currentTarget.style.borderTopColor="transparent";}}>
+                <div style={{fontFamily:"var(--serif)",fontSize:19,color:"var(--ink)",marginBottom:4}}>{stone}</div>
+                {lore&&<p style={{fontSize:10,color:"var(--ink3)",marginBottom:8,lineHeight:1.6,fontWeight:300,fontStyle:"italic"}}>{lore.symbol.slice(0,60)}...</p>}
+                <span style={{fontSize:8,letterSpacing:".14em",textTransform:"uppercase",color:"var(--gold)"}}>{pcs.length} {pcs.length===1?"piece":"pieces"} - tap to explore</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CarePage({setPage,onA}){useRv();return(<div style={{paddingTop:64}}><div className="page-header"><span className="page-header-tag" data-rv>Care</span><h1 className="page-header-title" data-rv data-d="1">Keep your copper alive</h1><p className="page-header-sub" data-rv data-d="2">Every Dorra piece ships with a copper care kit - polish liquid and soft cloth. Use them when your piece begins to darken.</p></div><div className="section-cream"><div className="care-steps" data-rv>{[["Apply","A few drops of polish to the soft cloth."],["Rub","Gently along the copper wire in small circles."],["Rinse","Briefly with cool water."],["Dry","Pat dry immediately. Never leave wet."]].map((s,i)=><div key={s[0]} className="care-step"><div className="care-step-icon">0{i+1}</div><div className="care-step-title">{s[0]}</div><p className="care-step-text">{s[1]}</p></div>)}</div><div style={{maxWidth:560,margin:"40px auto 0",textAlign:"center"}} data-rv data-d="2"><p style={{fontSize:13,color:"var(--ink3)",lineHeight:2.0,marginBottom:20,fontWeight:300}}>The darkening of copper is a natural process called a patina - it is not damage. Your care kit lets you choose when to restore.</p><button className="btn btn-dark" onClick={()=>{
+              const kit=CATALOG.find(p=>p.type==="Care");
+              if(kit&&onA){onA(kit,[],kit.price);}
+            }}>Add Copper Care Kit to Cart</button></div></div></div>);}
+
+function StoryPage(){useRv();return(<div style={{paddingTop:64}}><div className="story-split"><div className="story-left"><span className="sec-label sec-label-dark" data-rv>The Name</span><div style={{fontFamily:"var(--serif)",fontSize:"clamp(42px,5.4vw,76px)",color:"var(--gold)",fontStyle:"italic",lineHeight:1,marginBottom:7}} data-rv data-d="1">Dorra</div><div style={{fontSize:8,letterSpacing:".36em",textTransform:"uppercase",color:"rgba(245,239,227,.22)",marginBottom:19}} data-rv data-d="1">Pearl - Egypt</div><p style={{fontSize:13,color:"rgba(245,239,227,.44)",lineHeight:2.0,maxWidth:360,marginBottom:22,fontWeight:300}} data-rv data-d="2">In Arabic, Dorra means pearl - not found in the earth, born from a living creature's patient response to discomfort. A grain of sand held for years, becoming luminous.</p><div data-rv data-d="3">{[{n:"01",t:"The stone is chosen",tx:"Every piece begins with a stone selected for what it carries, not just how it looks."},{n:"02",t:"The copper is shaped",tx:"Raw copper wire, wound by hand over 2-4 days. No molds. No machines."},{n:"03",t:"The piece is finished",tx:"Polished, paired with its stone card, wrapped in its pouch."},{n:"04",t:"It finds its wearer",tx:"Every Dorra piece is made to order, for one person."}].map(item=><div key={item.n} className="timeline-row"><div className="timeline-num">{item.n}</div><div><div className="timeline-title">{item.t}</div><p className="timeline-sub">{item.tx}</p></div></div>)}</div></div><div className="story-right">{IMGS.logo&&<img src={IMGS.logo} alt="" style={{height:44,width:"auto",opacity:.15}}/>}</div></div><div className="story-mid"><div className="story-dark"><span className="sec-label sec-label-dark" data-rv>Our Story</span><h2 className="sec-title sec-title-dark" style={{marginBottom:10}} data-rv data-d="1">Nature is the original artisan. We are her hands.</h2><div className="sec-rule"/><p style={{fontSize:13,color:"rgba(245,239,227,.44)",lineHeight:2.0,maxWidth:360,fontWeight:300}} data-rv data-d="2">Dorra was born from the belief that the earth holds more beauty than any factory could. Each piece carries a stone chosen for its meaning, set in copper shaped by hand.</p><blockquote className="blockquote" data-rv data-d="3">"A pearl is not made by a jeweler. It is made by the sea."</blockquote></div><div className="story-light"><div style={{textAlign:"center"}}>{IMGS.logo&&<img src={IMGS.logo} alt="" style={{height:44,width:"auto",opacity:.15,marginBottom:12}}/>}<p style={{fontSize:8,letterSpacing:".2em",textTransform:"uppercase",color:"var(--ink3)"}}>Made in Egypt</p></div></div></div></div>);}
+
+function ContactPage(){const[form,setForm]=useState({name:"",email:"",subject:"",message:""}),[sent,setSent]=useState(false);useRv();const send=()=>{if(!form.name||!form.email||!form.message)return;window.location.href="mailto:dorrastonejewelry@gmail.com?subject="+encodeURIComponent(form.subject||"Message from "+form.name)+"&body="+encodeURIComponent("Name: "+form.name+"\nEmail: "+form.email+"\n\n"+form.message);setSent(true);};return(<div style={{paddingTop:64}}><div className="contact-split"><div className="contact-dark"><span className="sec-label sec-label-dark" data-rv>Get in Touch</span><h1 className="sec-title sec-title-dark" data-rv data-d="1">We would love to hear from you</h1><div className="sec-rule"/>{[{l:"Email",v:"dorrastonejewelry@gmail.com"},{l:"Instagram",v:"@dorrastones"},{l:"Location",v:"Cairo"},{l:"WhatsApp",v:"+20 102 062 4266"}].map((d,i)=><div key={d.l} data-rv data-d={String(i+2)}><div className="contact-label">{d.l}</div><div className="contact-val">{d.v}</div></div>)}<blockquote className="blockquote" data-rv data-d="4">"The Luxury of Nature."</blockquote></div><div className="contact-light">{sent?<div className="success-block"><div className="success-icon">*</div><div className="success-title">Message Sent</div><p style={{fontSize:13,color:"var(--ink3)"}}>We reply within 24 hours.</p><button className="btn btn-dark" onClick={()=>setSent(false)}>Send Another</button></div>:<div data-rv><h2 style={{fontFamily:"var(--serif)",fontSize:23,fontWeight:300,color:"var(--ink)",marginBottom:20}}>Send a Message</h2><div className="field"><label className="field-label">Your Name</label><input className="field-input" placeholder="Full name" value={form.name} onChange={e=>setForm({...form,name:e.target.value})}/></div><div className="field"><label className="field-label">Email</label><input className="field-input" type="email" placeholder="your@email.com" value={form.email} onChange={e=>setForm({...form,email:e.target.value})}/></div><div className="field"><label className="field-label">Subject</label><input className="field-input" placeholder="Subject" value={form.subject} onChange={e=>setForm({...form,subject:e.target.value})}/></div><div className="field"><label className="field-label">Message</label><textarea className="field-textarea" style={{minHeight:96}} placeholder="Your message..." value={form.message} onChange={e=>setForm({...form,message:e.target.value})}/></div><button className="btn btn-dark btn-full" style={{padding:"13px",marginTop:4}} onClick={send}>Send Message</button></div>}</div></div></div>);}
+
+function CustomizePage({onAddCart,onGoCart}){
+  const[pt,setPt]=useState("Bracelet");
+  const[picked,setPicked]=useState([]);
+  const[note,setNote]=useState("");
+  useRv();
+  const tog=s=>setPicked(p=>p.includes(s)?p.filter(x=>x!==s):[...p,s]);
+  const base={"Bracelet":480,"Necklace":580,"Anklet":360,"Earring":340}[pt]||480;
+  const est=base+picked.length*85;
+  const dep=Math.round(est*.4);
+
+  const addToCartAndCheckout=()=>{
+    if(!picked.length)return;
+    const customProduct={
+      id:Date.now(),
+      name:"Bespoke "+pt,
+      type:pt,
+      price:est,
+      stones:picked,
+      img:"",img2:"",
+      desc:"Bespoke "+pt+" designed from scratch. Stones: "+picked.join(", ")+"."+(note?" Notes: "+note:""),
+      care:"Handle with care. See individual stone care guides.",
+      isFromScratch:true
+    };
+    if(onAddCart) onAddCart(customProduct,picked,est);
+    if(onGoCart) onGoCart();
+  };
+
+  return(<div style={{paddingTop:64}}>
+    <div className="page-header">
+      <span className="page-header-tag" data-rv>Bespoke</span>
+      <h1 className="page-header-title" data-rv data-d="1">Design Your Piece</h1>
+      <p className="page-header-sub" data-rv data-d="2">Choose your form and stones. Your contact details and delivery information will be collected at checkout.</p>
+    </div>
+    <div className="section-cream">
+      <div className="customize-grid">
+        <div data-rv>
+          <span style={{fontSize:8.5,letterSpacing:".2em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:12}}>Step 01 - Your Design</span>
+          <div className="sec-rule"/>
+          <div className="field">
+            <label className="field-label">Type of Piece</label>
+            <select className="field-select" value={pt} onChange={e=>setPt(e.target.value)}>
+              <option>Bracelet</option><option>Necklace</option><option>Anklet</option><option>Earring</option>
+            </select>
+          </div>
+          <div className="field">
+            <label className="field-label">Choose Your Stones</label>
+            <div className="stone-picker">
+              {STONES.map(s=>(
+                <button key={s} className={"stone-pill"+(picked.includes(s)?" picked":"")} onClick={()=>tog(s)}>
+                  <span className="stone-pill-name">{s}</span>
+                  <span className="stone-pill-meaning">{(STONE_CARE[s]||"Natural stone").slice(0,22)}...</span>
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="field">
+            <label className="field-label">Additional Notes (Optional)</label>
+            <textarea className="field-textarea" placeholder="Sizing, vision, any specific details..." value={note} onChange={e=>setNote(e.target.value)}/>
+          </div>
+        </div>
+
+        <div data-rv data-d="1">
+          <span style={{fontSize:8.5,letterSpacing:".2em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:12}}>Step 02 - Summary</span>
+          <div className="sec-rule"/>
+          <div className="estimate-box">
+            <div style={{fontSize:8,letterSpacing:".2em",textTransform:"uppercase",color:"var(--ink3)",marginBottom:9}}>Price Estimate</div>
+            <div className="estimate-row"><span className="estimate-key">Type</span><span className="estimate-val">{pt}</span></div>
+            <div className="estimate-row"><span className="estimate-key">Stones</span><span className="estimate-val">{picked.length?picked.join(", "):"None selected"}</span></div>
+            <div className="estimate-total"><span style={{fontSize:9,color:"var(--ink3)"}}>From</span><span className="estimate-total-val">{fmt(est)}</span></div>
+          </div>
+          <div style={{background:"rgba(184,145,60,.07)",border:"1px solid rgba(184,145,60,.15)",padding:"12px 14px",marginBottom:14}}>
+            <p style={{fontSize:11,color:"var(--ink3)",lineHeight:1.78}}>A <strong style={{color:"var(--ink)"}}>{fmt(dep)} deposit (40%)</strong> is required to begin crafting. This will be processed at checkout via Instapay, Card, or Apple Pay.</p>
+            <p style={{fontSize:10,color:"var(--ink3)",marginTop:5}}>Instapay: <strong style={{color:"var(--ink)"}}>01020624266</strong></p>
+          </div>
+          <div className="craft-note" style={{marginBottom:14}}>
+            <p>Every Dorra piece is made entirely by hand in Egypt. No two pieces are exactly alike.</p>
+          </div>
+          <button
+            className="btn btn-gold btn-full"
+            style={{padding:"15px",fontSize:9,letterSpacing:".22em"}}
+            onClick={addToCartAndCheckout}
+            disabled={!picked.length}
+          >
+            Add to Cart and Proceed to Checkout
+          </button>
+          {!picked.length&&(
+            <p style={{fontSize:10,color:"var(--ink3)",textAlign:"center",marginTop:6}}>Choose at least one stone to continue.</p>
+          )}
+        </div>
+      </div>
+    </div>
+  </div>);
+}
+
+
+
+
+function DetailPage({product,initStone,onBack,onA}){
+  useEffect(()=>{window.scrollTo(0,0);document.documentElement.scrollTop=0;document.body.scrollTop=0;const r=document.getElementById("app-root");if(r)r.scrollTop=0;},[]);
+  const[idx,setIdx]=useState(0);
+  const[tx,setTx]=useState(null);
+  const[selSize,setSelSize]=useState("");const[sizeErr,setSizeErr]=useState(false);
+  const[swaps,setSwaps]=useState(()=>product.stones?[...product.stones]:[]);
+  const swapCount=product.stones?product.stones.filter((s,i)=>(swaps[i]||s)!==s).length:0;
+  const price=swapCount>0?Math.round(product.price*(1+swapCount*0.08)):product.price;
+  const imgs=[product.img,product.img2,product.img3,product.img4].filter(k=>k&&IMGS[k]);
+
+  return(
+    <div style={{paddingTop:64,background:"var(--cr)"}}>
+      <div className="detail-layout">
+
+        {/* LEFT - sticky image */}
+        <div className="detail-media"
+          onTouchStart={e=>setTx(e.touches[0].clientX)}
+          onTouchEnd={e=>{if(tx===null)return;const d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>40)setIdx(i=>d<0?Math.min(i+1,imgs.length-1):Math.max(i-1,0));setTx(null);}}>
+          {imgs.length>0
+            ?<img src={IMGS[imgs[idx]]} alt={product.name}/>
+            :<div style={{width:"100%",height:"100%",background:"var(--g)",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:10}}>
+              <div style={{width:28,height:1,background:"rgba(184,145,60,.3)"}}/>
+              <span style={{fontFamily:"var(--serif)",fontSize:14,color:"rgba(184,145,60,.45)"}}>Photo Coming Soon</span>
+              <div style={{width:28,height:1,background:"rgba(184,145,60,.3)"}}/>
+            </div>}
+          {imgs.length>1&&<div className="detail-dots">{imgs.map((_,i)=><button key={i} onClick={()=>setIdx(i)} className={"detail-dot"+(i===idx?" on":"")}/>)}</div>}
+        </div>
+
+        {/* RIGHT - info */}
+        <div className="detail-info">
+
+          {/* Back */}
+          <button onClick={onBack} style={{background:"none",border:"none",color:"var(--ink3)",fontSize:8,letterSpacing:".24em",textTransform:"uppercase",cursor:"pointer",display:"inline-flex",alignItems:"center",gap:7,marginBottom:16,padding:0,transition:"color .2s"}}
+            onMouseEnter={e=>e.currentTarget.style.color="var(--ink)"}
+            onMouseLeave={e=>e.currentTarget.style.color="var(--ink3)"}>
+            <span style={{fontSize:14}}>&#8592;</span> Return to Collection
+          </button>
+
+          <span style={{fontSize:8,letterSpacing:".32em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:8}}>{product.type}</span>
+          <h1 className="detail-name">{product.name}</h1>
+          <div className="detail-price">
+            {fmt(price)}{swapCount>0&&<span style={{fontSize:12,color:"var(--gold)",marginLeft:10,fontFamily:"var(--sans)",fontWeight:300}}>+{fmt(price-product.price)} customisation</span>}
+          </div>
+
+          <p className="detail-desc">{product.desc}</p>
+
+          {product.durabilityNote&&<div style={{fontSize:11,color:"var(--ink3)",lineHeight:1.8,padding:"10px 14px",background:"var(--cr3)",borderLeft:"2px solid rgba(184,145,60,.25)",marginBottom:8}}>{product.durabilityNote}</div>}
+          {product.delicateNote&&<div style={{fontSize:11,color:"var(--gold)",lineHeight:1.8,padding:"10px 14px",background:"rgba(184,145,60,.05)",borderLeft:"2px solid rgba(184,145,60,.4)",marginBottom:8,fontStyle:"italic"}}>{product.delicateNote}</div>}
+
+          {product.sizes&&product.sizes.length>0&&<div style={{marginBottom:10}}>
+            <div style={{fontSize:8,letterSpacing:".2em",textTransform:"uppercase",color:"var(--ink3)",marginBottom:7}}>Size</div>
+            <div style={{display:"flex",gap:6}}>
+              {product.sizes.map(sz=><button key={sz} onClick={()=>setSelSize(sz)} style={{padding:"7px 20px",fontFamily:"var(--sans)",fontSize:8,letterSpacing:".14em",textTransform:"uppercase",background:selSize===sz?"var(--g)":"transparent",color:selSize===sz?"var(--cr)":"var(--ink3)",border:"1px solid",borderColor:selSize===sz?"var(--g)":"rgba(26,18,10,.2)",cursor:"pointer",transition:"all .2s"}}>{sz}</button>)}
+            </div>
+          </div>}
+
+          {product.stones&&product.stones.length>0&&<div style={{marginBottom:10}}>
+            <SwapPanel stones={product.stones} swaps={swaps} setSwaps={setSwaps} price={product.price} currentPrice={price}/>
+          </div>}
+
+          <button onClick={()=>onA(product,swaps,price,selSize)}
+            style={{width:"100%",padding:"14px",fontFamily:"var(--sans)",fontSize:9,letterSpacing:".2em",textTransform:"uppercase",background:"var(--g)",color:"var(--gold)",border:"none",cursor:"pointer",transition:"all .25s",marginBottom:10}}
+            onMouseEnter={e=>{e.currentTarget.style.background="var(--gold)";e.currentTarget.style.color="var(--g)";}}
+            onMouseLeave={e=>{e.currentTarget.style.background="var(--g)";e.currentTarget.style.color="var(--gold)";}}>
+            Add to Cart &nbsp; {fmt(price)}
+          </button>
+
+          {product.care&&<div style={{borderTop:"1px solid rgba(26,18,10,.08)",paddingTop:14}}>
+            <div style={{fontSize:8,letterSpacing:".2em",textTransform:"uppercase",color:"var(--gold)",marginBottom:6}}>Care</div>
+            <p style={{fontSize:11,color:"var(--ink3)",lineHeight:1.85,fontWeight:300}}>{product.care}</p>
+          </div>}
+
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CartDrawer({cart,onClose,onQty,onPkg,onCk}){
+  const velvetCount=0;
+  const total=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  if(cart.length===0)return(
+    <div className="cart-overlay" onClick={onClose}>
+      <div className="cart-panel" onClick={e=>e.stopPropagation()}>
+        <div className="cart-head"><span className="cart-title">Your Cart</span><button className="cart-close" onClick={onClose}>x</button></div>
+        <div style={{padding:"52px 24px",textAlign:"center"}}>
+          <p style={{fontFamily:"var(--serif)",fontSize:22,fontWeight:300,color:"var(--ink)",marginBottom:8}}>Your cart is empty.</p>
+          <p style={{fontSize:12,color:"var(--ink3)"}}>Add a piece to begin.</p>
+        </div>
+      </div>
+    </div>
+  );
+  return(
+    <div className="cart-overlay" onClick={onClose}>
+      <div className="cart-panel" onClick={e=>e.stopPropagation()}>
+        <div className="cart-head"><span className="cart-title">Your Cart ({cart.reduce((s,i)=>s+i.qty,0)})</span><button className="cart-close" onClick={onClose}>x</button></div>
+        <div className="cart-items">
+          {cart.map((item,i)=>(
+            <div key={i} className="cart-item">
+              <div className="cart-item-img">{item.product.img&&IMGS[item.product.img]&&<img src={IMGS[item.product.img]} alt={item.product.name} style={{width:"100%",height:"100%",objectFit:"cover"}}/>}</div>
+              <div className="cart-item-info">
+                <div className="cart-item-name">{item.product.name}</div>
+                <div className="cart-item-stone">{Array.isArray(item.swapStone)?item.swapStone.join(", "):item.swapStone}{item.size&&item.product.sizes?" - "+item.size:""}</div>
+                {item.product.isFromScratch&&<span style={{fontSize:8,color:"var(--gold)",letterSpacing:".1em",textTransform:"uppercase"}}>Bespoke</span>}
+                <div className="cart-item-foot">
+                  <span className="cart-item-price">{fmt(item.price*item.qty)}</span>
+                  <div className="qty-ctrl">
+                    <button className="qty-btn" onClick={()=>onQty(i,item.qty-1)}>-</button>
+                    <span className="qty-num">{item.qty}</span>
+                    <button className="qty-btn" onClick={()=>onQty(i,item.qty+1)}>+</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="cart-foot">
+          <div className="cart-total-row"><span className="cart-total-label">Total</span><span className="cart-total-val">{fmt(total)}</span></div>
+          <button className="btn btn-gold btn-full" style={{padding:"14px",fontSize:9,letterSpacing:".22em",marginTop:12}} onClick={onCk}>Proceed to Checkout</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Checkout({cart,onClose,onOk,setLastOrder}){
+  const[step,setStep]=useState(1);
+  const[name,setName]=useState("");
+  const[phone,setPhone]=useState("");
+  const[email,setEmail]=useState("");
+  const[address,setAddress]=useState("");
+  const[city,setCity]=useState("Cairo");
+  const[notes,setNotes]=useState("");
+  const[pkg,setPkg]=useState("standard");
+  const[pay,setPay]=useState(()=>cart.some(i=>i.product&&i.product.isFromScratch)?"instapay":"full_cod");
+  const[instRef,setInstRef]=useState("");
+  const[instScreenshot,setInstScreenshot]=useState("");
+  const[cardN,setCardN]=useState("");
+  const[cardE,setCardE]=useState("");
+  const[cardC,setCardC]=useState("");
+  const ref=useRef("DRR-"+Math.random().toString(36).slice(2,8).toUpperCase()).current;
+
+  const ship=city==="10th of Ramadan City"?50:70;
+  const boxFee=0;
+  const customItems=cart.filter(i=>i.product&&i.product.isFromScratch);
+  const standardItems=cart.filter(i=>!i.product||!i.product.isFromScratch);
+  const customSub=customItems.reduce((s,i)=>s+i.price*i.qty,0);
+  const standardSub=standardItems.reduce((s,i)=>s+i.price*i.qty,0);
+  const sub=customSub+standardSub;
+  const tot=sub+ship;
+  const customDep=Math.round(customSub*0.4);
+  const customBal=customSub-customDep;
+  const hasFromScratch=customItems.length>0;
+  const isCOD=pay==="full_cod";
+  const isFullOnline=pay.endsWith("_full")||pay==="full_instapay"||pay==="full_card"||pay==="full_apple";
+  const dueNow=isCOD?customDep:(isFullOnline?tot:(customDep+standardSub+ship));
+  const dueOnDelivery=isCOD?(standardSub+customBal+ship):(isFullOnline?0:customBal);
+  const amountDue=dueNow;
+  const ok1=!!(name&&phone&&email&&email.includes("@")&&email.includes(".")&&address&&address.length>5);
+  const needRef=(pay==="instapay"||pay==="instapay_full"||pay==="full_instapay");
+  const needCard=(pay==="card"||pay==="card_full"||pay==="full_card");
+  const ok2=pay==="full_cod"||(needRef&&instRef.length>3&&instScreenshot.length>0)||(needCard&&cardN.length===16&&cardE.length===5&&cardC.length===3)||pay==="apple"||pay==="full_apple"||pay==="apple_full";
+  const cities=["Cairo","Giza","Alexandria","Al Sharkia","10th of Ramadan City","Luxor","Aswan","Hurghada","Other"];
+  const payOptions=hasFromScratch
+    ?[{id:"instapay",label:"Instapay",sub:"Deposit "+fmt(customDep)+" now, "+fmt(dueOnDelivery)+" on delivery",group:"deposit"},{id:"instapay_full",label:"Instapay",sub:"Pay full "+fmt(tot)+" now",group:"full"},{id:"card",label:"Card",sub:"Deposit "+fmt(customDep)+" now",group:"deposit"},{id:"card_full",label:"Card",sub:"Pay full "+fmt(tot)+" now",group:"full"},{id:"full_cod",label:"Cash on Delivery",sub:"Pay on delivery",group:"full"}]
+    :[{id:"full_instapay",label:"Instapay",sub:"Pay "+fmt(tot)+" now"},{id:"full_card",label:"Card",sub:"Pay "+fmt(tot)+" now"},{id:"full_apple",label:"Apple Pay",sub:"Pay "+fmt(tot)+" now"},{id:"full_cod",label:"Cash on Delivery",sub:"Pay "+fmt(tot)+" on delivery"}];
+
+  const[submitting,setSubmitting]=useState(false);
+  const submit=async()=>{
+    if(!ok1||!ok2||submitting)return;
+    setSubmitting(true);
+    const order={ref,date:new Date().toISOString(),status:"pending",
+      customer:{name,phone,email,address,city,notes},
+      items:cart.map(i=>({name:i.product.name,stone:Array.isArray(i.swapStone)?i.swapStone.join(", "):i.swapStone,qty:i.qty,price:i.price,size:i.size||""})),
+      packaging:pkg,shipping:ship,subtotal:sub,total:tot,
+      payment:pay,instapayRef:needRef?instRef:"",instapayScreenshot:needRef?instScreenshot:"",
+      isCustom:hasFromScratch,deposit:customDep,balance:customBal,dueNow,dueOnDelivery,
+      adminStatus:"new",createdAt:new Date().toISOString()};
+    // Save to backend (real database + email)
+    const result = await apiPost("/api/orders", order);
+    if(result.error){
+      console.error("Order save failed:", result.error);
+    }
+    // Also save to localStorage as backup
+    try{const ex=JSON.parse(localStorage.getItem("dorra_orders")||"[]");ex.push(order);localStorage.setItem("dorra_orders",JSON.stringify(ex));window.dispatchEvent(new Event("storage"));}catch(e){}
+    setSubmitting(false);
+    setLastOrder(order);
+    setTimeout(onOk,100);
+  };
+
+  const Summary=()=>(
+    <div className="order-summary">
+      <div className="order-summary-title">Order Summary</div>
+      {standardItems.map((i,idx2)=><div key={"s"+idx2} className="order-row"><span>{i.product.name}{i.size?" - "+i.size:""} x{i.qty}</span><span>{fmt(i.price*i.qty)}</span></div>)}
+      {customItems.map((i,idx2)=><div key={"c"+idx2} className="order-row"><span style={{color:"var(--gold)"}}>{i.product.name} x{i.qty} <span style={{fontSize:9,opacity:.7}}>(bespoke)</span></span><span>{fmt(i.price*i.qty)}</span></div>)}
+      <div className="order-row"><span>Shipping</span><span>EGP {ship}</span></div>
+      <div className="order-total-row"><span className="order-total-label">Total</span><span className="order-total-val">{fmt(tot)}</span></div>
+      {hasFromScratch&&customSub>0&&<div style={{marginTop:10,padding:"11px 13px",background:"rgba(184,145,60,.07)",borderLeft:"2px solid rgba(184,145,60,.28)"}}>
+        <div style={{fontSize:8,letterSpacing:".2em",textTransform:"uppercase",color:"var(--ink3)",marginBottom:8}}>Payment Breakdown</div>
+        <div style={{display:"flex",justifyContent:"space-between",fontSize:11,marginBottom:4}}><span style={{color:"var(--ink3)"}}>Bespoke deposit (40%)</span><span>{fmt(customDep)}</span></div>
+        {standardSub>0&&!isCOD&&<div style={{display:"flex",justifyContent:"space-between",fontSize:11,marginBottom:4}}><span style={{color:"var(--ink3)"}}>Standard items</span><span>{fmt(standardSub)}</span></div>}
+        <div style={{display:"flex",justifyContent:"space-between",paddingTop:7,borderTop:"1px solid rgba(26,18,10,.09)",fontWeight:500}}><span style={{fontSize:11,color:"var(--ink)"}}>Due now</span><span style={{fontFamily:"var(--serif)",fontSize:18}}>{fmt(dueNow)}</span></div>
+        {dueOnDelivery>0&&<div style={{display:"flex",justifyContent:"space-between",fontSize:11,marginTop:4}}><span style={{color:"var(--ink3)"}}>Due on delivery</span><span style={{color:"var(--ink3)"}}>{fmt(dueOnDelivery)}</span></div>}
+      </div>}
+    </div>
+  );
+
+  const PayOpt=({opt})=>(
+    <button onClick={()=>setPay(opt.id)} style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"11px 14px",background:pay===opt.id?"var(--g)":"var(--cr2)",border:pay===opt.id?"1px solid rgba(184,145,60,.4)":"1px solid rgba(26,18,10,.1)",cursor:"pointer",textAlign:"left",width:"100%",marginBottom:4,transition:"all .2s"}}>
+      <div><div style={{fontFamily:"var(--serif)",fontSize:15,color:pay===opt.id?"var(--cr)":"var(--ink)"}}>{opt.label}</div><div style={{fontSize:10,color:pay===opt.id?"rgba(245,239,227,.5)":"var(--ink3)",marginTop:1}}>{opt.sub}</div></div>
+      <div style={{width:14,height:14,borderRadius:"50%",border:"1px solid",borderColor:pay===opt.id?"var(--gold)":"rgba(26,18,10,.2)",background:pay===opt.id?"var(--gold)":"transparent",flexShrink:0}}/>
+    </button>
+  );
+
+  return(
+    <div className="modal-overlay" onClick={e=>e.target===e.currentTarget&&onClose()}>
+      <div className="modal">
+        <div className="modal-head">
+          <div>
+            <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:4}}>
+              <h2 className="modal-title">Checkout</h2>
+              <button onClick={onClose} style={{background:"none",border:"none",cursor:"pointer",fontSize:11,color:"var(--ink3)",letterSpacing:".1em",textTransform:"uppercase",display:"flex",alignItems:"center",gap:5,padding:0}}>&#8592; Keep Shopping</button>
+            </div>
+            <div className="step-bar" style={{paddingTop:16}}>
+              {["Details","Payment","Confirm"].map((s,i)=>[
+                <div key={s} className={"step-dot "+(step>i+1?"step-done":step===i+1?"step-active":"step-idle")}>{step>i+1?"v":i+1}</div>,
+                <span key={s+"l"} className={"step-label"+(step===i+1?" active-label":"")}>{s}</span>,
+                i<2&&<span key={s+"x"} className="step-sep">-</span>
+              ])}
+            </div>
+          </div>
+          <button className="modal-close" onClick={onClose}>x</button>
+        </div>
+        <div className="modal-body">
+          {step===1&&<>
+            <Summary/>
+            <div className="field-grid">
+              <div className="field"><label className="field-label">Full Name *</label><input className="field-input" placeholder="Your name" value={name} onChange={e=>setName(e.target.value)}/></div>
+              <div className="field"><label className="field-label">Phone *</label><input className="field-input" placeholder="+20 1xx xxx xxxx" value={phone} onChange={e=>setPhone(e.target.value)}/></div>
+            </div>
+            <div className="field"><label className="field-label">Email *</label><input className="field-input" type="email" placeholder="your@email.com" value={email} onChange={e=>setEmail(e.target.value)}/></div>
+            <div className="field"><label className="field-label">Delivery Address *</label><input className="field-input" placeholder="Street, building, apartment" value={address} onChange={e=>setAddress(e.target.value)}/></div>
+            <div className="field">
+              <label className="field-label">City</label>
+              <select className="field-select" value={city} onChange={e=>setCity(e.target.value)}>{cities.map(ct=><option key={ct}>{ct}</option>)}</select>
+              <div className="field-note">Shipping: EGP {ship}</div>
+            </div>
+            <div className="field"><label className="field-label">Notes</label><textarea className="field-textarea" style={{minHeight:52}} placeholder="Special instructions..." value={notes} onChange={e=>setNotes(e.target.value)}/></div>
+            <button className="submit-btn" onClick={()=>ok1&&setStep(2)} disabled={!ok1}>Continue to Payment</button>
+            {!ok1&&<p style={{fontSize:10,color:"var(--ink3)",textAlign:"center",marginTop:6}}>Please fill in all required fields with a valid email and address.</p>}
+          </>}
+
+          {step===2&&<>
+            <Summary/>
+            <div className="field">
+              <label className="field-label">Payment Method</label>
+              {hasFromScratch&&<p style={{fontSize:8,letterSpacing:".14em",textTransform:"uppercase",color:"var(--ink3)",marginBottom:7,marginTop:4}}>Deposit Options (40% now)</p>}
+              {hasFromScratch?<>{payOptions.filter(o=>o.group==="deposit").map(opt=><PayOpt key={opt.id} opt={opt}/>)}<p style={{fontSize:8,letterSpacing:".14em",textTransform:"uppercase",color:"var(--ink3)",marginBottom:7,marginTop:10}}>Pay Full Now</p>{payOptions.filter(o=>o.group==="full").map(opt=><PayOpt key={opt.id} opt={opt}/>)}</>:payOptions.map(opt=><PayOpt key={opt.id} opt={opt}/>)}
+            </div>
+            {needRef&&<div className="pay-box">
+              <div style={{background:"var(--cr)",padding:"13px 15px",borderLeft:"2px solid var(--gold)",marginBottom:11}}>
+                <p style={{fontSize:11,color:"var(--ink3)",marginBottom:4}}>Send {fmt(amountDue)} to Instapay:</p>
+                <p style={{fontFamily:"var(--serif)",fontSize:24,color:"var(--ink)",letterSpacing:".04em",marginBottom:4}}>01020624266</p>
+                <p style={{fontSize:10,color:"var(--gold)",fontWeight:400}}>Your order will NOT be processed until payment is confirmed and approved.</p>
+              </div>
+              <div className="field"><label className="field-label">Reference Number *</label><input className="field-input" placeholder="e.g. TXN123456789" value={instRef} onChange={e=>setInstRef(e.target.value)}/></div>
+              <div className="field" style={{marginBottom:0}}>
+                <label className="field-label">Payment Screenshot * <span style={{fontSize:9,color:"var(--ink3)",fontWeight:300,letterSpacing:0,textTransform:"none"}}>(required)</span></label>
+                <p style={{fontSize:10,color:"var(--ink3)",marginBottom:8,lineHeight:1.65}}>Upload a screenshot of your transfer. Your order is processed after we verify it.</p>
+                <input type="file" accept="image/*" onChange={e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>setInstScreenshot(ev.target.result);r.readAsDataURL(f);}} style={{fontSize:12,color:"var(--ink3)"}}/>
+                {instScreenshot&&<div style={{marginTop:8,padding:"6px",background:"var(--cr2)",border:"1px solid rgba(184,145,60,.15)"}}><img src={instScreenshot} alt="payment proof" style={{maxHeight:140,maxWidth:"100%",objectFit:"contain",display:"block"}}/><p style={{fontSize:9,color:"var(--gold)",marginTop:4}}>Screenshot uploaded</p></div>}
+              </div>
+            </div>}
+            {needCard&&<div className="pay-box">
+              <div className="field"><label className="field-label">Card Number</label><input className="field-input" placeholder="1234 5678 9012 3456" maxLength={16} value={cardN} onChange={e=>setCardN(e.target.value.replace(/[^0-9]/g,""))}/></div>
+              <div className="field-grid">
+                <div className="field"><label className="field-label">Expiry MM/YY</label><input className="field-input" placeholder="MM/YY" maxLength={5} value={cardE} onChange={e=>{let v=e.target.value.replace(/[^0-9]/g,"");if(v.length>2)v=v.slice(0,2)+"/"+v.slice(2);setCardE(v);}}/></div>
+                <div className="field"><label className="field-label">CVV</label><input className="field-input" placeholder="123" maxLength={3} value={cardC} onChange={e=>setCardC(e.target.value.replace(/[^0-9]/g,""))}/></div>
+              </div>
+            </div>}
+            {pay==="full_cod"&&<div className="pay-box"><p style={{fontSize:12,color:"var(--ink3)",lineHeight:1.8}}>Pay <strong style={{color:"var(--ink)"}}>{fmt(tot)}</strong> in cash when your piece arrives.</p></div>}
+            <div style={{display:"flex",gap:8,marginTop:8}}>
+              <button className="btn btn-dark" style={{padding:"12px 18px",fontSize:8.5}} onClick={()=>setStep(1)}>Back</button>
+              <button className="submit-btn" style={{margin:0,flex:1}} onClick={()=>ok2&&setStep(3)} disabled={!ok2}>Review Order</button>
+            </div>
+          </>}
+
+          {step===3&&<>
+            <Summary/>
+            <div className="confirm-section">
+              <div className="confirm-section-title">Delivery Details</div>
+              {[["Name",name],["Phone",phone],["Email",email],["Address",address+", "+city],["Packaging","Standard Box"]].map(([k,v])=>(
+                <div key={k} className="confirm-row"><span className="confirm-key">{k}</span><span className="confirm-val">{v}</span></div>
+              ))}
+            </div>
+            <div style={{display:"flex",gap:8,marginTop:8}}>
+              <button className="btn btn-dark" style={{padding:"12px 18px",fontSize:8.5}} onClick={()=>setStep(2)}>Back</button>
+              <button className="submit-btn" style={{margin:0,flex:1}} onClick={submit}>{pay==="full_cod"?"Place Order":"Confirm & Pay "+fmt(amountDue)}</button>
+            </div>
+            <p style={{fontSize:10,color:"var(--ink3)",textAlign:"center",marginTop:8}}>Ref: {ref}</p>
+          </>}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function OrderConfirm({order,onClose}){
+  if(!order)return null;
+  return(
+    <div className="modal-overlay">
+      <div className="modal" style={{maxWidth:480}}>
+        <div style={{background:"#062318",textAlign:"center",padding:"28px 24px"}}>
+          {IMGS.logo
+            ?<img src={IMGS.logo} alt="Dorra" style={{height:56,width:"auto",objectFit:"contain",display:"inline-block"}}/>
+            :<div style={{fontFamily:"var(--serif)",fontSize:32,color:"var(--gold)",fontWeight:300,fontStyle:"italic"}}>Dorra</div>}
+          <p style={{fontSize:8,letterSpacing:".38em",textTransform:"uppercase",color:"rgba(184,145,60,.6)",marginTop:10}}>Order Confirmed</p>
+        </div>
+        <div style={{padding:"28px 24px",textAlign:"center"}}>
+          <span style={{fontSize:8,letterSpacing:".4em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:12}}>Order Confirmed</span>
+          <h2 style={{fontFamily:"var(--serif)",fontSize:28,fontWeight:300,color:"var(--ink)",marginBottom:8}}>Thank you, {order.customer.name.split(" ")[0]}.</h2>
+          <p style={{fontSize:12,color:"var(--ink3)",lineHeight:1.85,marginBottom:16}}>Your order <strong style={{color:"var(--ink)"}}>{order.ref}</strong> has been received. We will confirm by email within 24 hours and begin preparing your piece by hand in Egypt.</p>
+          <div style={{background:"var(--cr2)",padding:"12px 16px",marginBottom:16,textAlign:"left"}}>
+            {order.items.map((it,i)=><div key={i} style={{display:"flex",justifyContent:"space-between",fontSize:12,marginBottom:4}}><span style={{color:"var(--ink3)"}}>{it.name} x{it.qty}</span><span>{fmt(it.price*it.qty)}</span></div>)}
+            <div style={{display:"flex",justifyContent:"space-between",fontSize:12,paddingTop:8,borderTop:"1px solid rgba(26,18,10,.08)",fontWeight:500}}><span>Total</span><span>{fmt(order.total)}</span></div>
+          </div>
+          {order.dueNow>0&&order.dueNow<order.total&&<p style={{fontSize:11,color:"var(--gold)",marginBottom:12}}>Amount due now: {fmt(order.dueNow)} - Remaining on delivery: {fmt(order.dueOnDelivery)}</p>}
+          <button className="btn btn-dark btn-full" style={{padding:"13px"}} onClick={onClose}>Continue Shopping</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function AllPage({onP,onA}){
+  const[filter,setFilter]=useState("all");
+  useRv();
+  useEffect(()=>{document.documentElement.scrollTop=0;document.body.scrollTop=0;},[]);
+  const cats=[{id:"all",label:"All Pieces"},{id:"Bracelet",label:"Bracelets"},{id:"Necklace",label:"Necklaces"},{id:"Anklet",label:"Anklets"},{id:"Earring",label:"Earrings"}];
+  const featured=CATALOG.filter(p=>p.type!=="Care");
+  const filtered=filter==="all"?featured:featured.filter(p=>p.type===filter);
+  return(<div style={{paddingTop:64}}>
+    <div className="page-header">
+      <span className="page-header-tag" data-rv>The Collection</span>
+      <h1 className="page-header-title" data-rv data-d="1">All Pieces</h1>
+      <p className="page-header-sub" data-rv data-d="2">Every Dorra design, crafted entirely by hand in Egypt.</p>
+    </div>
+    <div style={{background:"var(--cr)",borderBottom:"1px solid rgba(26,18,10,.08)",position:"sticky",top:64,zIndex:100}}>
+      <div style={{display:"flex",gap:0,overflowX:"auto",padding:"0 72px",scrollbarWidth:"none"}}>
+        {cats.map(cat=>(
+          <button key={cat.id} onClick={()=>setFilter(cat.id)} style={{flexShrink:0,fontFamily:"var(--sans)",fontSize:9,letterSpacing:".2em",textTransform:"uppercase",background:"none",border:"none",cursor:"pointer",padding:"18px 20px",color:filter===cat.id?"var(--ink)":"var(--ink3)",borderBottom:filter===cat.id?"2px solid var(--gold)":"2px solid transparent",transition:"all .2s",fontWeight:filter===cat.id?400:300}}>
+            {cat.label}{filter===cat.id&&<span style={{marginLeft:5,fontSize:8,opacity:.5}}>({filter==="all"?featured.length:featured.filter(p=>p.type===cat.id).length})</span>}
+          </button>
+        ))}
+      </div>
+    </div>
+    <div style={{background:"var(--cr)",padding:"40px 72px 64px"}}>
+      {filtered.length===0
+        ?<p style={{textAlign:"center",padding:"52px 0",color:"var(--ink3)",fontFamily:"var(--serif)",fontSize:18,fontWeight:300}}>No pieces in this category yet.</p>
+        :<div className="pgrid" data-rv>{filtered.map(p=><PC key={p.id} product={p} onV={onP} onA={onA}/>)}</div>}
+    </div>
+  </div>);
+}
+
+function ReturnsPage({setPage}){
+  const[form,setForm]=useState({code:"",name:"",address:"",reason:""});
+  const[sent,setSent]=useState(false);
+  useRv();
+  const submit=()=>{
+    if(!form.code||!form.name||!form.address||!form.reason)return;
+    const msg=["Return Request","Order Code: "+form.code,"Name: "+form.name,"Address: "+form.address,"Reason: "+form.reason].join("\n");
+    window.location.href="mailto:dorrastonejewelry@gmail.com?subject="+encodeURIComponent("Return Request - "+form.code)+"&body="+encodeURIComponent(msg);
+    setSent(true);
+  };
+  return(<div style={{paddingTop:64}}>
+    <div className="page-header"><span className="page-header-tag" data-rv>After Your Order</span><h1 className="page-header-title" data-rv data-d="1">Returns</h1><p className="page-header-sub" data-rv data-d="2">We review every return request within 48 hours.</p></div>
+    <div className="section-cream" style={{maxWidth:560,margin:"0 auto"}}>
+      {sent?<div style={{textAlign:"center",padding:"40px 0"}}><div style={{fontFamily:"var(--serif)",fontSize:44,color:"var(--gold)",marginBottom:12}}>*</div><p style={{fontSize:13,color:"var(--ink3)"}}>Request sent. We will be in touch within 48 hours.</p><button className="btn btn-dark" style={{marginTop:12}} onClick={()=>setSent(false)}>Submit Another</button></div>
+      :<div>
+        <div className="field"><label className="field-label">Order Reference Code *</label><input className="field-input" placeholder="e.g. DRR-ABC123" value={form.code} onChange={e=>setForm({...form,code:e.target.value})}/></div>
+        <div className="field"><label className="field-label">Your Name *</label><input className="field-input" placeholder="Full name" value={form.name} onChange={e=>setForm({...form,name:e.target.value})}/></div>
+        <div className="field"><label className="field-label">Collection Address *</label><input className="field-input" placeholder="Address for collection" value={form.address} onChange={e=>setForm({...form,address:e.target.value})}/></div>
+        <div className="field"><label className="field-label">Reason *</label><textarea className="field-textarea" placeholder="Please describe your reason..." value={form.reason} onChange={e=>setForm({...form,reason:e.target.value})}/></div>
+        <button className="btn btn-dark btn-full" style={{padding:"13px"}} onClick={submit} disabled={!form.code||!form.name||!form.address||!form.reason}>Submit Return Request</button>
+        <div style={{borderTop:"1px solid rgba(26,18,10,.08)",marginTop:24,paddingTop:16,display:"flex",gap:12,justifyContent:"center"}}>
+          <button className="btn btn-outline" onClick={()=>setPage("exchanges")}>Exchanges</button>
+          <button className="btn btn-outline" onClick={()=>setPage("reviews")}>Leave a Review</button>
+        </div>
+      </div>}
+    </div>
+  </div>);
+}
+
+function ExchangesPage({setPage}){
+  const[form,setForm]=useState({code:"",name:"",address:"",reason:"",sizing:""});
+  const[sent,setSent]=useState(false);
+  useRv();
+  const submit=()=>{
+    if(!form.code||!form.name||!form.address||!form.reason)return;
+    const msg=["Exchange Request","Order Code: "+form.code,"Name: "+form.name,"Address: "+form.address,"Reason: "+form.reason+(form.sizing?" | Detail: "+form.sizing:"")].join("\n");
+    window.location.href="mailto:dorrastonejewelry@gmail.com?subject="+encodeURIComponent("Exchange Request - "+form.code)+"&body="+encodeURIComponent(msg);
+    setSent(true);
+  };
+  return(<div style={{paddingTop:64}}>
+    <div className="page-header"><span className="page-header-tag" data-rv>After Your Order</span><h1 className="page-header-title" data-rv data-d="1">Exchanges</h1><p className="page-header-sub" data-rv data-d="2">Sizing or stone adjustments handled with care.</p></div>
+    <div className="section-cream" style={{maxWidth:560,margin:"0 auto"}}>
+      {sent?<div style={{textAlign:"center",padding:"40px 0"}}><div style={{fontFamily:"var(--serif)",fontSize:44,color:"var(--gold)",marginBottom:12}}>*</div><p style={{fontSize:13,color:"var(--ink3)"}}>Request sent. We will be in touch within 48 hours.</p><button className="btn btn-dark" style={{marginTop:12}} onClick={()=>setSent(false)}>Submit Another</button></div>
+      :<div>
+        <div className="field"><label className="field-label">Order Reference Code *</label><input className="field-input" placeholder="e.g. DRR-ABC123" value={form.code} onChange={e=>setForm({...form,code:e.target.value})}/></div>
+        <div className="field"><label className="field-label">Your Name *</label><input className="field-input" placeholder="Full name" value={form.name} onChange={e=>setForm({...form,name:e.target.value})}/></div>
+        <div className="field"><label className="field-label">Collection Address *</label><input className="field-input" placeholder="Address for collection" value={form.address} onChange={e=>setForm({...form,address:e.target.value})}/></div>
+        <div className="field"><label className="field-label">Reason *</label>
+          <select className="field-select" value={form.reason} onChange={e=>setForm({...form,reason:e.target.value,sizing:""})}>
+            <option value="">Select...</option><option value="sizing">Sizing</option><option value="stone_swap">Different stone</option><option value="damaged">Arrived damaged</option><option value="other">Other</option>
+          </select>
+        </div>
+        {form.reason==="sizing"&&<div className="field"><label className="field-label">Sizing</label><select className="field-select" value={form.sizing} onChange={e=>setForm({...form,sizing:e.target.value})}><option value="">Select...</option><option value="too_small">Too small - need Medium</option><option value="too_large">Too large - need Small</option></select></div>}
+        {form.reason&&form.reason!=="sizing"&&<div className="field"><label className="field-label">Details</label><textarea className="field-textarea" value={form.sizing} onChange={e=>setForm({...form,sizing:e.target.value})}/></div>}
+        <button className="btn btn-dark btn-full" style={{padding:"13px"}} onClick={submit} disabled={!form.code||!form.name||!form.address||!form.reason}>Submit Exchange Request</button>
+        <div style={{borderTop:"1px solid rgba(26,18,10,.08)",marginTop:24,paddingTop:16,display:"flex",gap:12,justifyContent:"center"}}>
+          <button className="btn btn-outline" onClick={()=>setPage("returns")}>Returns</button>
+          <button className="btn btn-outline" onClick={()=>setPage("reviews")}>Leave a Review</button>
+        </div>
+      </div>}
+    </div>
+  </div>);
+}
+
+function ReviewsPage(){
+  const[form,setForm]=useState({name:"",piece:"",text:"",imgPreview:""});
+  const[sent,setSent]=useState(false);
+  useRv();
+  const submit=async()=>{
+    if(!form.name||!form.text)return;
+    // Save to real backend
+    await apiPost("/api/reviews",{name:form.name,piece:form.piece,text:form.text,img:form.imgPreview});
+    // Backup to localStorage
+    const reviews=JSON.parse(localStorage.getItem("dorra_reviews_pending")||"[]");
+    reviews.push({id:"REV-"+Date.now(),date:new Date().toISOString(),name:form.name,piece:form.piece,text:form.text,img:form.imgPreview,approved:false});
+    localStorage.setItem("dorra_reviews_pending",JSON.stringify(reviews));
+    setSent(true);
+  };
+  const handleImg=e=>{const file=e.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=ev=>setForm(f=>({...f,imgPreview:ev.target.result}));reader.readAsDataURL(file);};
+  const[published,setPublished]=useState([]);
+  useEffect(()=>{
+    // Load published reviews from backend, fallback to localStorage
+    apiGet("/api/reviews/published").then(data=>{
+      if(Array.isArray(data)&&data.length>0)setPublished(data);
+      else setPublished(JSON.parse(localStorage.getItem("dorra_reviews_published")||"[]"));
+    }).catch(()=>setPublished(JSON.parse(localStorage.getItem("dorra_reviews_published")||"[]")));
+  },[]);
+  return(<div style={{paddingTop:64}}>
+    <div className="page-header"><span className="page-header-tag" data-rv>Voices</span><h1 className="page-header-title" data-rv data-d="1">From Our Wearers</h1><p className="page-header-sub" data-rv data-d="2">Every Dorra piece finds the person it was meant for. Here is what they say.</p></div>
+    {published.length>0&&<div style={{background:"var(--cr2)",padding:"52px 72px",borderBottom:"1px solid rgba(26,18,10,.06)"}}>
+      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))",gap:2,width:"100%",boxSizing:"border-box"}}>
+        {published.map((rev,i)=>(
+          <div key={rev.id||i} style={{background:"var(--cr)",padding:"28px 24px",borderTop:"2px solid var(--gold)",boxSizing:"border-box",minWidth:0,overflow:"hidden"}}>
+            <p style={{fontFamily:"var(--serif)",fontSize:"clamp(15px,1.4vw,18px)",fontWeight:300,color:"var(--ink)",lineHeight:1.75,marginBottom:16,fontStyle:"italic"}}>"{rev.text}"</p>
+            {rev.img&&<img src={rev.img} alt={rev.name} style={{width:"100%",maxHeight:200,objectFit:"cover",marginBottom:12,display:"block"}}/>}
+            <div style={{display:"flex",alignItems:"baseline",justifyContent:"space-between"}}>
+              <span style={{fontFamily:"var(--serif)",fontSize:13,color:"var(--ink)",letterSpacing:".04em"}}>{rev.name}</span>
+              {rev.piece&&<span style={{fontSize:8,letterSpacing:".18em",textTransform:"uppercase",color:"var(--gold)",opacity:.7}}>{rev.piece}</span>}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>}
+    <div style={{background:"var(--g)",padding:"64px 72px"}}>
+      <div style={{maxWidth:560,margin:"0 auto",width:"100%",boxSizing:"border-box"}}>
+        <span className="sec-label sec-label-dark" style={{display:"block",marginBottom:10}}>Share Yours</span>
+        <h2 style={{fontFamily:"var(--serif)",fontSize:"clamp(22px,2.6vw,38px)",fontWeight:300,color:"var(--cr)",marginBottom:8}}>Your experience, in your words.</h2>
+        <div style={{width:28,height:1,background:"var(--gold)",marginBottom:24}}/>
+        {sent?<div style={{textAlign:"center",padding:"32px 0"}}><div style={{fontFamily:"var(--serif)",fontSize:44,color:"var(--gold)",marginBottom:12}}>*</div><p style={{fontSize:13,color:"rgba(245,239,227,.55)"}}>Thank you for sharing your experience.</p><button className="btn btn-ghost" style={{marginTop:16}} onClick={()=>setSent(false)}>Write Another</button></div>
+        :<div>
+          <div className="field"><label className="field-label" style={{color:"rgba(245,239,227,.45)"}}>Your Name *</label><input className="field-input" style={{background:"rgba(245,239,227,.05)",color:"var(--cr)",borderBottomColor:"rgba(184,145,60,.2)"}} placeholder="Your name" value={form.name} onChange={e=>setForm({...form,name:e.target.value})}/></div>
+          <div className="field"><label className="field-label" style={{color:"rgba(245,239,227,.45)"}}>Which piece?</label><input className="field-input" style={{background:"rgba(245,239,227,.05)",color:"var(--cr)",borderBottomColor:"rgba(184,145,60,.2)"}} placeholder="e.g. Sinai Bracelet" value={form.piece} onChange={e=>setForm({...form,piece:e.target.value})}/></div>
+          <div className="field"><label className="field-label" style={{color:"rgba(245,239,227,.45)"}}>Your Words *</label><textarea className="field-textarea" style={{background:"rgba(245,239,227,.05)",color:"var(--cr)",border:"1px solid rgba(184,145,60,.15)",minHeight:120}} placeholder="How does it feel to wear it?" value={form.text} onChange={e=>setForm({...form,text:e.target.value})}/></div>
+          <div className="field"><label className="field-label" style={{color:"rgba(245,239,227,.45)"}}>A Photo (optional)</label><input type="file" accept="image/*" onChange={handleImg} style={{fontSize:12,color:"rgba(245,239,227,.35)",paddingTop:4}}/>{form.imgPreview&&<img src={form.imgPreview} alt="preview" style={{marginTop:12,maxHeight:160,maxWidth:"100%",objectFit:"contain",display:"block"}}/>}</div>
+          <button className="btn btn-gold btn-full" style={{padding:"14px",marginTop:6}} onClick={submit} disabled={!form.name||!form.text}>Share Your Experience</button>
+        </div>}
+      </div>
+    </div>
+  </div>);
+}
+
+function AdminDashboard(){
+  const pw="dorra2026";
+  const[auth,setAuth]=useState(false);
+  const[inp,setInp]=useState("");
+  const[orders,setOrders]=useState(()=>{try{return JSON.parse(localStorage.getItem("dorra_orders")||"[]");}catch{return[];}});
+  const[pendingReviews,setPendingReviews]=useState(()=>{try{return JSON.parse(localStorage.getItem("dorra_reviews_pending")||"[]");}catch{return[];}});
+  const[publishedReviews,setPublishedReviews]=useState(()=>{try{return JSON.parse(localStorage.getItem("dorra_reviews_published")||"[]");}catch{return[];}});
+  useEffect(()=>{const h=()=>{try{setOrders(JSON.parse(localStorage.getItem("dorra_orders")||"[]"));setPendingReviews(JSON.parse(localStorage.getItem("dorra_reviews_pending")||"[]"));}catch{}};window.addEventListener("storage",h);return()=>window.removeEventListener("storage",h);},[]);
+  const G={bg:"#0a1a0e",card:"#0f2414",cream:"#f5efe3",gold:"#b8913c",ink:"rgba(245,239,227,.85)",faint:"rgba(245,239,227,.35)"};
+  const approveReview=(id)=>{const rev=pendingReviews.find(r=>r.id===id);if(!rev)return;const np=pendingReviews.filter(r=>r.id!==id);const npub=[...publishedReviews,{...rev,approved:true}];setPendingReviews(np);setPublishedReviews(npub);localStorage.setItem("dorra_reviews_pending",JSON.stringify(np));localStorage.setItem("dorra_reviews_published",JSON.stringify(npub));};
+  const rejectReview=(id)=>{const np=pendingReviews.filter(r=>r.id!==id);setPendingReviews(np);localStorage.setItem("dorra_reviews_pending",JSON.stringify(np));};
+  const updStatus=(ref,st)=>{const up=orders.map(o=>o.ref===ref?{...o,status:st}:o);setOrders(up);localStorage.setItem("dorra_orders",JSON.stringify(up));};
+  if(!auth)return(<div style={{minHeight:"100vh",background:G.bg,display:"flex",alignItems:"center",justifyContent:"center"}}><div style={{background:G.card,padding:"40px",textAlign:"center",minWidth:280}}><div style={{fontFamily:"Cormorant Garamond,serif",fontSize:32,color:G.cream,marginBottom:20}}>Dorra Admin</div><input type="password" placeholder="Password" value={inp} onChange={e=>setInp(e.target.value)} onKeyDown={e=>e.key==="Enter"&&inp===pw&&setAuth(true)} style={{width:"100%",background:"transparent",border:"none",borderBottom:"1px solid "+G.gold,color:G.cream,padding:"8px 0",fontSize:14,outline:"none",marginBottom:16,textAlign:"center"}}/><button onClick={()=>inp===pw&&setAuth(true)} style={{background:G.gold,color:"#fdfbf7",border:"none",padding:"10px 28px",cursor:"pointer",fontSize:12,letterSpacing:".2em",textTransform:"uppercase"}}>Enter</button></div></div>);
+  const stats={total:orders.length,pending:orders.filter(o=>o.status==="pending").length,revenue:orders.reduce((s,o)=>s+(o.dueNow||o.total||0),0)};
+  return(<div style={{minHeight:"100vh",background:G.bg,color:G.ink,fontFamily:"Jost,sans-serif",padding:"32px"}}>
+    <div style={{maxWidth:1100,margin:"0 auto"}}>
+      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:28}}><div style={{fontFamily:"Cormorant Garamond,serif",fontSize:28,color:G.cream}}>Dorra Admin</div><div style={{fontSize:10,letterSpacing:".2em",textTransform:"uppercase",color:G.faint}}>Orders: {stats.total} | Pending: {stats.pending} | Revenue: {fmt(stats.revenue)}</div></div>
+      {pendingReviews.length>0&&<div style={{marginBottom:24}}>
+        <div style={{fontSize:8,letterSpacing:".22em",textTransform:"uppercase",color:G.gold,marginBottom:12}}>Pending Reviews ({pendingReviews.length})</div>
+        {pendingReviews.map(rev=>(
+          <div key={rev.id} style={{background:G.card,padding:"13px 16px",marginBottom:6,display:"flex",alignItems:"flex-start",justifyContent:"space-between",gap:12}}>
+            <div style={{flex:1}}><div style={{display:"flex",gap:8,marginBottom:4}}><span style={{fontSize:12,color:G.cream}}>{rev.name}</span>{rev.piece&&<span style={{fontSize:9,letterSpacing:".1em",color:G.gold}}>{rev.piece}</span>}</div><p style={{fontSize:11,color:G.faint,lineHeight:1.7}}>{rev.text}</p></div>
+            <div style={{display:"flex",gap:6,flexShrink:0}}><button onClick={()=>approveReview(rev.id)} style={{background:"rgba(50,160,80,.15)",border:"1px solid rgba(50,160,80,.3)",color:"#6ecf8a",padding:"5px 10px",fontSize:8,letterSpacing:".1em",textTransform:"uppercase",cursor:"pointer"}}>Approve</button><button onClick={()=>rejectReview(rev.id)} style={{background:"rgba(200,70,70,.1)",border:"1px solid rgba(200,70,70,.25)",color:"#e08080",padding:"5px 10px",fontSize:8,letterSpacing:".1em",textTransform:"uppercase",cursor:"pointer"}}>Reject</button></div>
+          </div>
+        ))}
+      </div>}
+      <div style={{overflowX:"auto"}}><table style={{width:"100%",borderCollapse:"collapse"}}>
+        <thead><tr>{["Ref","Date","Customer","Items","Total","Due Now","Payment","Status","Action"].map(h=><th key={h} style={{textAlign:"left",padding:"8px 10px",fontSize:8,letterSpacing:".18em",textTransform:"uppercase",color:G.gold,borderBottom:"1px solid rgba(184,145,60,.15)",fontWeight:400}}>{h}</th>)}</tr></thead>
+        <tbody>{orders.length===0?<tr><td colSpan={9} style={{padding:"32px",textAlign:"center",color:G.faint,fontSize:13}}>No orders yet.</td></tr>:orders.slice().reverse().map(o=>(
+          <tr key={o.ref} style={{borderBottom:"1px solid rgba(245,239,227,.04)"}}>
+            <td style={{padding:"10px",fontSize:11,color:G.cream}}>{o.ref}</td>
+            <td style={{padding:"10px",fontSize:10,color:G.faint}}>{new Date(o.date).toLocaleDateString("en-GB")}</td>
+            <td style={{padding:"10px",fontSize:11,color:G.ink}}>{o.customer?.name}<br/><span style={{fontSize:9,color:G.faint}}>{o.customer?.phone}</span></td>
+            <td style={{padding:"10px",fontSize:10,color:G.faint,maxWidth:160}}>{o.items?.map(i=>i.name+" x"+i.qty).join(", ")}</td>
+            <td style={{padding:"10px",fontSize:11,color:G.cream}}>{fmt(o.total)}</td>
+            <td style={{padding:"10px",fontSize:11,color:G.gold}}>{fmt(o.dueNow||0)}</td>
+            <td style={{padding:"10px",fontSize:10,color:G.faint}}>{o.payment}</td>
+            <td style={{padding:"10px"}}><span style={{fontSize:9,letterSpacing:".1em",textTransform:"uppercase",padding:"3px 7px",background:o.status==="pending"?"rgba(184,145,60,.15)":o.status==="shipped"?"rgba(50,160,80,.15)":"rgba(200,70,70,.1)",color:o.status==="pending"?G.gold:o.status==="shipped"?"#6ecf8a":"#e08080"}}>{o.status}</span></td>
+            <td style={{padding:"10px"}}><select onChange={e=>updStatus(o.ref,e.target.value)} value={o.status} style={{background:G.card,border:"1px solid rgba(184,145,60,.2)",color:G.ink,padding:"4px 6px",fontSize:10,cursor:"pointer"}}><option value="pending">Pending</option><option value="confirmed">Confirmed</option><option value="crafting">Crafting</option><option value="shipped">Shipped</option><option value="delivered">Delivered</option><option value="cancelled">Cancelled</option></select></td>
+          </tr>
+        ))}</tbody>
+      </table></div>
+    </div>
+  </div>);
+}
+
+function Footer({setPage}){
+  const lnk={display:"block",background:"none",border:"none",cursor:"pointer",fontFamily:"var(--sans)",fontSize:12,fontWeight:300,color:"rgba(245,239,227,.52)",padding:0,textAlign:"left",transition:"color .2s",lineHeight:1};
+  const h=e=>e.currentTarget.style.color="rgba(245,239,227,.88)";
+  const l=e=>e.currentTarget.style.color="rgba(245,239,227,.52)";
+  const col=title=>(<div style={{fontFamily:"var(--sans)",fontSize:8,fontWeight:300,letterSpacing:".32em",textTransform:"uppercase",color:"rgba(184,145,60,.6)",marginBottom:16}}>{title}</div>);
+  return(
+    <footer style={{background:"#041a0f",borderTop:"1px solid rgba(184,145,60,.1)"}}>
+      <div style={{maxWidth:1080,margin:"0 auto",padding:"52px 48px 40px"}}>
+
+        {/* Logo top */}
+        <div style={{marginBottom:36,borderBottom:"1px solid rgba(184,145,60,.08)",paddingBottom:28}}>
+          {IMGS.logo&&<img src={IMGS.logo} alt="Dorra" style={{height:36,width:"auto",display:"block",objectFit:"contain"}}/>}
+        </div>
+
+        {/* 3 columns below logo */}
+        <div style={{display:"grid",gridTemplateColumns:"2fr 1fr 1fr",gap:40,alignItems:"start"}}>
+
+          {/* About */}
+          <div>
+            {col("About")}
+            <p style={{fontFamily:"var(--sans)",fontSize:12,fontWeight:300,color:"rgba(245,239,227,.38)",lineHeight:1.9,maxWidth:240,marginBottom:0}}>
+              Handcrafted copper jewelry with natural gemstones. Made entirely by hand in Egypt.
+            </p>
+            <p style={{fontFamily:"var(--serif)",fontStyle:"italic",fontSize:12,color:"rgba(184,145,60,.4)",marginTop:16}}>The Luxury of Nature</p>
+          </div>
+
+          {/* Shop */}
+          <div>
+            {col("Shop")}
+            <div style={{display:"flex",flexDirection:"column",gap:12}}>
+              {[["all","All Pieces"],["bracelets","Bracelets"],["necklaces","Necklaces"],["anklets","Anklets"],["earrings","Earrings"],["stones","Shop by Stone"]].map(([p,t])=>(
+                <button key={p} style={lnk} onClick={()=>setPage(p)} onMouseEnter={h} onMouseLeave={l}>{t}</button>
+              ))}
+            </div>
+          </div>
+
+          {/* Dorra */}
+          <div>
+            {col("Dorra")}
+            <div style={{display:"flex",flexDirection:"column",gap:12}}>
+              {[["customize","Design a Piece"],["care","Copper Care"],["story","Our Story"],["contact","Contact"],["returns","Returns"],["exchanges","Exchanges"],["reviews","Leave a Review"]].map(([p,t])=>(
+                <button key={p} style={lnk} onClick={()=>setPage(p)} onMouseEnter={h} onMouseLeave={l}>{t}</button>
+              ))}
+            </div>
+          </div>
+
+        </div>
+
+        {/* Bottom */}
+        <div style={{marginTop:40,paddingTop:16,borderTop:"1px solid rgba(184,145,60,.07)",display:"flex",justifyContent:"space-between"}}>
+          <span style={{fontFamily:"var(--sans)",fontSize:10,fontWeight:300,color:"rgba(245,239,227,.18)"}}>2025 Dorra. All rights reserved.</span>
+          <span style={{fontFamily:"var(--sans)",fontSize:10,fontWeight:300,color:"rgba(245,239,227,.18)"}}>dorrastonejewelry@gmail.com</span>
+        </div>
+
+      </div>
+    </footer>
+  );
+}
+
+
+export default function App(){
+  const isAdmin=()=>{try{return window.location.hash==="#/admin";}catch{return false;}};
+  if(isAdmin())return <AdminDashboard/>;
+  const[page,setPage]=useState("home");
+  const[detail,setDetail]=useState(null);
+  const[detailStone,setDetailStone]=useState("");
+  const[cart,setCart]=useState([]);
+  const[cO,setCO]=useState(false);
+  const[ck,setCk]=useState(false);
+  const[lastOrder,setLastOrder]=useState(null);
+  const[toast,setToast]=useState(null);
+  const[loading,setLoading]=useState(true);
+  useEffect(()=>{const t=setTimeout(()=>setLoading(false),1900);return()=>clearTimeout(t);},[]);
+  const scrollTop=()=>{try{document.documentElement.scrollTop=0;document.body.scrollTop=0;window.scrollTo(0,0);const r=document.getElementById("app-root");if(r)r.scrollTop=0;}catch(e){}};
+  const go=useCallback(p=>{setCO(false);setPage(p);setDetail(null);scrollTop();setTimeout(scrollTop,80);},[]);
+  const showDetail=useCallback((product,stone)=>{setDetail(product);setDetailStone(stone||product.stones[0]||"");setPage("_detail");scrollTop();setTimeout(scrollTop,80);},[]);
+  const showT=msg=>{setToast(msg);setTimeout(()=>setToast(null),2600);};
+  const addCart=(product,swapStone,price,size)=>{
+    const sw=Array.isArray(swapStone)?swapStone:(swapStone?[swapStone]:[product.stones[0]||""]);
+    const pr=price||product.price;
+    setCart(prev=>{
+      const existIdx=prev.findIndex(i=>i.product.id===product.id&&JSON.stringify(Array.isArray(i.swapStone)?i.swapStone:[i.swapStone])===JSON.stringify(sw));
+      if(existIdx>=0){const updated=[...prev];updated[existIdx]={...updated[existIdx],qty:updated[existIdx].qty+1};return updated;}
+      return [...prev,{product,swapStone:sw,price:pr,qty:1,pkg:"standard",size:size||""}];
+    });
+    showT(product.name+" added to cart");
+  };
+  const updPkg=(i,pkg)=>setCart(prev=>prev.map((item,idx)=>idx===i?{...item,pkg}:item));
+  const upQ=(i,q)=>{if(q<=0)setCart(p=>p.filter((_,idx)=>idx!==i));else setCart(p=>p.map((item,idx)=>idx===i?{...item,qty:q}:item));};
+  const cc=cart.reduce((s,i)=>s+i.qty,0);
+  useEffect(()=>{
+    document.documentElement.scrollTop=0;document.body.scrollTop=0;
+    if(page.startsWith("_d_")){const id=parseInt(page.replace("_d_",""));const prod=CATALOG.find(p=>p.id===id);if(prod){setDetail(prod);setDetailStone(prod.stones[0]||"");setPage("_detail");}}
+    [0,100,300].forEach(ms=>setTimeout(()=>{document.documentElement.scrollTop=0;document.body.scrollTop=0;},ms));
+  },[page]);
+  const activePage=page.startsWith("_d_")?"_detail":page;
+  return(<>
+    <InjectCSS/>
+    {loading&&(
+      <div style={{position:"fixed",inset:0,zIndex:99999,background:"#062318",display:"flex",alignItems:"center",justifyContent:"center"}}>
+        <div style={{textAlign:"center",display:"flex",flexDirection:"column",alignItems:"center",gap:0}}>
+          {IMGS.logo?<img src={IMGS.logo} alt="Dorra" style={{height:"clamp(52px,9vw,88px)",width:"auto",objectFit:"contain",marginBottom:16,animation:"fade-in .8s ease both"}}/>
+            :<div style={{fontFamily:"Cormorant Garamond,serif",fontSize:"clamp(48px,8vw,88px)",fontWeight:300,color:"#f5efe3",letterSpacing:".04em"}}>Dorra</div>}
+          <div style={{height:1,background:"rgba(184,145,60,.5)",width:60,animation:"line-grow 1s .3s cubic-bezier(.16,1,.3,1) both"}}/>
+          <p style={{fontFamily:"Jost,sans-serif",fontSize:8,letterSpacing:".44em",textTransform:"uppercase",color:"rgba(184,145,60,.6)",marginTop:12,animation:"fade-in .9s .7s ease both"}}>The Luxury of Nature</p>
+        </div>
+      </div>
+    )}
+    <Nav page={activePage} setPage={go} cc={cc} setCO={setCO}/>
+    <div id="app-root" className="main-layout-wrapper" style={{position:"relative"}}>
+      {activePage==="_detail"&&detail
+        ?<DetailPage product={detail} initStone={detailStone} onBack={()=>go("bracelets")} onA={addCart}/>
+        :<>
+          {activePage==="home"&&<HomePage setPage={go} onV={showDetail} onA={addCart}/>}
+          {activePage==="bracelets"&&<TypePage type="Bracelet" title="Bracelets" sub="Hand-wound copper with real stones. Each piece is unique." onV={showDetail} onA={addCart}/>}
+          {activePage==="necklaces"&&<TypePage type="Necklace" title="Necklaces" sub="Stone and copper on stainless steel chain." onV={showDetail} onA={addCart}/>}
+          {activePage==="anklets"&&<TypePage type="Anklet" title="Anklets" sub="Delicate copper anklets with real stone beads." onV={showDetail} onA={addCart}/>}
+          {activePage==="earrings"&&<TypePage type="Earring" title="Earrings" sub="Copper hook earrings with real stone drops." onV={showDetail} onA={addCart}/>}
+          {activePage==="all"&&<AllPage onP={showDetail} onA={addCart}/>}
+          {activePage==="stones"&&<StonesPage onV={showDetail} onA={addCart}/>}
+          {activePage==="care"&&<CarePage setPage={go} onA={addCart}/>}
+          {activePage==="story"&&<StoryPage/>}
+          {activePage==="contact"&&<ContactPage/>}
+          {activePage==="returns"&&<ReturnsPage setPage={go}/>}
+          {activePage==="exchanges"&&<ExchangesPage setPage={go}/>}
+          {activePage==="reviews"&&<ReviewsPage/>}
+          {activePage==="customize"&&<CustomizePage onAddCart={addCart} onGoCart={()=>{scrollTop();setCO(true);}}/>}
+        </>}
+    </div>
+    <Footer setPage={go}/>
+    {cO&&<CartDrawer cart={cart} onClose={()=>setCO(false)} onQty={upQ} onPkg={updPkg} onCk={()=>{setCO(false);setCk(true);}}/>}
+    {ck&&<Checkout cart={cart} onClose={()=>setCk(false)} onOk={()=>{setCk(false);setCart([]);}} setLastOrder={setLastOrder}/>}
+    {lastOrder&&<OrderConfirm order={lastOrder} onClose={()=>setLastOrder(null)}/>}
+    {toast&&<div className="toast"><span className="toast-dot"/>{toast}</div>}
+  </>);
+}
