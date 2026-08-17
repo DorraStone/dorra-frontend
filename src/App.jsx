@@ -690,7 +690,7 @@ function Nav({page,setPage,cc,setCO}){
     try{if(id!=="home")window.history.pushState({page:id},"","/"+id);else window.history.pushState({page:"home"},"","/");}catch(e){}
   };
   window.__dorraGo=go;
-  React.useEffect(()=>{
+  useEffect(()=>{
     const onPop=e=>{const pg=e.state&&e.state.page?e.state.page:"home";setCO(false);setPage(pg);window.scrollTo(0,0);};
     window.addEventListener("popstate",onPop);
     return()=>window.removeEventListener("popstate",onPop);
