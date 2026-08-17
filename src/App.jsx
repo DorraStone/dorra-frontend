@@ -1603,7 +1603,8 @@ function DetailPage({product,initStone,onBack,onA}){
             <SwapPanel stones={product.stones} swaps={swaps} setSwaps={setSwaps} price={product.price} currentPrice={price}/>
           </div>}
 
-          <button onClick={()=>onA(product,swaps,price,selSize)}
+          {sizeErr&&<p style={{fontSize:12,color:"#c0392b",textAlign:"center",marginBottom:8}}>Please select a size before adding to cart.</p>}
+          <button onClick={()=>{if(product.sizes&&product.sizes.length>0&&!selSize){setSizeErr(true);setTimeout(()=>setSizeErr(false),3000);return;}onA(product,swaps,price,selSize);}}
             style={{width:"100%",padding:"14px",fontFamily:"var(--sans)",fontSize:9,letterSpacing:".2em",textTransform:"uppercase",background:"var(--g)",color:"var(--gold)",border:"none",cursor:"pointer",transition:"all .25s",marginBottom:10}}
             onMouseEnter={e=>{e.currentTarget.style.background="var(--gold)";e.currentTarget.style.color="var(--g)";}}
             onMouseLeave={e=>{e.currentTarget.style.background="var(--g)";e.currentTarget.style.color="var(--gold)";}}>
