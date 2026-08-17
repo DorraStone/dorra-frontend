@@ -346,7 +346,7 @@ const CSS_LINES=[
   ".page-header-title{font-family:var(--serif);font-size:clamp(28px,3.6vw,56px);font-weight:300;color:var(--cr);line-height:1.03;}",
   ".page-header-sub{font-size:13px;color:rgba(245,239,227,.44);line-height:2.0;margin-top:10px;max-width:440px;font-weight:300;}",
   ".section{padding:72px 72px;}",
-  ".section-cream{padding:40px 48px;background:var(--cr);}",
+  ".section-cream{padding:40px 32px;background:var(--cr);}",
   ".section-pale{padding:72px 72px;background:var(--cr2);}",
   ".section-cream2{padding:48px 72px;background:var(--cr2);}",
   ".section-dark{padding:52px 72px;background:var(--g);}",
@@ -363,7 +363,7 @@ const CSS_LINES=[
   ".pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(272px,1fr));gap:1px;}",
   ".pc{background:var(--cr2);position:relative;overflow:hidden;cursor:pointer;transition:box-shadow .3s;}",
   ".pc:hover{box-shadow:0 12px 40px rgba(6,35,24,.1);}",
-  ".pc-img{aspect-ratio:4/5;overflow:hidden;position:relative;background:var(--cr2);min-height:300px;}",
+  ".pc-img{aspect-ratio:4/5;overflow:hidden;position:relative;background:var(--cr2);min-height:320px;}",
   ".pc-img img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;transition:transform .6s cubic-bezier(.16,1,.3,1);}",".pc:hover .pc-img img{transform:scale(1.04);}",
   ".pc-badge{position:absolute;top:11px;left:11px;z-index:3;font-size:7.5px;letter-spacing:.18em;text-transform:uppercase;padding:3px 9px;}",
   ".badge-new{background:var(--gold);color:var(--g);}",
@@ -439,13 +439,13 @@ const CSS_LINES=[
   "@keyframes fade-in{from{opacity:0}to{opacity:1}}",
   ".cart-drawer{position:fixed;z-index:9500;top:64px;right:0;bottom:0;width:390px;background:var(--cr);display:flex;flex-direction:column;animation:slide-right .38s var(--ease);box-shadow:-12px 0 40px rgba(6,35,24,.18);}",
   "@keyframes slide-right{from{transform:translateX(100%)}to{transform:none}}",
-  ".cart-head{padding:20px 22px 16px;border-bottom:1px solid rgba(26,18,10,.09);display:flex;align-items:center;justify-content:space-between;}",
+  ".cart-head{padding:18px 20px 14px;border-bottom:1px solid rgba(26,18,10,.09);display:flex;align-items:center;justify-content:space-between;}",
   ".cart-title{font-family:var(--serif);font-size:22px;font-weight:300;color:var(--ink);}",
   ".cart-close{background:none;border:none;color:var(--ink3);cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:15px;transition:color .2s;;min-width:36px;min-height:36px;display:flex;align-items:center;justify-content:center;}",
   ".cart-close:hover{color:var(--ink);}",
   ".cart-items{flex:1;overflow-y:auto;padding:16px 22px;display:flex;flex-direction:column;gap:13px;}",
   ".cart-item{display:flex;gap:12px;padding-bottom:13px;border-bottom:1px solid rgba(26,18,10,.07);}",
-  ".cart-thumb{width:52px;height:64px;background:var(--cr2);overflow:hidden;flex-shrink:0;}",
+  ".cart-thumb{width:44px;height:54px;background:var(--cr2);overflow:hidden;flex-shrink:0;}",
   ".cart-thumb img{width:100%;height:100%;object-fit:cover;}",
   ".cart-item-info{flex:1;}",
   ".cart-item-name{font-family:var(--serif);font-size:clamp(14px,3.5vw,15px);color:var(--ink);margin-bottom:2px;}",
@@ -968,33 +968,18 @@ function HomePage({setPage,onV,onA}){
       <NecklaceSection onV={onV} onA={onA} setPage={setPage}/>
     </div>
 
-    {/* Anklets & Earrings */}
-    <div className="section-cream" style={{paddingTop:52,paddingBottom:52}}>
-      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:48,alignItems:"start"}}>
-        <div>
-          <div style={{display:"flex",alignItems:"flex-end",justifyContent:"space-between",marginBottom:20}} data-rv>
-            <div>
-              <span className="sec-label sec-label-light">Anklets</span>
-              <h2 className="sec-title sec-title-light" style={{fontSize:"clamp(18px,2vw,24px)"}}>For the shore</h2>
-            </div>
-            <button className="btn btn-outline" style={{fontSize:8,padding:"6px 14px"}} onClick={()=>setPage("anklets")}>View All</button>
+    {/* Anklets & Earrings - horizontal scroll */}
+    <div style={{background:"var(--cr)",paddingTop:40,paddingBottom:40}}>
+      <div style={{padding:"0 32px",marginBottom:16}}>
+        <span className="sec-label sec-label-light">Also in our collection</span>
+      </div>
+      <div style={{overflowX:"auto",WebkitOverflowScrolling:"touch",scrollbarWidth:"none",msOverflowStyle:"none",display:"flex",gap:1,paddingBottom:0}}>
+        <style>{`.ae-scroll::-webkit-scrollbar{display:none}`}</style>
+        {CATALOG.filter(p=>p.type==="Anklet"||p.type==="Earring").map(p=>(
+          <div key={p.id} style={{flex:"0 0 260px",minWidth:260}}>
+            <PC product={p} onV={onV} onA={onA}/>
           </div>
-          <div className="pgrid" style={{gridTemplateColumns:"1fr"}} data-rv>
-            {CATALOG.filter(p=>p.type==="Anklet").slice(0,1).map(p=><PC key={p.id} product={p} onV={onV} onA={onA}/>)}
-          </div>
-        </div>
-        <div>
-          <div style={{display:"flex",alignItems:"flex-end",justifyContent:"space-between",marginBottom:20}} data-rv>
-            <div>
-              <span className="sec-label sec-label-light">Earrings</span>
-              <h2 className="sec-title sec-title-light" style={{fontSize:"clamp(18px,2vw,24px)"}}>Drop &amp; stone</h2>
-            </div>
-            <button className="btn btn-outline" style={{fontSize:8,padding:"6px 14px"}} onClick={()=>setPage("earrings")}>View All</button>
-          </div>
-          <div className="pgrid" style={{gridTemplateColumns:"1fr"}} data-rv>
-            {CATALOG.filter(p=>p.type==="Earring").slice(0,1).map(p=><PC key={p.id} product={p} onV={onV} onA={onA}/>)}
-          </div>
-        </div>
+        ))}
       </div>
     </div>
 
@@ -1225,9 +1210,9 @@ function CustomizePage({onAddCart,onGoCart}){
             </div>
           </div>
 
-          {/* WIRE COLOR */}
+          {/* WIRE COLOR / BASE METAL */}
           <div style={{marginBottom:28}}>
-            <span style={{fontSize:11,letterSpacing:".2em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:10}}>Decorative Wire Color</span>
+            <span style={{fontSize:11,letterSpacing:".2em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:10}}>{pt==="Earring"?"Earring Base Metal":"Decorative Wire Color"}</span>
             <div className="sec-rule" style={{marginBottom:10}}/>
             <p style={{fontSize:13,color:"var(--ink3)",lineHeight:1.8,marginBottom:14}}>The thin decorative wire comes in two finishes, or opt for doubled thick copper or none at all.</p>
             <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
@@ -1707,16 +1692,15 @@ function ReturnsPage({setPage}){
   const[form,setForm]=useState({code:"",name:"",address:"",reason:""});
   const[sent,setSent]=useState(false);
   useRv();
-  const submit=()=>{
+  const submit=async()=>{
     if(!form.code||!form.name||!form.address||!form.reason)return;
-    const msg=["Return Request","Order Code: "+form.code,"Name: "+form.name,"Address: "+form.address,"Reason: "+form.reason].join("\n");
-    window.location.href="mailto:dorrastonejewelry@gmail.com?subject="+encodeURIComponent("Return Request - "+form.code)+"&body="+encodeURIComponent(msg);
+    try{await apiPost("/api/orders/returns",{ref:form.code,name:form.name,address:form.address,reason:form.reason});}catch(e){console.error(e);}
     setSent(true);
   };
   return(<div style={{paddingTop:64}}>
     <div className="page-header"><span className="page-header-tag" data-rv>After Your Order</span><h1 className="page-header-title" data-rv data-d="1">Returns</h1><p className="page-header-sub" data-rv data-d="2">We review every return request within 48 hours.</p></div>
     <div className="section-cream" style={{maxWidth:560,margin:"0 auto"}}>
-      {sent?<div style={{textAlign:"center",padding:"40px 0"}}><div style={{fontFamily:"var(--serif)",fontSize:44,color:"var(--gold)",marginBottom:12}}>*</div><p style={{fontSize:13,color:"var(--ink3)"}}>Request sent. We will be in touch within 48 hours.</p><button className="btn btn-dark" style={{marginTop:12}} onClick={()=>setSent(false)}>Submit Another</button></div>
+      {sent?<div style={{textAlign:"center",padding:"40px 0"}}><div style={{fontFamily:"var(--serif)",fontSize:44,color:"var(--gold)",marginBottom:12}}>*</div><p style={{fontSize:13,color:"var(--ink3)"}}>Your request has been received. This is not yet a confirmation  our team will review and contact you within 2-3 business days.</p><button className="btn btn-dark" style={{marginTop:12}} onClick={()=>setSent(false)}>Submit Another</button></div>
       :<div>
         <div className="field"><label className="field-label">Order Reference Code *</label><input className="field-input" placeholder="e.g. DRR-ABC123" value={form.code} onChange={e=>setForm({...form,code:e.target.value})}/></div>
         <div className="field"><label className="field-label">Your Name *</label><input className="field-input" placeholder="Full name" value={form.name} onChange={e=>setForm({...form,name:e.target.value})}/></div>
@@ -1736,16 +1720,15 @@ function ExchangesPage({setPage}){
   const[form,setForm]=useState({code:"",name:"",address:"",reason:"",sizing:""});
   const[sent,setSent]=useState(false);
   useRv();
-  const submit=()=>{
+  const submit=async()=>{
     if(!form.code||!form.name||!form.address||!form.reason)return;
-    const msg=["Exchange Request","Order Code: "+form.code,"Name: "+form.name,"Address: "+form.address,"Reason: "+form.reason+(form.sizing?" | Detail: "+form.sizing:"")].join("\n");
-    window.location.href="mailto:dorrastonejewelry@gmail.com?subject="+encodeURIComponent("Exchange Request - "+form.code)+"&body="+encodeURIComponent(msg);
+    try{await apiPost("/api/orders/exchanges",{ref:form.code,name:form.name,address:form.address,reason:form.reason});}catch(e){console.error(e);}
     setSent(true);
   };
   return(<div style={{paddingTop:64}}>
     <div className="page-header"><span className="page-header-tag" data-rv>After Your Order</span><h1 className="page-header-title" data-rv data-d="1">Exchanges</h1><p className="page-header-sub" data-rv data-d="2">Sizing or stone adjustments handled with care.</p></div>
     <div className="section-cream" style={{maxWidth:560,margin:"0 auto"}}>
-      {sent?<div style={{textAlign:"center",padding:"40px 0"}}><div style={{fontFamily:"var(--serif)",fontSize:44,color:"var(--gold)",marginBottom:12}}>*</div><p style={{fontSize:13,color:"var(--ink3)"}}>Request sent. We will be in touch within 48 hours.</p><button className="btn btn-dark" style={{marginTop:12}} onClick={()=>setSent(false)}>Submit Another</button></div>
+      {sent?<div style={{textAlign:"center",padding:"40px 0"}}><div style={{fontFamily:"var(--serif)",fontSize:44,color:"var(--gold)",marginBottom:12}}>*</div><p style={{fontSize:13,color:"var(--ink3)"}}>Your request has been received. This is not yet a confirmation  our team will review and contact you within 2-3 business days.</p><button className="btn btn-dark" style={{marginTop:12}} onClick={()=>setSent(false)}>Submit Another</button></div>
       :<div>
         <div className="field"><label className="field-label">Order Reference Code *</label><input className="field-input" placeholder="e.g. DRR-ABC123" value={form.code} onChange={e=>setForm({...form,code:e.target.value})}/></div>
         <div className="field"><label className="field-label">Your Name *</label><input className="field-input" placeholder="Full name" value={form.name} onChange={e=>setForm({...form,name:e.target.value})}/></div>
