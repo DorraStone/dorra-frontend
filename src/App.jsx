@@ -363,7 +363,7 @@ const CSS_LINES=[
   ".pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(272px,1fr));gap:1px;}",
   ".pc{background:var(--cr2);position:relative;overflow:hidden;cursor:pointer;transition:box-shadow .3s;}",
   ".pc:hover{box-shadow:0 12px 40px rgba(6,35,24,.1);}",
-  ".pc-img{aspect-ratio:4/5;overflow:hidden;position:relative;background:var(--cr2);min-height:320px;}",
+  ".pc-img{aspect-ratio:3/4;overflow:hidden;position:relative;background:var(--cr2);}",
   ".pc-img img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;transition:transform .6s cubic-bezier(.16,1,.3,1);}",".pc:hover .pc-img img{transform:scale(1.04);}",
   ".pc-badge{position:absolute;top:11px;left:11px;z-index:3;font-size:7.5px;letter-spacing:.18em;text-transform:uppercase;padding:3px 9px;}",
   ".badge-new{background:var(--gold);color:var(--g);}",
@@ -990,8 +990,8 @@ function HomePage({setPage,onV,onA}){
           <h2 style={{fontFamily:"var(--serif)",fontSize:"clamp(22px,3vw,32px)",fontWeight:300,color:"var(--cr)",marginBottom:12,lineHeight:1.3}}>Arrives with a care kit</h2>
           <p style={{fontSize:14,color:"rgba(245,239,227,.5)",lineHeight:1.85,marginBottom:24,maxWidth:480,margin:"0 auto 24px"}}>Anti-rust spray, soft polishing cloth, Dorra pouch. Keep your piece exactly as you first received it.</p>
           <div style={{display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap",marginTop:8}}>
-            <button className="btn btn-outline-gold" onClick={()=>setPage("care")} style={{fontSize:9,letterSpacing:".24em",padding:"13px 32px",minWidth:200}}>Care Instructions</button>
-            <button className="btn btn-gold" onClick={()=>onV(CATALOG.find(p=>p.name==="Copper Care Kit"),[])} style={{fontSize:9,letterSpacing:".24em",padding:"13px 32px",minWidth:200}}>Shop Care Kit  149 EGP</button>
+            <button className="btn btn-outline-gold" onClick={()=>setPage("care")} style={{fontSize:9,letterSpacing:".2em",padding:"13px 0",width:200,textAlign:"center",minHeight:42,boxSizing:"border-box"}}>Care Instructions</button>
+            <button className="btn btn-gold" onClick={()=>onV(CATALOG.find(p=>p.name==="Copper Care Kit"),[])} style={{fontSize:9,letterSpacing:".2em",padding:"13px 0",width:200,textAlign:"center",minHeight:42,boxSizing:"border-box"}}>Shop Care Kit  149 EGP</button>
           </div>
       </div>
     </div>
@@ -1208,6 +1208,9 @@ function CustomizePage({onAddCart,onGoCart}){
                 </button>
               ))}
             </div>
+            {/* Piece type description */}
+            {pt==="Bracelet"&&<p style={{fontSize:12,color:"var(--ink3)",lineHeight:1.8,marginTop:10,padding:"10px 14px",background:"rgba(26,18,10,.04)",borderLeft:"2px solid rgba(184,145,60,.2)"}}>All stones are the same size, wound evenly around the copper wire.</p>}
+            {pt==="Statement Bracelet"&&<p style={{fontSize:12,color:"var(--ink3)",lineHeight:1.8,marginTop:10,padding:"10px 14px",background:"rgba(26,18,10,.04)",borderLeft:"2px solid var(--gold)"}}>One stone is chosen as a centrepiece  larger in size and placed at the front. The remaining stones complement it.</p>}
           </div>
 
           {/* WIRE COLOR / BASE METAL */}
@@ -2060,7 +2063,7 @@ function Footer({setPage}){
 
         {/* Logo top */}
         <div style={{marginBottom:36,borderBottom:"1px solid rgba(184,145,60,.08)",paddingBottom:28}}>
-          {IMGS.logo&&<img src={IMGS.logo} alt="Dorra" style={{height:36,width:"auto",display:"block",objectFit:"contain"}}/>}
+          <button onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");}} style={{background:"none",border:"none",cursor:"pointer",padding:0,lineHeight:0,display:"inline-block"}}>{IMGS.logo&&<img src={IMGS.logo} alt="Dorra" style={{height:36,width:"auto",display:"block",objectFit:"contain"}}/>}</button>
         </div>
 
         {/* 3 columns below logo */}
