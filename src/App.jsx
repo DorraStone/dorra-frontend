@@ -406,7 +406,7 @@ const CSS_LINES=[
   ".stone-card-val{font-size:11px;color:var(--ink);text-align:right;max-width:55%;font-weight:300;}",
   ".stone-card-foot{margin-top:11px;padding-top:10px;font-family:var(--serif);font-style:italic;font-size:11px;color:var(--gold);text-align:center;opacity:.78;}",
   ".detail-layout{display:grid;grid-template-columns:1fr 1fr;overflow:visible;}",
-  ".detail-media{background:var(--cr2);position:relative;overflow:hidden;}",
+  ".detail-media{background:var(--cr2);position:relative;overflow:hidden;min-height:400px;}",
   ".detail-img-wrap{width:100%;height:100%;min-height:480px;position:relative;}",
   ".detail-type{font-size:8px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;display:block;}",
   ".detail-care{background:var(--cr2);padding:14px 16px;border-top:1px solid rgba(26,18,10,.08);margin-top:auto;}",
@@ -592,7 +592,7 @@ const CSS_LINES=[
   "@keyframes page-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}",
   ".page-header{padding:90px 20px 44px;}",
   ".section,.section-cream,.section-cream2,.section-dark,.section-dark2{padding:48px 20px;}",
-  "@media(max-width:680px){.detail-layout{grid-template-columns:1fr;}.detail-media{order:1;}.detail-info{order:2;}}",
+  "@media(max-width:680px){.detail-layout{grid-template-columns:1fr;}.detail-media{order:1!important;}.detail-info{order:2!important;}}",
   "@media(max-width:680px){.detail-info{padding:24px 20px;}}",
   ".story-split,.story-mid,.contact-split,.customize-grid{grid-template-columns:1fr;}",
   ".story-right,.story-light{display:none;}",
@@ -976,7 +976,7 @@ function HomePage({setPage,onV,onA}){
       <div style={{overflowX:"auto",WebkitOverflowScrolling:"touch",scrollbarWidth:"none",msOverflowStyle:"none",display:"flex",gap:1,paddingBottom:0}}>
         <style>{`.ae-scroll::-webkit-scrollbar{display:none}`}</style>
         {CATALOG.filter(p=>p.type==="Anklet"||p.type==="Earring").map(p=>(
-          <div key={p.id} style={{flex:"0 0 260px",minWidth:260}}>
+          <div key={p.id} style={{flex:"0 0 300px",minWidth:300}}>
             <PC product={p} onV={onV} onA={onA}/>
           </div>
         ))}
@@ -1789,7 +1789,7 @@ function ReviewsPage(){
         ))}
       </div>
     </div>}
-    <div style={{background:"var(--g)",padding:"64px 72px"}}>
+    <div style={{background:"var(--g)",padding:"40px 20px"}}>
       <div style={{maxWidth:560,margin:"0 auto",width:"100%",boxSizing:"border-box"}}>
         <span className="sec-label sec-label-dark" style={{display:"block",marginBottom:10}}>Share Yours</span>
         <h2 style={{fontFamily:"var(--serif)",fontSize:"clamp(22px,2.6vw,38px)",fontWeight:300,color:"var(--cr)",marginBottom:8}}>Your experience, in your words.</h2>
@@ -1810,6 +1810,7 @@ function ReviewsPage(){
 function AdminDashboard(){
   const[orders,setOrders]=useState([]);
   const[reviews,setReviews]=useState([]);
+  const[published,setPublished]=useState([]);
   const[returns,setReturns]=useState([]);
   const[exchanges,setExchanges]=useState([]);
   const[tab,setTab]=useState("orders");
@@ -1821,18 +1822,21 @@ function AdminDashboard(){
   const load=async()=>{
     setLoading(true);
     try{
-      const[oRes,rRes,retRes,excRes]=await Promise.all([
+      const[oRes,rRes,pubRes,retRes,excRes]=await Promise.all([
         fetch(API_BASE+"/api/orders",{headers}),
         fetch(API_BASE+"/api/reviews/pending",{headers}),
+        fetch(API_BASE+"/api/reviews/published",{headers}),
         fetch(API_BASE+"/api/orders/returns-list",{headers}).catch(()=>({json:()=>[]})),
         fetch(API_BASE+"/api/orders/exchanges-list",{headers}).catch(()=>({json:()=>[]})),
       ]);
       const o=await oRes.json();
       const r=await rRes.json();
+      const pub=await pubRes.json();
       const ret=await retRes.json();
       const exc=await excRes.json();
       if(Array.isArray(o))setOrders(o);
       if(Array.isArray(r))setReviews(r);
+      if(Array.isArray(pub))setPublished(pub);
       if(Array.isArray(ret))setReturns(ret);
       if(Array.isArray(exc))setExchanges(exc);
     }catch(e){console.error("Admin load:",e);}
@@ -1868,6 +1872,7 @@ function AdminDashboard(){
     try{
       await fetch(API_BASE+"/api/reviews/"+id,{method:"DELETE",headers});
       setReviews(r=>r.filter(x=>x._id!==id));
+      setPublished(r=>r.filter(x=>x._id!==id));
     }catch(e){console.error(e);}
   };
 
@@ -1875,7 +1880,7 @@ function AdminDashboard(){
   const fmt2=n=>"EGP "+Number(n||0).toLocaleString();
   const statusColors={pending:"#b8913c",confirmed:"#4a9e6b",processing:"#4a7fb5",shipped:"#9b59b6",delivered:"#27ae60",cancelled:"#e74c3c"};
 
-  const tabs=["orders","reviews","returns","exchanges"];
+  const tabs=["orders","reviews","published","returns","exchanges"];
   
   return(
     <div style={{minHeight:"100vh",background:G.bg,color:G.ink,fontFamily:"'Helvetica Neue',Arial,sans-serif",padding:"0 0 60px"}}>
@@ -1894,7 +1899,7 @@ function AdminDashboard(){
       <div style={{display:"flex",gap:0,borderBottom:"1px solid rgba(184,145,60,.12)",padding:"0 32px"}}>
         {tabs.map(t=>(
           <button key={t} onClick={()=>setTab(t)} style={{background:"none",border:"none",borderBottom:tab===t?"2px solid "+G.gold:"2px solid transparent",color:tab===t?G.gold:G.faint,fontSize:12,letterSpacing:".1em",textTransform:"uppercase",padding:"16px 20px",cursor:"pointer",transition:"all .2s"}}>
-            {t==="orders"?"Orders ("+orders.length+")":t==="reviews"?"Reviews ("+reviews.length+")":t==="returns"?"Returns ("+returns.length+")":"Exchanges ("+exchanges.length+")"}
+            {t==="orders"?"Orders ("+orders.length+")":t==="reviews"?"Pending Reviews ("+reviews.length+")":t==="published"?"Published Reviews ("+published.length+")":t==="returns"?"Returns ("+returns.length+")":"Exchanges ("+exchanges.length+")"}
           </button>
         ))}
       </div>
@@ -1941,6 +1946,28 @@ function AdminDashboard(){
           </div>
         )}
 
+
+
+        {/* PUBLISHED REVIEWS TAB */}
+        {!loading&&tab==="published"&&(
+          <div>
+            {published.length===0&&<p style={{color:G.faint,fontSize:14,textAlign:"center",padding:"40px 0"}}>No published reviews yet.</p>}
+            {published.map(r=>(
+              <div key={r._id} style={{background:G.card,marginBottom:12,padding:"18px 20px",borderLeft:"2px solid #4a9e6b"}}>
+                <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:12}}>
+                  <div style={{flex:1}}>
+                    <div style={{fontSize:14,color:G.cream,fontWeight:500,marginBottom:4}}>{r.name}{r.piece?"  "+r.piece:""}</div>
+                    <p style={{fontSize:13,color:G.ink,lineHeight:1.8,fontStyle:"italic",marginBottom:6}}>"{r.text}"</p>
+                    <div style={{fontSize:11,color:G.faint}}>{r.approvedAt?new Date(r.approvedAt).toLocaleString("en-GB"):""}</div>
+                  </div>
+                  <button onClick={()=>deleteReview(r._id)&&setPublished(p=>p.filter(x=>x._id!==r._id))} style={{background:"rgba(231,76,60,.08)",border:"1px solid rgba(231,76,60,.3)",color:"#e74c3c",fontSize:11,letterSpacing:".08em",padding:"8px 16px",cursor:"pointer",textTransform:"uppercase",flexShrink:0}}>
+                    Remove
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
 
         {/* RETURNS TAB */}
         {!loading&&tab==="returns"&&(
