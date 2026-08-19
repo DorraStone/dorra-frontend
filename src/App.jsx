@@ -1068,6 +1068,10 @@ function StonesPage({onV,onA}){
     const lore=STONE_LORE[active];
     return(
       <div style={{paddingTop:64}}>
+      <div style={{padding:"8px 24px",background:"var(--cr)",borderBottom:"1px solid rgba(26,18,10,.08)",position:"sticky",top:64,zIndex:500}}>
+        <button onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");}} style={{background:"none",border:"none",cursor:"pointer",fontSize:11,color:"var(--ink3)",letterSpacing:".1em",textTransform:"uppercase",display:"flex",alignItems:"center",gap:5,padding:0}}>&#8592; Home</button>
+      </div>
+      
         <div style={{background:"var(--g)",width:"100%"}}>
           <div style={{maxWidth:1200,margin:"0 auto",padding:"28px 52px 52px"}}>
             <button onClick={()=>setActive(null)} style={{background:"none",border:"none",color:"rgba(245,239,227,.5)",fontSize:8.5,letterSpacing:".16em",textTransform:"uppercase",cursor:"pointer",marginBottom:24,display:"flex",alignItems:"center",gap:5}}>Back to Stones</button>
@@ -1136,7 +1140,11 @@ function StonesPage({onV,onA}){
   );
 }
 
-function CarePage({setPage,onA}){useRv();return(<div style={{paddingTop:64}}><div className="page-header"><span className="page-header-tag" data-rv>Care</span><h1 className="page-header-title" data-rv data-d="1">Keep your copper alive</h1><p className="page-header-sub" data-rv data-d="2">Every Dorra piece ships with a copper care kit - polish liquid and soft cloth. Use them when your piece begins to darken.</p></div><div className="section-cream"><div className="care-steps" data-rv>{[["Apply","A few drops of polish to the soft cloth."],["Rub","Gently along the copper wire in small circles."],["Rinse","Briefly with cool water."],["Dry","Pat dry immediately. Never leave wet."]].map((s,i)=><div key={s[0]} className="care-step"><div className="care-step-icon">0{i+1}</div><div className="care-step-title">{s[0]}</div><p className="care-step-text">{s[1]}</p></div>)}</div><div style={{maxWidth:560,margin:"40px auto 0",textAlign:"center"}} data-rv data-d="2"><p style={{fontSize:13,color:"var(--ink3)",lineHeight:2.0,marginBottom:20,fontWeight:300}}>The darkening of copper is a natural process called a patina - it is not damage. Your care kit lets you choose when to restore.</p><button className="btn btn-dark" onClick={()=>{
+function CarePage({setPage,onA}){useRv();return(<div style={{paddingTop:64}}>
+      <div style={{padding:"8px 24px",background:"var(--cr)",borderBottom:"1px solid rgba(26,18,10,.08)",position:"sticky",top:64,zIndex:500}}>
+        <button onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");}} style={{background:"none",border:"none",cursor:"pointer",fontSize:11,color:"var(--ink3)",letterSpacing:".1em",textTransform:"uppercase",display:"flex",alignItems:"center",gap:5,padding:0}}>&#8592; Home</button>
+      </div>
+      <div className="page-header"><span className="page-header-tag" data-rv>Care</span><h1 className="page-header-title" data-rv data-d="1">Keep your copper alive</h1><p className="page-header-sub" data-rv data-d="2">Every Dorra piece ships with a copper care kit - polish liquid and soft cloth. Use them when your piece begins to darken.</p></div><div className="section-cream"><div className="care-steps" data-rv>{[["Apply","A few drops of polish to the soft cloth."],["Rub","Gently along the copper wire in small circles."],["Rinse","Briefly with cool water."],["Dry","Pat dry immediately. Never leave wet."]].map((s,i)=><div key={s[0]} className="care-step"><div className="care-step-icon">0{i+1}</div><div className="care-step-title">{s[0]}</div><p className="care-step-text">{s[1]}</p></div>)}</div><div style={{maxWidth:560,margin:"40px auto 0",textAlign:"center"}} data-rv data-d="2"><p style={{fontSize:13,color:"var(--ink3)",lineHeight:2.0,marginBottom:20,fontWeight:300}}>The darkening of copper is a natural process called a patina - it is not damage. Your care kit lets you choose when to restore.</p><button className="btn btn-dark" onClick={()=>{
               const kit=CATALOG.find(p=>p.type==="Care");
               if(kit&&onA){onA(kit,[],kit.price);}
             }}>Add Copper Care Kit to Cart</button></div></div></div>);}
@@ -1486,13 +1494,13 @@ function Checkout({cart,onClose,onOk,setLastOrder}){
   const dueOnDelivery=isCOD?(standardSub+customBal+ship):(isFullOnline?0:customBal);
   const amountDue=dueNow;
   const ok1=!!(name&&phone&&email&&email.includes("@")&&email.includes(".")&&address&&address.length>5);
-  const needRef=(pay==="instapay"||pay==="instapay_full"||pay==="full_instapay");
+  const needRef=pay.includes("instapay")||pay==="full_instapay";
   const needCard=(pay==="card"||pay==="card_full"||pay==="full_card");
-  const ok2=pay==="full_cod"||(needRef&&instRef.length>3&&instScreenshot.length>0)||(needCard&&cardN.length===16&&cardE.length===5&&cardC.length===3)||pay==="apple"||pay==="full_apple"||pay==="apple_full";
+  const ok2=pay==="full_cod"||(needRef&&instScreenshot.length>0)||pay==="apple"||pay==="full_apple"||pay==="apple_full";
   const cities=["Cairo","Giza","Alexandria","Al Sharkia","10th of Ramadan City","Luxor","Aswan","Hurghada","Other"];
   const payOptions=hasFromScratch
-    ?[{id:"instapay",label:"Instapay",sub:"Deposit "+fmt(customDep)+" now, "+fmt(dueOnDelivery)+" on delivery",group:"deposit"},{id:"instapay_full",label:"Instapay",sub:"Pay full "+fmt(tot)+" now",group:"full"},{id:"card",label:"Card",sub:"Deposit "+fmt(customDep)+" now",group:"deposit"},{id:"card_full",label:"Card",sub:"Pay full "+fmt(tot)+" now",group:"full"},{id:"full_cod",label:"Cash on Delivery",sub:"Pay on delivery",group:"full"}]
-    :[{id:"full_instapay",label:"Instapay",sub:"Pay "+fmt(tot)+" now"},{id:"full_card",label:"Card",sub:"Pay "+fmt(tot)+" now"},{id:"full_apple",label:"Apple Pay",sub:"Pay "+fmt(tot)+" now"},{id:"full_cod",label:"Cash on Delivery",sub:"Pay "+fmt(tot)+" on delivery"}];
+    ?[{id:"instapay",label:"Instapay",sub:"40% Deposit "+fmt(customDep)+" now  "+fmt(dueOnDelivery)+" on delivery",group:"deposit"},{id:"instapay_full",label:"Instapay",sub:"Pay full "+fmt(tot)+" now",group:"full"},{id:"full_cod",label:"Cash on Delivery",sub:"Pay "+fmt(standardSub+ship)+" on delivery (bespoke deposit via Instapay required)",group:"full"}]
+    :[{id:"full_instapay",label:"Instapay",sub:"Pay "+fmt(tot)+" now"},{id:"full_cod",label:"Cash on Delivery",sub:"Pay on delivery"}]
 
   const[submitting,setSubmitting]=useState(false);
   const submit=async()=>{
@@ -1543,9 +1551,11 @@ function Checkout({cart,onClose,onOk,setLastOrder}){
 
   return(
     <div className="modal-overlay" onClick={e=>e.target===e.currentTarget&&onClose()}>
-      <div className="modal">
+      <div className="modal" style={{position:"relative"}}>
+        <button onClick={onClose} style={{position:"absolute",top:12,right:14,background:"none",border:"none",cursor:"pointer",fontSize:22,color:"var(--ink3)",fontWeight:200,lineHeight:1,zIndex:10,padding:4}}>&#x2715;</button>
         <div className="modal-head">
-          <div>
+          <div style={{display:"flex",alignItems:"flex-start",justifyContent:"space-between"}}>
+            <div style={{flex:1}}>
             <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:4}}>
               <h2 className="modal-title">Checkout</h2>
               <button onClick={onClose} style={{background:"none",border:"none",cursor:"pointer",fontSize:11,color:"var(--ink3)",letterSpacing:".1em",textTransform:"uppercase",display:"flex",alignItems:"center",gap:5,padding:0}}>&#8592; Keep Shopping</button>
@@ -1558,7 +1568,7 @@ function Checkout({cart,onClose,onOk,setLastOrder}){
               ])}
             </div>
           </div>
-          <button className="modal-close" onClick={onClose}>x</button>
+          <button className="modal-close" onClick={onClose} style={{fontSize:22,fontWeight:200,lineHeight:1,padding:"4px 8px"}}>&#x2715;</button>
         </div>
         <div className="modal-body">
           {step===1&&<>
@@ -1669,6 +1679,10 @@ function AllPage({onP,onA}){
   const featured=CATALOG.filter(p=>p.type!=="Care");
   const filtered=filter==="all"?featured:featured.filter(p=>p.type===filter);
   return(<div style={{paddingTop:64}}>
+      <div style={{padding:"8px 24px",background:"var(--cr)",borderBottom:"1px solid rgba(26,18,10,.08)",position:"sticky",top:64,zIndex:500}}>
+        <button onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");}} style={{background:"none",border:"none",cursor:"pointer",fontSize:11,color:"var(--ink3)",letterSpacing:".1em",textTransform:"uppercase",display:"flex",alignItems:"center",gap:5,padding:0}}>&#8592; Home</button>
+      </div>
+      
     <div className="page-header">
       <span className="page-header-tag" data-rv>The Collection</span>
       <h1 className="page-header-title" data-rv data-d="1">All Pieces</h1>
@@ -1701,6 +1715,10 @@ function ReturnsPage({setPage}){
     setSent(true);
   };
   return(<div style={{paddingTop:64}}>
+      <div style={{padding:"8px 24px",background:"var(--cr)",borderBottom:"1px solid rgba(26,18,10,.08)",position:"sticky",top:64,zIndex:500}}>
+        <button onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");}} style={{background:"none",border:"none",cursor:"pointer",fontSize:11,color:"var(--ink3)",letterSpacing:".1em",textTransform:"uppercase",display:"flex",alignItems:"center",gap:5,padding:0}}>&#8592; Home</button>
+      </div>
+      
     <div className="page-header"><span className="page-header-tag" data-rv>After Your Order</span><h1 className="page-header-title" data-rv data-d="1">Returns</h1><p className="page-header-sub" data-rv data-d="2">We review every return request within 48 hours.</p></div>
     <div className="section-cream" style={{maxWidth:560,margin:"0 auto"}}>
       {sent?<div style={{textAlign:"center",padding:"40px 0"}}><div style={{fontFamily:"var(--serif)",fontSize:44,color:"var(--gold)",marginBottom:12}}>*</div><p style={{fontSize:13,color:"var(--ink3)"}}>Your request has been received. This is not yet a confirmation  our team will review and contact you within 2-3 business days.</p><button className="btn btn-dark" style={{marginTop:12}} onClick={()=>setSent(false)}>Submit Another</button></div>
@@ -1729,6 +1747,10 @@ function ExchangesPage({setPage}){
     setSent(true);
   };
   return(<div style={{paddingTop:64}}>
+      <div style={{padding:"8px 24px",background:"var(--cr)",borderBottom:"1px solid rgba(26,18,10,.08)",position:"sticky",top:64,zIndex:500}}>
+        <button onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");}} style={{background:"none",border:"none",cursor:"pointer",fontSize:11,color:"var(--ink3)",letterSpacing:".1em",textTransform:"uppercase",display:"flex",alignItems:"center",gap:5,padding:0}}>&#8592; Home</button>
+      </div>
+      
     <div className="page-header"><span className="page-header-tag" data-rv>After Your Order</span><h1 className="page-header-title" data-rv data-d="1">Exchanges</h1><p className="page-header-sub" data-rv data-d="2">Sizing or stone adjustments handled with care.</p></div>
     <div className="section-cream" style={{maxWidth:560,margin:"0 auto"}}>
       {sent?<div style={{textAlign:"center",padding:"40px 0"}}><div style={{fontFamily:"var(--serif)",fontSize:44,color:"var(--gold)",marginBottom:12}}>*</div><p style={{fontSize:13,color:"var(--ink3)"}}>Your request has been received. This is not yet a confirmation  our team will review and contact you within 2-3 business days.</p><button className="btn btn-dark" style={{marginTop:12}} onClick={()=>setSent(false)}>Submit Another</button></div>
@@ -1777,6 +1799,10 @@ function ReviewsPage(){
     }).catch(()=>setPublished(JSON.parse(localStorage.getItem("dorra_reviews_published")||"[]")));
   },[]);
   return(<div style={{paddingTop:64}}>
+      <div style={{padding:"8px 24px",background:"var(--cr)",borderBottom:"1px solid rgba(26,18,10,.08)",position:"sticky",top:64,zIndex:500}}>
+        <button onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");}} style={{background:"none",border:"none",cursor:"pointer",fontSize:11,color:"var(--ink3)",letterSpacing:".1em",textTransform:"uppercase",display:"flex",alignItems:"center",gap:5,padding:0}}>&#8592; Home</button>
+      </div>
+      
     <div className="page-header"><span className="page-header-tag" data-rv>Voices</span><h1 className="page-header-title" data-rv data-d="1">From Our Wearers</h1><p className="page-header-sub" data-rv data-d="2">Every Dorra piece finds the person it was meant for. Here is what they say.</p></div>
     {published.length>0&&<div style={{background:"var(--cr2)",padding:"52px 72px",borderBottom:"1px solid rgba(26,18,10,.06)"}}>
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))",gap:2,width:"100%",boxSizing:"border-box"}}>
