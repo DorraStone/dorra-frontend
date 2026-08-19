@@ -1568,6 +1568,7 @@ function Checkout({cart,onClose,onOk,setLastOrder}){
               ])}
             </div>
           </div>
+          </div>
           <button className="modal-close" onClick={onClose} style={{fontSize:22,fontWeight:200,lineHeight:1,padding:"4px 8px"}}>&#x2715;</button>
         </div>
         <div className="modal-body">
