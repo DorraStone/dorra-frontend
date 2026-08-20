@@ -1463,6 +1463,7 @@ function CartDrawer({cart,onClose,onQty,onPkg,onCk}){
 function Checkout({cart,onClose,onOk,setLastOrder}){
   const[step,setStep]=useState(1);
   const[name,setName]=useState("");
+  const[fieldErr,setFieldErr]=useState("");
   const[phone,setPhone]=useState("");
   const[email,setEmail]=useState("");
   const[address,setAddress]=useState("");
@@ -1514,15 +1515,15 @@ function Checkout({cart,onClose,onOk,setLastOrder}){
       isCustom:hasFromScratch,deposit:customDep,balance:customBal,dueNow,dueOnDelivery,
       adminStatus:"new",createdAt:new Date().toISOString()};
     // Save to backend (real database + email)
-    const result = await apiPost("/api/orders", order);
-    if(result.error){
-      console.error("Order save failed:", result.error);
-    }
-    // Also save to localStorage as backup
-    try{const ex=JSON.parse(localStorage.getItem("dorra_orders")||"[]");ex.push(order);localStorage.setItem("dorra_orders",JSON.stringify(ex));window.dispatchEvent(new Event("storage"));}catch(e){}
-    setSubmitting(false);
+    // Show confirmation immediately - don't wait for backend
     setLastOrder(order);
-    setTimeout(onOk,100);
+    setSubmitting(false);
+    setTimeout(onOk,50);
+    // Save to localStorage
+    try{const ex=JSON.parse(localStorage.getItem("dorra_orders")||"[]");ex.push(order);localStorage.setItem("dorra_orders",JSON.stringify(ex));window.dispatchEvent(new Event("storage"));}catch(e){}
+    // Send to backend in background (non-blocking)
+    const orderToSend={...order,instapayScreenshot:""};
+    apiPost("/api/orders",orderToSend).catch(e=>console.error("Order save:",e));
   };
 
   const Summary=()=>(
@@ -1575,18 +1576,24 @@ function Checkout({cart,onClose,onOk,setLastOrder}){
           {step===1&&<>
             <Summary/>
             <div className="field-grid">
-              <div className="field"><label className="field-label">Full Name *</label><input className="field-input" placeholder="Your name" value={name} onChange={e=>setName(e.target.value)}/></div>
-              <div className="field"><label className="field-label">Phone *</label><input className="field-input" placeholder="+20 1xx xxx xxxx" value={phone} onChange={e=>setPhone(e.target.value)}/></div>
+              <div className="field"><label className="field-label">Full Name *</label><input className="field-input" autoComplete="name" placeholder="Your name" value={name} style={{borderColor:fieldErr&&!name.trim()?"#c0392b":undefined}} onChange={e=>{setName(e.target.value);if(fieldErr)setFieldErr("");}}/></div>
+              <div className="field"><label className="field-label">Phone *</label><input className="field-input" autoComplete="tel" inputMode="tel" placeholder="+20 1xx xxx xxxx" value={phone} style={{borderColor:fieldErr&&!phone.trim()?"#c0392b":undefined}} onChange={e=>{setPhone(e.target.value);if(fieldErr)setFieldErr("");}}/></div>
             </div>
-            <div className="field"><label className="field-label">Email *</label><input className="field-input" type="email" placeholder="your@email.com" value={email} onChange={e=>setEmail(e.target.value)}/></div>
-            <div className="field"><label className="field-label">Delivery Address *</label><input className="field-input" placeholder="Street, building, apartment" value={address} onChange={e=>setAddress(e.target.value)}/></div>
+            <div className="field"><label className="field-label">Email *</label><input className="field-input" type="email" autoComplete="email" placeholder="your@email.com" value={email} style={{borderColor:fieldErr&&!email.includes("@")?"#c0392b":undefined}} onChange={e=>{setEmail(e.target.value);if(fieldErr)setFieldErr("");}}/></div>
+            <div className="field"><label className="field-label">Delivery Address *</label><input className="field-input" autoComplete="street-address" placeholder="Street, building, apartment" value={address} style={{borderColor:fieldErr&&!address.trim()?"#c0392b":undefined}} onChange={e=>{setAddress(e.target.value);if(fieldErr)setFieldErr("");}}/></div>
             <div className="field">
               <label className="field-label">City</label>
               <select className="field-select" value={city} onChange={e=>setCity(e.target.value)}>{cities.map(ct=><option key={ct}>{ct}</option>)}</select>
               <div className="field-note">Shipping: EGP {ship}</div>
             </div>
             <div className="field"><label className="field-label">Notes</label><textarea className="field-textarea" style={{minHeight:52}} placeholder="Special instructions..." value={notes} onChange={e=>setNotes(e.target.value)}/></div>
-            <button className="submit-btn" onClick={()=>ok1&&setStep(2)} disabled={!ok1}>Continue to Payment</button>
+            <button className="submit-btn" onClick={()=>{
+              if(!name.trim()){setFieldErr("Please enter your full name.");return;}
+              if(!phone.trim()){setFieldErr("Please enter your phone number.");return;}
+              if(!email.includes("@")){setFieldErr("Please enter a valid email address.");return;}
+              if(!address.trim()){setFieldErr("Please enter your delivery address.");return;}
+              setFieldErr("");setStep(2);
+            }}>Continue to Payment</button>
             {!ok1&&<p style={{fontSize:10,color:"var(--ink3)",textAlign:"center",marginTop:6}}>Please fill in all required fields with a valid email and address.</p>}
           </>}
 
@@ -1621,7 +1628,10 @@ function Checkout({cart,onClose,onOk,setLastOrder}){
             {pay==="full_cod"&&<div className="pay-box"><p style={{fontSize:12,color:"var(--ink3)",lineHeight:1.8}}>Pay <strong style={{color:"var(--ink)"}}>{fmt(tot)}</strong> in cash when your piece arrives.</p></div>}
             <div style={{display:"flex",gap:8,marginTop:8}}>
               <button className="btn btn-dark" style={{padding:"12px 18px",fontSize:8.5}} onClick={()=>setStep(1)}>Back</button>
-              <button className="submit-btn" style={{margin:0,flex:1}} onClick={()=>ok2&&setStep(3)} disabled={!ok2}>Review Order</button>
+              <button className="submit-btn" style={{margin:0,flex:1}} onClick={()=>{
+              if(needRef&&instScreenshot.length===0){setFieldErr("Please upload your Instapay screenshot.");return;}
+              setFieldErr("");setStep(3);
+            }}>Review Order</button>
             </div>
           </>}
 
