@@ -1,5 +1,5 @@
 // build: 20260816-234410
-// v20260822210942
+// v20260822211715
 import{useState,useEffect,useRef,useCallback}from"react";
 
 // -- Backend API URL - update after Railway deployment --
@@ -329,7 +329,7 @@ const CSS_LINES=[
   ".hero-l{display:flex;flex-direction:column;justify-content:center;padding:0 72px;z-index:2;align-items:flex-start;}",
   ".hero-tag{font-size:8.5px;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;opacity:0;animation:fade-up .9s .3s forwards;}",
   "@keyframes fade-up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}",
-  ".hero-title{font-family:var(--serif);font-size:clamp(36px,5.5vw,56px);font-weight:300;line-height:.92;color:var(--cr);margin-bottom:22px;letter-spacing:-.01em;}",
+  ".hero-title{font-family:var(--serif);font-size:clamp(28px,4vw,44px);font-weight:300;line-height:.92;color:var(--cr);margin-bottom:22px;letter-spacing:-.01em;}",
   ".hero-title em{font-style:italic;color:var(--gold);}",
   ".hero-line{display:block;overflow:hidden;}",
   ".hero-line span{display:block;animation:line-up 1.1s var(--ease) both;}",
@@ -360,7 +360,7 @@ const CSS_LINES=[
   ".page-header{background:var(--g);padding:72px 72px 44px;position:relative;overflow:hidden;}",
   ".page-header::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(184,145,60,.04),transparent 60%);pointer-events:none;}",
   ".page-header-tag{font-size:12px;letter-spacing:.44em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:10px;}",
-  ".page-header-title{font-family:var(--serif);font-size:clamp(32px,5vw,48px);font-weight:300;color:var(--cr);line-height:1.03;}",
+  ".page-header-title{font-family:var(--serif);font-size:clamp(22px,3.5vw,32px);font-weight:300;color:var(--cr);line-height:1.03;}",
   ".page-header-sub{font-size:14px;color:rgba(245,239,227,.44);line-height:1.8;margin-top:10px;max-width:440px;font-weight:300;}",
   ".section{padding:72px 72px;}",
   ".section-cream{padding:40px 32px;background:var(--cr);}",
@@ -372,7 +372,7 @@ const CSS_LINES=[
   ".sec-label{font-size:12px;letter-spacing:.44em;text-transform:uppercase;display:block;margin-bottom:9px;}",
   ".sec-label-dark{color:var(--gold);}",
   ".sec-label-light{color:var(--gold);opacity:1;}",
-  ".sec-title{font-family:var(--serif);font-size:clamp(24px,3.5vw,36px);font-weight:300;line-height:1.06;}",
+  ".sec-title{font-family:var(--serif);font-size:clamp(18px,2.5vw,26px);font-weight:300;line-height:1.06;}",
   ".sec-title-dark{color:var(--cr);}",
   ".sec-title-light{color:var(--ink);}",
   ".sec-rule{display:none;}",
@@ -439,8 +439,8 @@ const CSS_LINES=[
   ".detail-next{right:11px;}",
   ".detail-info{padding:24px 32px 36px;display:flex;flex-direction:column;background:var(--cr);overflow:visible;}",
   ".detail-tag{font-size:13px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);margin-bottom:9px;}",
-  ".detail-name{font-family:var(--serif);font-size:clamp(20px,2.2vw,32px);font-weight:300;line-height:1.05;margin-bottom:4px;color:var(--ink);}",
-  ".detail-price{font-family:var(--serif);font-size:22px;margin-bottom:14px;color:var(--ink);}",
+  ".detail-name{font-family:var(--serif);font-size:clamp(18px,2vw,26px);font-weight:300;line-height:1.05;margin-bottom:4px;color:var(--ink);}",
+  ".detail-price{font-family:var(--serif);font-size:18px;margin-bottom:14px;color:var(--ink);}",
   ".detail-desc{font-size:15px;color:var(--ink2);line-height:1.8;margin-bottom:12px;font-weight:300;}",
   ".detail-tags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:11px;}",
   ".detail-tag-chip{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);background:var(--cr2);padding:4px 10px;border:1px solid rgba(26,18,10,.1);}",
@@ -457,7 +457,7 @@ const CSS_LINES=[
   ".cart-drawer{position:fixed;z-index:9500;top:64px;right:0;bottom:0;width:390px;background:var(--cr);display:flex;flex-direction:column;animation:slide-right .38s var(--ease);box-shadow:-12px 0 40px rgba(6,35,24,.18);}",
   "@keyframes slide-right{from{transform:translateX(100%)}to{transform:none}}",
   ".cart-head{padding:18px 20px 14px;border-bottom:1px solid rgba(26,18,10,.09);display:flex;align-items:center;justify-content:space-between;}",
-  ".cart-title{font-family:var(--serif);font-size:22px;font-weight:300;color:var(--ink);}",
+  ".cart-title{font-family:var(--serif);font-size:17px;font-weight:300;color:var(--ink);}",
   ".cart-close{background:none;border:none;color:var(--ink3);cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:15px;transition:color .2s;;min-width:36px;min-height:36px;display:flex;align-items:center;justify-content:center;}",
   ".cart-close:hover{color:var(--ink);}",
   ".cart-items{flex:1;overflow-y:auto;padding:16px 22px;display:flex;flex-direction:column;gap:13px;}",
@@ -477,7 +477,7 @@ const CSS_LINES=[
   ".cart-footer{padding:12px 22px 20px;border-top:1px solid rgba(26,18,10,.08);}",
   ".cart-total-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;}",
   ".cart-total-label{font-size:8.5px;letter-spacing:.12em;color:var(--ink3);}",
-  ".cart-total-val{font-family:var(--serif);font-size:22px;color:var(--ink);}",
+  ".cart-total-val{font-family:var(--serif);font-size:18px;color:var(--ink);}",
   ".cart-note{font-size:13px;color:var(--ink3);margin-bottom:10px;line-height:1.7;}",
   ".cart-checkout-btn{width:100%;padding:13px;font-family:var(--sans);font-size:8.5px;letter-spacing:.19em;text-transform:uppercase;background:var(--g);color:var(--cr);border:none;cursor:pointer;transition:background .28s;}",
   ".cart-checkout-btn:hover{background:var(--gold);color:var(--g);}",
@@ -486,7 +486,7 @@ const CSS_LINES=[
   "@keyframes scale-in{from{transform:scale(.94);opacity:0}to{transform:scale(1);opacity:1}}",
   ".modal-sm{max-width:400px;}",
   ".modal-head{padding:20px 26px 16px;border-bottom:1px solid rgba(26,18,10,.09);display:flex;justify-content:space-between;align-items:flex-start;}",
-  ".modal-title{font-family:var(--serif);font-size:22px;font-weight:300;color:var(--ink);}",
+  ".modal-title{font-family:var(--serif);font-size:17px;font-weight:300;color:var(--ink);}",
   ".modal-close{background:none;border:none;color:var(--ink3);cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:15px;}",
   ".modal-body{padding:20px 26px;}",
   ".order-summary{background:var(--cr2);padding:13px 15px;margin-bottom:15px;}",
@@ -494,7 +494,7 @@ const CSS_LINES=[
   ".order-row{display:flex;justify-content:space-between;font-size:14px;margin-bottom:3px;color:var(--ink3);}",
   ".order-total-row{display:flex;justify-content:space-between;padding-top:8px;margin-top:5px;border-top:1px solid rgba(26,18,10,.1);}",
   ".order-total-label{font-size:8.5px;color:var(--ink3);}",
-  ".order-total-val{font-family:var(--serif);font-size:20px;color:var(--ink);}",
+  ".order-total-val{font-family:var(--serif);font-size:16px;color:var(--ink);}",
   ".field{margin-bottom:12px;}",
   ".field-label{font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink3);display:block;margin-bottom:4px;}",
   ".field-input,.field-select,.field-textarea{font-family:var(--sans);font-size:16px;font-weight:300;background:var(--cr2);border:none;border-bottom:1px solid rgba(26,18,10,.14);color:var(--ink);padding:8px 0;outline:none;width:100%;transition:border-color .2s;}",
@@ -933,7 +933,7 @@ function HomePage({setPage,onV,onA}){
         <h2 style={{fontFamily:"var(--serif)",fontSize:"clamp(26px,3.2vw,52px)",fontWeight:300,color:"var(--ink)",lineHeight:1.04,marginBottom:16}}>Nothing made only for you<br/>exists anywhere else.</h2>
         <div style={{width:36,height:1,background:"var(--gold)",margin:"0 auto 18px",opacity:.5}}/>
         <p style={{fontSize:13,color:"var(--ink3)",lineHeight:2.0,maxWidth:420,margin:"0 auto 28px",fontWeight:300}}>Your vision. Your stones. Your piece  crafted by hand in Egypt.</p>
-        <button className="btn btn-dark" style={{padding:"15px 40px",fontSize:13,letterSpacing:".28em"}} onClick={()=>setPage("customize")}>Design Your Dorra Piece</button>
+        <button className="btn btn-dark" style={{padding:"10px 24px",fontSize:11,letterSpacing:".15em"}} onClick={()=>setPage("customize")}>Design Your Dorra Piece</button>
       </div>
     </div>
     <div className="section-cream" style={{paddingTop:60,paddingBottom:52}}>
