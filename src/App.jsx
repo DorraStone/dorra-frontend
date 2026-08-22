@@ -259,7 +259,7 @@ const CSS_LINES=[
   "--gold:#b8913c;",
   "--gold2:#d4aa58;",
   "--serif:'Cormorant Garamond',Georgia,serif;",
-  "--sans:'Jost',sans-serif;",
+  "--sans:'DM Sans',sans-serif;",
   "--ease:cubic-bezier(.16,1,.3,1);",
   "--ink:#140e07;",
   "--ink2:#2e2214;",
@@ -323,13 +323,13 @@ const CSS_LINES=[
   ".search-row{display:flex;align-items:center;gap:12px;padding:10px 12px;background:none;border:none;border-bottom:1px solid rgba(184,145,60,.06);width:100%;text-align:left;cursor:pointer;transition:background .15s;}",
   ".search-row:hover{background:rgba(184,145,60,.06);}",
   ".search-thumb{width:38px;height:38px;object-fit:cover;flex-shrink:0;}",
-  ".search-name{font-family:var(--serif);font-size:15px;color:var(--cr);display:block;}",
+  ".search-name{font-family:var(--serif);font-size:14px;color:var(--cr);display:block;}",
   ".search-meta{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);display:block;opacity:.8;margin-top:1px;}",
   ".hero{height:100vh;min-height:580px;background:var(--g);display:grid;grid-template-columns:1fr 1fr;overflow:hidden;}",
   ".hero-l{display:flex;flex-direction:column;justify-content:center;padding:0 72px;z-index:2;align-items:flex-start;}",
   ".hero-tag{font-size:8.5px;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;opacity:0;animation:fade-up .9s .3s forwards;}",
   "@keyframes fade-up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}",
-  ".hero-title{font-family:var(--serif);font-size:clamp(28px,4vw,44px);font-weight:300;line-height:.92;color:var(--cr);margin-bottom:22px;letter-spacing:-.01em;}",
+  ".hero-title{font-family:var(--serif);font-size:clamp(26px,3.5vw,38px);font-weight:300;line-height:.92;color:var(--cr);margin-bottom:22px;letter-spacing:-.01em;}",
   ".hero-title em{font-style:italic;color:var(--gold);}",
   ".hero-line{display:block;overflow:hidden;}",
   ".hero-line span{display:block;animation:line-up 1.1s var(--ease) both;}",
@@ -341,7 +341,7 @@ const CSS_LINES=[
   ".hero-sub{font-size:14px;line-height:2.0;color:rgba(245,239,227,.55);max-width:320px;margin-bottom:36px;opacity:0;animation:fade-up .8s .88s forwards;font-weight:300;}",
   ".hero-btns{display:flex;gap:10px;flex-wrap:wrap;opacity:0;animation:fade-up .8s 1s forwards;}",
   ".hero-img{display:block;overflow:hidden;position:relative;height:100%;}",
-  ".hero-img img{width:100%;height:100%;object-fit:cover;object-position:center 60%;}",
+  ".hero-img img{width:100%;height:100%;object-fit:cover;object-position:center center;}",
   "@keyframes slow-zoom{from{transform:scale(1.07)}to{transform:scale(1.01)}}",
   ".hero-img::before{content:'';position:absolute;left:0;top:0;bottom:0;width:160px;background:linear-gradient(to right,var(--g),transparent);z-index:1;}",
   ".btn{font-family:var(--sans);font-size:12px;letter-spacing:.15em;text-transform:uppercase;border:none;cursor:pointer;transition:all .28s var(--ease);display:inline-flex;align-items:center;justify-content:center;gap:7px;white-space:nowrap;font-weight:400;}",
@@ -360,7 +360,7 @@ const CSS_LINES=[
   ".page-header{background:var(--g);padding:72px 72px 44px;position:relative;overflow:hidden;}",
   ".page-header::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(184,145,60,.04),transparent 60%);pointer-events:none;}",
   ".page-header-tag{font-size:12px;letter-spacing:.44em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:10px;}",
-  ".page-header-title{font-family:var(--serif);font-size:clamp(22px,3.5vw,32px);font-weight:300;color:var(--cr);line-height:1.03;}",
+  ".page-header-title{font-family:var(--serif);font-size:clamp(18px,2.8vw,26px);font-weight:300;color:var(--cr);line-height:1.03;}",
   ".page-header-sub{font-size:14px;color:rgba(245,239,227,.44);line-height:1.8;margin-top:10px;max-width:440px;font-weight:300;}",
   ".section{padding:72px 72px;}",
   ".section-cream{padding:40px 32px;background:var(--cr);}",
@@ -372,7 +372,7 @@ const CSS_LINES=[
   ".sec-label{font-size:12px;letter-spacing:.44em;text-transform:uppercase;display:block;margin-bottom:9px;}",
   ".sec-label-dark{color:var(--gold);}",
   ".sec-label-light{color:var(--gold);opacity:1;}",
-  ".sec-title{font-family:var(--serif);font-size:clamp(18px,2.5vw,26px);font-weight:300;line-height:1.06;}",
+  ".sec-title{font-family:var(--serif);font-size:clamp(16px,2.2vw,22px);font-weight:300;line-height:1.06;}",
   ".sec-title-dark{color:var(--cr);}",
   ".sec-title-light{color:var(--ink);}",
   ".sec-rule{display:none;}",
@@ -380,8 +380,8 @@ const CSS_LINES=[
   ".pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(272px,1fr));gap:1px;}",
   ".pc{background:var(--cr2);position:relative;overflow:hidden;cursor:pointer;transition:box-shadow .3s;}",
   ".pc:hover{box-shadow:0 12px 40px rgba(6,35,24,.1);}",
-  ".pc-img{aspect-ratio:4/5;overflow:hidden;position:relative;background:var(--cr2);}",".pc-img{min-height:220px;}",
-  ".pc-img img{width:100%;height:100%;object-fit:cover;object-position:center 60%;display:block;transition:transform .6s cubic-bezier(.16,1,.3,1);}",".pc:hover .pc-img img{transform:scale(1.04);}",
+  ".pc-img{aspect-ratio:3/4;overflow:hidden;position:relative;background:var(--cr2);}",".pc-img{min-height:220px;}",
+  ".pc-img img{width:100%;height:100%;object-fit:cover;object-position:center center;display:block;transition:transform .6s cubic-bezier(.16,1,.3,1);}",".pc:hover .pc-img img{transform:scale(1.04);}",
   ".pc-badge{position:absolute;top:11px;left:11px;z-index:3;font-size:7.5px;letter-spacing:.18em;text-transform:uppercase;padding:3px 9px;}",
   ".badge-new{background:var(--gold);color:var(--g);}",
   ".pc-ov{position:absolute;inset:0;background:rgba(6,35,24,.44);opacity:0;transition:opacity .34s;display:flex;align-items:center;justify-content:center;}",
@@ -406,7 +406,7 @@ const CSS_LINES=[
   ".how-step{padding:26px 22px;border-top:1px solid rgba(184,145,60,.1);transition:border-top-color .28s;}",
   ".how-step:hover{border-top-color:var(--gold);}",
   ".how-num{font-family:var(--serif);font-size:30px;color:rgba(184,145,60,.14);margin-bottom:11px;line-height:1;}",
-  ".how-title{font-family:var(--serif);font-size:15px;color:var(--cr);margin-bottom:6px;}",
+  ".how-title{font-family:var(--serif);font-size:14px;color:var(--cr);margin-bottom:6px;}",
   ".how-desc{font-size:11.5px;color:rgba(245,239,227,.4);line-height:1.82;font-weight:300;}",
   ".promise-strip{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(26,18,10,.08);border-bottom:1px solid rgba(26,18,10,.08);}",
   ".promise-item{padding:22px 20px;border-right:1px solid rgba(26,18,10,.08);}",
@@ -440,7 +440,7 @@ const CSS_LINES=[
   ".detail-info{padding:24px 32px 36px;display:flex;flex-direction:column;background:var(--cr);overflow:visible;}",
   ".detail-tag{font-size:13px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);margin-bottom:9px;}",
   ".detail-name{font-family:var(--serif);font-size:clamp(18px,2vw,26px);font-weight:300;line-height:1.05;margin-bottom:4px;color:var(--ink);}",
-  ".detail-price{font-family:var(--serif);font-size:18px;margin-bottom:14px;color:var(--ink);}",
+  ".detail-price{font-family:var(--serif);font-size:16px;margin-bottom:14px;color:var(--ink);}",
   ".detail-desc{font-size:15px;color:var(--ink2);line-height:1.8;margin-bottom:12px;font-weight:300;}",
   ".detail-tags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:11px;}",
   ".detail-tag-chip{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);background:var(--cr2);padding:4px 10px;border:1px solid rgba(26,18,10,.1);}",
@@ -457,7 +457,7 @@ const CSS_LINES=[
   ".cart-drawer{position:fixed;z-index:9500;top:64px;right:0;bottom:0;width:390px;background:var(--cr);display:flex;flex-direction:column;animation:slide-right .38s var(--ease);box-shadow:-12px 0 40px rgba(6,35,24,.18);}",
   "@keyframes slide-right{from{transform:translateX(100%)}to{transform:none}}",
   ".cart-head{padding:18px 20px 14px;border-bottom:1px solid rgba(26,18,10,.09);display:flex;align-items:center;justify-content:space-between;}",
-  ".cart-title{font-family:var(--serif);font-size:17px;font-weight:300;color:var(--ink);}",
+  ".cart-title{font-family:var(--serif);font-size:16px;font-weight:300;color:var(--ink);}",
   ".cart-close{background:none;border:none;color:var(--ink3);cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:15px;transition:color .2s;;min-width:36px;min-height:36px;display:flex;align-items:center;justify-content:center;}",
   ".cart-close:hover{color:var(--ink);}",
   ".cart-items{flex:1;overflow-y:auto;padding:16px 22px;display:flex;flex-direction:column;gap:13px;}",
@@ -477,7 +477,7 @@ const CSS_LINES=[
   ".cart-footer{padding:12px 22px 20px;border-top:1px solid rgba(26,18,10,.08);}",
   ".cart-total-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;}",
   ".cart-total-label{font-size:8.5px;letter-spacing:.12em;color:var(--ink3);}",
-  ".cart-total-val{font-family:var(--serif);font-size:18px;color:var(--ink);}",
+  ".cart-total-val{font-family:var(--serif);font-size:16px;color:var(--ink);}",
   ".cart-note{font-size:13px;color:var(--ink3);margin-bottom:10px;line-height:1.7;}",
   ".cart-checkout-btn{width:100%;padding:13px;font-family:var(--sans);font-size:8.5px;letter-spacing:.19em;text-transform:uppercase;background:var(--g);color:var(--cr);border:none;cursor:pointer;transition:background .28s;}",
   ".cart-checkout-btn:hover{background:var(--gold);color:var(--g);}",
@@ -486,7 +486,7 @@ const CSS_LINES=[
   "@keyframes scale-in{from{transform:scale(.94);opacity:0}to{transform:scale(1);opacity:1}}",
   ".modal-sm{max-width:400px;}",
   ".modal-head{padding:20px 26px 16px;border-bottom:1px solid rgba(26,18,10,.09);display:flex;justify-content:space-between;align-items:flex-start;}",
-  ".modal-title{font-family:var(--serif);font-size:17px;font-weight:300;color:var(--ink);}",
+  ".modal-title{font-family:var(--serif);font-size:16px;font-weight:300;color:var(--ink);}",
   ".modal-close{background:none;border:none;color:var(--ink3);cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:15px;}",
   ".modal-body{padding:20px 26px;}",
   ".order-summary{background:var(--cr2);padding:13px 15px;margin-bottom:15px;}",
@@ -595,7 +595,7 @@ const CSS_LINES=[
   ".care-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;align-items:stretch;}",
   ".care-step{background:#062318;padding:22px 18px;border-top:2px solid rgba(184,145,60,.3);display:flex;flex-direction:column;transition:border-top-color .28s,transform .35s var(--ease);}",
   ".care-step:hover{border-top-color:var(--gold);background:#041a0f;}",
-  ".care-step-icon{font-family:var(--serif);font-size:17px;color:var(--gold);margin-bottom:9px;opacity:.6;}",
+  ".care-step-icon{font-family:var(--serif);font-size:15px;color:var(--gold);margin-bottom:9px;opacity:.6;}",
   ".care-step-title{font-family:var(--serif);font-size:13px;color:var(--ink);margin-bottom:4px;}",
   ".care-step-text{font-size:14px;color:var(--ink3);line-height:1.75;font-weight:300;}",
   "@media(max-width:1024px){",
@@ -878,7 +878,7 @@ function HeroCarousel({onV}){
       onTouchStart={e=>setTx(e.touches[0].clientX)}
       onTouchEnd={e=>{if(tx===null)return;const d=e.changedTouches[0].clientX-tx;const swiped=Math.abs(d)>=40;if(swiped)setIdx(i=>d<0?(i+1)%items.length:(i-1+items.length)%items.length);setTx(null);}}
       onClick={()=>onV(cur,cur.stones)}>
-      {imgSrc&&<img src={imgSrc} alt={cur.name} style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center 60%",display:"block",opacity:.92,transition:"opacity .8s ease"}}/>}
+      {imgSrc&&<img src={imgSrc} alt={cur.name} style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center center",display:"block",opacity:.92,transition:"opacity .8s ease"}}/>}
       <div style={{position:"absolute",inset:0,background:"linear-gradient(to bottom,rgba(6,35,24,.05) 0%,rgba(6,35,24,.55) 100%)"}}/>
       <div style={{position:"absolute",bottom:"10%",left:"8%",right:"8%"}}>
         <span style={{fontSize:13,letterSpacing:".36em",textTransform:"uppercase",color:"rgba(184,145,60,.8)",display:"block",marginBottom:10}}>{cur.type}</span>
@@ -1141,10 +1141,15 @@ function CustomizePage({onAddCart,onGoCart}){
   const[pt,setPt]=useState("Bracelet");
   const[picked,setPicked]=useState([]);
   const[note,setNote]=useState("");
-  const[wire,setWire]=useState("gold");
+  const[baseColor,setBaseColor]=useState("gold");
+  const[decoWires,setDecoWires]=useState([]);
   const[size,setSize]=useState("Medium");
   const[inspoImg,setInspoImg]=useState(null);
   const[inspoB64,setInspoB64]=useState(null);
+  const toggleDecoWire=w=>{
+    if(pt==="Earring")return;
+    setDecoWires(prev=>prev.includes(w)?prev.filter(x=>x!==w):(prev.length<3?[...prev,w]:prev));
+  };
   useRv();
 
   const tog=s=>setPicked(p=>p.includes(s)?p.filter(x=>x!==s):[...p,s]);
@@ -1158,10 +1163,10 @@ function CustomizePage({onAddCart,onGoCart}){
   };
 
   const BASE={"Bracelet":299,"Statement Bracelet":399,"Necklace":419,"Anklet":299,"Earring":199};
-  const WIRE_COST={"silver":0,"gold":0,"double_thick":80,"none":0};
+  const DECO_COST={"thin_gold":0,"thin_silver":0,"thick_gold":80,"thick_silver":80};
   const STONE_EXTRA={"Pearl":60,"Rose Quartz":45,"Amethyst":45,"Ruby Jade":45,"Black Onyx":40,"Blue Crystal Quartz":35,"Green Crystal":35,"Purple Agate":35,"Agate":30,"Tigers Eye":30,"Crystal":25};
   const base=BASE[pt]||299;
-  const wireCost=WIRE_COST[wire]||0;
+  const wireCost=(decoWires||[]).reduce((s,w)=>s+(({"thin_gold":0,"thin_silver":0,"thick_gold":80,"thick_silver":80})[w]||0),0);
   const extraStones=Math.max(0,picked.length-2);
   const stoneExtra=picked.slice(2).reduce((s,st)=>s+(STONE_EXTRA[st]||30),0);
   const raw=base+wireCost+stoneExtra;
@@ -1171,7 +1176,7 @@ function CustomizePage({onAddCart,onGoCart}){
 
   const doAdd=()=>{
     if(!picked.length)return;
-    const p={id:Date.now(),name:"Bespoke "+pt,type:pt.includes("Bracelet")?"Bracelet":pt==="Anklet"?"Anklet":pt==="Necklace"?"Necklace":"Earring",price:est,stones:picked,img:"",img2:"",img3:"",desc:"Bespoke "+pt+". Wire: "+wire+". Stones: "+picked.join(", ")+"."+(note?" Notes: "+note:""),care:"Handle with care.",isFromScratch:true,size:needsSize?size:"",wireColor:wire,inspoImg:inspoB64||null};
+    const p={id:Date.now(),name:"Bespoke "+pt,type:pt.includes("Bracelet")?"Bracelet":pt==="Anklet"?"Anklet":pt==="Necklace"?"Necklace":"Earring",price:est,stones:picked,img:"",img2:"",img3:"",desc:"Bespoke "+pt+". Base: "+baseColor+". Wire: "+(decoWires.length?decoWires.join(", "):"none")+". Stones: "+picked.join(", ")+"."+(note?" Notes: "+note:""),care:"Handle with care.",isFromScratch:true,size:needsSize?size:"",wireColor:baseColor,decoWires:decoWires,inspoImg:inspoB64||null};
     if(onAddCart)onAddCart(p,picked,est,needsSize?size:"");
   };
 
@@ -1205,22 +1210,51 @@ function CustomizePage({onAddCart,onGoCart}){
             {pt==="Statement Bracelet"&&<p style={{fontSize:15,color:"var(--ink3)",lineHeight:1.8,marginTop:10,padding:"10px 14px",background:"rgba(26,18,10,.04)",borderLeft:"2px solid var(--gold)"}}>One stone is chosen as a centrepiece  larger in size and placed at the front. The remaining stones complement it.</p>}
           </div>
 
-          {/* WIRE COLOR / BASE METAL */}
-          <div style={{marginBottom:28}}>
-            <span style={{fontSize:11,letterSpacing:".18em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:10}}>{pt==="Earring"?"Earring Base Metal":"Decorative Wire Color"}</span>
+          
+          {/* BASE COLOR */}
+          <div style={{marginBottom:24}}>
+            <span style={{fontSize:11,letterSpacing:".18em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:8}}>Base Color</span>
             <div className="sec-rule" style={{marginBottom:10}}/>
-            <p style={{fontSize:13,color:"var(--ink3)",lineHeight:1.75,marginBottom:12}}>The thin decorative wire comes in two finishes, or opt for doubled thick copper or none at all.</p>
-            <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
-              {[{id:"silver",label:"Silver-Toned",sub:"Thin, light finish",extra:0},{id:"gold",label:"Gold-Toned",sub:"Thin, warm finish",extra:0},{id:"double_thick",label:"Doubled Thick Copper",sub:"Bold, raw  harder to work with",extra:80},{id:"none",label:"Raw Copper Only",sub:"No decorative wire",extra:0}].map(w=>(
-                <button key={w.id} onClick={()=>setWire(w.id)}
-                  style={{padding:"12px 16px",textAlign:"left",background:wire===w.id?"var(--g)":"transparent",color:wire===w.id?"var(--cr)":"var(--ink)",border:"1px solid",borderColor:wire===w.id?"var(--g)":"rgba(26,18,10,.15)",cursor:"pointer",transition:"all .2s",minWidth:150}}>
-                  <div style={{fontSize:14,fontFamily:"var(--serif)",marginBottom:2}}>{w.label}</div>
-                  <div style={{fontSize:14,opacity:.7}}>{w.sub}</div>
-                  {w.extra>0&&<div style={{fontSize:14,color:wire===w.id?"rgba(245,239,227,.6)":"var(--gold)",marginTop:4}}>+{w.extra} EGP</div>}
+            <p style={{fontSize:13,color:"var(--ink3)",lineHeight:1.7,marginBottom:12}}>The metal base of your piece  chain, hooks, or core wire.</p>
+            <div style={{display:"flex",gap:8}}>
+              {[{id:"gold",label:"Gold-Toned",sub:"Warm golden finish"},{id:"silver",label:"Silver-Toned",sub:"Cool silver finish"}].map(b=>(
+                <button key={b.id} onClick={()=>setBaseColor(b.id)}
+                  style={{flex:1,padding:"12px 16px",textAlign:"left",background:baseColor===b.id?"var(--g)":"transparent",color:baseColor===b.id?"var(--cr)":"var(--ink)",border:"1px solid",borderColor:baseColor===b.id?"var(--g)":"rgba(26,18,10,.15)",cursor:"pointer",transition:"all .2s"}}>
+                  <div style={{fontSize:13,fontFamily:"var(--serif)",marginBottom:2}}>{b.label}</div>
+                  <div style={{fontSize:11,opacity:.6}}>{b.sub}</div>
                 </button>
               ))}
             </div>
           </div>
+
+          {/* DECORATIVE WIRE */}
+          {pt!=="Earring"&&(
+            <div style={{marginBottom:24}}>
+              <span style={{fontSize:11,letterSpacing:".18em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:8}}>Decorative Wire <span style={{fontSize:10,opacity:.55,textTransform:"none",letterSpacing:0,fontFamily:"var(--sans)"}}> up to 3</span></span>
+              <div className="sec-rule" style={{marginBottom:10}}/>
+              <p style={{fontSize:13,color:"var(--ink3)",lineHeight:1.7,marginBottom:12}}>Thin copper wire wound between stones. Mix finishes for a layered look.</p>
+              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
+                {[
+                  {id:"thin_gold",label:"Thin Gold",sub:"Delicate, gold-toned",extra:0},
+                  {id:"thin_silver",label:"Thin Silver",sub:"Delicate, silver-toned",extra:0},
+                  {id:"thick_gold",label:"Thick Gold",sub:"Bold gold-toned copper",extra:80},
+                  {id:"thick_silver",label:"Thick Silver",sub:"Bold silver-toned copper",extra:80},
+                ].map(w=>{
+                  const sel=decoWires.includes(w.id);
+                  const disabled=!sel&&decoWires.length>=3;
+                  return(
+                    <button key={w.id} onClick={()=>toggleDecoWire(w.id)} disabled={disabled}
+                      style={{padding:"12px 14px",textAlign:"left",background:sel?"var(--g)":"transparent",color:sel?"var(--cr)":"var(--ink)",border:"2px solid",borderColor:sel?"var(--g)":"rgba(26,18,10,.15)",cursor:disabled?"not-allowed":"pointer",transition:"all .2s",opacity:disabled?.35:1}}>
+                      <div style={{fontSize:13,fontFamily:"var(--serif)",marginBottom:2}}>{w.label}</div>
+                      <div style={{fontSize:11,opacity:.65}}>{w.sub}</div>
+                      {w.extra>0&&<div style={{fontSize:11,color:sel?"rgba(245,239,227,.6)":"var(--gold)",marginTop:3}}>+{w.extra} EGP</div>}
+                    </button>
+                  );
+                })}
+              </div>
+              {decoWires.length===0&&<p style={{fontSize:12,color:"var(--ink3)",marginTop:8,fontStyle:"italic"}}>Optional  leave empty for no decorative wire.</p>}
+            </div>
+          )}
 
           {/* STONES */}
           <div style={{marginBottom:28}}>
@@ -1291,8 +1325,9 @@ function CustomizePage({onAddCart,onGoCart}){
               :<div>
                 <div className="estimate-row"><span className="estimate-key">Type</span><span className="estimate-val">{pt}</span></div>
                 <div className="estimate-row"><span className="estimate-key">Stones</span><span className="estimate-val">{picked.length} selected</span></div>
-                <div className="estimate-row"><span className="estimate-key">Wire</span><span className="estimate-val">{wire==="double_thick"?"Doubled Thick":"Silver-Toned"===wire?"Silver":wire==="gold"?"Gold-Toned":"Raw Copper"}</span></div>
-                {wireCost>0&&<div className="estimate-row"><span className="estimate-key">Wire add-on</span><span className="estimate-val">+{wireCost} EGP</span></div>}
+                <div className="estimate-row"><span className="estimate-key">Base</span><span className="estimate-val">{baseColor==="gold"?"Gold-Toned":"Silver-Toned"}</span></div>
+                {decoWires.length>0&&<div className="estimate-row"><span className="estimate-key">Dec. Wire</span><span className="estimate-val">{decoWires.map(w=>w.replace("_"," ")).join(", ")}</span></div>}
+                {wireCost>0&&<div className="estimate-row"><span className="estimate-key">Wire add-ons</span><span className="estimate-val">+{wireCost} EGP</span></div>}
                 {extraStones>0&&<div className="estimate-row"><span className="estimate-key">Extra stones</span><span className="estimate-val">+{stoneExtra} EGP</span></div>}
                 <div style={{height:1,background:"rgba(184,145,60,.15)",margin:"12px 0"}}/>
                 <div style={{fontFamily:"var(--serif)",fontSize:28,color:"#f5efe3",fontWeight:300,marginBottom:4}}>{est} EGP</div>
