@@ -871,13 +871,6 @@ function NecklaceSection({onV,onA,setPage}){
           View {all.length-2} More Necklaces
         </button>
       </div>
-    {!showAll&&all.length>2&&(
-      <div style={{textAlign:"center",marginTop:20}} data-rv>
-        <button className="btn btn-outline" style={{fontSize:13,padding:"10px 24px"}} onClick={()=>setShowAll(true)}>
-          View {all.length-2} More Necklaces
-        </button>
-      </div>
-    )}
     )}
   </>);
 }
