@@ -209,7 +209,7 @@ function SwapPanel({stones,swaps,setSwaps,price,currentPrice}){
         onMouseLeave={e=>e.currentTarget.style.borderColor=isSwapped?"var(--gold)":"rgba(26,18,10,.12)"}>
         <div style={{display:"flex",alignItems:"center",gap:10}}>
           <span style={{fontFamily:"var(--serif)",fontSize:16,color:"var(--gold)",lineHeight:1}}>*</span>
-          <span style={{fontFamily:"var(--sans)",fontSize:13,letterSpacing:".16em",textTransform:"uppercase",color:isSwapped?"var(--gold)":"var(--ink)"}}>
+          <span style={{fontFamily:"var(--sans)",fontSize:13,letterSpacing:".02em",textTransform:"uppercase",color:isSwapped?"var(--gold)":"var(--ink)"}}>
             {isSwapped?"Stones Customised":"Alter or Swap Gemstones"}
           </span>
         </div>
@@ -259,7 +259,7 @@ const CSS_LINES=[
   "--gold:#b8913c;",
   "--gold2:#d4aa58;",
   "--serif:'Cormorant Garamond',Georgia,serif;",
-  "--sans:'DM Sans',sans-serif;",
+  "--sans:'Inter',sans-serif;",
   "--ease:cubic-bezier(.16,1,.3,1);",
   "--ink:#140e07;",
   "--ink2:#2e2214;",
@@ -344,7 +344,7 @@ const CSS_LINES=[
   ".hero-img img{width:100%;height:100%;object-fit:cover;object-position:center center;}",
   "@keyframes slow-zoom{from{transform:scale(1.07)}to{transform:scale(1.01)}}",
   ".hero-img::before{content:'';position:absolute;left:0;top:0;bottom:0;width:160px;background:linear-gradient(to right,var(--g),transparent);z-index:1;}",
-  ".btn{font-family:var(--sans);font-size:11px;letter-spacing:.12em;text-transform:uppercase;border:none;cursor:pointer;transition:all .28s var(--ease);display:inline-flex;align-items:center;justify-content:center;gap:7px;white-space:nowrap;font-weight:400;}",
+  ".btn{font-family:var(--sans);font-size:13px;letter-spacing:.02em;text-transform:none;border:none;cursor:pointer;transition:all .28s var(--ease);display:inline-flex;align-items:center;justify-content:center;gap:7px;white-space:nowrap;font-weight:400;}",
   ".btn-gold{background:var(--gold);color:var(--g);padding:12px 26px;}",
   ".btn-gold:hover{background:var(--gold2);box-shadow:0 4px 16px rgba(184,145,60,.2);}",
   ".btn-ghost{background:transparent;color:rgba(245,239,227,.8);border:1px solid rgba(184,145,60,.25);padding:11px 24px;}",
@@ -392,7 +392,7 @@ const CSS_LINES=[
   ".pc-price{font-family:var(--serif);font-size:14px;color:var(--ink2);margin-bottom:7px;}",
   ".pc-care{font-size:13px;color:var(--ink3);line-height:1.6;border-top:1px solid rgba(26,18,10,.08);padding-top:7px;margin-bottom:10px;}",
   ".pc-actions{display:flex;align-items:center;justify-content:space-between;gap:6px;}",
-  ".pc-add{font-family:var(--sans);font-size:13px;letter-spacing:.13em;text-transform:uppercase;background:none;border:1px solid rgba(184,145,60,.24);color:var(--gold);padding:7px 12px;cursor:pointer;transition:all .22s;;margin-top:auto;}",
+  ".pc-add{font-family:var(--sans);font-size:12px;letter-spacing:.02em;text-transform:none;background:none;border:1px solid rgba(184,145,60,.24);color:var(--gold);padding:7px 12px;cursor:pointer;transition:all .22s;;margin-top:auto;}",
   ".pc-add:hover{background:var(--gold);color:var(--g);}",
   ".stone-swap-box{background:var(--cr);border:1px solid rgba(184,145,60,.16);padding:11px 13px;margin:10px 0;}",
   ".stone-swap-label{font-size:7.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:6px;}",
@@ -450,7 +450,7 @@ const CSS_LINES=[
   ".detail-care-box{background:var(--cr2);padding:12px 14px;margin:12px 0;border-left:2px solid var(--gold);}",
   ".detail-care-label{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;}",
   ".detail-care-text{font-size:14px;color:var(--ink3);line-height:1.82;font-weight:300;}",
-  ".detail-add{flex:1;padding:13px;font-family:var(--sans);font-size:8.5px;letter-spacing:.19em;text-transform:uppercase;background:var(--g);color:var(--cr);border:none;cursor:pointer;transition:background .28s;}",
+  ".detail-add{flex:1;padding:13px;font-family:var(--sans);font-size:13px;letter-spacing:.02em;text-transform:none;background:var(--g);color:var(--cr);border:none;cursor:pointer;transition:background .28s;}",
   ".detail-add:hover{background:var(--gold);color:var(--g);}",
   ".cart-overlay{position:fixed;z-index:9400;top:64px;left:0;right:0;bottom:0;background:rgba(3,15,9,.7);animation:fade-in .22s;}",
   "@keyframes fade-in{from{opacity:0}to{opacity:1}}",
@@ -479,7 +479,7 @@ const CSS_LINES=[
   ".cart-total-label{font-size:8.5px;letter-spacing:.12em;color:var(--ink3);}",
   ".cart-total-val{font-family:var(--serif);font-size:16px;color:var(--ink);}",
   ".cart-note{font-size:13px;color:var(--ink3);margin-bottom:10px;line-height:1.7;}",
-  ".cart-checkout-btn{width:100%;padding:13px;font-family:var(--sans);font-size:8.5px;letter-spacing:.19em;text-transform:uppercase;background:var(--g);color:var(--cr);border:none;cursor:pointer;transition:background .28s;}",
+  ".cart-checkout-btn{width:100%;padding:13px;font-family:var(--sans);font-size:13px;letter-spacing:.02em;text-transform:none;uppercase;background:var(--g);color:var(--cr);border:none;cursor:pointer;transition:background .28s;}",
   ".cart-checkout-btn:hover{background:var(--gold);color:var(--g);}",
   ".modal-overlay{position:fixed;inset:0;z-index:9600;background:rgba(3,15,9,.56);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;padding:20px;animation:fade-in .2s;}",
   ".modal{background:var(--cr);width:100%;max-width:560px;max-height:92vh;overflow-y:auto;animation:scale-in .3s var(--ease);}",
@@ -496,7 +496,7 @@ const CSS_LINES=[
   ".order-total-label{font-size:8.5px;color:var(--ink3);}",
   ".order-total-val{font-family:var(--serif);font-size:16px;color:var(--ink);}",
   ".field{margin-bottom:12px;}",
-  ".field-label{font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink3);display:block;margin-bottom:4px;}",
+  ".field-label{font-size:12px;letter-spacing:.01em;text-transform:none;color:var(--ink3);display:block;margin-bottom:4px;}",
   ".field-input,.field-select,.field-textarea{font-family:var(--sans);font-size:16px;font-weight:300;background:var(--cr2);border:none;border-bottom:1px solid rgba(26,18,10,.14);color:var(--ink);padding:8px 0;outline:none;width:100%;transition:border-color .2s;}",
   ".field-input:focus,.field-select:focus,.field-textarea:focus{border-bottom-color:var(--gold);}",
   ".field-textarea{min-height:80px;resize:vertical;padding:8px;border:1px solid rgba(26,18,10,.12);background:var(--cr2);}",
@@ -508,11 +508,11 @@ const CSS_LINES=[
   ".step-done{background:var(--gold);color:var(--g);}",
   ".step-active{background:var(--g);color:var(--gold);border:2px solid var(--gold);}",
   ".step-idle{background:transparent;color:var(--ink3);border:1px solid rgba(26,18,10,.18);}",
-  ".step-label{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);}",
+  ".step-label{font-size:13px;letter-spacing:.01em;text-transform:none;color:var(--ink3);}",
   ".step-label.active-label{color:var(--ink);}",
   ".step-sep{color:rgba(26,18,10,.2);font-size:13px;}",
   ".pay-tabs{display:flex;border:1px solid rgba(26,18,10,.12);margin-bottom:14px;}",
-  ".pay-tab{flex:1;padding:10px 5px;font-family:var(--sans);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;background:transparent;border:none;border-right:1px solid rgba(26,18,10,.1);cursor:pointer;transition:all .2s;color:var(--ink3);}",
+  ".pay-tab{flex:1;padding:10px 5px;font-family:var(--sans);font-size:12px;letter-spacing:.01em;text-transform:none;background:transparent;border:none;border-right:1px solid rgba(26,18,10,.1);cursor:pointer;transition:all .2s;color:var(--ink3);}",
   ".pay-tab:last-child{border-right:none;}",
   ".pay-tab.on{background:var(--g);color:var(--gold);}",
   ".pay-box{background:var(--cr2);padding:13px 15px;margin-bottom:13px;}",
@@ -858,7 +858,7 @@ function BackBtn({label,onClick}){
     <button onClick={onClick} style={{
       display:"inline-flex",alignItems:"center",gap:8,
       background:"none",border:"none",cursor:"pointer",
-      fontFamily:"var(--sans)",fontSize:13,letterSpacing:".16em",
+      fontFamily:"var(--sans)",fontSize:13,letterSpacing:".02em",
       textTransform:"uppercase",color:"var(--ink3)",
       padding:"16px 0",transition:"color .2s",
     }}
@@ -894,7 +894,7 @@ function HeroCarousel({onV}){
         <span style={{fontSize:13,letterSpacing:".36em",textTransform:"uppercase",color:"rgba(245,239,227,.85)",display:"block",marginBottom:10,letterSpacing:".3em"}}>{cur.type}</span>
         <h2 style={{fontFamily:"var(--serif)",fontSize:"clamp(32px,5vw,64px)",fontWeight:300,color:"#f5efe3",lineHeight:1.05,marginBottom:12,letterSpacing:".01em"}}>{cur.name}</h2>
         <p style={{fontFamily:"var(--serif)",fontSize:"clamp(16px,1.8vw,20px)",color:"rgba(245,239,227,.6)",fontStyle:"italic",marginBottom:20}}>{fmt(cur.price)} EGP</p>
-        <span style={{fontSize:13,letterSpacing:".16em",textTransform:"uppercase",color:"rgba(245,239,227,.5)",borderBottom:"1px solid rgba(184,145,60,.4)",paddingBottom:4}}>Discover the piece</span>
+        <span style={{fontSize:13,letterSpacing:".02em",textTransform:"uppercase",color:"rgba(245,239,227,.5)",borderBottom:"1px solid rgba(184,145,60,.4)",paddingBottom:4}}>Discover the piece</span>
       </div>
       {/* Arrows */}
       <button onClick={e=>{e.stopPropagation();setIdx(i=>(i-1+items.length)%items.length);}} style={{position:"absolute",left:20,top:"50%",transform:"translateY(-50%)",background:"rgba(6,35,24,.4)",border:"1px solid rgba(184,145,60,.2)",color:"#f5efe3",width:44,height:44,borderRadius:"50%",cursor:"pointer",fontSize:18,display:"flex",alignItems:"center",justifyContent:"center"}}>&#8592;</button>
@@ -925,8 +925,8 @@ function HomePage({setPage,onV,onA}){
         <div className="hero-rule"/>
         <p className="hero-sub">Natural stones. No two pieces alike. Every piece shaped entirely by hand in Egypt.</p>
         <div className="hero-btns">
-          <button className="btn btn-gold" style={{padding:"10px 24px",fontSize:11,letterSpacing:".15em",minWidth:160,justifyContent:"center"}} onClick={()=>setPage("all")}>Shop Now</button>
-          <button className="btn btn-ghost" style={{padding:"10px 24px",fontSize:11,letterSpacing:".15em",minWidth:160,justifyContent:"center"}} onClick={()=>setPage("customize")}>Design Your Dorra Piece</button>
+          <button className="btn btn-gold" style={{padding:"10px 24px",fontSize:11,letterSpacing:".02em",minWidth:160,justifyContent:"center"}} onClick={()=>setPage("all")}>Shop Now</button>
+          <button className="btn btn-ghost" style={{padding:"10px 24px",fontSize:11,letterSpacing:".02em",minWidth:160,justifyContent:"center"}} onClick={()=>setPage("customize")}>Design Your Dorra Piece</button>
         </div>
       </div>
       <div className="hero-img" style={{overflow:"hidden",position:"relative"}}>
@@ -943,7 +943,7 @@ function HomePage({setPage,onV,onA}){
         <h2 style={{fontFamily:"var(--serif)",fontSize:"clamp(26px,3.2vw,52px)",fontWeight:300,color:"var(--ink)",lineHeight:1.04,marginBottom:16}}>Nothing made only for you<br/>exists anywhere else.</h2>
         <div style={{width:36,height:1,background:"var(--gold)",margin:"0 auto 18px",opacity:.5}}/>
         <p style={{fontSize:13,color:"var(--ink3)",lineHeight:2.0,maxWidth:420,margin:"0 auto 28px",fontWeight:300}}>Your vision. Your stones. Your piece  crafted by hand in Egypt.</p>
-        <button className="btn btn-dark" style={{padding:"10px 24px",fontSize:11,letterSpacing:".15em"}} onClick={()=>setPage("customize")}>Design Your Dorra Piece</button>
+        <button className="btn btn-dark" style={{padding:"10px 24px",fontSize:11,letterSpacing:".02em"}} onClick={()=>setPage("customize")}>Design Your Dorra Piece</button>
       </div>
     </div>
     <div className="section-cream" style={{paddingTop:60,paddingBottom:52}}>
@@ -984,8 +984,8 @@ function HomePage({setPage,onV,onA}){
           <h2 style={{fontFamily:"var(--serif)",fontSize:"clamp(22px,3vw,32px)",fontWeight:300,color:"var(--cr)",marginBottom:12,lineHeight:1.3}}>Arrives with a care kit</h2>
           <p style={{fontSize:14,color:"rgba(245,239,227,.5)",lineHeight:1.85,marginBottom:24,maxWidth:480,margin:"0 auto 24px"}}>Anti-rust spray, soft polishing cloth, Dorra pouch. Keep your piece exactly as you first received it.</p>
           <div style={{display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap",marginTop:8}}>
-            <button className="btn btn-outline-gold" onClick={()=>setPage("care")} style={{fontSize:13,letterSpacing:".16em",padding:"13px 0",width:200,textAlign:"center",minHeight:42,boxSizing:"border-box"}}>Care Instructions</button>
-            <button className="btn btn-gold" onClick={()=>onV(CATALOG.find(p=>p.name==="Copper Care Kit"),[])} style={{fontSize:13,letterSpacing:".16em",padding:"13px 0",width:200,textAlign:"center",minHeight:42,boxSizing:"border-box"}}>Shop Care Kit  149 EGP</button>
+            <button className="btn btn-outline-gold" onClick={()=>setPage("care")} style={{fontSize:13,letterSpacing:".02em",padding:"13px 0",width:200,textAlign:"center",minHeight:42,boxSizing:"border-box"}}>Care Instructions</button>
+            <button className="btn btn-gold" onClick={()=>onV(CATALOG.find(p=>p.name==="Copper Care Kit"),[])} style={{fontSize:13,letterSpacing:".02em",padding:"13px 0",width:200,textAlign:"center",minHeight:42,boxSizing:"border-box"}}>Shop Care Kit  149 EGP</button>
           </div>
       </div>
     </div>
@@ -1028,7 +1028,7 @@ function TypePage({type,title,sub,onV,onA,setPage}){
       </div>
       <div className="section-cream">
         <div style={{display:"flex",gap:6,marginBottom:24,flexWrap:"wrap",alignItems:"center"}}>
-          <span style={{fontSize:13,letterSpacing:".16em",color:"var(--ink3)",textTransform:"uppercase"}}>Sort:</span>
+          <span style={{fontSize:13,letterSpacing:".02em",color:"var(--ink3)",textTransform:"uppercase"}}>Sort:</span>
           {[["best","Best Rated"],["price_asc","Price: Low to High"],["price_desc","Price: High to Low"]].map(([val,lbl])=>(
             <button key={val} onClick={()=>setTpSort(val)}
               style={{fontSize:13,letterSpacing:".1em",padding:"5px 14px",
@@ -1068,7 +1068,7 @@ function StonesPage({onV,onA}){
       
         <div style={{background:"var(--g)",width:"100%"}}>
           <div style={{maxWidth:1200,margin:"0 auto",padding:"28px 52px 52px"}}>
-            <button onClick={()=>setActive(null)} style={{background:"none",border:"none",color:"rgba(245,239,227,.5)",fontSize:13,letterSpacing:".16em",textTransform:"uppercase",cursor:"pointer",marginBottom:24,display:"flex",alignItems:"center",gap:5}}>Back to Stones</button>
+            <button onClick={()=>setActive(null)} style={{background:"none",border:"none",color:"rgba(245,239,227,.5)",fontSize:13,letterSpacing:".02em",textTransform:"uppercase",cursor:"pointer",marginBottom:24,display:"flex",alignItems:"center",gap:5}}>Back to Stones</button>
             <span style={{fontSize:13,letterSpacing:".5em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:14}}>{active}</span>
             <h1 style={{fontFamily:"var(--serif)",fontSize:"clamp(36px,5vw,72px)",fontWeight:300,color:"var(--cr)",lineHeight:1.03,marginBottom:32}}>{active}</h1>
             {lore?(
@@ -1143,7 +1143,7 @@ function CarePage({setPage,onA}){useRv();return(<div style={{paddingTop:64}}>
               if(kit&&onA){onA(kit,[],kit.price);}
             }}>Add Copper Care Kit to Cart</button></div></div></div>);}
 
-function StoryPage(){useRv();return(<div style={{paddingTop:64}}><div className="story-split"><div className="story-left"><span className="sec-label sec-label-dark" data-rv>The Name</span><div style={{fontFamily:"var(--serif)",fontSize:"clamp(42px,5.4vw,76px)",color:"var(--gold)",fontStyle:"italic",lineHeight:1,marginBottom:7}} data-rv data-d="1">Dorra</div><div style={{fontSize:13,letterSpacing:".36em",textTransform:"uppercase",color:"rgba(245,239,227,.22)",marginBottom:19}} data-rv data-d="1">Pearl - Egypt</div><p style={{fontSize:13,color:"rgba(245,239,227,.44)",lineHeight:2.0,maxWidth:360,marginBottom:22,fontWeight:300}} data-rv data-d="2">In Arabic, Dorra means pearl - not found in the earth, born from a living creature's patient response to discomfort. A grain of sand held for years, becoming luminous.</p><div data-rv data-d="3">{[{n:"01",t:"The stone is chosen",tx:"Every piece begins with a stone selected for what it carries, not just how it looks."},{n:"02",t:"The copper is shaped",tx:"Raw copper wire, wound by hand over 2-4 days. No molds. No machines."},{n:"03",t:"The piece is finished",tx:"Polished, paired with its stone card, wrapped in its pouch."},{n:"04",t:"It finds its wearer",tx:"Every Dorra piece is made to order, for one person."}].map(item=><div key={item.n} className="timeline-row"><div className="timeline-num">{item.n}</div><div><div className="timeline-title">{item.t}</div><p className="timeline-sub">{item.tx}</p></div></div>)}</div></div><div className="story-right">{IMGS.logo&&<img src={IMGS.logo} alt="" style={{height:44,width:"auto",opacity:.15}}/>}</div></div><div className="story-mid"><div className="story-dark"><span className="sec-label sec-label-dark" data-rv>Our Story</span><h2 className="sec-title sec-title-dark" style={{marginBottom:10}} data-rv data-d="1">Nature is the original artisan. We are her hands.</h2><div className="sec-rule"/><p style={{fontSize:13,color:"rgba(245,239,227,.44)",lineHeight:2.0,maxWidth:360,fontWeight:300}} data-rv data-d="2">Dorra was born from the belief that the earth holds more beauty than any factory could. Each piece carries a stone chosen for its meaning, set in copper shaped by hand.</p><blockquote className="blockquote" data-rv data-d="3">"A pearl is not made by a jeweler. It is made by the sea."</blockquote></div><div className="story-light"><div style={{textAlign:"center"}}>{IMGS.logo&&<img src={IMGS.logo} alt="" style={{height:44,width:"auto",opacity:.15,marginBottom:12}}/>}<p style={{fontSize:13,letterSpacing:".16em",textTransform:"uppercase",color:"var(--ink3)"}}>Made in Egypt</p></div></div></div></div>);}
+function StoryPage(){useRv();return(<div style={{paddingTop:64}}><div className="story-split"><div className="story-left"><span className="sec-label sec-label-dark" data-rv>The Name</span><div style={{fontFamily:"var(--serif)",fontSize:"clamp(42px,5.4vw,76px)",color:"var(--gold)",fontStyle:"italic",lineHeight:1,marginBottom:7}} data-rv data-d="1">Dorra</div><div style={{fontSize:13,letterSpacing:".36em",textTransform:"uppercase",color:"rgba(245,239,227,.22)",marginBottom:19}} data-rv data-d="1">Pearl - Egypt</div><p style={{fontSize:13,color:"rgba(245,239,227,.44)",lineHeight:2.0,maxWidth:360,marginBottom:22,fontWeight:300}} data-rv data-d="2">In Arabic, Dorra means pearl - not found in the earth, born from a living creature's patient response to discomfort. A grain of sand held for years, becoming luminous.</p><div data-rv data-d="3">{[{n:"01",t:"The stone is chosen",tx:"Every piece begins with a stone selected for what it carries, not just how it looks."},{n:"02",t:"The copper is shaped",tx:"Raw copper wire, wound by hand over 2-4 days. No molds. No machines."},{n:"03",t:"The piece is finished",tx:"Polished, paired with its stone card, wrapped in its pouch."},{n:"04",t:"It finds its wearer",tx:"Every Dorra piece is made to order, for one person."}].map(item=><div key={item.n} className="timeline-row"><div className="timeline-num">{item.n}</div><div><div className="timeline-title">{item.t}</div><p className="timeline-sub">{item.tx}</p></div></div>)}</div></div><div className="story-right">{IMGS.logo&&<img src={IMGS.logo} alt="" style={{height:44,width:"auto",opacity:.15}}/>}</div></div><div className="story-mid"><div className="story-dark"><span className="sec-label sec-label-dark" data-rv>Our Story</span><h2 className="sec-title sec-title-dark" style={{marginBottom:10}} data-rv data-d="1">Nature is the original artisan. We are her hands.</h2><div className="sec-rule"/><p style={{fontSize:13,color:"rgba(245,239,227,.44)",lineHeight:2.0,maxWidth:360,fontWeight:300}} data-rv data-d="2">Dorra was born from the belief that the earth holds more beauty than any factory could. Each piece carries a stone chosen for its meaning, set in copper shaped by hand.</p><blockquote className="blockquote" data-rv data-d="3">"A pearl is not made by a jeweler. It is made by the sea."</blockquote></div><div className="story-light"><div style={{textAlign:"center"}}>{IMGS.logo&&<img src={IMGS.logo} alt="" style={{height:44,width:"auto",opacity:.15,marginBottom:12}}/>}<p style={{fontSize:13,letterSpacing:".02em",textTransform:"uppercase",color:"var(--ink3)"}}>Made in Egypt</p></div></div></div></div>);}
 
 function ContactPage(){const[form,setForm]=useState({name:"",email:"",subject:"",message:""}),[sent,setSent]=useState(false);useRv();const send=()=>{if(!form.name||!form.email||!form.message)return;window.location.href="mailto:dorrastonejewelry@gmail.com?subject="+encodeURIComponent(form.subject||"Message from "+form.name)+"&body="+encodeURIComponent("Name: "+form.name+"\nEmail: "+form.email+"\n\n"+form.message);setSent(true);};return(<div style={{paddingTop:64}}><div className="contact-split"><div className="contact-dark"><span className="sec-label sec-label-dark" data-rv>Get in Touch</span><h1 className="sec-title sec-title-dark" data-rv data-d="1">We would love to hear from you</h1><div className="sec-rule"/>{[{l:"Email",v:"dorrastonejewelry@gmail.com"},{l:"Instagram",v:"@dorrastones"},{l:"Location",v:"Cairo"},{l:"WhatsApp",v:"+20 102 062 4266"}].map((d,i)=><div key={d.l} data-rv data-d={String(i+2)}><div className="contact-label">{d.l}</div><div className="contact-val">{d.v}</div></div>)}<blockquote className="blockquote" data-rv data-d="4">"The Luxury of Nature."</blockquote></div><div className="contact-light">{sent?<div className="success-block"><div className="success-icon">*</div><div className="success-title">Message Sent</div><p style={{fontSize:13,color:"var(--ink3)"}}>We reply within 24 hours.</p><button className="btn btn-dark" onClick={()=>setSent(false)}>Send Another</button></div>:<div data-rv><h2 style={{fontFamily:"var(--serif)",fontSize:23,fontWeight:300,color:"var(--ink)",marginBottom:20}}>Send a Message</h2><div className="field"><label className="field-label">Your Name</label><input className="field-input" placeholder="Full name" value={form.name} onChange={e=>setForm({...form,name:e.target.value})}/></div><div className="field"><label className="field-label">Email</label><input className="field-input" type="email" placeholder="your@email.com" value={form.email} onChange={e=>setForm({...form,email:e.target.value})}/></div><div className="field"><label className="field-label">Subject</label><input className="field-input" placeholder="Subject" value={form.subject} onChange={e=>setForm({...form,subject:e.target.value})}/></div><div className="field"><label className="field-label">Message</label><textarea className="field-textarea" style={{minHeight:96}} placeholder="Your message..." value={form.message} onChange={e=>setForm({...form,message:e.target.value})}/></div><button className="btn btn-dark btn-full" style={{padding:"13px",marginTop:4}} onClick={send}>Send Message</button></div>}</div></div></div>);}
 
@@ -1205,7 +1205,7 @@ function CustomizePage({onAddCart,onGoCart}){
 
           {/* PIECE TYPE */}
           <div style={{marginBottom:28}}>
-            <span style={{fontSize:11,letterSpacing:".18em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:10}}>Piece Type</span>
+            <span style={{fontSize:11,letterSpacing:".02em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:10}}>Piece Type</span>
             <div className="sec-rule" style={{marginBottom:14}}/>
             <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
               {["Bracelet","Statement Bracelet","Necklace","Anklet","Earring"].map(t=>(
@@ -1223,7 +1223,7 @@ function CustomizePage({onAddCart,onGoCart}){
           
           {/* BASE COLOR */}
           <div style={{marginBottom:24}}>
-            <span style={{fontSize:11,letterSpacing:".18em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:8}}>Base Color</span>
+            <span style={{fontSize:11,letterSpacing:".02em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:8}}>Base Color</span>
             <div className="sec-rule" style={{marginBottom:10}}/>
             <p style={{fontSize:13,color:"var(--ink3)",lineHeight:1.7,marginBottom:12}}>The metal base of your piece  chain, hooks, or core wire.</p>
             <div style={{display:"flex",gap:8}}>
@@ -1240,7 +1240,7 @@ function CustomizePage({onAddCart,onGoCart}){
           {/* DECORATIVE WIRE */}
           {pt!=="Earring"&&(
             <div style={{marginBottom:24}}>
-              <span style={{fontSize:11,letterSpacing:".18em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:8}}>Decorative Wire <span style={{fontSize:10,opacity:.55,textTransform:"none",letterSpacing:0,fontFamily:"var(--sans)"}}> up to 3</span></span>
+              <span style={{fontSize:11,letterSpacing:".02em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:8}}>Decorative Wire <span style={{fontSize:10,opacity:.55,textTransform:"none",letterSpacing:0,fontFamily:"var(--sans)"}}> up to 3</span></span>
               <div className="sec-rule" style={{marginBottom:10}}/>
               <p style={{fontSize:13,color:"var(--ink3)",lineHeight:1.7,marginBottom:12}}>Thin copper wire wound between stones. Mix finishes for a layered look.</p>
               <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
@@ -1268,7 +1268,7 @@ function CustomizePage({onAddCart,onGoCart}){
 
           {/* STONES */}
           <div style={{marginBottom:28}}>
-            <span style={{fontSize:11,letterSpacing:".18em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:4}}>Choose Your Stones</span>
+            <span style={{fontSize:11,letterSpacing:".02em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:4}}>Choose Your Stones</span>
             <p style={{fontSize:15,color:"var(--ink3)",marginBottom:10}}>First 2 stones included. Each additional stone adds to total.</p>
             <div className="sec-rule" style={{marginBottom:14}}/>
             <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(clamp(120px,28vw,150px),1fr))",gap:8,marginBottom:8}}>
@@ -1293,7 +1293,7 @@ function CustomizePage({onAddCart,onGoCart}){
           {needsSize&&(
             <div style={{marginBottom:28}}>
               <div style={{display:"flex",alignItems:"baseline",justifyContent:"space-between",marginBottom:10}}>
-                <span style={{fontSize:11,letterSpacing:".18em",textTransform:"uppercase",color:"var(--gold)"}}>Size</span>
+                <span style={{fontSize:11,letterSpacing:".02em",textTransform:"uppercase",color:"var(--gold)"}}>Size</span>
                 <span style={{fontSize:15,color:"var(--ink3)",fontStyle:"italic"}}>S: 5 cm &bull; M: 5.5 cm &bull; L: 6.5 cm (inner diameter)</span>
               </div>
               <div className="sec-rule" style={{marginBottom:14}}/>
@@ -1329,7 +1329,7 @@ function CustomizePage({onAddCart,onGoCart}){
         {/* ESTIMATE */}
         <div>
           <div className="estimate-box">
-            <div style={{fontSize:14,letterSpacing:".16em",textTransform:"uppercase",color:"rgba(184,145,60,.85)",marginBottom:12}}>Price Estimate</div>
+            <div style={{fontSize:14,letterSpacing:".02em",textTransform:"uppercase",color:"rgba(184,145,60,.85)",marginBottom:12}}>Price Estimate</div>
             {picked.length===0
               ?<p style={{fontSize:14,color:"rgba(245,239,227,.4)",lineHeight:1.8}}>Select a piece type and at least one stone to see your estimated price.</p>
               :<div>
@@ -1343,13 +1343,13 @@ function CustomizePage({onAddCart,onGoCart}){
                 <div style={{fontFamily:"var(--serif)",fontSize:28,color:"#f5efe3",fontWeight:300,marginBottom:4}}>{est} EGP</div>
                 <div style={{fontSize:15,color:"rgba(245,239,227,.4)",marginBottom:16}}>Final price confirmed after review.</div>
                 <div style={{paddingTop:14,borderTop:"1px solid rgba(184,145,60,.12)"}}>
-                  <div style={{fontSize:14,letterSpacing:".18em",textTransform:"uppercase",color:"rgba(184,145,60,.6)",marginBottom:4}}>40% Deposit to Begin</div>
+                  <div style={{fontSize:14,letterSpacing:".02em",textTransform:"uppercase",color:"rgba(184,145,60,.6)",marginBottom:4}}>40% Deposit to Begin</div>
                   <div style={{fontFamily:"var(--serif)",fontSize:24,color:"var(--gold)"}}>{dep} EGP</div>
                   <div style={{fontSize:14,color:"rgba(245,239,227,.3)",marginTop:4}}>Balance paid on delivery</div>
                 </div>
               </div>}
           </div>
-          <button className="btn btn-gold btn-full" style={{padding:"15px",fontSize:15,letterSpacing:".16em",marginTop:16}} onClick={doAdd} disabled={!picked.length}>
+          <button className="btn btn-gold btn-full" style={{padding:"15px",fontSize:15,letterSpacing:".02em",marginTop:16}} onClick={doAdd} disabled={!picked.length}>
             Add to Cart
           </button>
           {!picked.length&&<p style={{fontSize:15,color:"var(--ink3)",textAlign:"center",marginTop:8}}>Select at least one stone to continue.</p>}
@@ -1410,7 +1410,7 @@ function DetailPage({product,initStone,onBack,onA}){
 
           {(product.type==="Bracelet"||product.type==="Necklace")&&(
             <div style={{marginBottom:16}}>
-              <div style={{fontSize:14,letterSpacing:".16em",textTransform:"uppercase",color:"var(--gold)",marginBottom:8}}>Wire Finish</div>
+              <div style={{fontSize:14,letterSpacing:".02em",textTransform:"uppercase",color:"var(--gold)",marginBottom:8}}>Wire Finish</div>
               <div style={{display:"flex",gap:8}}>
                 {[{id:"gold",label:"Gold-Toned"},{id:"silver",label:"Silver-Toned"}].map(b=>(
                   <button key={b.id} onClick={()=>setBaseMetal(b.id)}
@@ -1422,14 +1422,14 @@ function DetailPage({product,initStone,onBack,onA}){
             </div>
           )}
           <button onClick={()=>onA({...product,wireColor:baseMetal},swaps,price,selSize)}
-            style={{width:"100%",padding:"14px",fontFamily:"var(--sans)",fontSize:13,letterSpacing:".16em",textTransform:"uppercase",background:"var(--g)",color:"var(--gold)",border:"none",cursor:"pointer",transition:"all .25s",marginBottom:10}}
+            style={{width:"100%",padding:"14px",fontFamily:"var(--sans)",fontSize:13,letterSpacing:".02em",textTransform:"uppercase",background:"var(--g)",color:"var(--gold)",border:"none",cursor:"pointer",transition:"all .25s",marginBottom:10}}
             onMouseEnter={e=>{e.currentTarget.style.background="var(--gold)";e.currentTarget.style.color="var(--g)";}}
             onMouseLeave={e=>{e.currentTarget.style.background="var(--g)";e.currentTarget.style.color="var(--gold)";}}>
             Add to Cart &nbsp; {fmt(price)}
           </button>
 
           {product.care&&<div style={{borderTop:"1px solid rgba(26,18,10,.08)",paddingTop:14}}>
-            <div style={{fontSize:13,letterSpacing:".16em",textTransform:"uppercase",color:"var(--gold)",marginBottom:6}}>Care</div>
+            <div style={{fontSize:13,letterSpacing:".02em",textTransform:"uppercase",color:"var(--gold)",marginBottom:6}}>Care</div>
             <p style={{fontSize:14,color:"var(--ink3)",lineHeight:1.85,fontWeight:300}}>{product.care}</p>
           </div>}
 
@@ -1483,7 +1483,7 @@ function CartDrawer({cart,onClose,onQty,onPkg,onCk}){
         </div>
         <div className="cart-foot">
           <div className="cart-total-row"><span className="cart-total-label">Total</span><span className="cart-total-val">{fmt(total)}</span></div>
-          <button className="btn btn-gold btn-full" style={{padding:"14px",fontSize:13,letterSpacing:".16em",marginTop:12,padding:"15px",fontSize:10}} onClick={onCk}>Proceed to Checkout</button>
+          <button className="btn btn-gold btn-full" style={{padding:"14px",fontSize:13,letterSpacing:".02em",marginTop:12,padding:"15px",fontSize:10}} onClick={onCk}>Proceed to Checkout</button>
         </div>
       </div>
     </div>
@@ -1564,7 +1564,7 @@ function Checkout({cart,onClose,onOk,setLastOrder}){
       <div className="order-row"><span>Shipping</span><span>EGP {ship}</span></div>
       <div className="order-total-row"><span className="order-total-label">Total</span><span className="order-total-val">{fmt(tot)}</span></div>
       {hasFromScratch&&customSub>0&&<div style={{marginTop:10,padding:"11px 13px",background:"rgba(184,145,60,.07)",borderLeft:"2px solid rgba(184,145,60,.28)"}}>
-        <div style={{fontSize:13,letterSpacing:".16em",textTransform:"uppercase",color:"var(--ink3)",marginBottom:8}}>Payment Breakdown</div>
+        <div style={{fontSize:13,letterSpacing:".02em",textTransform:"uppercase",color:"var(--ink3)",marginBottom:8}}>Payment Breakdown</div>
         <div style={{display:"flex",justifyContent:"space-between",fontSize:14,marginBottom:4}}><span style={{color:"var(--ink3)"}}>Bespoke deposit (40%)</span><span>{fmt(customDep)}</span></div>
         {standardSub>0&&!isCOD&&<div style={{display:"flex",justifyContent:"space-between",fontSize:14,marginBottom:4}}><span style={{color:"var(--ink3)"}}>Standard items</span><span>{fmt(standardSub)}</span></div>}
         <div style={{display:"flex",justifyContent:"space-between",paddingTop:7,borderTop:"1px solid rgba(26,18,10,.09)",fontWeight:500}}><span style={{fontSize:14,color:"var(--ink)"}}>Due now</span><span style={{fontFamily:"var(--serif)",fontSize:18}}>{fmt(dueNow)}</span></div>
@@ -1732,7 +1732,7 @@ function AllPage({onP,onA}){
     <div style={{background:"var(--cr)",borderBottom:"1px solid rgba(26,18,10,.08)",position:"sticky",top:64,zIndex:100}}>
       <div style={{display:"flex",gap:0,overflowX:"auto",padding:"0 72px",scrollbarWidth:"none"}}>
         {cats.map(cat=>(
-          <button key={cat.id} onClick={()=>setFilter(cat.id)} style={{flexShrink:0,fontFamily:"var(--sans)",fontSize:13,letterSpacing:".16em",textTransform:"uppercase",background:"none",border:"none",cursor:"pointer",padding:"18px 20px",color:filter===cat.id?"var(--ink)":"var(--ink3)",borderBottom:filter===cat.id?"2px solid var(--gold)":"2px solid transparent",transition:"all .2s",fontWeight:filter===cat.id?400:300}}>
+          <button key={cat.id} onClick={()=>setFilter(cat.id)} style={{flexShrink:0,fontFamily:"var(--sans)",fontSize:13,letterSpacing:".02em",textTransform:"uppercase",background:"none",border:"none",cursor:"pointer",padding:"18px 20px",color:filter===cat.id?"var(--ink)":"var(--ink3)",borderBottom:filter===cat.id?"2px solid var(--gold)":"2px solid transparent",transition:"all .2s",fontWeight:filter===cat.id?400:300}}>
             {cat.label}{filter===cat.id&&<span style={{marginLeft:5,fontSize:13,opacity:.5}}>({filter==="all"?featured.length:featured.filter(p=>p.type===cat.id).length})</span>}
           </button>
         ))}
@@ -1853,7 +1853,7 @@ function ReviewsPage(){
             {rev.img&&<img src={rev.img} alt={rev.name} style={{width:"100%",maxHeight:200,objectFit:"cover",marginBottom:12,display:"block"}}/>}
             <div style={{display:"flex",alignItems:"baseline",justifyContent:"space-between"}}>
               <span style={{fontFamily:"var(--serif)",fontSize:13,color:"var(--ink)",letterSpacing:".04em"}}>{rev.name}</span>
-              {rev.piece&&<span style={{fontSize:13,letterSpacing:".18em",textTransform:"uppercase",color:"var(--gold)",opacity:.7}}>{rev.piece}</span>}
+              {rev.piece&&<span style={{fontSize:13,letterSpacing:".02em",textTransform:"uppercase",color:"var(--gold)",opacity:.7}}>{rev.piece}</span>}
             </div>
           </div>
         ))}
@@ -1886,13 +1886,13 @@ function AdminDashboard(){
     <div style={{minHeight:"100vh",background:"#062318",display:"flex",alignItems:"center",justifyContent:"center",fontFamily:"'Helvetica Neue',Arial,sans-serif"}}>
       <div style={{background:"#0a2d1a",padding:"40px 32px",width:"90%",maxWidth:320,textAlign:"center",boxSizing:"border-box"}}>
         <div style={{fontFamily:"Georgia,serif",fontSize:28,fontWeight:300,color:"#f5efe3",marginBottom:4}}>Dorra</div>
-        <div style={{fontSize:14,color:"rgba(184,145,60,.6)",letterSpacing:".16em",marginBottom:28}}>ADMIN</div>
+        <div style={{fontSize:14,color:"rgba(184,145,60,.6)",letterSpacing:".02em",marginBottom:28}}>ADMIN</div>
         <input type="password" value={pwInput} onChange={e=>setPwInput(e.target.value)}
           onKeyDown={e=>e.key==="Enter"&&doLogin()}
           placeholder="Password"
           style={{width:"100%",background:"rgba(245,239,227,.06)",border:"1px solid rgba(184,145,60,.2)",color:"#f5efe3",padding:"12px 14px",fontSize:15,outline:"none",boxSizing:"border-box",marginBottom:8}}/>
         {pwErr&&<p style={{fontSize:15,color:"#e74c3c",marginBottom:8}}>Incorrect password</p>}
-        <button onClick={doLogin} style={{width:"100%",background:"#b8913c",border:"none",color:"#062318",padding:"13px",fontSize:14,letterSpacing:".16em",textTransform:"uppercase",cursor:"pointer"}}>Enter</button>
+        <button onClick={doLogin} style={{width:"100%",background:"#b8913c",border:"none",color:"#062318",padding:"13px",fontSize:14,letterSpacing:".02em",textTransform:"uppercase",cursor:"pointer"}}>Enter</button>
       </div>
     </div>
   );
