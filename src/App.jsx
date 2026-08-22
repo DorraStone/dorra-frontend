@@ -1,5 +1,5 @@
 // build: 20260816-234410
-// v20260822211715
+// v20260822220802
 import{useState,useEffect,useRef,useCallback}from"react";
 
 // -- Backend API URL - update after Railway deployment --
@@ -259,7 +259,7 @@ const CSS_LINES=[
   "--gold:#b8913c;",
   "--gold2:#d4aa58;",
   "--serif:'Cormorant Garamond',Georgia,serif;",
-  "--sans:'Inter',sans-serif;",
+  "--sans:'Raleway',sans-serif;",
   "--ease:cubic-bezier(.16,1,.3,1);",
   "--ink:#140e07;",
   "--ink2:#2e2214;",
@@ -380,8 +380,8 @@ const CSS_LINES=[
   ".pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(272px,1fr));gap:2px;}",
   ".pc{background:var(--cr2);position:relative;overflow:hidden;cursor:pointer;transition:box-shadow .3s;}",
   ".pc:hover{box-shadow:0 12px 40px rgba(6,35,24,.1);}",
-  ".pc-img{aspect-ratio:4/5;overflow:hidden;position:relative;background:var(--cr2);}",".pc-img{min-height:220px;}",
-  ".pc-img img{width:100%;height:100%;object-fit:cover;object-position:center center;display:block;transition:transform .6s cubic-bezier(.16,1,.3,1);}",".pc:hover .pc-img img{transform:scale(1.04);}",
+  ".pc-img{aspect-ratio:4/5;overflow:hidden;position:relative;background:var(--cr2);}",,
+  ".pc-img img{width:100%;height:100%;object-fit:cover;object-position:center 41%;display:block;transition:transform .6s cubic-bezier(.16,1,.3,1);}",".pc:hover .pc-img img{transform:scale(1.04);}",
   ".pc-badge{position:absolute;top:11px;left:11px;z-index:3;font-size:7.5px;letter-spacing:.18em;text-transform:uppercase;padding:3px 9px;}",
   ".badge-new{background:var(--gold);color:var(--g);}",
   ".pc-ov{position:absolute;inset:0;background:rgba(6,35,24,.44);opacity:0;transition:opacity .34s;display:flex;align-items:center;justify-content:center;}",
