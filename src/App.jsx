@@ -1,5 +1,5 @@
 // build: 20260816-234410
-// v20260822210134
+// v20260822210942
 import{useState,useEffect,useRef,useCallback}from"react";
 
 // -- Backend API URL - update after Railway deployment --
@@ -313,7 +313,7 @@ const CSS_LINES=[
   "@keyframes slide-in{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}",
   ".mob-search{width:100%;background:transparent;border:none;border-bottom:1px solid rgba(184,145,60,.18);color:var(--cr);font-family:var(--sans);font-size:16px;font-weight:300;padding:10px 0;outline:none;margin-bottom:26px;letter-spacing:.02em;}",
   ".mob-search::placeholder{color:rgba(245,239,227,.22);}",
-  ".mob-link{font-family:var(--sans);font-size:14px;letter-spacing:.22em;text-transform:uppercase;color:rgba(245,239,227,.52);background:none;border:none;cursor:pointer;padding:15px 0;border-bottom:1px solid rgba(184,145,60,.06);text-align:left;transition:color .2s;width:100%;}",
+  ".mob-link{font-family:var(--sans);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:rgba(245,239,227,.52);background:none;border:none;cursor:pointer;padding:15px 0;border-bottom:1px solid rgba(184,145,60,.06);text-align:left;transition:color .2s;width:100%;}",
   ".mob-link:hover,.mob-link.on{color:var(--gold);}",
   ".mob-cta{margin-top:28px;background:var(--gold);color:var(--g);padding:14px;font-family:var(--sans);font-size:8.5px;letter-spacing:.22em;text-transform:uppercase;border:none;cursor:pointer;width:100%;font-weight:500;}",
   ".search-drop{position:fixed;top:64px;left:0;right:0;z-index:8998;background:var(--g);border-bottom:1px solid rgba(184,145,60,.1);padding:14px 52px;animation:slide-in .2s var(--ease);}",
@@ -361,7 +361,7 @@ const CSS_LINES=[
   ".page-header::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(184,145,60,.04),transparent 60%);pointer-events:none;}",
   ".page-header-tag{font-size:12px;letter-spacing:.44em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:10px;}",
   ".page-header-title{font-family:var(--serif);font-size:clamp(32px,5vw,48px);font-weight:300;color:var(--cr);line-height:1.03;}",
-  ".page-header-sub{font-size:15px;color:rgba(245,239,227,.44);line-height:2.0;margin-top:10px;max-width:440px;font-weight:300;}",
+  ".page-header-sub{font-size:14px;color:rgba(245,239,227,.44);line-height:1.8;margin-top:10px;max-width:440px;font-weight:300;}",
   ".section{padding:72px 72px;}",
   ".section-cream{padding:40px 32px;background:var(--cr);}",
   ".section-pale{padding:72px 72px;background:var(--cr2);}",
@@ -416,7 +416,7 @@ const CSS_LINES=[
   ".stone-card{background:var(--cr2);padding:24px 22px;position:relative;max-width:275px;}",
   ".stone-card::before{content:'';position:absolute;top:-4px;left:-4px;right:4px;bottom:4px;border:1px solid rgba(184,145,60,.1);}",
   ".stone-card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px;padding-bottom:11px;border-bottom:1px solid rgba(26,18,10,.09);}",
-  ".stone-card-brand{font-family:var(--serif);font-size:16px;color:var(--ink);}",
+  ".stone-card-brand{font-family:var(--serif);font-size:14px;color:var(--ink);}",
   ".stone-card-mark{font-size:13px;color:var(--gold);letter-spacing:.2em;}",
   ".stone-card-row{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(26,18,10,.05);}",
   ".stone-card-key{font-size:7px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);}",
@@ -626,53 +626,20 @@ const CSS_LINES=[
 
   /*  MOBILE TEXT SIZES  */
   ".hero-title{font-size:clamp(38px,10vw,62px);}",
-  ".hero-sub{font-size:14px;line-height:1.85;color:rgba(245,239,227,.6);max-width:360px;}",".hero-btns{justify-content:flex-start;}",
-  
-
-  ".page-header-title{font-size:clamp(28px,7vw,42px);}",
-  
-  ".page-header-tag{font-size:13px;letter-spacing:.3em;}",
-
-  
-  ".pc-price{font-size:14px;}",
-  ".pc-tag{font-size:13px;}",
-  ".pc-add{font-size:13px;padding:13px 0;letter-spacing:.18em;}",
-
-  ".detail-name{font-size:clamp(22px,6vw,32px);}",
-  
-
-  ".field-label{font-size:14px;letter-spacing:.1em;}",
-  ".field-input,.field-textarea,.field-select{font-size:16px;padding:12px 14px;}",
-
-  ".estimate-box p{font-size:13px !important;}",
-
-  
-  ".btn-full{padding:16px 28px;}",
-  ".submit-btn{font-size:13px;padding:15px;letter-spacing:.2em;}",
-
-  ".section-label{font-size:13px;letter-spacing:.3em;}",
-  ".cart-item-name{font-size:14px;}",
-  ".cart-item-sub{font-size:14px;}",
-  ".cart-total{font-size:16px;}",
-
-  
-
-  /* Customize page mobile */
-  ".customize-grid > div:first-child{order:1;}",
-  ".customize-grid > div:last-child{order:2;}",
-  ".estimate-box{margin-top:0;}",
-
-  /* Stone grid - 2 columns on mobile */
-  ".pgrid{grid-template-columns:1fr 1fr;gap:1px;}",".pc-body{padding:10px 10px 12px;}",".page-header-sub{font-size:14px!important;}",".hero-sub{font-size:13px!important;}",".detail-desc{font-size:14px!important;}",".page-header-title{font-size:clamp(28px,8vw,40px)!important;}",".hero-title{font-size:clamp(32px,9vw,42px)!important;}",".hero-sub{font-size:13px!important;}",".pc-price{font-size:14px!important;}",".field-label{font-size:14px!important;}",".field-input{font-size:16px!important;}",".field-textarea{font-size:16px!important;}",
-  "}",
-  "/* Horizontal carousel */",
-  "div[style*='scrollSnapType']{-ms-overflow-style:none;scrollbar-width:none;}",
-  "div[style*='scrollSnapType']::-webkit-scrollbar{display:none;}",
-  ".nav-logo-wrap{line-height:0;}",
-  "html{touch-action:manipulation;}",
-  "*{-webkit-tap-highlight-color:transparent;}",
-  "input,textarea,select{font-size:16px !important;-webkit-text-size-adjust:100%;}",
-  "@media screen and (max-width:768px){input,textarea,select{font-size:16px !important;}}",
+  ".hero-sub{font-size:13px;line-height:1.85;color:rgba(245,239,227,.6);max-width:360px;}",
+  ".page-header-title{font-size:clamp(26px,7vw,40px);}",
+  ".page-header-tag{font-size:11px;letter-spacing:.3em;}",
+  ".page-header-sub{font-size:14px;line-height:1.8;}",
+  ".pc-name{font-size:14px;}",
+  ".pc-price{font-size:13px;}",
+  ".pc-add{font-size:11px;padding:11px 0;letter-spacing:.16em;}",
+  ".detail-name{font-size:clamp(20px,6vw,30px);}",
+  ".detail-desc{font-size:14px;}",
+  ".field-label{font-size:12px;letter-spacing:.12em;}",
+  ".field-input,.field-textarea,.field-select{font-size:16px;padding:11px 14px;}",
+  ".submit-btn{font-size:11px;padding:14px;letter-spacing:.18em;}",
+  ".cart-item-name{font-size:13px;}",
+  "input,textarea,select{font-size:16px !important;-webkit-text-size-adjust:100%;}"
 ];
 const CSS_TEXT=CSS_LINES.join("\n");
 function InjectCSS(){useEffect(()=>{const el=document.createElement("style");el.id="dorra-css";el.textContent=CSS_TEXT;document.head.appendChild(el);return()=>{const e=document.getElementById("dorra-css");if(e)e.remove();};},[]);return null;}
@@ -948,8 +915,8 @@ function HomePage({setPage,onV,onA}){
         <div className="hero-rule"/>
         <p className="hero-sub">Natural stones. No two pieces alike. Every piece shaped entirely by hand in Egypt.</p>
         <div className="hero-btns">
-          <button className="btn btn-gold" style={{padding:"12px 28px",fontSize:12,letterSpacing:".15em",minWidth:180,justifyContent:"center"}} onClick={()=>setPage("all")}>Shop Now</button>
-          <button className="btn btn-ghost" style={{padding:"12px 28px",fontSize:12,letterSpacing:".15em",minWidth:180,justifyContent:"center"}} onClick={()=>setPage("customize")}>Design Your Dorra Piece</button>
+          <button className="btn btn-gold" style={{padding:"10px 24px",fontSize:11,letterSpacing:".15em",minWidth:160,justifyContent:"center"}} onClick={()=>setPage("all")}>Shop Now</button>
+          <button className="btn btn-ghost" style={{padding:"10px 24px",fontSize:11,letterSpacing:".15em",minWidth:160,justifyContent:"center"}} onClick={()=>setPage("customize")}>Design Your Dorra Piece</button>
         </div>
       </div>
       <div className="hero-img" style={{overflow:"hidden",position:"relative"}}>
