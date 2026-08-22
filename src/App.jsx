@@ -760,7 +760,7 @@ function PC({product,onV,onA}){
           onTouchStart={e=>setPcTx(e.touches[0].clientX)}
           onTouchEnd={e=>{if(pcTx===null)return;const d=e.changedTouches[0].clientX-pcTx;if(Math.abs(d)>30)setPcIdx(i=>d<0?Math.min(i+1,pcImgs.length-1):Math.max(i-1,0));setPcTx(null);}}>
           {pcImgs.length>0?pcImgs.map((imgKey,i)=>(
-            <div key={imgKey} style={{position:"absolute",inset:0,transform:`translateX(${(i-pcIdx)*100}%)`,transition:"transform .38s cubic-bezier(.25,.46,.45,.94)"}}>
+            <div key={imgKey} style={{position:"absolute",inset:0,transform:"translateX("+((i-pcIdx)*100)+"%)",transition:"transform .38s cubic-bezier(.25,.46,.45,.94)"}}>
               <img src={IMGS[imgKey]} alt={product.name} loading="lazy" style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center center",display:"block"}}/>
             </div>
           )):<div style={{width:"100%",height:"100%",background:"var(--g)"}}/>}
@@ -1388,7 +1388,7 @@ function DetailPage({product,initStone,onBack,onA}){
             {imgs.map((imgKey,i)=>(
               <div key={imgKey} style={{
                 position:"absolute",inset:0,
-                transform:`translateX(${(i-idx)*100}%)`,
+                transform:"translateX("+((i-idx)*100)+"%)",
                 transition:"transform .4s cubic-bezier(.25,.46,.45,.94)"
               }}>
                 {IMGS[imgKey]
