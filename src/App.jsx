@@ -338,13 +338,13 @@ const CSS_LINES=[
   ".hero-line:nth-child(3) span{animation-delay:.62s;}",
   "@keyframes line-up{from{transform:translateY(105%)}to{transform:none}}",
   ".hero-rule{width:32px;height:1px;background:var(--gold);margin-bottom:18px;opacity:0;animation:fade-up .8s .78s forwards;}",
-  ".hero-sub{font-size:17px;line-height:2.0;color:rgba(245,239,227,.55);max-width:320px;margin-bottom:36px;opacity:0;animation:fade-up .8s .88s forwards;font-weight:300;}",
+  ".hero-sub{font-size:14px;line-height:2.0;color:rgba(245,239,227,.55);max-width:320px;margin-bottom:36px;opacity:0;animation:fade-up .8s .88s forwards;font-weight:300;}",
   ".hero-btns{display:flex;gap:10px;flex-wrap:wrap;opacity:0;animation:fade-up .8s 1s forwards;}",
   ".hero-img{display:block;overflow:hidden;position:relative;height:100%;}",
-  ".hero-img img{width:100%;height:100%;object-fit:cover;object-position:center 35%;}",
+  ".hero-img img{width:100%;height:100%;object-fit:cover;object-position:center center;}",
   "@keyframes slow-zoom{from{transform:scale(1.07)}to{transform:scale(1.01)}}",
   ".hero-img::before{content:'';position:absolute;left:0;top:0;bottom:0;width:160px;background:linear-gradient(to right,var(--g),transparent);z-index:1;}",
-  ".btn{font-family:var(--sans);font-size:14px;letter-spacing:.12em;text-transform:uppercase;border:none;cursor:pointer;transition:all .28s var(--ease);display:inline-flex;align-items:center;justify-content:center;gap:7px;white-space:nowrap;font-weight:400;}",
+  ".btn{font-family:var(--sans);font-size:12px;letter-spacing:.15em;text-transform:uppercase;border:none;cursor:pointer;transition:all .28s var(--ease);display:inline-flex;align-items:center;justify-content:center;gap:7px;white-space:nowrap;font-weight:400;}",
   ".btn-gold{background:var(--gold);color:var(--g);padding:12px 26px;}",
   ".btn-gold:hover{background:var(--gold2);box-shadow:0 4px 16px rgba(184,145,60,.2);}",
   ".btn-ghost{background:transparent;color:rgba(245,239,227,.8);border:1px solid rgba(184,145,60,.25);padding:11px 24px;}",
@@ -361,7 +361,7 @@ const CSS_LINES=[
   ".page-header::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(184,145,60,.04),transparent 60%);pointer-events:none;}",
   ".page-header-tag{font-size:12px;letter-spacing:.44em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:10px;}",
   ".page-header-title{font-family:var(--serif);font-size:clamp(32px,5vw,48px);font-weight:300;color:var(--cr);line-height:1.03;}",
-  ".page-header-sub{font-size:17px;color:rgba(245,239,227,.44);line-height:2.0;margin-top:10px;max-width:440px;font-weight:300;}",
+  ".page-header-sub{font-size:15px;color:rgba(245,239,227,.44);line-height:2.0;margin-top:10px;max-width:440px;font-weight:300;}",
   ".section{padding:72px 72px;}",
   ".section-cream{padding:40px 32px;background:var(--cr);}",
   ".section-pale{padding:72px 72px;background:var(--cr2);}",
@@ -380,16 +380,16 @@ const CSS_LINES=[
   ".pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(272px,1fr));gap:1px;}",
   ".pc{background:var(--cr2);position:relative;overflow:hidden;cursor:pointer;transition:box-shadow .3s;}",
   ".pc:hover{box-shadow:0 12px 40px rgba(6,35,24,.1);}",
-  ".pc-img{aspect-ratio:3/4;overflow:hidden;position:relative;background:var(--cr2);}",".pc-img{min-height:220px;}",
-  ".pc-img img{width:100%;height:100%;object-fit:cover;object-position:center 35%;display:block;transition:transform .6s cubic-bezier(.16,1,.3,1);}",".pc:hover .pc-img img{transform:scale(1.04);}",
+  ".pc-img{aspect-ratio:4/5;overflow:hidden;position:relative;background:var(--cr2);}",".pc-img{min-height:220px;}",
+  ".pc-img img{width:100%;height:100%;object-fit:cover;object-position:center center;display:block;transition:transform .6s cubic-bezier(.16,1,.3,1);}",".pc:hover .pc-img img{transform:scale(1.04);}",
   ".pc-badge{position:absolute;top:11px;left:11px;z-index:3;font-size:7.5px;letter-spacing:.18em;text-transform:uppercase;padding:3px 9px;}",
   ".badge-new{background:var(--gold);color:var(--g);}",
   ".pc-ov{position:absolute;inset:0;background:rgba(6,35,24,.44);opacity:0;transition:opacity .34s;display:flex;align-items:center;justify-content:center;}",
   ".pc:hover .pc-ov{opacity:1;}",
   ".pc-body{padding:12px 14px 14px;display:flex;flex-direction:column;flex:1;}",
   ".pc-stones{font-size:13px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;display:block;}",
-  ".pc-name{font-family:var(--serif);font-size:16px;font-weight:300;color:var(--ink);margin-bottom:3px;line-height:1.2;}",
-  ".pc-price{font-family:var(--serif);font-size:17px;color:var(--ink2);margin-bottom:7px;}",
+  ".pc-name{font-family:var(--serif);font-size:15px;font-weight:300;color:var(--ink);margin-bottom:3px;line-height:1.2;}",
+  ".pc-price{font-family:var(--serif);font-size:14px;color:var(--ink2);margin-bottom:7px;}",
   ".pc-care{font-size:13px;color:var(--ink3);line-height:1.6;border-top:1px solid rgba(26,18,10,.08);padding-top:7px;margin-bottom:10px;}",
   ".pc-actions{display:flex;align-items:center;justify-content:space-between;gap:6px;}",
   ".pc-add{font-family:var(--sans);font-size:13px;letter-spacing:.13em;text-transform:uppercase;background:none;border:1px solid rgba(184,145,60,.24);color:var(--gold);padding:7px 12px;cursor:pointer;transition:all .22s;;margin-top:auto;}",
@@ -441,7 +441,7 @@ const CSS_LINES=[
   ".detail-tag{font-size:13px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);margin-bottom:9px;}",
   ".detail-name{font-family:var(--serif);font-size:clamp(20px,2.2vw,32px);font-weight:300;line-height:1.05;margin-bottom:4px;color:var(--ink);}",
   ".detail-price{font-family:var(--serif);font-size:22px;margin-bottom:14px;color:var(--ink);}",
-  ".detail-desc{font-size:16px;color:var(--ink2);line-height:1.8;margin-bottom:12px;font-weight:300;}",
+  ".detail-desc{font-size:15px;color:var(--ink2);line-height:1.8;margin-bottom:12px;font-weight:300;}",
   ".detail-tags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:11px;}",
   ".detail-tag-chip{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);background:var(--cr2);padding:4px 10px;border:1px solid rgba(26,18,10,.1);}",
   ".detail-meta-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(26,18,10,.07);font-size:14px;}",
@@ -626,7 +626,7 @@ const CSS_LINES=[
 
   /*  MOBILE TEXT SIZES  */
   ".hero-title{font-size:clamp(38px,10vw,62px);}",
-  ".hero-sub{font-size:16px;line-height:1.85;color:rgba(245,239,227,.6);max-width:360px;}",".hero-btns{justify-content:flex-start;}",
+  ".hero-sub{font-size:14px;line-height:1.85;color:rgba(245,239,227,.6);max-width:360px;}",".hero-btns{justify-content:flex-start;}",
   
 
   ".page-header-title{font-size:clamp(28px,7vw,42px);}",
@@ -663,7 +663,7 @@ const CSS_LINES=[
   ".estimate-box{margin-top:0;}",
 
   /* Stone grid - 2 columns on mobile */
-  ".pgrid{grid-template-columns:1fr 1fr;gap:1px;}",".pc-body{padding:10px 10px 12px;}",".page-header-sub{font-size:15px!important;}",".hero-sub{font-size:15px!important;}",".detail-desc{font-size:15px!important;}",".page-header-title{font-size:clamp(28px,8vw,40px)!important;}",".hero-title{font-size:clamp(32px,9vw,42px)!important;}",".hero-sub{font-size:15px!important;}",".pc-price{font-size:14px!important;}",".field-label{font-size:14px!important;}",".field-input{font-size:16px!important;}",".field-textarea{font-size:16px!important;}",
+  ".pgrid{grid-template-columns:1fr 1fr;gap:1px;}",".pc-body{padding:10px 10px 12px;}",".page-header-sub{font-size:14px!important;}",".hero-sub{font-size:13px!important;}",".detail-desc{font-size:14px!important;}",".page-header-title{font-size:clamp(28px,8vw,40px)!important;}",".hero-title{font-size:clamp(32px,9vw,42px)!important;}",".hero-sub{font-size:13px!important;}",".pc-price{font-size:14px!important;}",".field-label{font-size:14px!important;}",".field-input{font-size:16px!important;}",".field-textarea{font-size:16px!important;}",
   "}",
   "/* Horizontal carousel */",
   "div[style*='scrollSnapType']{-ms-overflow-style:none;scrollbar-width:none;}",
@@ -911,7 +911,7 @@ function HeroCarousel({onV}){
       onTouchStart={e=>setTx(e.touches[0].clientX)}
       onTouchEnd={e=>{if(tx===null)return;const d=e.changedTouches[0].clientX-tx;const swiped=Math.abs(d)>=40;if(swiped)setIdx(i=>d<0?(i+1)%items.length:(i-1+items.length)%items.length);setTx(null);}}
       onClick={()=>onV(cur,cur.stones)}>
-      {imgSrc&&<img src={imgSrc} alt={cur.name} style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center 35%",display:"block",opacity:.92,transition:"opacity .8s ease"}}/>}
+      {imgSrc&&<img src={imgSrc} alt={cur.name} style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center center",display:"block",opacity:.92,transition:"opacity .8s ease"}}/>}
       <div style={{position:"absolute",inset:0,background:"linear-gradient(to bottom,rgba(6,35,24,.05) 0%,rgba(6,35,24,.55) 100%)"}}/>
       <div style={{position:"absolute",bottom:"10%",left:"8%",right:"8%"}}>
         <span style={{fontSize:13,letterSpacing:".36em",textTransform:"uppercase",color:"rgba(184,145,60,.8)",display:"block",marginBottom:10}}>{cur.type}</span>
@@ -948,8 +948,8 @@ function HomePage({setPage,onV,onA}){
         <div className="hero-rule"/>
         <p className="hero-sub">Natural stones. No two pieces alike. Every piece shaped entirely by hand in Egypt.</p>
         <div className="hero-btns">
-          <button className="btn btn-gold" style={{padding:"15px 36px",fontSize:15,letterSpacing:".1em",minWidth:220,justifyContent:"center"}} onClick={()=>setPage("all")}>Shop Now</button>
-          <button className="btn btn-ghost" style={{padding:"15px 36px",fontSize:15,letterSpacing:".1em",minWidth:220,justifyContent:"center"}} onClick={()=>setPage("customize")}>Design Your Dorra Piece</button>
+          <button className="btn btn-gold" style={{padding:"12px 28px",fontSize:12,letterSpacing:".15em",minWidth:180,justifyContent:"center"}} onClick={()=>setPage("all")}>Shop Now</button>
+          <button className="btn btn-ghost" style={{padding:"12px 28px",fontSize:12,letterSpacing:".15em",minWidth:180,justifyContent:"center"}} onClick={()=>setPage("customize")}>Design Your Dorra Piece</button>
         </div>
       </div>
       <div className="hero-img" style={{overflow:"hidden",position:"relative"}}>
@@ -1223,12 +1223,12 @@ function CustomizePage({onAddCart,onGoCart}){
 
           {/* PIECE TYPE */}
           <div style={{marginBottom:28}}>
-            <span style={{fontSize:14,letterSpacing:".16em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:10}}>Piece Type</span>
+            <span style={{fontSize:11,letterSpacing:".18em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:10}}>Piece Type</span>
             <div className="sec-rule" style={{marginBottom:14}}/>
             <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
               {["Bracelet","Statement Bracelet","Necklace","Anklet","Earring"].map(t=>(
                 <button key={t} onClick={()=>{setPt(t);setSize("Medium");}}
-                  style={{padding:"10px 18px",fontFamily:"var(--sans)",fontSize:13,letterSpacing:".06em",background:pt===t?"var(--g)":"transparent",color:pt===t?"var(--cr)":"var(--ink3)",border:"1px solid",borderColor:pt===t?"var(--g)":"rgba(26,18,10,.15)",cursor:"pointer",transition:"all .2s"}}>
+                  style={{padding:"10px 18px",fontFamily:"var(--sans)",fontSize:13,letterSpacing:".06em",background:pt===t?"var(--g)":"transparent",color:pt===t?"var(--cr)":"var(--ink3)",border:"1px solid",borderColor:pt===t?"var(--g)":"rgba(26,18,10,.15)",cursor:"pointer",transition:"all .2s",fontSize:13,padding:"9px 16px"}}>
                   {t}
                 </button>
               ))}
@@ -1240,14 +1240,14 @@ function CustomizePage({onAddCart,onGoCart}){
 
           {/* WIRE COLOR / BASE METAL */}
           <div style={{marginBottom:28}}>
-            <span style={{fontSize:14,letterSpacing:".16em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:10}}>{pt==="Earring"?"Earring Base Metal":"Decorative Wire Color"}</span>
+            <span style={{fontSize:11,letterSpacing:".18em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:10}}>{pt==="Earring"?"Earring Base Metal":"Decorative Wire Color"}</span>
             <div className="sec-rule" style={{marginBottom:10}}/>
-            <p style={{fontSize:13,color:"var(--ink3)",lineHeight:1.8,marginBottom:14}}>The thin decorative wire comes in two finishes, or opt for doubled thick copper or none at all.</p>
+            <p style={{fontSize:13,color:"var(--ink3)",lineHeight:1.75,marginBottom:12}}>The thin decorative wire comes in two finishes, or opt for doubled thick copper or none at all.</p>
             <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
               {[{id:"silver",label:"Silver-Toned",sub:"Thin, light finish",extra:0},{id:"gold",label:"Gold-Toned",sub:"Thin, warm finish",extra:0},{id:"double_thick",label:"Doubled Thick Copper",sub:"Bold, raw  harder to work with",extra:80},{id:"none",label:"Raw Copper Only",sub:"No decorative wire",extra:0}].map(w=>(
                 <button key={w.id} onClick={()=>setWire(w.id)}
                   style={{padding:"12px 16px",textAlign:"left",background:wire===w.id?"var(--g)":"transparent",color:wire===w.id?"var(--cr)":"var(--ink)",border:"1px solid",borderColor:wire===w.id?"var(--g)":"rgba(26,18,10,.15)",cursor:"pointer",transition:"all .2s",minWidth:150}}>
-                  <div style={{fontSize:14,fontFamily:"var(--serif)",marginBottom:3}}>{w.label}</div>
+                  <div style={{fontSize:14,fontFamily:"var(--serif)",marginBottom:2}}>{w.label}</div>
                   <div style={{fontSize:14,opacity:.7}}>{w.sub}</div>
                   {w.extra>0&&<div style={{fontSize:14,color:wire===w.id?"rgba(245,239,227,.6)":"var(--gold)",marginTop:4}}>+{w.extra} EGP</div>}
                 </button>
@@ -1257,7 +1257,7 @@ function CustomizePage({onAddCart,onGoCart}){
 
           {/* STONES */}
           <div style={{marginBottom:28}}>
-            <span style={{fontSize:14,letterSpacing:".16em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:4}}>Choose Your Stones</span>
+            <span style={{fontSize:11,letterSpacing:".18em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:4}}>Choose Your Stones</span>
             <p style={{fontSize:15,color:"var(--ink3)",marginBottom:10}}>First 2 stones included. Each additional stone adds to total.</p>
             <div className="sec-rule" style={{marginBottom:14}}/>
             <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(clamp(120px,28vw,150px),1fr))",gap:8,marginBottom:8}}>
@@ -1282,7 +1282,7 @@ function CustomizePage({onAddCart,onGoCart}){
           {needsSize&&(
             <div style={{marginBottom:28}}>
               <div style={{display:"flex",alignItems:"baseline",justifyContent:"space-between",marginBottom:10}}>
-                <span style={{fontSize:14,letterSpacing:".16em",textTransform:"uppercase",color:"var(--gold)"}}>Size</span>
+                <span style={{fontSize:11,letterSpacing:".18em",textTransform:"uppercase",color:"var(--gold)"}}>Size</span>
                 <span style={{fontSize:15,color:"var(--ink3)",fontStyle:"italic"}}>S: 5 cm &bull; M: 5.5 cm &bull; L: 6.5 cm (inner diameter)</span>
               </div>
               <div className="sec-rule" style={{marginBottom:14}}/>
@@ -1328,7 +1328,7 @@ function CustomizePage({onAddCart,onGoCart}){
                 {wireCost>0&&<div className="estimate-row"><span className="estimate-key">Wire add-on</span><span className="estimate-val">+{wireCost} EGP</span></div>}
                 {extraStones>0&&<div className="estimate-row"><span className="estimate-key">Extra stones</span><span className="estimate-val">+{stoneExtra} EGP</span></div>}
                 <div style={{height:1,background:"rgba(184,145,60,.15)",margin:"12px 0"}}/>
-                <div style={{fontFamily:"var(--serif)",fontSize:32,color:"#f5efe3",fontWeight:300,marginBottom:4}}>{est} EGP</div>
+                <div style={{fontFamily:"var(--serif)",fontSize:28,color:"#f5efe3",fontWeight:300,marginBottom:4}}>{est} EGP</div>
                 <div style={{fontSize:15,color:"rgba(245,239,227,.4)",marginBottom:16}}>Final price confirmed after review.</div>
                 <div style={{paddingTop:14,borderTop:"1px solid rgba(184,145,60,.12)"}}>
                   <div style={{fontSize:14,letterSpacing:".18em",textTransform:"uppercase",color:"rgba(184,145,60,.6)",marginBottom:4}}>40% Deposit to Begin</div>
@@ -1362,9 +1362,9 @@ function DetailPage({product,initStone,onBack,onA}){
   return(
     <div style={{paddingTop:64,background:"var(--cr)"}}>
       <div style={{padding:"8px 24px",background:"var(--cr)",borderBottom:"1px solid rgba(26,18,10,.08)",position:"sticky",top:64,zIndex:500,display:"flex",alignItems:"center",gap:16}}>
-        <button onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");}} style={{background:"none",border:"none",cursor:"pointer",fontSize:12,color:"var(--ink3)",letterSpacing:".1em",textTransform:"uppercase",display:"flex",alignItems:"center",gap:5,padding:0}}>&#8592; Home</button>
+        <button onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");}} style={{background:"none",border:"none",cursor:"pointer",fontSize:11,color:"var(--ink3)",letterSpacing:".1em",textTransform:"uppercase",display:"flex",alignItems:"center",gap:5,padding:0}}>&#8592; Home</button>
         <span style={{color:"rgba(26,18,10,.2)"}}>|</span>
-        <button onClick={onBack} style={{background:"none",border:"none",cursor:"pointer",fontSize:12,color:"var(--ink3)",letterSpacing:".1em",textTransform:"uppercase",display:"flex",alignItems:"center",gap:5,padding:0}}>&#8592; Collection</button>
+        <button onClick={onBack} style={{background:"none",border:"none",cursor:"pointer",fontSize:11,color:"var(--ink3)",letterSpacing:".1em",textTransform:"uppercase",display:"flex",alignItems:"center",gap:5,padding:0}}>&#8592; Collection</button>
       </div>
       <div className="detail-layout">
 
