@@ -1,5 +1,5 @@
 // build: 20260816-234410
-// v20260822203943
+// v20260822210134
 import{useState,useEffect,useRef,useCallback}from"react";
 
 // -- Backend API URL - update after Railway deployment --
@@ -341,7 +341,7 @@ const CSS_LINES=[
   ".hero-sub{font-size:14px;line-height:2.0;color:rgba(245,239,227,.55);max-width:320px;margin-bottom:36px;opacity:0;animation:fade-up .8s .88s forwards;font-weight:300;}",
   ".hero-btns{display:flex;gap:10px;flex-wrap:wrap;opacity:0;animation:fade-up .8s 1s forwards;}",
   ".hero-img{display:block;overflow:hidden;position:relative;height:100%;}",
-  ".hero-img img{width:100%;height:100%;object-fit:cover;object-position:center center;}",
+  ".hero-img img{width:100%;height:100%;object-fit:cover;object-position:center 60%;}",
   "@keyframes slow-zoom{from{transform:scale(1.07)}to{transform:scale(1.01)}}",
   ".hero-img::before{content:'';position:absolute;left:0;top:0;bottom:0;width:160px;background:linear-gradient(to right,var(--g),transparent);z-index:1;}",
   ".btn{font-family:var(--sans);font-size:12px;letter-spacing:.15em;text-transform:uppercase;border:none;cursor:pointer;transition:all .28s var(--ease);display:inline-flex;align-items:center;justify-content:center;gap:7px;white-space:nowrap;font-weight:400;}",
@@ -381,7 +381,7 @@ const CSS_LINES=[
   ".pc{background:var(--cr2);position:relative;overflow:hidden;cursor:pointer;transition:box-shadow .3s;}",
   ".pc:hover{box-shadow:0 12px 40px rgba(6,35,24,.1);}",
   ".pc-img{aspect-ratio:4/5;overflow:hidden;position:relative;background:var(--cr2);}",".pc-img{min-height:220px;}",
-  ".pc-img img{width:100%;height:100%;object-fit:cover;object-position:center center;display:block;transition:transform .6s cubic-bezier(.16,1,.3,1);}",".pc:hover .pc-img img{transform:scale(1.04);}",
+  ".pc-img img{width:100%;height:100%;object-fit:cover;object-position:center 60%;display:block;transition:transform .6s cubic-bezier(.16,1,.3,1);}",".pc:hover .pc-img img{transform:scale(1.04);}",
   ".pc-badge{position:absolute;top:11px;left:11px;z-index:3;font-size:7.5px;letter-spacing:.18em;text-transform:uppercase;padding:3px 9px;}",
   ".badge-new{background:var(--gold);color:var(--g);}",
   ".pc-ov{position:absolute;inset:0;background:rgba(6,35,24,.44);opacity:0;transition:opacity .34s;display:flex;align-items:center;justify-content:center;}",
@@ -911,7 +911,7 @@ function HeroCarousel({onV}){
       onTouchStart={e=>setTx(e.touches[0].clientX)}
       onTouchEnd={e=>{if(tx===null)return;const d=e.changedTouches[0].clientX-tx;const swiped=Math.abs(d)>=40;if(swiped)setIdx(i=>d<0?(i+1)%items.length:(i-1+items.length)%items.length);setTx(null);}}
       onClick={()=>onV(cur,cur.stones)}>
-      {imgSrc&&<img src={imgSrc} alt={cur.name} style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center center",display:"block",opacity:.92,transition:"opacity .8s ease"}}/>}
+      {imgSrc&&<img src={imgSrc} alt={cur.name} style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center 60%",display:"block",opacity:.92,transition:"opacity .8s ease"}}/>}
       <div style={{position:"absolute",inset:0,background:"linear-gradient(to bottom,rgba(6,35,24,.05) 0%,rgba(6,35,24,.55) 100%)"}}/>
       <div style={{position:"absolute",bottom:"10%",left:"8%",right:"8%"}}>
         <span style={{fontSize:13,letterSpacing:".36em",textTransform:"uppercase",color:"rgba(184,145,60,.8)",display:"block",marginBottom:10}}>{cur.type}</span>
