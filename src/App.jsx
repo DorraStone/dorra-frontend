@@ -967,10 +967,9 @@ function HomePage({setPage,onV,onA}){
       <div style={{padding:"0 32px",marginBottom:16}}>
         <span className="sec-label sec-label-light">Also in our collection</span>
       </div>
-      <div style={{overflowX:"auto",WebkitOverflowScrolling:"touch",scrollbarWidth:"none",msOverflowStyle:"none",display:"flex",gap:1,paddingBottom:0}}>
-        <style>{`.ae-scroll::-webkit-scrollbar{display:none}`}</style>
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:1}}>
         {CATALOG.filter(p=>p.type==="Anklet"||p.type==="Earring").map(p=>(
-          <div key={p.id} style={{flex:"0 0 300px",minWidth:300}}>
+          <div key={p.id} style={{flex:"0 0 calc(50% - 1px)",minWidth:"calc(50% - 1px)",maxWidth:"calc(50% - 1px)"}}>
             <PC product={p} onV={onV} onA={onA}/>
           </div>
         ))}
