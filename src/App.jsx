@@ -344,7 +344,7 @@ const CSS_LINES=[
   ".hero-img img{width:100%;height:100%;object-fit:cover;object-position:center center;}",
   "@keyframes slow-zoom{from{transform:scale(1.07)}to{transform:scale(1.01)}}",
   ".hero-img::before{content:'';position:absolute;left:0;top:0;bottom:0;width:160px;background:linear-gradient(to right,var(--g),transparent);z-index:1;}",
-  ".btn{font-family:var(--sans);font-size:12px;letter-spacing:.15em;text-transform:uppercase;border:none;cursor:pointer;transition:all .28s var(--ease);display:inline-flex;align-items:center;justify-content:center;gap:7px;white-space:nowrap;font-weight:400;}",
+  ".btn{font-family:var(--sans);font-size:11px;letter-spacing:.12em;text-transform:uppercase;border:none;cursor:pointer;transition:all .28s var(--ease);display:inline-flex;align-items:center;justify-content:center;gap:7px;white-space:nowrap;font-weight:400;}",
   ".btn-gold{background:var(--gold);color:var(--g);padding:12px 26px;}",
   ".btn-gold:hover{background:var(--gold2);box-shadow:0 4px 16px rgba(184,145,60,.2);}",
   ".btn-ghost{background:transparent;color:rgba(245,239,227,.8);border:1px solid rgba(184,145,60,.25);padding:11px 24px;}",
@@ -363,7 +363,7 @@ const CSS_LINES=[
   ".page-header-title{font-family:var(--serif);font-size:clamp(18px,2.8vw,26px);font-weight:300;color:var(--cr);line-height:1.03;}",
   ".page-header-sub{font-size:14px;color:rgba(245,239,227,.44);line-height:1.8;margin-top:10px;max-width:440px;font-weight:300;}",
   ".section{padding:72px 72px;}",
-  ".section-cream{padding:40px 32px;background:var(--cr);}",
+  ".section-cream{padding:56px 40px;background:var(--cr);}",
   ".section-pale{padding:72px 72px;background:var(--cr2);}",
   ".section-cream2{padding:48px 72px;background:var(--cr2);}",
   ".section-dark{padding:52px 72px;background:var(--g);}",
@@ -377,7 +377,7 @@ const CSS_LINES=[
   ".sec-title-light{color:var(--ink);}",
   ".sec-rule{display:none;}",
   ".sec-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:24px;}",
-  ".pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(272px,1fr));gap:1px;}",
+  ".pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(272px,1fr));gap:2px;}",
   ".pc{background:var(--cr2);position:relative;overflow:hidden;cursor:pointer;transition:box-shadow .3s;}",
   ".pc:hover{box-shadow:0 12px 40px rgba(6,35,24,.1);}",
   ".pc-img{aspect-ratio:3/4;overflow:hidden;position:relative;background:var(--cr2);}",".pc-img{min-height:220px;}",
@@ -481,7 +481,7 @@ const CSS_LINES=[
   ".cart-note{font-size:13px;color:var(--ink3);margin-bottom:10px;line-height:1.7;}",
   ".cart-checkout-btn{width:100%;padding:13px;font-family:var(--sans);font-size:8.5px;letter-spacing:.19em;text-transform:uppercase;background:var(--g);color:var(--cr);border:none;cursor:pointer;transition:background .28s;}",
   ".cart-checkout-btn:hover{background:var(--gold);color:var(--g);}",
-  ".modal-overlay{position:fixed;inset:0;z-index:3000;background:rgba(3,15,9,.56);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;padding:20px;animation:fade-in .2s;}",
+  ".modal-overlay{position:fixed;inset:0;z-index:9600;background:rgba(3,15,9,.56);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;padding:20px;animation:fade-in .2s;}",
   ".modal{background:var(--cr);width:100%;max-width:560px;max-height:92vh;overflow-y:auto;animation:scale-in .3s var(--ease);}",
   "@keyframes scale-in{from{transform:scale(.94);opacity:0}to{transform:scale(1);opacity:1}}",
   ".modal-sm{max-width:400px;}",
@@ -1606,11 +1606,11 @@ function Checkout({cart,onClose,onOk,setLastOrder}){
           {step===1&&<>
             <Summary/>
             <div className="field-grid">
-              <div className="field"><label className="field-label">Full Name *</label><input className="field-input" autoComplete="name" placeholder="Your name" value={name} style={{borderColor:fieldErr&&!name.trim()?"#c0392b":undefined}} onChange={e=>{setName(e.target.value);if(fieldErr)setFieldErr("");}}/></div>
-              <div className="field"><label className="field-label">Phone *</label><input className="field-input" autoComplete="tel" inputMode="tel" placeholder="+20 1xx xxx xxxx" value={phone} style={{borderColor:fieldErr&&!phone.trim()?"#c0392b":undefined}} onChange={e=>{setPhone(e.target.value);if(fieldErr)setFieldErr("");}}/></div>
+              <div className="field"><label className="field-label">Full Name *</label><input className="field-input" autoComplete="name" autoCapitalize="words" autoCorrect="off" spellCheck="false" placeholder="Your name" value={name} style={{borderColor:fieldErr&&!name.trim()?"#c0392b":undefined}} onChange={e=>{setName(e.target.value);if(fieldErr)setFieldErr("");}}/></div>
+              <div className="field"><label className="field-label">Phone *</label><input className="field-input" autoComplete="tel" inputMode="numeric" pattern="[0-9]*" placeholder="+20 1xx xxx xxxx" value={phone} style={{borderColor:fieldErr&&!phone.trim()?"#c0392b":undefined}} onChange={e=>{setPhone(e.target.value);if(fieldErr)setFieldErr("");}}/></div>
             </div>
-            <div className="field"><label className="field-label">Email *</label><input className="field-input" type="email" autoComplete="email" placeholder="your@email.com" value={email} style={{borderColor:fieldErr&&!email.includes("@")?"#c0392b":undefined}} onChange={e=>{setEmail(e.target.value);if(fieldErr)setFieldErr("");}}/></div>
-            <div className="field"><label className="field-label">Delivery Address *</label><input className="field-input" autoComplete="street-address" placeholder="Street, building, apartment" value={address} style={{borderColor:fieldErr&&!address.trim()?"#c0392b":undefined}} onChange={e=>{setAddress(e.target.value);if(fieldErr)setFieldErr("");}}/></div>
+            <div className="field"><label className="field-label">Email *</label><input className="field-input" type="email" autoComplete="email" inputMode="email" autoCapitalize="none" autoCorrect="off" placeholder="your@email.com" value={email} style={{borderColor:fieldErr&&!email.includes("@")?"#c0392b":undefined}} onChange={e=>{setEmail(e.target.value);if(fieldErr)setFieldErr("");}}/></div>
+            <div className="field"><label className="field-label">Delivery Address *</label><input className="field-input" autoComplete="street-address" autoCapitalize="sentences" placeholder="Street, building, apartment" value={address} style={{borderColor:fieldErr&&!address.trim()?"#c0392b":undefined}} onChange={e=>{setAddress(e.target.value);if(fieldErr)setFieldErr("");}}/></div>
             <div className="field">
               <label className="field-label">City</label>
               <select className="field-select" value={city} onChange={e=>setCity(e.target.value)}>{cities.map(ct=><option key={ct}>{ct}</option>)}</select>
@@ -1638,7 +1638,7 @@ function Checkout({cart,onClose,onOk,setLastOrder}){
               <div style={{background:"var(--cr)",padding:"13px 15px",borderLeft:"2px solid var(--gold)",marginBottom:11}}>
                 <p style={{fontSize:14,color:"var(--ink3)",marginBottom:4}}>Send {fmt(amountDue)} to Instapay:</p>
                 <p style={{fontFamily:"var(--serif)",fontSize:24,color:"var(--ink)",letterSpacing:".04em",marginBottom:4}}>01020624266</p>
-                <p style={{fontSize:14,color:"var(--gold)",fontWeight:400}}>Your order will NOT be processed until payment is confirmed and approved.</p>
+                <p style={{fontSize:14,color:"var(--gold)",fontWeight:400}}>Your order will be processed as soon as payment is received and confirmed.</p>
               </div>
               <div className="field"><label className="field-label">Reference Number *</label><input className="field-input" placeholder="e.g. TXN123456789" value={instRef} onChange={e=>setInstRef(e.target.value)}/></div>
               <div className="field" style={{marginBottom:0}}>
