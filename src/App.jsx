@@ -142,7 +142,7 @@ const IMGS={
 
 const CATALOG=[
   {id:1,name:"The Original",type:"Bracelet",price:499,sizes:["Small","Medium","Large"],stones:["Blue Crystal Quartz","Crystal","Pearl"],img:"original_1",img2:"original_2",img3:"original_3",desc:"Delicate copper wirework with blue crystal quartz and freshwater pearls. The piece that started it all - minimal, intentional, complete.",care:"Blue Crystal Quartz - handle gently. Pearl must not contact liquids."},
-  {id:2,name:"Dahab",type:"Bracelet",price:599,sizes:["Small","Medium","Large"],stones:["Blue Crystal Quartz","Tigers Eye","Pearl"],img:"dahab_1",img2:"dahab_2",img3:"dahab_3",desc:"A large raw Blue Crystal Quartz stone at the centre of a doubled copper spiral, with Tiger's Eye spheres and freshwater pearl clusters. Every detail shaped by hand over four days.",care:"Blue Crystal Quartz - handle gently. Pearl must not contact liquids. Dry cloth only."},
+  {id:2,name:"Dahab",type:"Bracelet",price:599,sizes:["Small","Medium","Large"],stones:["Blue Crystal Quartz","Tigers Eye","Pearl"],img:"dahab_2",img2:"dahab_1",img3:"dahab_3",desc:"A large raw Blue Crystal Quartz stone at the centre of a doubled copper spiral, with Tiger's Eye spheres and freshwater pearl clusters. Every detail shaped by hand over four days.",care:"Blue Crystal Quartz - handle gently. Pearl must not contact liquids. Dry cloth only."},
   {id:3,name:"Sun & Salt",type:"Bracelet",price:449,sizes:["Small","Medium","Large"],stones:["Tigers Eye","Pearl"],img:"sunsalt_1",img2:"sunsalt_2",img3:"sunsalt_3",desc:"Tiger's Eye and freshwater pearls alternating on doubled twisted copper wire. Fire and water, held simultaneously. Renamed and reimagined.",care:"Keep away from water. Pearls always last on, first off.",delicateNote:"Artisanal Note: Designed with a single, delicate layer of pure copper. This piece possesses a flexible, delicate fluidity that contours elegantly to your form - handle with care as a true statement of minimalist luxury."},
   {id:4,name:"Sahl Hasheesh",type:"Bracelet",price:399,sizes:["Small","Medium","Large"],stones:["Tigers Eye","Crystal","Blue Crystal Quartz"],img:"sahlhasheesh_1",img2:"sahlhasheesh_2",img3:"sahlhasheesh_3",desc:"Tiger's Eye, crystal and blue crystal quartz threaded across a copper wire structure, anchored by hand-wound spiral clasps for added strength. Textured, earthy, made to wear every day.",care:"Copper patinas naturally. Polish with a dry cloth or lemon juice.",durabilityNote:"Crafted with extra structural wire spirals for enhanced durability and a resilient shape."},
   {id:5,name:"The Citadel",type:"Bracelet",price:599,sizes:["Small","Medium","Large"],stones:["Blue Crystal Quartz","Pearl","Ruby Jade","Crystal"],img:"citadel_1",img2:"citadel_2",img3:"citadel_3",desc:"Blue Crystal Quartz anchors this piece, surrounded by freshwater pearls, ruby-dyed jade, and both blue and transparent crystal on a doubled copper wire base with gold accents.",care:"Blue Crystal Quartz - keep away from water. Remove before washing hands."},
@@ -328,7 +328,7 @@ const CSS_LINES=[
   ".hero-l{display:flex;flex-direction:column;justify-content:center;padding:0 72px;z-index:2;align-items:flex-start;}",
   ".hero-tag{font-size:8.5px;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;opacity:0;animation:fade-up .9s .3s forwards;}",
   "@keyframes fade-up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}",
-  ".hero-title{font-family:var(--serif);font-size:clamp(52px,6.5vw,104px);font-weight:300;line-height:.92;color:var(--cr);margin-bottom:22px;letter-spacing:-.01em;}",
+  ".hero-title{font-family:var(--serif);font-size:clamp(36px,5.5vw,56px);font-weight:300;line-height:.92;color:var(--cr);margin-bottom:22px;letter-spacing:-.01em;}",
   ".hero-title em{font-style:italic;color:var(--gold);}",
   ".hero-line{display:block;overflow:hidden;}",
   ".hero-line span{display:block;animation:line-up 1.1s var(--ease) both;}",
@@ -359,7 +359,7 @@ const CSS_LINES=[
   ".page-header{background:var(--g);padding:72px 72px 44px;position:relative;overflow:hidden;}",
   ".page-header::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(184,145,60,.04),transparent 60%);pointer-events:none;}",
   ".page-header-tag{font-size:8.5px;letter-spacing:.44em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:10px;}",
-  ".page-header-title{font-family:var(--serif);font-size:clamp(28px,3.6vw,56px);font-weight:300;color:var(--cr);line-height:1.03;}",
+  ".page-header-title{font-family:var(--serif);font-size:clamp(32px,5vw,48px);font-weight:300;color:var(--cr);line-height:1.03;}",
   ".page-header-sub{font-size:15px;color:rgba(245,239,227,.44);line-height:2.0;margin-top:10px;max-width:440px;font-weight:300;}",
   ".section{padding:72px 72px;}",
   ".section-cream{padding:40px 32px;background:var(--cr);}",
@@ -371,7 +371,7 @@ const CSS_LINES=[
   ".sec-label{font-size:8.5px;letter-spacing:.44em;text-transform:uppercase;display:block;margin-bottom:9px;}",
   ".sec-label-dark{color:var(--gold);}",
   ".sec-label-light{color:var(--gold);opacity:1;}",
-  ".sec-title{font-family:var(--serif);font-size:clamp(22px,2.6vw,38px);font-weight:300;line-height:1.06;}",
+  ".sec-title{font-family:var(--serif);font-size:clamp(24px,3.5vw,36px);font-weight:300;line-height:1.06;}",
   ".sec-title-dark{color:var(--cr);}",
   ".sec-title-light{color:var(--ink);}",
   ".sec-rule{display:none;}",
@@ -380,14 +380,14 @@ const CSS_LINES=[
   ".pc{background:var(--cr2);position:relative;overflow:hidden;cursor:pointer;transition:box-shadow .3s;}",
   ".pc:hover{box-shadow:0 12px 40px rgba(6,35,24,.1);}",
   ".pc-img{aspect-ratio:3/4;overflow:hidden;position:relative;background:var(--cr2);}",".pc-img{min-height:220px;}",
-  ".pc-img img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;transition:transform .6s cubic-bezier(.16,1,.3,1);}",".pc:hover .pc-img img{transform:scale(1.04);}",
+  ".pc-img img{width:100%;height:100%;object-fit:cover;object-position:center center;display:block;transition:transform .6s cubic-bezier(.16,1,.3,1);}",".pc:hover .pc-img img{transform:scale(1.04);}",
   ".pc-badge{position:absolute;top:11px;left:11px;z-index:3;font-size:7.5px;letter-spacing:.18em;text-transform:uppercase;padding:3px 9px;}",
   ".badge-new{background:var(--gold);color:var(--g);}",
   ".pc-ov{position:absolute;inset:0;background:rgba(6,35,24,.44);opacity:0;transition:opacity .34s;display:flex;align-items:center;justify-content:center;}",
   ".pc:hover .pc-ov{opacity:1;}",
   ".pc-body{padding:12px 14px 14px;display:flex;flex-direction:column;flex:1;}",
   ".pc-stones{font-size:13px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;display:block;}",
-  ".pc-name{font-family:var(--serif);font-size:17px;font-weight:300;color:var(--ink);margin-bottom:3px;line-height:1.1;}",
+  ".pc-name{font-family:var(--serif);font-size:16px;font-weight:300;color:var(--ink);margin-bottom:3px;line-height:1.2;}",
   ".pc-price{font-family:var(--serif);font-size:17px;color:var(--ink2);margin-bottom:7px;}",
   ".pc-care{font-size:13px;color:var(--ink3);line-height:1.6;border-top:1px solid rgba(26,18,10,.08);padding-top:7px;margin-bottom:10px;}",
   ".pc-actions{display:flex;align-items:center;justify-content:space-between;gap:6px;}",
@@ -440,7 +440,7 @@ const CSS_LINES=[
   ".detail-tag{font-size:13px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);margin-bottom:9px;}",
   ".detail-name{font-family:var(--serif);font-size:clamp(20px,2.2vw,32px);font-weight:300;line-height:1.05;margin-bottom:4px;color:var(--ink);}",
   ".detail-price{font-family:var(--serif);font-size:22px;margin-bottom:14px;color:var(--ink);}",
-  ".detail-desc{font-size:13px;color:var(--ink2);line-height:1.8;margin-bottom:12px;font-weight:300;}",
+  ".detail-desc{font-size:16px;color:var(--ink2);line-height:1.8;margin-bottom:12px;font-weight:300;}",
   ".detail-tags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:11px;}",
   ".detail-tag-chip{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);background:var(--cr2);padding:4px 10px;border:1px solid rgba(26,18,10,.1);}",
   ".detail-meta-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(26,18,10,.07);font-size:14px;}",
@@ -662,7 +662,7 @@ const CSS_LINES=[
   ".estimate-box{margin-top:0;}",
 
   /* Stone grid - 2 columns on mobile */
-  ".pgrid{grid-template-columns:1fr 1fr;gap:1px;}",".pc-body{padding:10px 10px 12px;}",".pc-price{font-size:14px!important;}",".field-label{font-size:14px!important;}",".field-input{font-size:16px!important;}",".field-textarea{font-size:16px!important;}",
+  ".pgrid{grid-template-columns:1fr 1fr;gap:1px;}",".pc-body{padding:10px 10px 12px;}",".page-header-title{font-size:clamp(28px,8vw,40px)!important;}",".hero-title{font-size:clamp(32px,9vw,42px)!important;}",".hero-sub{font-size:15px!important;}",".btn{font-size:14px!important;}",".pc-price{font-size:14px!important;}",".field-label{font-size:14px!important;}",".field-input{font-size:16px!important;}",".field-textarea{font-size:16px!important;}",
   "}",
   "/* Horizontal carousel */",
   "div[style*='scrollSnapType']{-ms-overflow-style:none;scrollbar-width:none;}",
@@ -803,7 +803,7 @@ function PC({product,onV,onA}){
         {product.sizes&&product.sizes.length>0&&(
           <div style={{display:"flex",gap:4,marginTop:7}}>
             {product.sizes.map(sz=>(
-              <button key={sz} onClick={()=>setSelSize(sz)} style={{flex:1,fontSize:13,letterSpacing:".1em",textTransform:"uppercase",padding:"5px 0",background:selSize===sz?"var(--g)":"transparent",color:selSize===sz?"var(--cr)":"var(--ink3)",border:"1px solid",borderColor:selSize===sz?"var(--g)":"rgba(26,18,10,.14)",cursor:"pointer",transition:"all .2s"}}>{sz}</button>
+              <button key={sz} onClick={()=>setSelSize(sz)} style={{flex:1,fontSize:11,letterSpacing:".08em",textTransform:"uppercase",padding:"4px 0",background:selSize===sz?"var(--g)":"transparent",color:selSize===sz?"var(--cr)":"var(--ink3)",border:"1px solid",borderColor:selSize===sz?"var(--g)":"rgba(26,18,10,.14)",cursor:"pointer",transition:"all .2s"}}>{sz}</button>
             ))}
           </div>
         )}
@@ -836,7 +836,7 @@ function BraceletSection({onV,onA,setPage}){
     </div>
     <div style={{width:"100%",height:1,background:"rgba(26,18,10,.08)",marginBottom:28}}/>
     <div className="pgrid" data-rv>{visible.map(p=><PC key={p.id} product={p} onV={onV} onA={onA}/>)}</div>
-    {!showAll&&all.length>3&&(
+    {!showAll&&all.length>2&&(
       <div style={{textAlign:"center",marginTop:28}} data-rv>
         <button onClick={()=>setShowAll(true)} style={{background:"none",border:"none",cursor:"none",fontFamily:"var(--sans)",fontSize:13,letterSpacing:".28em",textTransform:"uppercase",color:"var(--ink3)",padding:"10px 0",borderBottom:"1px solid rgba(26,18,10,.18)",transition:"color .2s,border-color .2s"}}
           onMouseEnter={e=>{e.currentTarget.style.color="var(--ink)";e.currentTarget.style.borderBottomColor="var(--gold)";}}
