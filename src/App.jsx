@@ -401,7 +401,7 @@ const CSS_LINES=[
   ".filter-bar{display:flex;gap:5px;flex-wrap:wrap;align-items:center;margin-bottom:26px;padding-bottom:13px;border-bottom:1px solid rgba(26,18,10,.09);}",
   ".filter-chip{font-family:var(--sans);font-size:13px;letter-spacing:.12em;text-transform:uppercase;background:transparent;border:1px solid rgba(26,18,10,.14);color:var(--ink3);padding:5px 12px;cursor:pointer;transition:all .18s;}",
   ".filter-chip:hover{border-color:var(--gold);color:var(--gold);}",
-  ".filter-chip.on{background:var(--g);color:var(--cr);border-color:var(--g);}",
+  ".filter-chip.on{background:var(--gold);color:var(--g);border-color:var(--gold);}",
   ".how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;}",
   ".how-step{padding:26px 22px;border-top:1px solid rgba(184,145,60,.1);transition:border-top-color .28s;}",
   ".how-step:hover{border-top-color:var(--gold);}",
@@ -506,7 +506,7 @@ const CSS_LINES=[
   ".step-bar{display:flex;align-items:center;gap:7px;padding:20px 0 16px;}",
   ".step-dot{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;transition:all .22s;}",
   ".step-done{background:var(--gold);color:var(--g);}",
-  ".step-active{background:var(--g);color:var(--gold);border:2px solid var(--gold);}",
+  ".step-active{background:var(--gold);color:var(--g);:var(--gold);border:2px solid var(--gold);}",
   ".step-idle{background:transparent;color:var(--ink3);border:1px solid rgba(26,18,10,.18);}",
   ".step-label{font-size:13px;letter-spacing:.01em;text-transform:none;color:var(--ink3);}",
   ".step-label.active-label{color:var(--ink);}",
@@ -540,7 +540,7 @@ const CSS_LINES=[
   ".confirm-deposit-val{font-family:var(--serif);font-size:16px;color:var(--ink);}",
   ".pkg-options{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:13px;}",
   ".pkg-option{border:1px solid rgba(26,18,10,.12);background:var(--cr2);cursor:pointer;padding:12px;text-align:left;transition:border-color .2s;}",
-  ".pkg-option.sel{border-color:var(--g);}",
+  ".pkg-option.sel{border-color:var(--gold);}",
   ".pkg-option-name{font-family:var(--serif);font-size:15px;color:var(--ink);display:block;margin-bottom:2px;}",
   ".pkg-option-note{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);}",
   ".toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--g);color:var(--cr);padding:11px 18px;z-index:9999;font-size:14px;letter-spacing:.08em;display:flex;align-items:center;gap:8px;box-shadow:0 6px 24px rgba(6,35,24,.22);animation:toast-up .28s var(--ease);}",
@@ -576,7 +576,7 @@ const CSS_LINES=[
   ".stone-picker{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;}",
   ".stone-pill{background:var(--cr2);border:1px solid rgba(26,18,10,.1);padding:9px 4px;text-align:center;cursor:pointer;transition:all .18s;display:flex;flex-direction:column;align-items:center;gap:2px;}",
   ".stone-pill:hover{border-color:rgba(184,145,60,.35);}",
-  ".stone-pill.picked{background:var(--g);border-color:var(--g);}",
+  ".stone-pill.picked{background:var(--gold);border-color:var(--gold);}",
   ".stone-pill-name{font-size:13px;color:var(--ink3);}",
   ".stone-pill.picked .stone-pill-name{color:var(--gold);}",
   ".stone-pill-meaning{font-size:6.5px;color:var(--ink3);opacity:.6;}",
@@ -777,7 +777,7 @@ function PC({product,onV,onA}){
         {product.sizes&&product.sizes.length>0&&(
           <div style={{display:"flex",gap:5,marginBottom:8}}>
             {product.sizes.map(sz=>(
-              <button key={sz} onClick={()=>setSelSize(sz)} style={{flex:1,fontSize:11,letterSpacing:".08em",textTransform:"uppercase",padding:"4px 0",background:selSize===sz?"var(--g)":"transparent",color:selSize===sz?"var(--cr)":"var(--ink3)",border:"1px solid",borderColor:selSize===sz?"var(--g)":"rgba(26,18,10,.15)",cursor:"pointer",transition:"all .15s"}}>
+              <button key={sz} onClick={()=>setSelSize(sz)} style={{flex:1,fontSize:11,letterSpacing:".08em",textTransform:"uppercase",padding:"4px 0",background:"transparent",color:selSize===sz?"var(--gold)":"var(--ink3)",border:"1px solid",borderColor:selSize===sz?"var(--gold)":"rgba(26,18,10,.15)",cursor:"pointer",transition:"all .15s"}}>
                 {sz}
               </button>
             ))}
