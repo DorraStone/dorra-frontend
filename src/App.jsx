@@ -154,7 +154,6 @@ const CATALOG=[
   {id:11,name:"Reef Anklet",type:"Anklet",price:449,sizes:[],stones:["Green Crystal","Blue Crystal Quartz"],img:"reefanklet_1",img2:"reefanklet_2",desc:"Silver-toned copper wire wound delicately with green and Blue Crystal Quartz beads. Lightweight and luminous, like the sea caught on your ankle Adjustable clasp  fits all." ,care:"Remove before swimming. Wipe with a dry cloth after wear."},
   {id:12,name:"Onyx",type:"Earring",price:349,stones:["Pearl","Black Onyx","Blue Crystal Quartz"],img:"onyx_1",img2:"onyx_2",img3:"onyx_3",desc:"Freshwater pearl, deep onyx, and Blue Crystal Quartz rondelles on gold stainless steel hooks. Three stones, one intention - worn light, felt deeply.",care:"Pearl must not contact perfume or water. Put on last, take off first."},
   {id:13,name:"Copper Care Kit",type:"Care",price:149,stones:[],img:"",img2:"",desc:"Every Dorra order arrives with an anti-rust spray and a soft polishing cloth in a Dorra pouch. The Care Kit is a full replenishment set  an additional spray, cloth, and copper cleaning solution  to keep your piece exactly as you first received it.",care:"Apply a few drops to the cloth. Rub gently. Rinse. Dry immediately."},
-];,
   {id:14,name:"Snow",type:"Bracelet",subtype:"Statement",price:549,sizes:["Small","Medium","Large"],stones:["Crystal","Rose Quartz","Pearl"],img:"snow_1",img2:"snow_2",img3:"snow_3",desc:"Crisp white stones on hand-wound copper wire. Ethereal, clean, and effortlessly refined.",care:"Crystal and Rose Quartz are durable. Pearl must not contact liquids or perfume."}
 ];
 
