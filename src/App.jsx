@@ -1384,7 +1384,7 @@ function DetailPage({product,initStone,onBack,onA}){
         <div className="detail-media"
           onTouchStart={e=>setTx(e.touches[0].clientX)}
           onTouchEnd={e=>{if(tx===null)return;const d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>40)setIdx(i=>d<0?Math.min(i+1,imgs.length-1):Math.max(i-1,0));setTx(null);}}>
-          {<div style={{position:"relative",width:"100%",height:"100%",overflow:"hidden"}}>
+          <div style={{position:"relative",width:"100%",height:"100%",overflow:"hidden"}}>
             {imgs.map((imgKey,i)=>(
               <div key={imgKey} style={{
                 position:"absolute",inset:0,
