@@ -746,37 +746,47 @@ function Nav({page,setPage,cc,setCO}){
 
 function PC({product,onV,onA}){
   const[hover,setHover]=useState(false);
-  const[selSize,setSelSize]=useState("");const[sizeErr,setSizeErr]=useState(false);
+  const[selSize,setSelSize]=useState("");
+  const[sizeErr,setSizeErr]=useState(false);
+  const[pcIdx,setPcIdx]=useState(0);
+  const[pcTx,setPcTx]=useState(null);
+  const pcImgs=[product.img,product.img2,product.img3].filter(k=>k&&IMGS[k]);
   const price=product.price;
 
   return(
     <div className="pc" onMouseEnter={()=>setHover(true)} onMouseLeave={()=>setHover(false)}>
       <div className="pc-img" onClick={()=>onV(product,product.stones)}>
-        {IMGS[product.img]
-          ?<img src={IMGS[product.img]} alt={product.name} loading="lazy"
-              style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center",display:"block"}}/>
-          :<div style={{width:"100%",height:"100%",background:"var(--g)",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:12}}>
-            <div style={{width:36,height:1,background:"rgba(184,145,60,.3)"}}/>
-            <span style={{fontFamily:"var(--serif)",fontSize:14,color:"var(--cr)",letterSpacing:".08em",textAlign:"center",padding:"0 16px",fontStyle:"italic"}}>{product.name}</span>
-            <div style={{width:36,height:1,background:"rgba(184,145,60,.3)"}}/>
+        <div style={{position:"relative",width:"100%",height:"100%",overflow:"hidden"}}
+          onTouchStart={e=>setPcTx(e.touches[0].clientX)}
+          onTouchEnd={e=>{if(pcTx===null)return;const d=e.changedTouches[0].clientX-pcTx;if(Math.abs(d)>30)setPcIdx(i=>d<0?Math.min(i+1,pcImgs.length-1):Math.max(i-1,0));setPcTx(null);}}>
+          {pcImgs.length>0?pcImgs.map((imgKey,i)=>(
+            <div key={imgKey} style={{position:"absolute",inset:0,transform:`translateX(${(i-pcIdx)*100}%)`,transition:"transform .38s cubic-bezier(.25,.46,.45,.94)"}}>
+              <img src={IMGS[imgKey]} alt={product.name} loading="lazy" style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center center",display:"block"}}/>
+            </div>
+          )):<div style={{width:"100%",height:"100%",background:"var(--g)"}}/>}
+          {pcImgs.length>1&&<div style={{position:"absolute",bottom:6,left:0,right:0,display:"flex",justifyContent:"center",gap:4,zIndex:2,pointerEvents:"none"}}>
+            {pcImgs.map((_,i)=><div key={i} style={{width:i===pcIdx?14:4,height:3,borderRadius:2,background:i===pcIdx?"rgba(255,255,255,.9)":"rgba(255,255,255,.35)",transition:"width .3s"}}/>)}
           </div>}
-        <div style={{position:"absolute",inset:0,background:"rgba(6,35,24,0)",transition:"background .5s",pointerEvents:"none",background:hover?"rgba(6,35,24,.28)":"rgba(6,35,24,0)"}}/>
-        <div style={{position:"absolute",bottom:0,left:0,right:0,padding:"16px",opacity:hover?1:0,transition:"opacity .35s"}}>
-          <button className="btn btn-gold" style={{width:"100%",padding:"11px",fontSize:13,letterSpacing:".16em"}} onClick={e=>{e.stopPropagation();onV(product,product.stones);}}>View & Customise</button>
         </div>
       </div>
       <div className="pc-body">
+        <div className="pc-stones">{(product.stones||[]).slice(0,2).join(" - ")}</div>
         <div className="pc-name">{product.name}</div>
+        {product.subtype&&<div style={{fontSize:11,color:"var(--ink3)",letterSpacing:".1em",textTransform:"uppercase",marginBottom:2}}>{product.subtype}</div>}
         <div className="pc-price">{fmt(price)}</div>
         {product.sizes&&product.sizes.length>0&&(
-          <div style={{display:"flex",gap:4,marginTop:7}}>
+          <div style={{display:"flex",gap:5,marginBottom:8}}>
             {product.sizes.map(sz=>(
-              <button key={sz} onClick={()=>setSelSize(sz)} style={{flex:1,fontSize:11,letterSpacing:".08em",textTransform:"uppercase",padding:"4px 0",background:selSize===sz?"var(--g)":"transparent",color:selSize===sz?"var(--cr)":"var(--ink3)",border:"1px solid",borderColor:selSize===sz?"var(--g)":"rgba(26,18,10,.14)",cursor:"pointer",transition:"all .2s"}}>{sz}</button>
+              <button key={sz} onClick={()=>setSelSize(sz)} style={{flex:1,fontSize:11,letterSpacing:".08em",textTransform:"uppercase",padding:"4px 0",background:selSize===sz?"var(--g)":"transparent",color:selSize===sz?"var(--cr)":"var(--ink3)",border:"1px solid",borderColor:selSize===sz?"var(--g)":"rgba(26,18,10,.15)",cursor:"pointer",transition:"all .15s"}}>
+                {sz}
+              </button>
             ))}
           </div>
         )}
-        <button className="pc-add" style={{marginTop:8}} onClick={()=>{if(product.sizes&&product.sizes.length>0&&!selSize){setSizeErr(true);setTimeout(()=>setSizeErr(false),3000);return;}onA(product,product.stones,price,selSize);}}>Add to Cart</button>
-      {sizeErr&&<p style={{fontSize:14,color:"#c0392b",textAlign:"center",marginTop:4,padding:"2px 8px",fontFamily:"var(--sans)"}}>Please select a size</p>}
+        <button className="pc-add" style={{marginTop:8}} onClick={()=>{
+          if(product.sizes&&product.sizes.length>0&&!selSize){setSizeErr(true);setTimeout(()=>setSizeErr(false),3000);return;}
+          onA(product,product.stones,price,selSize);}}>Add to Cart</button>
+        {sizeErr&&<p style={{fontSize:11,color:"#c0392b",textAlign:"center",marginTop:4,padding:"2px 8px",fontFamily:"var(--sans)"}}>Please select a size</p>}
       </div>
     </div>
   );
@@ -1374,43 +1384,25 @@ function DetailPage({product,initStone,onBack,onA}){
         <div className="detail-media"
           onTouchStart={e=>setTx(e.touches[0].clientX)}
           onTouchEnd={e=>{if(tx===null)return;const d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>40)setIdx(i=>d<0?Math.min(i+1,imgs.length-1):Math.max(i-1,0));setTx(null);}}>
-          {imgs.length>0
-            ?<img src={IMGS[imgs[idx]]} alt={product.name}/>
-            :<div style={{width:"100%",height:"100%",background:"var(--g)",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:10}}>
-              <div style={{width:28,height:1,background:"rgba(184,145,60,.3)"}}/>
-              <span style={{fontFamily:"var(--serif)",fontSize:14,color:"rgba(184,145,60,.45)"}}>Photo Coming Soon</span>
-              <div style={{width:28,height:1,background:"rgba(184,145,60,.3)"}}/>
-            </div>}
+          {<div style={{position:"relative",width:"100%",height:"100%",overflow:"hidden"}}>
+            {imgs.map((imgKey,i)=>(
+              <div key={imgKey} style={{
+                position:"absolute",inset:0,
+                transform:`translateX(${(i-idx)*100}%)`,
+                transition:"transform .4s cubic-bezier(.25,.46,.45,.94)"
+              }}>
+                {IMGS[imgKey]
+                  ?<img src={IMGS[imgKey]} alt={product.name} style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center center",display:"block"}}/>
+                  :<div style={{width:"100%",height:"100%",background:"var(--g)"}}/>
+                }
+              </div>
+            ))}
+          </div>
           {imgs.length>1&&<div className="detail-dots">{imgs.map((_,i)=><button key={i} onClick={()=>setIdx(i)} className={"detail-dot"+(i===idx?" on":"")}/>)}</div>}
         </div>
 
         {/* RIGHT - info */}
         <div className="detail-info">
-
-          {/* Back */}
-          <button onClick={onBack} style={{background:"none",border:"none",color:"var(--ink3)",fontSize:13,letterSpacing:".16em",textTransform:"uppercase",cursor:"pointer",display:"inline-flex",alignItems:"center",gap:7,marginBottom:16,padding:0,transition:"color .2s"}}
-            onMouseEnter={e=>e.currentTarget.style.color="var(--ink)"}
-            onMouseLeave={e=>e.currentTarget.style.color="var(--ink3)"}>
-            <span style={{fontSize:14}}>&#8592;</span> Return to Collection
-          </button>
-
-          <span style={{fontSize:13,letterSpacing:".32em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:8}}>{product.type}</span>
-          <h1 className="detail-name">{product.name}</h1>
-          <div className="detail-price">
-            {fmt(price)}{swapCount>0&&<span style={{fontSize:15,color:"var(--gold)",marginLeft:10,fontFamily:"var(--sans)",fontWeight:300}}>+{fmt(price-product.price)} customisation</span>}
-          </div>
-
-          <p className="detail-desc">{product.desc}</p>
-
-          {product.durabilityNote&&<div style={{fontSize:14,color:"var(--ink3)",lineHeight:1.8,padding:"10px 14px",background:"var(--cr3)",borderLeft:"2px solid rgba(184,145,60,.25)",marginBottom:8}}>{product.durabilityNote}</div>}
-          {product.delicateNote&&<div style={{fontSize:14,color:"var(--gold)",lineHeight:1.8,padding:"10px 14px",background:"rgba(184,145,60,.05)",borderLeft:"2px solid rgba(184,145,60,.4)",marginBottom:8,fontStyle:"italic"}}>{product.delicateNote}</div>}
-
-          {product.sizes&&product.sizes.length>0&&<div style={{marginBottom:10}}>
-            <div style={{fontSize:13,letterSpacing:".16em",textTransform:"uppercase",color:"var(--ink3)",marginBottom:7}}>Size</div>
-            <div style={{display:"flex",gap:6}}>
-              {product.sizes.map(sz=><button key={sz} onClick={()=>setSelSize(sz)} style={{padding:"7px 20px",fontFamily:"var(--sans)",fontSize:13,letterSpacing:".14em",textTransform:"uppercase",background:selSize===sz?"var(--g)":"transparent",color:selSize===sz?"var(--cr)":"var(--ink3)",border:"1px solid",borderColor:selSize===sz?"var(--g)":"rgba(26,18,10,.2)",cursor:"pointer",transition:"all .2s"}}>{sz}</button>)}
-            </div>
-          </div>}
 
           {product.stones&&product.stones.length>0&&<div style={{marginBottom:10}}>
             <SwapPanel stones={product.stones} swaps={swaps} setSwaps={setSwaps} price={product.price} currentPrice={price}/>
