@@ -1,5 +1,5 @@
 // build: 20260816-234410
-// v20260822220802
+// v20260822221247
 import{useState,useEffect,useRef,useCallback}from"react";
 
 // -- Backend API URL - update after Railway deployment --
@@ -261,9 +261,9 @@ const CSS_LINES=[
   "--serif:'Cormorant Garamond',Georgia,serif;",
   "--sans:'Raleway',sans-serif;",
   "--ease:cubic-bezier(.16,1,.3,1);",
-  "--ink:#140e07;",
-  "--ink2:#2e2214;",
-  "--ink3:#6b5435;",
+  "--ink:#0d2116;",
+  "--ink2:#1a3328;",
+  "--ink3:#4a7a63;",
   "}",
   "html{scroll-behavior:auto;overflow-x:hidden;max-width:100vw;overflow-y:auto;}",
   "#app-root,.main-layout-wrapper{overflow-x:hidden;overflow-y:visible;position:relative;}",
@@ -271,7 +271,7 @@ const CSS_LINES=[
   "@media(prefers-reduced-motion:no-preference){html{scroll-behavior:auto;}}",
   "html *{scroll-behavior:auto;}",
   "*{box-sizing:border-box;max-width:100%;}",
-  "body{overflow-x:hidden;width:100%;}",
+  "body{overflow-x:hidden;width:100%;font-family:var(--sans);font-weight:400;}",
   "html,body{overflow-x:hidden;max-width:100%;}",
   "body{font-family:var(--sans);background:var(--cr);color:var(--ink);font-weight:300;-webkit-font-smoothing:antialiased;overflow-x:hidden;}",
   "img{display:block;max-width:100%;}",
@@ -380,15 +380,15 @@ const CSS_LINES=[
   ".pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(272px,1fr));gap:2px;}",
   ".pc{background:var(--cr2);position:relative;overflow:hidden;cursor:pointer;transition:box-shadow .3s;}",
   ".pc:hover{box-shadow:0 12px 40px rgba(6,35,24,.1);}",
-  ".pc-img{aspect-ratio:4/5;overflow:hidden;position:relative;background:var(--cr2);}",,
-  ".pc-img img{width:100%;height:100%;object-fit:cover;object-position:center 41%;display:block;transition:transform .6s cubic-bezier(.16,1,.3,1);}",".pc:hover .pc-img img{transform:scale(1.04);}",
+  ".pc-img{aspect-ratio:1/1;overflow:hidden;position:relative;background:var(--cr2);}",,
+  ".pc-img img{width:100%;height:100%;object-fit:cover;object-position:center 28%;display:block;transition:transform .6s cubic-bezier(.16,1,.3,1);}",".pc:hover .pc-img img{transform:scale(1.04);}",
   ".pc-badge{position:absolute;top:11px;left:11px;z-index:3;font-size:7.5px;letter-spacing:.18em;text-transform:uppercase;padding:3px 9px;}",
   ".badge-new{background:var(--gold);color:var(--g);}",
   ".pc-ov{position:absolute;inset:0;background:rgba(6,35,24,.44);opacity:0;transition:opacity .34s;display:flex;align-items:center;justify-content:center;}",
   ".pc:hover .pc-ov{opacity:1;}",
   ".pc-body{padding:12px 14px 14px;display:flex;flex-direction:column;flex:1;}",
   ".pc-stones{font-size:13px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;display:block;}",
-  ".pc-name{font-family:var(--serif);font-size:15px;font-weight:300;color:var(--ink);margin-bottom:3px;line-height:1.2;}",
+  ".pc-name{font-family:var(--serif);font-size:15px;font-weight:400;color:var(--ink);margin-bottom:3px;line-height:1.2;}",
   ".pc-price{font-family:var(--serif);font-size:14px;color:var(--ink2);margin-bottom:7px;}",
   ".pc-care{font-size:13px;color:var(--ink3);line-height:1.6;border-top:1px solid rgba(26,18,10,.08);padding-top:7px;margin-bottom:10px;}",
   ".pc-actions{display:flex;align-items:center;justify-content:space-between;gap:6px;}",
