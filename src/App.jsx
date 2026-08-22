@@ -1336,6 +1336,7 @@ function DetailPage({product,initStone,onBack,onA}){
   const[idx,setIdx]=useState(0);
   const[tx,setTx]=useState(null);
   const[selSize,setSelSize]=useState("");const[sizeErr,setSizeErr]=useState(false);
+  const[baseMetal,setBaseMetal]=useState("gold");
   const[swaps,setSwaps]=useState(()=>product.stones?[...product.stones]:[]);
   const swapCount=product.stones?product.stones.filter((s,i)=>(swaps[i]||s)!==s).length:0;
   const price=swapCount>0?Math.round(product.price*(1+swapCount*0.08)):product.price;
@@ -1391,7 +1392,20 @@ function DetailPage({product,initStone,onBack,onA}){
             <SwapPanel stones={product.stones} swaps={swaps} setSwaps={setSwaps} price={product.price} currentPrice={price}/>
           </div>}
 
-          <button onClick={()=>onA(product,swaps,price,selSize)}
+          {(product.type==="Bracelet"||product.type==="Necklace")&&(
+            <div style={{marginBottom:16}}>
+              <div style={{fontSize:10,letterSpacing:".16em",textTransform:"uppercase",color:"var(--gold)",marginBottom:8}}>Wire Finish</div>
+              <div style={{display:"flex",gap:8}}>
+                {[{id:"gold",label:"Gold-Toned"},{id:"silver",label:"Silver-Toned"}].map(b=>(
+                  <button key={b.id} onClick={()=>setBaseMetal(b.id)}
+                    style={{flex:1,padding:"9px 8px",fontSize:12,letterSpacing:".06em",background:baseMetal===b.id?"var(--g)":"transparent",color:baseMetal===b.id?"var(--cr)":"var(--ink3)",border:"1px solid",borderColor:baseMetal===b.id?"var(--g)":"rgba(26,18,10,.15)",cursor:"pointer",transition:"all .2s"}}>
+                    {b.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+          <button onClick={()=>onA({...product,wireColor:baseMetal},swaps,price,selSize)}
             style={{width:"100%",padding:"14px",fontFamily:"var(--sans)",fontSize:9,letterSpacing:".2em",textTransform:"uppercase",background:"var(--g)",color:"var(--gold)",border:"none",cursor:"pointer",transition:"all .25s",marginBottom:10}}
             onMouseEnter={e=>{e.currentTarget.style.background="var(--gold)";e.currentTarget.style.color="var(--g)";}}
             onMouseLeave={e=>{e.currentTarget.style.background="var(--g)";e.currentTarget.style.color="var(--gold)";}}>
@@ -1509,7 +1523,7 @@ function Checkout({cart,onClose,onOk,setLastOrder}){
     setSubmitting(true);
     const order={ref,date:new Date().toISOString(),status:"pending",
       customer:{name,phone,email,address,city,notes},
-      items:cart.map(i=>({name:i.product.name,stone:Array.isArray(i.swapStone)?i.swapStone.join(", "):i.swapStone,qty:i.qty,price:i.price,size:i.size||""})),
+      items:cart.map(i=>({name:i.product.name,stone:Array.isArray(i.swapStone)?i.swapStone.join(", "):i.swapStone,qty:i.qty,price:i.price,size:i.size||"",wireColor:i.product.wireColor||"",isCustom:!!i.product.isFromScratch,stones:i.product.stones||[],customNote:i.product.desc||""})),
       packaging:pkg,shipping:ship,subtotal:sub,total:tot,
       payment:pay,instapayRef:needRef?instRef:"",instapayScreenshot:needRef?instScreenshot:"",
       isCustom:hasFromScratch,deposit:customDep,balance:customBal,dueNow,dueOnDelivery,
@@ -1848,6 +1862,24 @@ function ReviewsPage(){
 }
 
 function AdminDashboard(){
+  const[authed,setAuthed]=useState(()=>sessionStorage.getItem("dorra_adm")==="1");
+  const[pwInput,setPwInput]=useState("");
+  const[pwErr,setPwErr]=useState(false);
+  const doLogin=()=>{if(pwInput==="dorra2026"){setAuthed(true);sessionStorage.setItem("dorra_adm","1");}else setPwErr(true);};
+  if(!authed)return(
+    <div style={{minHeight:"100vh",background:"#062318",display:"flex",alignItems:"center",justifyContent:"center",fontFamily:"'Helvetica Neue',Arial,sans-serif"}}>
+      <div style={{background:"#0a2d1a",padding:"40px 32px",width:"90%",maxWidth:320,textAlign:"center",boxSizing:"border-box"}}>
+        <div style={{fontFamily:"Georgia,serif",fontSize:28,fontWeight:300,color:"#f5efe3",marginBottom:4}}>Dorra</div>
+        <div style={{fontSize:10,color:"rgba(184,145,60,.6)",letterSpacing:".2em",marginBottom:28}}>ADMIN</div>
+        <input type="password" value={pwInput} onChange={e=>setPwInput(e.target.value)}
+          onKeyDown={e=>e.key==="Enter"&&doLogin()}
+          placeholder="Password"
+          style={{width:"100%",background:"rgba(245,239,227,.06)",border:"1px solid rgba(184,145,60,.2)",color:"#f5efe3",padding:"12px 14px",fontSize:15,outline:"none",boxSizing:"border-box",marginBottom:8}}/>
+        {pwErr&&<p style={{fontSize:12,color:"#e74c3c",marginBottom:8}}>Incorrect password</p>}
+        <button onClick={doLogin} style={{width:"100%",background:"#b8913c",border:"none",color:"#062318",padding:"13px",fontSize:11,letterSpacing:".2em",textTransform:"uppercase",cursor:"pointer"}}>Enter</button>
+      </div>
+    </div>
+  );
   const[orders,setOrders]=useState([]);
   const[reviews,setReviews]=useState([]);
   const[published,setPublished]=useState([]);
@@ -1923,9 +1955,9 @@ function AdminDashboard(){
   const tabs=["orders","reviews","published","returns","exchanges"];
   
   return(
-    <div style={{minHeight:"100vh",background:G.bg,color:G.ink,fontFamily:"'Helvetica Neue',Arial,sans-serif",padding:"0 0 60px"}}>
+    <div style={{minHeight:"100vh",background:G.bg,color:G.ink,fontFamily:"'Helvetica Neue',Arial,sans-serif",padding:"0 0 60px",overflowX:"hidden",WebkitOverflowScrolling:"touch",maxWidth:"100vw",boxSizing:"border-box"}}>
       {/* Header */}
-      <div style={{background:"rgba(0,0,0,.3)",padding:"20px 32px",display:"flex",alignItems:"center",justifyContent:"space-between",borderBottom:"1px solid rgba(184,145,60,.15)"}}>
+      <div style={{background:"rgba(0,0,0,.3)",padding:"16px",display:"flex",alignItems:"center",justifyContent:"space-between",borderBottom:"1px solid rgba(184,145,60,.15)"}}>
         <div>
           <div style={{fontFamily:"Georgia,serif",fontSize:22,fontWeight:300,color:G.cream,letterSpacing:".04em"}}>Dorra Admin</div>
           <div style={{fontSize:11,color:G.faint,marginTop:2}}>dorrastone.shop</div>
@@ -1936,7 +1968,7 @@ function AdminDashboard(){
       </div>
 
       {/* Tabs */}
-      <div style={{display:"flex",gap:0,borderBottom:"1px solid rgba(184,145,60,.12)",padding:"0 32px"}}>
+      <div style={{display:"flex",gap:0,borderBottom:"1px solid rgba(184,145,60,.12)",padding:"0 16px",overflowX:"auto",WebkitOverflowScrolling:"touch",scrollbarWidth:"none"}}>
         {tabs.map(t=>(
           <button key={t} onClick={()=>setTab(t)} style={{background:"none",border:"none",borderBottom:tab===t?"2px solid "+G.gold:"2px solid transparent",color:tab===t?G.gold:G.faint,fontSize:12,letterSpacing:".1em",textTransform:"uppercase",padding:"16px 20px",cursor:"pointer",transition:"all .2s"}}>
             {t==="orders"?"Orders ("+orders.length+")":t==="reviews"?"Pending Reviews ("+reviews.length+")":t==="published"?"Published Reviews ("+published.length+")":t==="returns"?"Returns ("+returns.length+")":"Exchanges ("+exchanges.length+")"}
@@ -1944,7 +1976,7 @@ function AdminDashboard(){
         ))}
       </div>
 
-      <div style={{padding:"24px 32px"}}>
+      <div style={{padding:"16px"}}>
         {loading&&<p style={{color:G.faint,fontSize:14,textAlign:"center",padding:"40px 0"}}>Loading from database...</p>}
 
         {/* ORDERS TAB */}
@@ -1961,7 +1993,13 @@ function AdminDashboard(){
                     <div style={{fontSize:12,color:G.faint,marginBottom:6}}>{o.customer&&o.customer.address}</div>
                     <div style={{fontSize:13,color:G.gold,fontFamily:"Georgia,serif"}}>{fmt2(o.total)}</div>
                     {o.items&&o.items.map((item,i)=>(
-                      <div key={i} style={{fontSize:11,color:G.faint,marginTop:4}}>{item.name}{item.size?" ("+item.size+")":""} x{item.qty}</div>
+                      <div key={i} style={{marginTop:6}}>
+                        <div style={{fontSize:11,color:item.isCustom?G.gold:G.faint}}>
+                          {item.isCustom?"[BESPOKE] ":""}{item.name}{item.size?" ("+item.size+")":""} x{item.qty}  EGP {item.price}
+                        </div>
+                        {item.isCustom&&item.stones&&<div style={{fontSize:10,color:G.faint,marginLeft:8}}>Stones: {(item.stones||[]).join(", ")}</div>}
+                        {item.isCustom&&item.wireColor&&<div style={{fontSize:10,color:G.faint,marginLeft:8}}>Wire: {item.wireColor}</div>}
+                      </div>
                     ))}
                   </div>
                   <div style={{textAlign:"right"}}>
@@ -2221,7 +2259,7 @@ export default function App(){
     <Footer setPage={go}/>
     {cO&&<CartDrawer cart={cart} onClose={()=>setCO(false)} onQty={upQ} onPkg={updPkg} onCk={()=>{setCO(false);setCk(true);}}/>}
     {ck&&<Checkout cart={cart} onClose={()=>setCk(false)} onOk={()=>{setCk(false);setCart([]);}} setLastOrder={setLastOrder}/>}
-    {lastOrder&&<OrderConfirm order={lastOrder} onClose={()=>setLastOrder(null)}/>}
+    {lastOrder&&<OrderConfirm order={lastOrder} onClose={()=>{setLastOrder(null);if(window.__dorraGo)window.__dorraGo("home");}}/>}
     {toast&&<div className="toast"><span className="toast-dot"/>{toast}</div>}
   </>);
 }
