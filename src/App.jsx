@@ -380,7 +380,7 @@ const CSS_LINES=[
   ".pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(272px,1fr));gap:2px;}",
   ".pc{background:var(--cr2);position:relative;overflow:hidden;cursor:pointer;transition:box-shadow .3s;}",
   ".pc:hover{box-shadow:0 12px 40px rgba(6,35,24,.1);}",
-  ".pc-img{aspect-ratio:3/4;overflow:hidden;position:relative;background:var(--cr2);}",".pc-img{min-height:220px;}",
+  ".pc-img{aspect-ratio:4/5;overflow:hidden;position:relative;background:var(--cr2);}",".pc-img{min-height:220px;}",
   ".pc-img img{width:100%;height:100%;object-fit:cover;object-position:center center;display:block;transition:transform .6s cubic-bezier(.16,1,.3,1);}",".pc:hover .pc-img img{transform:scale(1.04);}",
   ".pc-badge{position:absolute;top:11px;left:11px;z-index:3;font-size:7.5px;letter-spacing:.18em;text-transform:uppercase;padding:3px 9px;}",
   ".badge-new{background:var(--gold);color:var(--g);}",
@@ -891,7 +891,7 @@ function HeroCarousel({onV}){
       {imgSrc&&<img src={imgSrc} alt={cur.name} style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center center",display:"block",opacity:.92,transition:"opacity .8s ease"}}/>}
       <div style={{position:"absolute",inset:0,background:"linear-gradient(to bottom,rgba(6,35,24,.05) 0%,rgba(6,35,24,.55) 100%)"}}/>
       <div style={{position:"absolute",bottom:"10%",left:"8%",right:"8%"}}>
-        <span style={{fontSize:13,letterSpacing:".36em",textTransform:"uppercase",color:"rgba(184,145,60,.8)",display:"block",marginBottom:10}}>{cur.type}</span>
+        <span style={{fontSize:13,letterSpacing:".36em",textTransform:"uppercase",color:"rgba(245,239,227,.85)",display:"block",marginBottom:10,letterSpacing:".3em"}}>{cur.type}</span>
         <h2 style={{fontFamily:"var(--serif)",fontSize:"clamp(32px,5vw,64px)",fontWeight:300,color:"#f5efe3",lineHeight:1.05,marginBottom:12,letterSpacing:".01em"}}>{cur.name}</h2>
         <p style={{fontFamily:"var(--serif)",fontSize:"clamp(16px,1.8vw,20px)",color:"rgba(245,239,227,.6)",fontStyle:"italic",marginBottom:20}}>{fmt(cur.price)} EGP</p>
         <span style={{fontSize:13,letterSpacing:".16em",textTransform:"uppercase",color:"rgba(245,239,227,.5)",borderBottom:"1px solid rgba(184,145,60,.4)",paddingBottom:4}}>Discover the piece</span>
