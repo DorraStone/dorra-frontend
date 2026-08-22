@@ -192,18 +192,18 @@ function SwapPanel({stones,swaps,setSwaps,price,currentPrice}){
         onMouseLeave={e=>e.currentTarget.style.borderColor=isSwapped?"var(--gold)":"rgba(26,18,10,.12)"}>
         <div style={{display:"flex",alignItems:"center",gap:10}}>
           <span style={{fontFamily:"var(--serif)",fontSize:16,color:"var(--gold)",lineHeight:1}}>*</span>
-          <span style={{fontFamily:"var(--sans)",fontSize:8.5,letterSpacing:".22em",textTransform:"uppercase",color:isSwapped?"var(--gold)":"var(--ink)"}}>
+          <span style={{fontFamily:"var(--sans)",fontSize:13,letterSpacing:".12em",textTransform:"uppercase",color:isSwapped?"var(--gold)":"var(--ink)"}}>
             {isSwapped?"Stones Customised":"Alter or Swap Gemstones"}
           </span>
         </div>
         <div style={{display:"flex",alignItems:"center",gap:8}}>
-          {isSwapped&&diff>0&&<span style={{fontSize:11,color:"var(--gold)",fontFamily:"var(--serif)"}}>+{fmt(diff)}</span>}
-          <span style={{fontSize:12,color:"var(--ink3)",transition:"transform .3s",display:"inline-block",transform:open?"rotate(180deg)":"rotate(0deg)"}}>v</span>
+          {isSwapped&&diff>0&&<span style={{fontSize:14,color:"var(--gold)",fontFamily:"var(--serif)"}}>+{fmt(diff)}</span>}
+          <span style={{fontSize:15,color:"var(--ink3)",transition:"transform .3s",display:"inline-block",transform:open?"rotate(180deg)":"rotate(0deg)"}}>v</span>
         </div>
       </button>
       {open&&(
         <div style={{border:"1px solid rgba(26,18,10,.1)",borderTop:"none",background:"var(--cr2)",padding:"12px 14px",overflow:"visible",width:"100%",boxSizing:"border-box"}}>
-          <p style={{fontSize:10,color:"var(--ink3)",marginBottom:12,lineHeight:1.7}}>Every stone can be replaced. Each swap adds +8% to the base price.</p>
+          <p style={{fontSize:14,color:"var(--ink3)",marginBottom:12,lineHeight:1.7}}>Every stone can be replaced. Each swap adds +8% to the base price.</p>
           {stones.map((orig,i)=>{
             const cur=swaps[i]||orig;
             const changed=cur!==orig;
@@ -211,17 +211,17 @@ function SwapPanel({stones,swaps,setSwaps,price,currentPrice}){
               <div key={i} style={{marginBottom:i<stones.length-1?10:0,paddingBottom:i<stones.length-1?10:0,borderBottom:i<stones.length-1?"1px solid rgba(26,18,10,.07)":"none"}}>
                 <div style={{display:"flex",alignItems:"center",gap:6,marginBottom:4}}>
                   <div style={{width:7,height:7,borderRadius:"50%",background:changed?"var(--gold)":"transparent",border:"1.5px solid",borderColor:changed?"var(--gold)":"rgba(26,18,10,.25)",flexShrink:0,transition:"all .2s"}}/>
-                  <span style={{fontSize:9,letterSpacing:".1em",textTransform:"uppercase",color:changed?"var(--gold)":"var(--ink3)"}}>Stone {i+1}: <em style={{fontStyle:"italic",letterSpacing:0,textTransform:"none"}}>{orig}</em></span>
-                  {changed&&<span style={{fontSize:8,color:"var(--gold)",marginLeft:"auto",letterSpacing:".08em",textTransform:"uppercase"}}>Changed</span>}
+                  <span style={{fontSize:13,letterSpacing:".1em",textTransform:"uppercase",color:changed?"var(--gold)":"var(--ink3)"}}>Stone {i+1}: <em style={{fontStyle:"italic",letterSpacing:0,textTransform:"none"}}>{orig}</em></span>
+                  {changed&&<span style={{fontSize:13,color:"var(--gold)",marginLeft:"auto",letterSpacing:".08em",textTransform:"uppercase"}}>Changed</span>}
                 </div>
                 <select value={cur} onChange={e=>{const n=[...swaps];n[i]=e.target.value;setSwaps(n);}}
-                  style={{width:"100%",fontFamily:"var(--sans)",fontSize:12,background:"var(--cr)",border:"1px solid rgba(26,18,10,.15)",color:"var(--ink)",padding:"7px 10px",outline:"none",cursor:"pointer",WebkitAppearance:"menulist",appearance:"menulist",display:"block",boxSizing:"border-box"}}>
+                  style={{width:"100%",fontFamily:"var(--sans)",fontSize:15,background:"var(--cr)",border:"1px solid rgba(26,18,10,.15)",color:"var(--ink)",padding:"7px 10px",outline:"none",cursor:"pointer",WebkitAppearance:"menulist",appearance:"menulist",display:"block",boxSizing:"border-box"}}>
                   {STONES.map(s=><option key={s} value={s}>{s}{s===orig?" (original)":""}</option>)}
                 </select>
               </div>
             );
           })}
-          {isSwapped&&<button onClick={()=>setSwaps([...stones])} style={{marginTop:12,background:"none",border:"none",fontSize:8.5,letterSpacing:".14em",textTransform:"uppercase",color:"var(--ink3)",cursor:"pointer",textDecoration:"underline",padding:0,display:"block"}}>Reset to original stones</button>}
+          {isSwapped&&<button onClick={()=>setSwaps([...stones])} style={{marginTop:12,background:"none",border:"none",fontSize:13,letterSpacing:".14em",textTransform:"uppercase",color:"var(--ink3)",cursor:"pointer",textDecoration:"underline",padding:0,display:"block"}}>Reset to original stones</button>}
         </div>
       )}
     </div>
@@ -283,7 +283,7 @@ const CSS_LINES=[
   ".nav-icon:hover{color:var(--gold);}",
   ".nav-cart{background:none;border:1px solid rgba(184,145,60,.3);color:rgba(245,239,227,.9);cursor:pointer;padding:8px 14px;font-family:var(--sans);font-size:8.5px;letter-spacing:.15em;text-transform:uppercase;transition:all .22s;display:flex;align-items:center;gap:6px;white-space:nowrap;}",
   ".nav-cart:hover{border-color:var(--gold);color:var(--cr);}",
-  ".cart-ct{background:var(--gold);color:var(--g);width:15px;height:15px;border-radius:50%;font-size:8px;display:flex;align-items:center;justify-content:center;font-weight:500;}",
+  ".cart-ct{background:var(--gold);color:var(--g);width:15px;height:15px;border-radius:50%;font-size:13px;display:flex;align-items:center;justify-content:center;font-weight:500;}",
   ".ham{display:flex;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:8px;align-items:flex-start;}",
   ".ham span{display:block;height:1.2px;background:rgba(245,239,227,.7);transition:all .3s var(--ease);border-radius:1px;}",
   ".ham span:nth-child(1){width:26px;}",
@@ -296,7 +296,7 @@ const CSS_LINES=[
   "@keyframes slide-in{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}",
   ".mob-search{width:100%;background:transparent;border:none;border-bottom:1px solid rgba(184,145,60,.18);color:var(--cr);font-family:var(--sans);font-size:16px;font-weight:300;padding:10px 0;outline:none;margin-bottom:26px;letter-spacing:.02em;}",
   ".mob-search::placeholder{color:rgba(245,239,227,.22);}",
-  ".mob-link{font-family:var(--sans);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:rgba(245,239,227,.52);background:none;border:none;cursor:pointer;padding:15px 0;border-bottom:1px solid rgba(184,145,60,.06);text-align:left;transition:color .2s;width:100%;}",
+  ".mob-link{font-family:var(--sans);font-size:14px;letter-spacing:.22em;text-transform:uppercase;color:rgba(245,239,227,.52);background:none;border:none;cursor:pointer;padding:15px 0;border-bottom:1px solid rgba(184,145,60,.06);text-align:left;transition:color .2s;width:100%;}",
   ".mob-link:hover,.mob-link.on{color:var(--gold);}",
   ".mob-cta{margin-top:28px;background:var(--gold);color:var(--g);padding:14px;font-family:var(--sans);font-size:8.5px;letter-spacing:.22em;text-transform:uppercase;border:none;cursor:pointer;width:100%;font-weight:500;}",
   ".search-drop{position:fixed;top:64px;left:0;right:0;z-index:8998;background:var(--g);border-bottom:1px solid rgba(184,145,60,.1);padding:14px 52px;animation:slide-in .2s var(--ease);}",
@@ -307,7 +307,7 @@ const CSS_LINES=[
   ".search-row:hover{background:rgba(184,145,60,.06);}",
   ".search-thumb{width:38px;height:38px;object-fit:cover;flex-shrink:0;}",
   ".search-name{font-family:var(--serif);font-size:15px;color:var(--cr);display:block;}",
-  ".search-meta{font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);display:block;opacity:.8;margin-top:1px;}",
+  ".search-meta{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);display:block;opacity:.8;margin-top:1px;}",
   ".hero{height:100vh;min-height:580px;background:var(--g);display:grid;grid-template-columns:1fr 1fr;overflow:hidden;}",
   ".hero-l{display:flex;flex-direction:column;justify-content:center;padding:0 72px;z-index:2;align-items:flex-start;}",
   ".hero-tag{font-size:8.5px;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;opacity:0;animation:fade-up .9s .3s forwards;}",
@@ -334,7 +334,7 @@ const CSS_LINES=[
   ".btn-ghost:hover{border-color:var(--gold);color:var(--cr);}",
   ".btn-dark{background:var(--g);color:var(--cr);padding:11px 24px;}",
   ".btn-dark:hover{background:var(--g2);}",
-  ".btn-outline-gold{background:none;border:1px solid rgba(184,145,60,.4);color:var(--cr);transition:all .25s;}", ".btn-outline{background:transparent;border:1px solid rgba(184,145,60,.25);color:var(--gold);padding:7px 14px;font-size:8px;}",
+  ".btn-outline-gold{background:none;border:1px solid rgba(184,145,60,.4);color:var(--cr);transition:all .25s;}", ".btn-outline{background:transparent;border:1px solid rgba(184,145,60,.25);color:var(--gold);padding:7px 14px;font-size:13px;}",
   ".btn-outline:hover{background:var(--gold);color:var(--g);}",
   ".btn-full{width:100%;justify-content:center;}",
   ".btn:disabled{opacity:.22;pointer-events:none;}",
@@ -370,19 +370,19 @@ const CSS_LINES=[
   ".pc-ov{position:absolute;inset:0;background:rgba(6,35,24,.44);opacity:0;transition:opacity .34s;display:flex;align-items:center;justify-content:center;}",
   ".pc:hover .pc-ov{opacity:1;}",
   ".pc-body{padding:12px 14px 14px;display:flex;flex-direction:column;flex:1;}",
-  ".pc-stones{font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;display:block;}",
+  ".pc-stones{font-size:13px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;display:block;}",
   ".pc-name{font-family:var(--serif);font-size:17px;font-weight:300;color:var(--ink);margin-bottom:3px;line-height:1.1;}",
   ".pc-price{font-family:var(--serif);font-size:17px;color:var(--ink2);margin-bottom:7px;}",
-  ".pc-care{font-size:10px;color:var(--ink3);line-height:1.6;border-top:1px solid rgba(26,18,10,.08);padding-top:7px;margin-bottom:10px;}",
+  ".pc-care{font-size:13px;color:var(--ink3);line-height:1.6;border-top:1px solid rgba(26,18,10,.08);padding-top:7px;margin-bottom:10px;}",
   ".pc-actions{display:flex;align-items:center;justify-content:space-between;gap:6px;}",
-  ".pc-add{font-family:var(--sans);font-size:8px;letter-spacing:.13em;text-transform:uppercase;background:none;border:1px solid rgba(184,145,60,.24);color:var(--gold);padding:7px 12px;cursor:pointer;transition:all .22s;;margin-top:auto;}",
+  ".pc-add{font-family:var(--sans);font-size:13px;letter-spacing:.13em;text-transform:uppercase;background:none;border:1px solid rgba(184,145,60,.24);color:var(--gold);padding:7px 12px;cursor:pointer;transition:all .22s;;margin-top:auto;}",
   ".pc-add:hover{background:var(--gold);color:var(--g);}",
   ".stone-swap-box{background:var(--cr);border:1px solid rgba(184,145,60,.16);padding:11px 13px;margin:10px 0;}",
   ".stone-swap-label{font-size:7.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:6px;}",
   ".stone-swap-select{width:100%;background:var(--cr);border:none;border-bottom:1px solid rgba(184,145,60,.22);color:var(--ink);font-family:var(--sans);font-size:16px;padding:6px 0;outline:none;appearance:none;}",
-  ".inspiration-note{font-size:10px;color:var(--ink3);font-style:italic;line-height:1.75;padding:9px 12px;border-left:2px solid rgba(184,145,60,.2);background:var(--cr);margin:8px 0;}",
+  ".inspiration-note{font-size:13px;color:var(--ink3);font-style:italic;line-height:1.75;padding:9px 12px;border-left:2px solid rgba(184,145,60,.2);background:var(--cr);margin:8px 0;}",
   ".filter-bar{display:flex;gap:5px;flex-wrap:wrap;align-items:center;margin-bottom:26px;padding-bottom:13px;border-bottom:1px solid rgba(26,18,10,.09);}",
-  ".filter-chip{font-family:var(--sans);font-size:8px;letter-spacing:.12em;text-transform:uppercase;background:transparent;border:1px solid rgba(26,18,10,.14);color:var(--ink3);padding:5px 12px;cursor:pointer;transition:all .18s;}",
+  ".filter-chip{font-family:var(--sans);font-size:13px;letter-spacing:.12em;text-transform:uppercase;background:transparent;border:1px solid rgba(26,18,10,.14);color:var(--ink3);padding:5px 12px;cursor:pointer;transition:all .18s;}",
   ".filter-chip:hover{border-color:var(--gold);color:var(--gold);}",
   ".filter-chip.on{background:var(--g);color:var(--cr);border-color:var(--g);}",
   ".how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;}",
@@ -395,22 +395,22 @@ const CSS_LINES=[
   ".promise-item{padding:22px 20px;border-right:1px solid rgba(26,18,10,.08);}",
   ".promise-item:last-child{border-right:none;}",
   ".promise-title{font-family:var(--serif);font-size:14px;color:var(--ink);margin-bottom:4px;}",
-  ".promise-sub{font-size:11px;color:var(--ink3);line-height:1.65;font-weight:300;}",
+  ".promise-sub{font-size:14px;color:var(--ink3);line-height:1.65;font-weight:300;}",
   ".stone-card{background:var(--cr2);padding:24px 22px;position:relative;max-width:275px;}",
   ".stone-card::before{content:'';position:absolute;top:-4px;left:-4px;right:4px;bottom:4px;border:1px solid rgba(184,145,60,.1);}",
   ".stone-card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px;padding-bottom:11px;border-bottom:1px solid rgba(26,18,10,.09);}",
   ".stone-card-brand{font-family:var(--serif);font-size:16px;color:var(--ink);}",
-  ".stone-card-mark{font-size:8px;color:var(--gold);letter-spacing:.2em;}",
+  ".stone-card-mark{font-size:13px;color:var(--gold);letter-spacing:.2em;}",
   ".stone-card-row{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(26,18,10,.05);}",
   ".stone-card-key{font-size:7px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);}",
-  ".stone-card-val{font-size:11px;color:var(--ink);text-align:right;max-width:55%;font-weight:300;}",
-  ".stone-card-foot{margin-top:11px;padding-top:10px;font-family:var(--serif);font-style:italic;font-size:11px;color:var(--gold);text-align:center;opacity:.78;}",
+  ".stone-card-val{font-size:14px;color:var(--ink);text-align:right;max-width:55%;font-weight:300;}",
+  ".stone-card-foot{margin-top:11px;padding-top:10px;font-family:var(--serif);font-style:italic;font-size:14px;color:var(--gold);text-align:center;opacity:.78;}",
   ".detail-layout{display:grid;grid-template-columns:1fr 1fr;overflow:visible;}",
   ".detail-media{background:var(--cr2);position:relative;overflow:hidden;min-height:400px;}",
   ".detail-img-wrap{width:100%;height:100%;min-height:480px;position:relative;}",
-  ".detail-type{font-size:8px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;display:block;}",
+  ".detail-type{font-size:13px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;display:block;}",
   ".detail-care{background:var(--cr2);padding:14px 16px;border-top:1px solid rgba(26,18,10,.08);margin-top:auto;}",
-  ".size-btn{padding:8px 20px;font-family:var(--sans);font-size:8px;letter-spacing:.14em;text-transform:uppercase;background:transparent;border:1px solid rgba(26,18,10,.2);cursor:pointer;color:var(--ink3);transition:all .2s;}",
+  ".size-btn{padding:8px 20px;font-family:var(--sans);font-size:13px;letter-spacing:.14em;text-transform:uppercase;background:transparent;border:1px solid rgba(26,18,10,.2);cursor:pointer;color:var(--ink3);transition:all .2s;}",
   ".size-btn:hover,.size-btn.active{background:var(--g);color:var(--cr);border-color:var(--g);}",
   ".detail-media img{width:100%;height:100%;object-fit:contain;background:var(--cr2);display:block;}",
   ".detail-dots{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);display:flex;gap:7px;z-index:4;}",
@@ -421,18 +421,18 @@ const CSS_LINES=[
   ".detail-prev{left:11px;}",
   ".detail-next{right:11px;}",
   ".detail-info{padding:24px 32px 36px;display:flex;flex-direction:column;background:var(--cr);overflow:visible;}",
-  ".detail-tag{font-size:8px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);margin-bottom:9px;}",
+  ".detail-tag{font-size:13px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);margin-bottom:9px;}",
   ".detail-name{font-family:var(--serif);font-size:clamp(20px,2.2vw,32px);font-weight:300;line-height:1.05;margin-bottom:4px;color:var(--ink);}",
   ".detail-price{font-family:var(--serif);font-size:22px;margin-bottom:14px;color:var(--ink);}",
   ".detail-desc{font-size:13px;color:var(--ink2);line-height:1.8;margin-bottom:12px;font-weight:300;}",
   ".detail-tags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:11px;}",
-  ".detail-tag-chip{font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);background:var(--cr2);padding:4px 10px;border:1px solid rgba(26,18,10,.1);}",
-  ".detail-meta-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(26,18,10,.07);font-size:12px;}",
+  ".detail-tag-chip{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);background:var(--cr2);padding:4px 10px;border:1px solid rgba(26,18,10,.1);}",
+  ".detail-meta-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(26,18,10,.07);font-size:14px;}",
   ".detail-meta-key{color:var(--ink3);font-weight:300;}",
   ".detail-meta-val{color:var(--ink);}",
   ".detail-care-box{background:var(--cr2);padding:12px 14px;margin:12px 0;border-left:2px solid var(--gold);}",
-  ".detail-care-label{font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;}",
-  ".detail-care-text{font-size:12px;color:var(--ink3);line-height:1.82;font-weight:300;}",
+  ".detail-care-label{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;}",
+  ".detail-care-text{font-size:14px;color:var(--ink3);line-height:1.82;font-weight:300;}",
   ".detail-add{flex:1;padding:13px;font-family:var(--sans);font-size:8.5px;letter-spacing:.19em;text-transform:uppercase;background:var(--g);color:var(--cr);border:none;cursor:pointer;transition:background .28s;}",
   ".detail-add:hover{background:var(--gold);color:var(--g);}",
   ".cart-overlay{position:fixed;z-index:9400;top:64px;left:0;right:0;bottom:0;background:rgba(3,15,9,.7);animation:fade-in .22s;}",
@@ -453,15 +453,15 @@ const CSS_LINES=[
   ".cart-item-foot{display:flex;align-items:center;justify-content:space-between;}",
   ".cart-item-price{font-family:var(--serif);font-size:15px;color:var(--ink);}",
   ".qty-ctrl{display:flex;align-items:center;gap:6px;}",
-  ".qty-btn{width:20px;height:20px;border:1px solid rgba(26,18,10,.13);background:none;color:var(--ink3);cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;transition:all .18s;}",
+  ".qty-btn{width:20px;height:20px;border:1px solid rgba(26,18,10,.13);background:none;color:var(--ink3);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .18s;}",
   ".qty-btn:hover{border-color:var(--gold);color:var(--gold);}",
-  ".qty-num{font-size:12px;color:var(--ink);width:15px;text-align:center;}",
+  ".qty-num{font-size:14px;color:var(--ink);width:15px;text-align:center;}",
   ".cart-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:140px;gap:9px;}",
   ".cart-footer{padding:12px 22px 20px;border-top:1px solid rgba(26,18,10,.08);}",
   ".cart-total-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;}",
   ".cart-total-label{font-size:8.5px;letter-spacing:.12em;color:var(--ink3);}",
   ".cart-total-val{font-family:var(--serif);font-size:22px;color:var(--ink);}",
-  ".cart-note{font-size:10px;color:var(--ink3);margin-bottom:10px;line-height:1.7;}",
+  ".cart-note{font-size:13px;color:var(--ink3);margin-bottom:10px;line-height:1.7;}",
   ".cart-checkout-btn{width:100%;padding:13px;font-family:var(--sans);font-size:8.5px;letter-spacing:.19em;text-transform:uppercase;background:var(--g);color:var(--cr);border:none;cursor:pointer;transition:background .28s;}",
   ".cart-checkout-btn:hover{background:var(--gold);color:var(--g);}",
   ".modal-overlay{position:fixed;inset:0;z-index:3000;background:rgba(3,15,9,.56);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;padding:20px;animation:fade-in .2s;}",
@@ -473,43 +473,43 @@ const CSS_LINES=[
   ".modal-close{background:none;border:none;color:var(--ink3);cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:15px;}",
   ".modal-body{padding:20px 26px;}",
   ".order-summary{background:var(--cr2);padding:13px 15px;margin-bottom:15px;}",
-  ".order-summary-title{font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink3);margin-bottom:8px;}",
-  ".order-row{display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px;color:var(--ink3);}",
+  ".order-summary-title{font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink3);margin-bottom:8px;}",
+  ".order-row{display:flex;justify-content:space-between;font-size:14px;margin-bottom:3px;color:var(--ink3);}",
   ".order-total-row{display:flex;justify-content:space-between;padding-top:8px;margin-top:5px;border-top:1px solid rgba(26,18,10,.1);}",
   ".order-total-label{font-size:8.5px;color:var(--ink3);}",
   ".order-total-val{font-family:var(--serif);font-size:20px;color:var(--ink);}",
   ".field{margin-bottom:12px;}",
-  ".field-label{font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink3);display:block;margin-bottom:4px;}",
+  ".field-label{font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink3);display:block;margin-bottom:4px;}",
   ".field-input,.field-select,.field-textarea{font-family:var(--sans);font-size:16px;font-weight:300;background:var(--cr2);border:none;border-bottom:1px solid rgba(26,18,10,.14);color:var(--ink);padding:8px 0;outline:none;width:100%;transition:border-color .2s;}",
   ".field-input:focus,.field-select:focus,.field-textarea:focus{border-bottom-color:var(--gold);}",
   ".field-textarea{min-height:80px;resize:vertical;padding:8px;border:1px solid rgba(26,18,10,.12);background:var(--cr2);}",
   ".field-select{appearance:none;background:var(--cr2);padding:8px;}",
-  ".field-note{font-size:10px;color:var(--ink3);margin-top:4px;line-height:1.65;border-left:2px solid var(--gold);padding-left:8px;background:var(--cr2);padding:6px 8px;}",
+  ".field-note{font-size:13px;color:var(--ink3);margin-top:4px;line-height:1.65;border-left:2px solid var(--gold);padding-left:8px;background:var(--cr2);padding:6px 8px;}",
   ".field-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}",
   ".step-bar{display:flex;align-items:center;gap:7px;padding:20px 0 16px;}",
-  ".step-dot{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:500;transition:all .22s;}",
+  ".step-dot{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;transition:all .22s;}",
   ".step-done{background:var(--gold);color:var(--g);}",
   ".step-active{background:var(--g);color:var(--gold);border:2px solid var(--gold);}",
   ".step-idle{background:transparent;color:var(--ink3);border:1px solid rgba(26,18,10,.18);}",
-  ".step-label{font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);}",
+  ".step-label{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);}",
   ".step-label.active-label{color:var(--ink);}",
-  ".step-sep{color:rgba(26,18,10,.2);font-size:9px;}",
+  ".step-sep{color:rgba(26,18,10,.2);font-size:13px;}",
   ".pay-tabs{display:flex;border:1px solid rgba(26,18,10,.12);margin-bottom:14px;}",
   ".pay-tab{flex:1;padding:10px 5px;font-family:var(--sans);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;background:transparent;border:none;border-right:1px solid rgba(26,18,10,.1);cursor:pointer;transition:all .2s;color:var(--ink3);}",
   ".pay-tab:last-child{border-right:none;}",
   ".pay-tab.on{background:var(--g);color:var(--gold);}",
   ".pay-box{background:var(--cr2);padding:13px 15px;margin-bottom:13px;}",
-  ".pay-box p{font-size:12px;color:var(--ink3);line-height:1.78;}",
+  ".pay-box p{font-size:14px;color:var(--ink3);line-height:1.78;}",
   ".submit-btn{width:100%;padding:13px;font-family:var(--sans);font-size:8.5px;letter-spacing:.19em;text-transform:uppercase;background:var(--g);color:var(--cr);border:none;cursor:pointer;transition:background .28s;margin-top:5px;}",
   ".submit-btn:hover{background:var(--gold);color:var(--g);}",
   ".confirm-logo{display:flex;justify-content:center;padding:22px 0 16px;border-bottom:1px solid rgba(26,18,10,.08);margin-bottom:16px;}",
   ".confirm-logo img{height:60px;width:auto;object-fit:contain;}",
   ".confirm-ref-block{text-align:center;margin-bottom:20px;}",
   ".confirm-ref-num{font-family:var(--serif);font-size:20px;color:var(--ink);letter-spacing:.05em;}",
-  ".confirm-ref-label{font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink3);margin-top:3px;}",
+  ".confirm-ref-label{font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink3);margin-top:3px;}",
   ".confirm-section{background:var(--cr2);padding:13px 15px;margin-bottom:10px;}",
   ".confirm-section-title{font-size:7.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;padding-bottom:7px;border-bottom:1px solid rgba(26,18,10,.09);}",
-  ".confirm-row{display:flex;justify-content:space-between;font-size:12px;padding:4px 0;border-bottom:1px solid rgba(26,18,10,.05);}",
+  ".confirm-row{display:flex;justify-content:space-between;font-size:14px;padding:4px 0;border-bottom:1px solid rgba(26,18,10,.05);}",
   ".confirm-row:last-child{border-bottom:none;}",
   ".confirm-key{color:var(--ink3);font-weight:300;}",
   ".confirm-val{color:var(--ink);text-align:right;max-width:58%;}",
@@ -518,27 +518,27 @@ const CSS_LINES=[
   ".confirm-total-val{font-family:var(--serif);font-size:24px;color:var(--gold);}",
   ".confirm-deposit-block{background:rgba(184,145,60,.08);border:1px solid rgba(184,145,60,.18);padding:12px 15px;margin-bottom:10px;}",
   ".confirm-deposit-title{font-size:7.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}",
-  ".confirm-deposit-row{display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;}",
+  ".confirm-deposit-row{display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px;}",
   ".confirm-deposit-key{color:var(--ink3);}",
   ".confirm-deposit-val{font-family:var(--serif);font-size:16px;color:var(--ink);}",
   ".pkg-options{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:13px;}",
   ".pkg-option{border:1px solid rgba(26,18,10,.12);background:var(--cr2);cursor:pointer;padding:12px;text-align:left;transition:border-color .2s;}",
   ".pkg-option.sel{border-color:var(--g);}",
   ".pkg-option-name{font-family:var(--serif);font-size:15px;color:var(--ink);display:block;margin-bottom:2px;}",
-  ".pkg-option-note{font-size:8px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);}",
-  ".toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--g);color:var(--cr);padding:11px 18px;z-index:9999;font-size:11px;letter-spacing:.08em;display:flex;align-items:center;gap:8px;box-shadow:0 6px 24px rgba(6,35,24,.22);animation:toast-up .28s var(--ease);}",
+  ".pkg-option-note{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);}",
+  ".toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--g);color:var(--cr);padding:11px 18px;z-index:9999;font-size:14px;letter-spacing:.08em;display:flex;align-items:center;gap:8px;box-shadow:0 6px 24px rgba(6,35,24,.22);animation:toast-up .28s var(--ease);}",
   "@keyframes toast-up{from{opacity:0;transform:translate(-50%,9px)}to{opacity:1;transform:translate(-50%,0)}}",
   ".toast-dot{width:4px;height:4px;border-radius:50%;background:var(--gold);}",
   ".footer{background:var(--g);padding:52px 72px 26px;}",
   ".footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;margin-bottom:36px;}",
   ".footer-brand-logo{height:30px;width:auto;object-fit:contain;filter:brightness(0) invert(1);opacity:.75;display:block;margin-bottom:11px;}",
-  ".footer-brand-text{font-size:12px;color:rgba(245,239,227,.42);line-height:1.9;max-width:185px;font-weight:300;}",
-  ".footer-col-title{font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;opacity:1;}",
+  ".footer-brand-text{font-size:14px;color:rgba(245,239,227,.42);line-height:1.9;max-width:185px;font-weight:300;}",
+  ".footer-col-title{font-size:13px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;opacity:1;}",
   ".footer-link{display:block;font-size:clamp(13px,3.2vw,14px);color:rgba(245,239,227,.58);background:none;border:none;text-align:left;cursor:pointer;margin-bottom:9px;transition:color .2s;text-decoration:none;font-weight:300;}",
   ".footer-link:hover{color:rgba(245,239,227,.9);}",
   ".footer-bottom{border-top:1px solid rgba(184,145,60,.07);padding-top:16px;display:flex;justify-content:space-between;align-items:center;}",
-  ".footer-copy{font-size:10px;color:rgba(245,239,227,.35);letter-spacing:.06em;}",
-  ".footer-tagline{font-size:10px;color:rgba(245,239,227,.3);font-family:var(--serif);font-style:italic;}",
+  ".footer-copy{font-size:13px;color:rgba(245,239,227,.35);letter-spacing:.06em;}",
+  ".footer-tagline{font-size:13px;color:rgba(245,239,227,.3);font-family:var(--serif);font-style:italic;}",
   ".story-split{background:var(--g);display:grid;grid-template-columns:1fr 1fr;min-height:80vh;}",
   ".story-left{padding:88px 72px;display:flex;flex-direction:column;justify-content:center;}",
   ".story-right{display:flex;align-items:center;justify-content:center;padding:52px;border-left:1px solid rgba(184,145,60,.07);}",
@@ -553,14 +553,14 @@ const CSS_LINES=[
   ".contact-split{display:grid;grid-template-columns:1fr 1fr;}",
   ".contact-dark{background:var(--g);padding:76px 72px;display:flex;flex-direction:column;justify-content:center;}",
   ".contact-light{background:var(--cr2);padding:76px 72px;}",
-  ".contact-label{font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:3px;opacity:.82;}",
+  ".contact-label{font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:3px;opacity:.82;}",
   ".contact-val{font-size:14px;color:rgba(245,239,227,.8);margin-bottom:14px;font-weight:300;}",
   ".customize-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;}",
   ".stone-picker{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;}",
   ".stone-pill{background:var(--cr2);border:1px solid rgba(26,18,10,.1);padding:9px 4px;text-align:center;cursor:pointer;transition:all .18s;display:flex;flex-direction:column;align-items:center;gap:2px;}",
   ".stone-pill:hover{border-color:rgba(184,145,60,.35);}",
   ".stone-pill.picked{background:var(--g);border-color:var(--g);}",
-  ".stone-pill-name{font-size:8px;color:var(--ink3);}",
+  ".stone-pill-name{font-size:13px;color:var(--ink3);}",
   ".stone-pill.picked .stone-pill-name{color:var(--gold);}",
   ".stone-pill-meaning{font-size:6.5px;color:var(--ink3);opacity:.6;}",
   ".stone-pill.picked .stone-pill-meaning{color:rgba(184,145,60,.44);}",
@@ -571,7 +571,7 @@ const CSS_LINES=[
   ".estimate-total{display:flex;justify-content:space-between;align-items:center;margin-top:10px;}",
   ".estimate-total-val{font-family:var(--serif);font-size:24px;color:var(--ink);}",
   ".craft-note{background:var(--cr3);padding:10px 12px;margin-top:10px;}",
-  ".craft-note p{font-size:11px;color:var(--ink3);line-height:1.82;font-weight:300;}",
+  ".craft-note p{font-size:14px;color:var(--ink3);line-height:1.82;font-weight:300;}",
   ".success-block{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:44vh;gap:14px;text-align:center;padding:40px;}",
   ".success-icon{font-family:var(--serif);font-size:40px;color:var(--gold);}",
   ".success-title{font-family:var(--serif);font-size:26px;font-weight:300;color:var(--ink);}",
@@ -580,7 +580,7 @@ const CSS_LINES=[
   ".care-step:hover{border-top-color:var(--gold);background:#041a0f;}",
   ".care-step-icon{font-family:var(--serif);font-size:17px;color:var(--gold);margin-bottom:9px;opacity:.6;}",
   ".care-step-title{font-family:var(--serif);font-size:13px;color:var(--ink);margin-bottom:4px;}",
-  ".care-step-text{font-size:11px;color:var(--ink3);line-height:1.75;font-weight:300;}",
+  ".care-step-text{font-size:14px;color:var(--ink3);line-height:1.75;font-weight:300;}",
   "@media(max-width:1024px){",
   ".nav-links{display:none!important;}",
   
@@ -609,36 +609,36 @@ const CSS_LINES=[
 
   /*  MOBILE TEXT SIZES  */
   ".hero-title{font-size:clamp(38px,10vw,62px);}",
-  ".hero-sub{font-size:15px;line-height:1.85;color:rgba(245,239,227,.6);max-width:360px;}",".hero-btns{justify-content:flex-start;}",
-  ".hero-tag{font-size:10px;letter-spacing:.3em;}",
+  ".hero-sub{font-size:16px;line-height:1.85;color:rgba(245,239,227,.6);max-width:360px;}",".hero-btns{justify-content:flex-start;}",
+  ".hero-tag{font-size:13px;letter-spacing:.3em;}",
 
   ".page-header-title{font-size:clamp(28px,7vw,42px);}",
   ".page-header-sub{font-size:14px;line-height:1.85;}",
-  ".page-header-tag{font-size:10px;letter-spacing:.3em;}",
+  ".page-header-tag{font-size:13px;letter-spacing:.3em;}",
 
   ".pc-name{font-size:15px;}",
   ".pc-price{font-size:14px;}",
-  ".pc-tag{font-size:10px;}",
-  ".pc-add{font-size:10px;padding:13px 0;letter-spacing:.18em;}",
+  ".pc-tag{font-size:13px;}",
+  ".pc-add{font-size:13px;padding:13px 0;letter-spacing:.18em;}",
 
   ".detail-name{font-size:clamp(22px,6vw,32px);}",
-  ".sec-label{font-size:10px;}",
+  ".sec-label{font-size:13px;}",
 
-  ".field-label{font-size:12px;letter-spacing:.1em;}",
+  ".field-label{font-size:14px;letter-spacing:.1em;}",
   ".field-input,.field-textarea,.field-select{font-size:16px;padding:12px 14px;}",
 
   ".estimate-box p{font-size:13px !important;}",
 
-  ".btn{font-size:10px;padding:14px 28px;letter-spacing:.2em;}",
+  ".btn{font-size:13px;padding:14px 28px;letter-spacing:.2em;}",
   ".btn-full{padding:16px 28px;}",
-  ".submit-btn{font-size:10px;padding:15px;letter-spacing:.2em;}",
+  ".submit-btn{font-size:13px;padding:15px;letter-spacing:.2em;}",
 
-  ".section-label{font-size:10px;letter-spacing:.3em;}",
+  ".section-label{font-size:13px;letter-spacing:.3em;}",
   ".cart-item-name{font-size:14px;}",
-  ".cart-item-sub{font-size:12px;}",
+  ".cart-item-sub{font-size:14px;}",
   ".cart-total{font-size:16px;}",
 
-  ".nav-cart{font-size:9px;padding:7px 14px;}",
+  ".nav-cart{font-size:13px;padding:7px 14px;}",
 
   /* Customize page mobile */
   ".customize-grid > div:first-child{order:1;}",
@@ -646,7 +646,7 @@ const CSS_LINES=[
   ".estimate-box{margin-top:0;}",
 
   /* Stone grid - 2 columns on mobile */
-  ".pgrid{grid-template-columns:1fr 1fr;gap:1px;}",".pc-body{padding:10px 10px 12px;}",
+  ".pgrid{grid-template-columns:1fr 1fr;gap:1px;}",".pc-body{padding:10px 10px 12px;}",".pc-name{font-size:15px!important;}",".pc-price{font-size:14px!important;}",".field-label{font-size:14px!important;}",".field-input{font-size:16px!important;}",".field-textarea{font-size:16px!important;}",
   "}",
   "/* Horizontal carousel */",
   "div[style*='scrollSnapType']{-ms-overflow-style:none;scrollbar-width:none;}",
@@ -778,7 +778,7 @@ function PC({product,onV,onA}){
           </div>}
         <div style={{position:"absolute",inset:0,background:"rgba(6,35,24,0)",transition:"background .5s",pointerEvents:"none",background:hover?"rgba(6,35,24,.28)":"rgba(6,35,24,0)"}}/>
         <div style={{position:"absolute",bottom:0,left:0,right:0,padding:"16px",opacity:hover?1:0,transition:"opacity .35s"}}>
-          <button className="btn btn-gold" style={{width:"100%",padding:"11px",fontSize:8.5,letterSpacing:".2em"}} onClick={e=>{e.stopPropagation();onV(product,product.stones);}}>View & Customise</button>
+          <button className="btn btn-gold" style={{width:"100%",padding:"11px",fontSize:13,letterSpacing:".12em"}} onClick={e=>{e.stopPropagation();onV(product,product.stones);}}>View & Customise</button>
         </div>
       </div>
       <div className="pc-body">
@@ -787,12 +787,12 @@ function PC({product,onV,onA}){
         {product.sizes&&product.sizes.length>0&&(
           <div style={{display:"flex",gap:4,marginTop:7}}>
             {product.sizes.map(sz=>(
-              <button key={sz} onClick={()=>setSelSize(sz)} style={{flex:1,fontSize:7.5,letterSpacing:".1em",textTransform:"uppercase",padding:"5px 0",background:selSize===sz?"var(--g)":"transparent",color:selSize===sz?"var(--cr)":"var(--ink3)",border:"1px solid",borderColor:selSize===sz?"var(--g)":"rgba(26,18,10,.14)",cursor:"pointer",transition:"all .2s"}}>{sz}</button>
+              <button key={sz} onClick={()=>setSelSize(sz)} style={{flex:1,fontSize:13,letterSpacing:".1em",textTransform:"uppercase",padding:"5px 0",background:selSize===sz?"var(--g)":"transparent",color:selSize===sz?"var(--cr)":"var(--ink3)",border:"1px solid",borderColor:selSize===sz?"var(--g)":"rgba(26,18,10,.14)",cursor:"pointer",transition:"all .2s"}}>{sz}</button>
             ))}
           </div>
         )}
         <button className="pc-add" style={{marginTop:8}} onClick={()=>{if(product.sizes&&product.sizes.length>0&&!selSize){setSizeErr(true);setTimeout(()=>setSizeErr(false),3000);return;}onA(product,product.stones,price,selSize);}}>Add to Cart</button>
-      {sizeErr&&<p style={{fontSize:11,color:"#c0392b",textAlign:"center",marginTop:4,padding:"2px 8px",fontFamily:"var(--sans)"}}>Please select a size</p>}
+      {sizeErr&&<p style={{fontSize:14,color:"#c0392b",textAlign:"center",marginTop:4,padding:"2px 8px",fontFamily:"var(--sans)"}}>Please select a size</p>}
       </div>
     </div>
   );
@@ -816,13 +816,13 @@ function BraceletSection({onV,onA,setPage}){
         <span className="sec-label sec-label-light">Bracelets</span>
         <h2 className="sec-title sec-title-light">Hand-wound copper</h2>
       </div>
-      <button className="btn btn-outline" style={{fontSize:8,padding:"6px 14px"}} onClick={()=>setPage("bracelets")}>View All ({all.length})</button>
+      <button className="btn btn-outline" style={{fontSize:13,padding:"6px 14px"}} onClick={()=>setPage("bracelets")}>View All ({all.length})</button>
     </div>
     <div style={{width:"100%",height:1,background:"rgba(26,18,10,.08)",marginBottom:28}}/>
     <div className="pgrid" data-rv>{visible.map(p=><PC key={p.id} product={p} onV={onV} onA={onA}/>)}</div>
     {!showAll&&all.length>3&&(
       <div style={{textAlign:"center",marginTop:28}} data-rv>
-        <button onClick={()=>setShowAll(true)} style={{background:"none",border:"none",cursor:"none",fontFamily:"var(--sans)",fontSize:9,letterSpacing:".28em",textTransform:"uppercase",color:"var(--ink3)",padding:"10px 0",borderBottom:"1px solid rgba(26,18,10,.18)",transition:"color .2s,border-color .2s"}}
+        <button onClick={()=>setShowAll(true)} style={{background:"none",border:"none",cursor:"none",fontFamily:"var(--sans)",fontSize:13,letterSpacing:".28em",textTransform:"uppercase",color:"var(--ink3)",padding:"10px 0",borderBottom:"1px solid rgba(26,18,10,.18)",transition:"color .2s,border-color .2s"}}
           onMouseEnter={e=>{e.currentTarget.style.color="var(--ink)";e.currentTarget.style.borderBottomColor="var(--gold)";}}
           onMouseLeave={e=>{e.currentTarget.style.color="var(--ink3)";e.currentTarget.style.borderBottomColor="rgba(26,18,10,.18)";}}>
           View {all.length-3} More Bracelets
@@ -842,13 +842,13 @@ function NecklaceSection({onV,onA,setPage}){
         <span className="sec-label sec-label-light">Necklaces</span>
         <h2 className="sec-title sec-title-light">Stone and copper</h2>
       </div>
-      <button className="btn btn-outline" style={{fontSize:8,padding:"6px 14px"}} onClick={()=>setPage("necklaces")}>View All ({all.length})</button>
+      <button className="btn btn-outline" style={{fontSize:13,padding:"6px 14px"}} onClick={()=>setPage("necklaces")}>View All ({all.length})</button>
     </div>
     <div style={{width:"100%",height:1,background:"rgba(26,18,10,.08)",marginBottom:28}}/>
     <div className="pgrid" data-rv>{visible.map(p=><PC key={p.id} product={p} onV={onV} onA={onA}/>)}</div>
     {!showAll&&all.length>2&&(
       <div style={{textAlign:"center",marginTop:28}} data-rv>
-        <button onClick={()=>setShowAll(true)} style={{background:"none",border:"none",cursor:"none",fontFamily:"var(--sans)",fontSize:9,letterSpacing:".28em",textTransform:"uppercase",color:"var(--ink3)",padding:"10px 0",borderBottom:"1px solid rgba(26,18,10,.18)",transition:"color .2s,border-color .2s"}}
+        <button onClick={()=>setShowAll(true)} style={{background:"none",border:"none",cursor:"none",fontFamily:"var(--sans)",fontSize:13,letterSpacing:".28em",textTransform:"uppercase",color:"var(--ink3)",padding:"10px 0",borderBottom:"1px solid rgba(26,18,10,.18)",transition:"color .2s,border-color .2s"}}
           onMouseEnter={e=>{e.currentTarget.style.color="var(--ink)";e.currentTarget.style.borderBottomColor="var(--gold)";}}
           onMouseLeave={e=>{e.currentTarget.style.color="var(--ink3)";e.currentTarget.style.borderBottomColor="rgba(26,18,10,.18)";}}>
           View {all.length-2} More Necklaces
@@ -864,7 +864,7 @@ function BackBtn({label,onClick}){
     <button onClick={onClick} style={{
       display:"inline-flex",alignItems:"center",gap:8,
       background:"none",border:"none",cursor:"pointer",
-      fontFamily:"var(--sans)",fontSize:8.5,letterSpacing:".22em",
+      fontFamily:"var(--sans)",fontSize:13,letterSpacing:".12em",
       textTransform:"uppercase",color:"var(--ink3)",
       padding:"16px 0",transition:"color .2s",
     }}
@@ -897,10 +897,10 @@ function HeroCarousel({onV}){
       {imgSrc&&<img src={imgSrc} alt={cur.name} style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center",display:"block",opacity:.92,transition:"opacity .8s ease"}}/>}
       <div style={{position:"absolute",inset:0,background:"linear-gradient(to bottom,rgba(6,35,24,.05) 0%,rgba(6,35,24,.55) 100%)"}}/>
       <div style={{position:"absolute",bottom:"10%",left:"8%",right:"8%"}}>
-        <span style={{fontSize:9,letterSpacing:".36em",textTransform:"uppercase",color:"rgba(184,145,60,.8)",display:"block",marginBottom:10}}>{cur.type}</span>
+        <span style={{fontSize:13,letterSpacing:".36em",textTransform:"uppercase",color:"rgba(184,145,60,.8)",display:"block",marginBottom:10}}>{cur.type}</span>
         <h2 style={{fontFamily:"var(--serif)",fontSize:"clamp(32px,5vw,64px)",fontWeight:300,color:"#f5efe3",lineHeight:1.05,marginBottom:12,letterSpacing:".01em"}}>{cur.name}</h2>
         <p style={{fontFamily:"var(--serif)",fontSize:"clamp(16px,1.8vw,20px)",color:"rgba(245,239,227,.6)",fontStyle:"italic",marginBottom:20}}>{fmt(cur.price)} EGP</p>
-        <span style={{fontSize:9,letterSpacing:".22em",textTransform:"uppercase",color:"rgba(245,239,227,.5)",borderBottom:"1px solid rgba(184,145,60,.4)",paddingBottom:4}}>Discover the piece</span>
+        <span style={{fontSize:13,letterSpacing:".12em",textTransform:"uppercase",color:"rgba(245,239,227,.5)",borderBottom:"1px solid rgba(184,145,60,.4)",paddingBottom:4}}>Discover the piece</span>
       </div>
       {/* Arrows */}
       <button onClick={e=>{e.stopPropagation();setIdx(i=>(i-1+items.length)%items.length);}} style={{position:"absolute",left:20,top:"50%",transform:"translateY(-50%)",background:"rgba(6,35,24,.4)",border:"1px solid rgba(184,145,60,.2)",color:"#f5efe3",width:44,height:44,borderRadius:"50%",cursor:"pointer",fontSize:18,display:"flex",alignItems:"center",justifyContent:"center"}}>&#8592;</button>
@@ -945,11 +945,11 @@ function HomePage({setPage,onV,onA}){
     {/* -- DESIGN YOUR PIECE - Luxury editorial banner -- */}
     <div style={{background:"var(--cr2)",borderTop:"1px solid rgba(184,145,60,.14)",borderBottom:"1px solid rgba(184,145,60,.14)",padding:"64px 72px"}}>
       <div style={{maxWidth:640,margin:"0 auto",textAlign:"center"}} data-rv>
-        <span style={{fontSize:8,letterSpacing:".6em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:18}}>Bespoke</span>
+        <span style={{fontSize:13,letterSpacing:".6em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:18}}>Bespoke</span>
         <h2 style={{fontFamily:"var(--serif)",fontSize:"clamp(26px,3.2vw,52px)",fontWeight:300,color:"var(--ink)",lineHeight:1.04,marginBottom:16}}>Nothing made only for you<br/>exists anywhere else.</h2>
         <div style={{width:36,height:1,background:"var(--gold)",margin:"0 auto 18px",opacity:.5}}/>
         <p style={{fontSize:13,color:"var(--ink3)",lineHeight:2.0,maxWidth:420,margin:"0 auto 28px",fontWeight:300}}>Your vision. Your stones. Your piece  crafted by hand in Egypt.</p>
-        <button className="btn btn-dark" style={{padding:"15px 40px",fontSize:9,letterSpacing:".28em"}} onClick={()=>setPage("customize")}>Design Your Dorra Piece</button>
+        <button className="btn btn-dark" style={{padding:"15px 40px",fontSize:13,letterSpacing:".28em"}} onClick={()=>setPage("customize")}>Design Your Dorra Piece</button>
       </div>
     </div>
     <div className="section-cream" style={{paddingTop:60,paddingBottom:52}}>
@@ -986,12 +986,12 @@ function HomePage({setPage,onV,onA}){
     {/* Care Kit Banner */}
     <div style={{background:"var(--g)",padding:"48px 72px"}} data-rv>
       <div style={{maxWidth:680,margin:"0 auto",textAlign:"center"}}>
-          <span style={{fontSize:8.5,letterSpacing:".32em",textTransform:"uppercase",color:"rgba(184,145,60,.6)",display:"block",marginBottom:12}}>Every Order</span>
+          <span style={{fontSize:13,letterSpacing:".32em",textTransform:"uppercase",color:"rgba(184,145,60,.6)",display:"block",marginBottom:12}}>Every Order</span>
           <h2 style={{fontFamily:"var(--serif)",fontSize:"clamp(22px,3vw,32px)",fontWeight:300,color:"var(--cr)",marginBottom:12,lineHeight:1.3}}>Arrives with a care kit</h2>
           <p style={{fontSize:14,color:"rgba(245,239,227,.5)",lineHeight:1.85,marginBottom:24,maxWidth:480,margin:"0 auto 24px"}}>Anti-rust spray, soft polishing cloth, Dorra pouch. Keep your piece exactly as you first received it.</p>
           <div style={{display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap",marginTop:8}}>
-            <button className="btn btn-outline-gold" onClick={()=>setPage("care")} style={{fontSize:9,letterSpacing:".2em",padding:"13px 0",width:200,textAlign:"center",minHeight:42,boxSizing:"border-box"}}>Care Instructions</button>
-            <button className="btn btn-gold" onClick={()=>onV(CATALOG.find(p=>p.name==="Copper Care Kit"),[])} style={{fontSize:9,letterSpacing:".2em",padding:"13px 0",width:200,textAlign:"center",minHeight:42,boxSizing:"border-box"}}>Shop Care Kit  149 EGP</button>
+            <button className="btn btn-outline-gold" onClick={()=>setPage("care")} style={{fontSize:13,letterSpacing:".12em",padding:"13px 0",width:200,textAlign:"center",minHeight:42,boxSizing:"border-box"}}>Care Instructions</button>
+            <button className="btn btn-gold" onClick={()=>onV(CATALOG.find(p=>p.name==="Copper Care Kit"),[])} style={{fontSize:13,letterSpacing:".12em",padding:"13px 0",width:200,textAlign:"center",minHeight:42,boxSizing:"border-box"}}>Shop Care Kit  149 EGP</button>
           </div>
       </div>
     </div>
@@ -1034,10 +1034,10 @@ function TypePage({type,title,sub,onV,onA,setPage}){
       </div>
       <div className="section-cream">
         <div style={{display:"flex",gap:6,marginBottom:24,flexWrap:"wrap",alignItems:"center"}}>
-          <span style={{fontSize:8,letterSpacing:".16em",color:"var(--ink3)",textTransform:"uppercase"}}>Sort:</span>
+          <span style={{fontSize:13,letterSpacing:".16em",color:"var(--ink3)",textTransform:"uppercase"}}>Sort:</span>
           {[["best","Best Rated"],["price_asc","Price: Low to High"],["price_desc","Price: High to Low"]].map(([val,lbl])=>(
             <button key={val} onClick={()=>setTpSort(val)}
-              style={{fontSize:8,letterSpacing:".1em",padding:"5px 14px",
+              style={{fontSize:13,letterSpacing:".1em",padding:"5px 14px",
                 background:tpSort===val?"var(--g)":"transparent",
                 color:tpSort===val?"var(--cr)":"var(--ink3)",
                 border:"1px solid",borderColor:tpSort===val?"var(--g)":"rgba(26,18,10,.14)",
@@ -1046,10 +1046,10 @@ function TypePage({type,title,sub,onV,onA,setPage}){
             </button>
           ))}
         </div>
-        <p style={{fontSize:11,color:"var(--ink3)",lineHeight:1.85,marginBottom:28,fontStyle:"italic",letterSpacing:".01em",maxWidth:560}}>
+        <p style={{fontSize:14,color:"var(--ink3)",lineHeight:1.85,marginBottom:28,fontStyle:"italic",letterSpacing:".01em",maxWidth:560}}>
           Each image is an inspiration  a reflection of the copper winding style and stone selection. As every piece is shaped entirely by hand, no two are exactly alike. What you receive will carry the same soul, never the same mark.
         </p>
-        <p style={{fontSize:11,color:"var(--ink3)",lineHeight:1.85,marginBottom:28,fontStyle:"italic",maxWidth:560}}>Each image is an inspiration. A reflection of the copper style and stone selection. Every piece is shaped by hand  no two exactly alike. What you receive will carry the same soul, never the same mark.</p>
+        <p style={{fontSize:14,color:"var(--ink3)",lineHeight:1.85,marginBottom:28,fontStyle:"italic",maxWidth:560}}>Each image is an inspiration. A reflection of the copper style and stone selection. Every piece is shaped by hand  no two exactly alike. What you receive will carry the same soul, never the same mark.</p>
         <div className="pgrid" data-rv>
           {products.map(p=><PC key={p.id} product={p} onV={onV} onA={onA}/>)}
         </div>
@@ -1069,13 +1069,13 @@ function StonesPage({onV,onA}){
     return(
       <div style={{paddingTop:64}}>
       <div style={{padding:"8px 24px",background:"var(--cr)",borderBottom:"1px solid rgba(26,18,10,.08)",position:"sticky",top:64,zIndex:500}}>
-        <button onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");}} style={{background:"none",border:"none",cursor:"pointer",fontSize:11,color:"var(--ink3)",letterSpacing:".1em",textTransform:"uppercase",display:"flex",alignItems:"center",gap:5,padding:0}}>&#8592; Home</button>
+        <button onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");}} style={{background:"none",border:"none",cursor:"pointer",fontSize:14,color:"var(--ink3)",letterSpacing:".1em",textTransform:"uppercase",display:"flex",alignItems:"center",gap:5,padding:0}}>&#8592; Home</button>
       </div>
       
         <div style={{background:"var(--g)",width:"100%"}}>
           <div style={{maxWidth:1200,margin:"0 auto",padding:"28px 52px 52px"}}>
-            <button onClick={()=>setActive(null)} style={{background:"none",border:"none",color:"rgba(245,239,227,.5)",fontSize:8.5,letterSpacing:".16em",textTransform:"uppercase",cursor:"pointer",marginBottom:24,display:"flex",alignItems:"center",gap:5}}>Back to Stones</button>
-            <span style={{fontSize:8,letterSpacing:".5em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:14}}>{active}</span>
+            <button onClick={()=>setActive(null)} style={{background:"none",border:"none",color:"rgba(245,239,227,.5)",fontSize:13,letterSpacing:".16em",textTransform:"uppercase",cursor:"pointer",marginBottom:24,display:"flex",alignItems:"center",gap:5}}>Back to Stones</button>
+            <span style={{fontSize:13,letterSpacing:".5em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:14}}>{active}</span>
             <h1 style={{fontFamily:"var(--serif)",fontSize:"clamp(36px,5vw,72px)",fontWeight:300,color:"var(--cr)",lineHeight:1.03,marginBottom:32}}>{active}</h1>
             {lore?(
               <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))",gap:0,width:"100%",borderTop:"1px solid rgba(184,145,60,.1)"}}>
@@ -1086,8 +1086,8 @@ function StonesPage({onV,onA}){
                   {k:"Energy",v:lore.energy},
                 ].map(({k,v})=>(
                   <div key={k} style={{padding:"22px 24px",borderRight:"1px solid rgba(184,145,60,.08)"}}>
-                    <div style={{fontSize:8,letterSpacing:".28em",textTransform:"uppercase",color:"var(--gold)",marginBottom:8,opacity:.7}}>{k}</div>
-                    <p style={{fontSize:12,color:"rgba(245,239,227,.55)",lineHeight:1.88,fontWeight:300}}>{v}</p>
+                    <div style={{fontSize:13,letterSpacing:".28em",textTransform:"uppercase",color:"var(--gold)",marginBottom:8,opacity:.7}}>{k}</div>
+                    <p style={{fontSize:15,color:"rgba(245,239,227,.55)",lineHeight:1.88,fontWeight:300}}>{v}</p>
                   </div>
                 ))}
               </div>
@@ -1098,14 +1098,14 @@ function StonesPage({onV,onA}){
         </div>
         <div style={{background:"var(--cr)",padding:"40px 72px"}}>
           <div style={{marginBottom:24}} data-rv>
-            <span style={{fontSize:8.5,letterSpacing:".3em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:6}}>{products.length} {products.length===1?"piece":"pieces"} featuring {active}</span>
-            <p style={{fontSize:12,color:"var(--ink3)",fontWeight:300}}>Each piece can be further customised with any stone of your choice.</p>
+            <span style={{fontSize:13,letterSpacing:".3em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:6}}>{products.length} {products.length===1?"piece":"pieces"} featuring {active}</span>
+            <p style={{fontSize:15,color:"var(--ink3)",fontWeight:300}}>Each piece can be further customised with any stone of your choice.</p>
           </div>
           {products.length>0
             ?<div className="pgrid" data-rv>{products.map(p=><PC key={p.id} product={p} onV={onV} onA={onA}/>)}</div>
             :<div style={{textAlign:"center",padding:"52px 0"}}>
               <p style={{fontSize:13,color:"var(--ink3)",marginBottom:12}}>No pieces currently feature {active} as a default stone.</p>
-              <p style={{fontSize:12,color:"var(--ink3)",fontStyle:"italic"}}>You can add {active} to any piece using the stone swap on any product.</p>
+              <p style={{fontSize:15,color:"var(--ink3)",fontStyle:"italic"}}>You can add {active} to any piece using the stone swap on any product.</p>
             </div>}
         </div>
       </div>
@@ -1129,8 +1129,8 @@ function StonesPage({onV,onA}){
                 onMouseEnter={e=>{e.currentTarget.style.background="var(--cr3)";e.currentTarget.style.borderTopColor="var(--gold)";}}
                 onMouseLeave={e=>{e.currentTarget.style.background="var(--cr2)";e.currentTarget.style.borderTopColor="transparent";}}>
                 <div style={{fontFamily:"var(--serif)",fontSize:19,color:"var(--ink)",marginBottom:4}}>{stone}</div>
-                {lore&&<p style={{fontSize:10,color:"var(--ink3)",marginBottom:8,lineHeight:1.6,fontWeight:300,fontStyle:"italic"}}>{lore.symbol.slice(0,60)}...</p>}
-                <span style={{fontSize:8,letterSpacing:".14em",textTransform:"uppercase",color:"var(--gold)"}}>{pcs.length} {pcs.length===1?"piece":"pieces"} - tap to explore</span>
+                {lore&&<p style={{fontSize:14,color:"var(--ink3)",marginBottom:8,lineHeight:1.6,fontWeight:300,fontStyle:"italic"}}>{lore.symbol.slice(0,60)}...</p>}
+                <span style={{fontSize:13,letterSpacing:".14em",textTransform:"uppercase",color:"var(--gold)"}}>{pcs.length} {pcs.length===1?"piece":"pieces"} - tap to explore</span>
               </button>
             );
           })}
@@ -1142,14 +1142,14 @@ function StonesPage({onV,onA}){
 
 function CarePage({setPage,onA}){useRv();return(<div style={{paddingTop:64}}>
       <div style={{padding:"8px 24px",background:"var(--cr)",borderBottom:"1px solid rgba(26,18,10,.08)",position:"sticky",top:64,zIndex:500}}>
-        <button onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");}} style={{background:"none",border:"none",cursor:"pointer",fontSize:11,color:"var(--ink3)",letterSpacing:".1em",textTransform:"uppercase",display:"flex",alignItems:"center",gap:5,padding:0}}>&#8592; Home</button>
+        <button onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");}} style={{background:"none",border:"none",cursor:"pointer",fontSize:14,color:"var(--ink3)",letterSpacing:".1em",textTransform:"uppercase",display:"flex",alignItems:"center",gap:5,padding:0}}>&#8592; Home</button>
       </div>
       <div className="page-header"><span className="page-header-tag" data-rv>Care</span><h1 className="page-header-title" data-rv data-d="1">Keep your copper alive</h1><p className="page-header-sub" data-rv data-d="2">Every Dorra piece ships with a copper care kit - polish liquid and soft cloth. Use them when your piece begins to darken.</p></div><div className="section-cream"><div className="care-steps" data-rv>{[["Apply","A few drops of polish to the soft cloth."],["Rub","Gently along the copper wire in small circles."],["Rinse","Briefly with cool water."],["Dry","Pat dry immediately. Never leave wet."]].map((s,i)=><div key={s[0]} className="care-step"><div className="care-step-icon">0{i+1}</div><div className="care-step-title">{s[0]}</div><p className="care-step-text">{s[1]}</p></div>)}</div><div style={{maxWidth:560,margin:"40px auto 0",textAlign:"center"}} data-rv data-d="2"><p style={{fontSize:13,color:"var(--ink3)",lineHeight:2.0,marginBottom:20,fontWeight:300}}>The darkening of copper is a natural process called a patina - it is not damage. Your care kit lets you choose when to restore.</p><button className="btn btn-dark" onClick={()=>{
               const kit=CATALOG.find(p=>p.type==="Care");
               if(kit&&onA){onA(kit,[],kit.price);}
             }}>Add Copper Care Kit to Cart</button></div></div></div>);}
 
-function StoryPage(){useRv();return(<div style={{paddingTop:64}}><div className="story-split"><div className="story-left"><span className="sec-label sec-label-dark" data-rv>The Name</span><div style={{fontFamily:"var(--serif)",fontSize:"clamp(42px,5.4vw,76px)",color:"var(--gold)",fontStyle:"italic",lineHeight:1,marginBottom:7}} data-rv data-d="1">Dorra</div><div style={{fontSize:8,letterSpacing:".36em",textTransform:"uppercase",color:"rgba(245,239,227,.22)",marginBottom:19}} data-rv data-d="1">Pearl - Egypt</div><p style={{fontSize:13,color:"rgba(245,239,227,.44)",lineHeight:2.0,maxWidth:360,marginBottom:22,fontWeight:300}} data-rv data-d="2">In Arabic, Dorra means pearl - not found in the earth, born from a living creature's patient response to discomfort. A grain of sand held for years, becoming luminous.</p><div data-rv data-d="3">{[{n:"01",t:"The stone is chosen",tx:"Every piece begins with a stone selected for what it carries, not just how it looks."},{n:"02",t:"The copper is shaped",tx:"Raw copper wire, wound by hand over 2-4 days. No molds. No machines."},{n:"03",t:"The piece is finished",tx:"Polished, paired with its stone card, wrapped in its pouch."},{n:"04",t:"It finds its wearer",tx:"Every Dorra piece is made to order, for one person."}].map(item=><div key={item.n} className="timeline-row"><div className="timeline-num">{item.n}</div><div><div className="timeline-title">{item.t}</div><p className="timeline-sub">{item.tx}</p></div></div>)}</div></div><div className="story-right">{IMGS.logo&&<img src={IMGS.logo} alt="" style={{height:44,width:"auto",opacity:.15}}/>}</div></div><div className="story-mid"><div className="story-dark"><span className="sec-label sec-label-dark" data-rv>Our Story</span><h2 className="sec-title sec-title-dark" style={{marginBottom:10}} data-rv data-d="1">Nature is the original artisan. We are her hands.</h2><div className="sec-rule"/><p style={{fontSize:13,color:"rgba(245,239,227,.44)",lineHeight:2.0,maxWidth:360,fontWeight:300}} data-rv data-d="2">Dorra was born from the belief that the earth holds more beauty than any factory could. Each piece carries a stone chosen for its meaning, set in copper shaped by hand.</p><blockquote className="blockquote" data-rv data-d="3">"A pearl is not made by a jeweler. It is made by the sea."</blockquote></div><div className="story-light"><div style={{textAlign:"center"}}>{IMGS.logo&&<img src={IMGS.logo} alt="" style={{height:44,width:"auto",opacity:.15,marginBottom:12}}/>}<p style={{fontSize:8,letterSpacing:".2em",textTransform:"uppercase",color:"var(--ink3)"}}>Made in Egypt</p></div></div></div></div>);}
+function StoryPage(){useRv();return(<div style={{paddingTop:64}}><div className="story-split"><div className="story-left"><span className="sec-label sec-label-dark" data-rv>The Name</span><div style={{fontFamily:"var(--serif)",fontSize:"clamp(42px,5.4vw,76px)",color:"var(--gold)",fontStyle:"italic",lineHeight:1,marginBottom:7}} data-rv data-d="1">Dorra</div><div style={{fontSize:13,letterSpacing:".36em",textTransform:"uppercase",color:"rgba(245,239,227,.22)",marginBottom:19}} data-rv data-d="1">Pearl - Egypt</div><p style={{fontSize:13,color:"rgba(245,239,227,.44)",lineHeight:2.0,maxWidth:360,marginBottom:22,fontWeight:300}} data-rv data-d="2">In Arabic, Dorra means pearl - not found in the earth, born from a living creature's patient response to discomfort. A grain of sand held for years, becoming luminous.</p><div data-rv data-d="3">{[{n:"01",t:"The stone is chosen",tx:"Every piece begins with a stone selected for what it carries, not just how it looks."},{n:"02",t:"The copper is shaped",tx:"Raw copper wire, wound by hand over 2-4 days. No molds. No machines."},{n:"03",t:"The piece is finished",tx:"Polished, paired with its stone card, wrapped in its pouch."},{n:"04",t:"It finds its wearer",tx:"Every Dorra piece is made to order, for one person."}].map(item=><div key={item.n} className="timeline-row"><div className="timeline-num">{item.n}</div><div><div className="timeline-title">{item.t}</div><p className="timeline-sub">{item.tx}</p></div></div>)}</div></div><div className="story-right">{IMGS.logo&&<img src={IMGS.logo} alt="" style={{height:44,width:"auto",opacity:.15}}/>}</div></div><div className="story-mid"><div className="story-dark"><span className="sec-label sec-label-dark" data-rv>Our Story</span><h2 className="sec-title sec-title-dark" style={{marginBottom:10}} data-rv data-d="1">Nature is the original artisan. We are her hands.</h2><div className="sec-rule"/><p style={{fontSize:13,color:"rgba(245,239,227,.44)",lineHeight:2.0,maxWidth:360,fontWeight:300}} data-rv data-d="2">Dorra was born from the belief that the earth holds more beauty than any factory could. Each piece carries a stone chosen for its meaning, set in copper shaped by hand.</p><blockquote className="blockquote" data-rv data-d="3">"A pearl is not made by a jeweler. It is made by the sea."</blockquote></div><div className="story-light"><div style={{textAlign:"center"}}>{IMGS.logo&&<img src={IMGS.logo} alt="" style={{height:44,width:"auto",opacity:.15,marginBottom:12}}/>}<p style={{fontSize:13,letterSpacing:".12em",textTransform:"uppercase",color:"var(--ink3)"}}>Made in Egypt</p></div></div></div></div>);}
 
 function ContactPage(){const[form,setForm]=useState({name:"",email:"",subject:"",message:""}),[sent,setSent]=useState(false);useRv();const send=()=>{if(!form.name||!form.email||!form.message)return;window.location.href="mailto:dorrastonejewelry@gmail.com?subject="+encodeURIComponent(form.subject||"Message from "+form.name)+"&body="+encodeURIComponent("Name: "+form.name+"\nEmail: "+form.email+"\n\n"+form.message);setSent(true);};return(<div style={{paddingTop:64}}><div className="contact-split"><div className="contact-dark"><span className="sec-label sec-label-dark" data-rv>Get in Touch</span><h1 className="sec-title sec-title-dark" data-rv data-d="1">We would love to hear from you</h1><div className="sec-rule"/>{[{l:"Email",v:"dorrastonejewelry@gmail.com"},{l:"Instagram",v:"@dorrastones"},{l:"Location",v:"Cairo"},{l:"WhatsApp",v:"+20 102 062 4266"}].map((d,i)=><div key={d.l} data-rv data-d={String(i+2)}><div className="contact-label">{d.l}</div><div className="contact-val">{d.v}</div></div>)}<blockquote className="blockquote" data-rv data-d="4">"The Luxury of Nature."</blockquote></div><div className="contact-light">{sent?<div className="success-block"><div className="success-icon">*</div><div className="success-title">Message Sent</div><p style={{fontSize:13,color:"var(--ink3)"}}>We reply within 24 hours.</p><button className="btn btn-dark" onClick={()=>setSent(false)}>Send Another</button></div>:<div data-rv><h2 style={{fontFamily:"var(--serif)",fontSize:23,fontWeight:300,color:"var(--ink)",marginBottom:20}}>Send a Message</h2><div className="field"><label className="field-label">Your Name</label><input className="field-input" placeholder="Full name" value={form.name} onChange={e=>setForm({...form,name:e.target.value})}/></div><div className="field"><label className="field-label">Email</label><input className="field-input" type="email" placeholder="your@email.com" value={form.email} onChange={e=>setForm({...form,email:e.target.value})}/></div><div className="field"><label className="field-label">Subject</label><input className="field-input" placeholder="Subject" value={form.subject} onChange={e=>setForm({...form,subject:e.target.value})}/></div><div className="field"><label className="field-label">Message</label><textarea className="field-textarea" style={{minHeight:96}} placeholder="Your message..." value={form.message} onChange={e=>setForm({...form,message:e.target.value})}/></div><button className="btn btn-dark btn-full" style={{padding:"13px",marginTop:4}} onClick={send}>Send Message</button></div>}</div></div></div>);}
 
@@ -1206,7 +1206,7 @@ function CustomizePage({onAddCart,onGoCart}){
 
           {/* PIECE TYPE */}
           <div style={{marginBottom:28}}>
-            <span style={{fontSize:11,letterSpacing:".2em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:10}}>Piece Type</span>
+            <span style={{fontSize:14,letterSpacing:".12em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:10}}>Piece Type</span>
             <div className="sec-rule" style={{marginBottom:14}}/>
             <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
               {["Bracelet","Statement Bracelet","Necklace","Anklet","Earring"].map(t=>(
@@ -1217,13 +1217,13 @@ function CustomizePage({onAddCart,onGoCart}){
               ))}
             </div>
             {/* Piece type description */}
-            {pt==="Bracelet"&&<p style={{fontSize:12,color:"var(--ink3)",lineHeight:1.8,marginTop:10,padding:"10px 14px",background:"rgba(26,18,10,.04)",borderLeft:"2px solid rgba(184,145,60,.2)"}}>All stones are the same size, wound evenly around the copper wire.</p>}
-            {pt==="Statement Bracelet"&&<p style={{fontSize:12,color:"var(--ink3)",lineHeight:1.8,marginTop:10,padding:"10px 14px",background:"rgba(26,18,10,.04)",borderLeft:"2px solid var(--gold)"}}>One stone is chosen as a centrepiece  larger in size and placed at the front. The remaining stones complement it.</p>}
+            {pt==="Bracelet"&&<p style={{fontSize:15,color:"var(--ink3)",lineHeight:1.8,marginTop:10,padding:"10px 14px",background:"rgba(26,18,10,.04)",borderLeft:"2px solid rgba(184,145,60,.2)"}}>All stones are the same size, wound evenly around the copper wire.</p>}
+            {pt==="Statement Bracelet"&&<p style={{fontSize:15,color:"var(--ink3)",lineHeight:1.8,marginTop:10,padding:"10px 14px",background:"rgba(26,18,10,.04)",borderLeft:"2px solid var(--gold)"}}>One stone is chosen as a centrepiece  larger in size and placed at the front. The remaining stones complement it.</p>}
           </div>
 
           {/* WIRE COLOR / BASE METAL */}
           <div style={{marginBottom:28}}>
-            <span style={{fontSize:11,letterSpacing:".2em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:10}}>{pt==="Earring"?"Earring Base Metal":"Decorative Wire Color"}</span>
+            <span style={{fontSize:14,letterSpacing:".12em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:10}}>{pt==="Earring"?"Earring Base Metal":"Decorative Wire Color"}</span>
             <div className="sec-rule" style={{marginBottom:10}}/>
             <p style={{fontSize:13,color:"var(--ink3)",lineHeight:1.8,marginBottom:14}}>The thin decorative wire comes in two finishes, or opt for doubled thick copper or none at all.</p>
             <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
@@ -1231,8 +1231,8 @@ function CustomizePage({onAddCart,onGoCart}){
                 <button key={w.id} onClick={()=>setWire(w.id)}
                   style={{padding:"12px 16px",textAlign:"left",background:wire===w.id?"var(--g)":"transparent",color:wire===w.id?"var(--cr)":"var(--ink)",border:"1px solid",borderColor:wire===w.id?"var(--g)":"rgba(26,18,10,.15)",cursor:"pointer",transition:"all .2s",minWidth:150}}>
                   <div style={{fontSize:14,fontFamily:"var(--serif)",marginBottom:3}}>{w.label}</div>
-                  <div style={{fontSize:11,opacity:.7}}>{w.sub}</div>
-                  {w.extra>0&&<div style={{fontSize:11,color:wire===w.id?"rgba(245,239,227,.6)":"var(--gold)",marginTop:4}}>+{w.extra} EGP</div>}
+                  <div style={{fontSize:14,opacity:.7}}>{w.sub}</div>
+                  {w.extra>0&&<div style={{fontSize:14,color:wire===w.id?"rgba(245,239,227,.6)":"var(--gold)",marginTop:4}}>+{w.extra} EGP</div>}
                 </button>
               ))}
             </div>
@@ -1240,8 +1240,8 @@ function CustomizePage({onAddCart,onGoCart}){
 
           {/* STONES */}
           <div style={{marginBottom:28}}>
-            <span style={{fontSize:11,letterSpacing:".2em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:4}}>Choose Your Stones</span>
-            <p style={{fontSize:12,color:"var(--ink3)",marginBottom:10}}>First 2 stones included. Each additional stone adds to total.</p>
+            <span style={{fontSize:14,letterSpacing:".12em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:4}}>Choose Your Stones</span>
+            <p style={{fontSize:15,color:"var(--ink3)",marginBottom:10}}>First 2 stones included. Each additional stone adds to total.</p>
             <div className="sec-rule" style={{marginBottom:14}}/>
             <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(clamp(120px,28vw,150px),1fr))",gap:8,marginBottom:8}}>
               {STONES.map((s,si)=>{
@@ -1253,7 +1253,7 @@ function CustomizePage({onAddCart,onGoCart}){
                     {SP[s]&&<div style={{height:72,overflow:"hidden"}}><img src={SP[s]} alt={s} style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}} onError={e=>e.currentTarget.style.display="none"}/></div>}
                     <div style={{padding:"8px 10px"}}>
                       <div style={{fontFamily:"var(--serif)",fontSize:14,color:"var(--ink)",marginBottom:2}}>{s}</div>
-                      {si<3&&<div style={{fontSize:10,color:"var(--gold)",letterSpacing:".06em"}}>RARE</div>}
+                      {si<3&&<div style={{fontSize:14,color:"var(--gold)",letterSpacing:".06em"}}>RARE</div>}
                     </div>
                   </button>
                 );
@@ -1265,8 +1265,8 @@ function CustomizePage({onAddCart,onGoCart}){
           {needsSize&&(
             <div style={{marginBottom:28}}>
               <div style={{display:"flex",alignItems:"baseline",justifyContent:"space-between",marginBottom:10}}>
-                <span style={{fontSize:11,letterSpacing:".2em",textTransform:"uppercase",color:"var(--gold)"}}>Size</span>
-                <span style={{fontSize:12,color:"var(--ink3)",fontStyle:"italic"}}>S: 5 cm &bull; M: 5.5 cm &bull; L: 6.5 cm (inner diameter)</span>
+                <span style={{fontSize:14,letterSpacing:".12em",textTransform:"uppercase",color:"var(--gold)"}}>Size</span>
+                <span style={{fontSize:15,color:"var(--ink3)",fontStyle:"italic"}}>S: 5 cm &bull; M: 5.5 cm &bull; L: 6.5 cm (inner diameter)</span>
               </div>
               <div className="sec-rule" style={{marginBottom:14}}/>
               <div style={{display:"flex",gap:8}}>
@@ -1288,12 +1288,12 @@ function CustomizePage({onAddCart,onGoCart}){
 
           {/* INSPO PHOTO */}
           <div className="field">
-            <label className="field-label">Inspiration Photo <span style={{fontSize:12,color:"var(--ink3)",fontWeight:300,textTransform:"none",letterSpacing:0}}>(optional)</span></label>
+            <label className="field-label">Inspiration Photo <span style={{fontSize:15,color:"var(--ink3)",fontWeight:300,textTransform:"none",letterSpacing:0}}>(optional)</span></label>
             <p style={{fontSize:13,color:"var(--ink3)",lineHeight:1.75,marginBottom:10}}>Share a reference image or mood board that captures the feeling you are after.</p>
             <input type="file" accept="image/*" onChange={handleInspo} style={{fontSize:13,color:"var(--ink3)"}}/>
             {inspoImg
-              ?<p style={{fontSize:12,color:"var(--gold)",marginTop:6}}>{inspoImg} uploaded</p>
-              :<p style={{fontSize:12,color:"var(--ink3)",marginTop:6,fontStyle:"italic"}}>The image is not necessary  share only if it helps express your vision.</p>}
+              ?<p style={{fontSize:15,color:"var(--gold)",marginTop:6}}>{inspoImg} uploaded</p>
+              :<p style={{fontSize:15,color:"var(--ink3)",marginTop:6,fontStyle:"italic"}}>The image is not necessary  share only if it helps express your vision.</p>}
           </div>
 
         </div>
@@ -1301,7 +1301,7 @@ function CustomizePage({onAddCart,onGoCart}){
         {/* ESTIMATE */}
         <div>
           <div className="estimate-box">
-            <div style={{fontSize:11,letterSpacing:".2em",textTransform:"uppercase",color:"rgba(184,145,60,.85)",marginBottom:12}}>Price Estimate</div>
+            <div style={{fontSize:14,letterSpacing:".12em",textTransform:"uppercase",color:"rgba(184,145,60,.85)",marginBottom:12}}>Price Estimate</div>
             {picked.length===0
               ?<p style={{fontSize:14,color:"rgba(245,239,227,.4)",lineHeight:1.8}}>Select a piece type and at least one stone to see your estimated price.</p>
               :<div>
@@ -1312,18 +1312,18 @@ function CustomizePage({onAddCart,onGoCart}){
                 {extraStones>0&&<div className="estimate-row"><span className="estimate-key">Extra stones</span><span className="estimate-val">+{stoneExtra} EGP</span></div>}
                 <div style={{height:1,background:"rgba(184,145,60,.15)",margin:"12px 0"}}/>
                 <div style={{fontFamily:"var(--serif)",fontSize:32,color:"#f5efe3",fontWeight:300,marginBottom:4}}>{est} EGP</div>
-                <div style={{fontSize:12,color:"rgba(245,239,227,.4)",marginBottom:16}}>Final price confirmed after review.</div>
+                <div style={{fontSize:15,color:"rgba(245,239,227,.4)",marginBottom:16}}>Final price confirmed after review.</div>
                 <div style={{paddingTop:14,borderTop:"1px solid rgba(184,145,60,.12)"}}>
-                  <div style={{fontSize:11,letterSpacing:".18em",textTransform:"uppercase",color:"rgba(184,145,60,.6)",marginBottom:4}}>40% Deposit to Begin</div>
+                  <div style={{fontSize:14,letterSpacing:".18em",textTransform:"uppercase",color:"rgba(184,145,60,.6)",marginBottom:4}}>40% Deposit to Begin</div>
                   <div style={{fontFamily:"var(--serif)",fontSize:24,color:"var(--gold)"}}>{dep} EGP</div>
-                  <div style={{fontSize:11,color:"rgba(245,239,227,.3)",marginTop:4}}>Balance paid on delivery</div>
+                  <div style={{fontSize:14,color:"rgba(245,239,227,.3)",marginTop:4}}>Balance paid on delivery</div>
                 </div>
               </div>}
           </div>
-          <button className="btn btn-gold btn-full" style={{padding:"15px",fontSize:12,letterSpacing:".22em",marginTop:16}} onClick={doAdd} disabled={!picked.length}>
+          <button className="btn btn-gold btn-full" style={{padding:"15px",fontSize:15,letterSpacing:".12em",marginTop:16}} onClick={doAdd} disabled={!picked.length}>
             Add to Cart
           </button>
-          {!picked.length&&<p style={{fontSize:12,color:"var(--ink3)",textAlign:"center",marginTop:8}}>Select at least one stone to continue.</p>}
+          {!picked.length&&<p style={{fontSize:15,color:"var(--ink3)",textAlign:"center",marginTop:8}}>Select at least one stone to continue.</p>}
         </div>
       </div>
     </div>
@@ -1364,27 +1364,27 @@ function DetailPage({product,initStone,onBack,onA}){
         <div className="detail-info">
 
           {/* Back */}
-          <button onClick={onBack} style={{background:"none",border:"none",color:"var(--ink3)",fontSize:8,letterSpacing:".24em",textTransform:"uppercase",cursor:"pointer",display:"inline-flex",alignItems:"center",gap:7,marginBottom:16,padding:0,transition:"color .2s"}}
+          <button onClick={onBack} style={{background:"none",border:"none",color:"var(--ink3)",fontSize:13,letterSpacing:".12em",textTransform:"uppercase",cursor:"pointer",display:"inline-flex",alignItems:"center",gap:7,marginBottom:16,padding:0,transition:"color .2s"}}
             onMouseEnter={e=>e.currentTarget.style.color="var(--ink)"}
             onMouseLeave={e=>e.currentTarget.style.color="var(--ink3)"}>
             <span style={{fontSize:14}}>&#8592;</span> Return to Collection
           </button>
 
-          <span style={{fontSize:8,letterSpacing:".32em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:8}}>{product.type}</span>
+          <span style={{fontSize:13,letterSpacing:".32em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:8}}>{product.type}</span>
           <h1 className="detail-name">{product.name}</h1>
           <div className="detail-price">
-            {fmt(price)}{swapCount>0&&<span style={{fontSize:12,color:"var(--gold)",marginLeft:10,fontFamily:"var(--sans)",fontWeight:300}}>+{fmt(price-product.price)} customisation</span>}
+            {fmt(price)}{swapCount>0&&<span style={{fontSize:15,color:"var(--gold)",marginLeft:10,fontFamily:"var(--sans)",fontWeight:300}}>+{fmt(price-product.price)} customisation</span>}
           </div>
 
           <p className="detail-desc">{product.desc}</p>
 
-          {product.durabilityNote&&<div style={{fontSize:11,color:"var(--ink3)",lineHeight:1.8,padding:"10px 14px",background:"var(--cr3)",borderLeft:"2px solid rgba(184,145,60,.25)",marginBottom:8}}>{product.durabilityNote}</div>}
-          {product.delicateNote&&<div style={{fontSize:11,color:"var(--gold)",lineHeight:1.8,padding:"10px 14px",background:"rgba(184,145,60,.05)",borderLeft:"2px solid rgba(184,145,60,.4)",marginBottom:8,fontStyle:"italic"}}>{product.delicateNote}</div>}
+          {product.durabilityNote&&<div style={{fontSize:14,color:"var(--ink3)",lineHeight:1.8,padding:"10px 14px",background:"var(--cr3)",borderLeft:"2px solid rgba(184,145,60,.25)",marginBottom:8}}>{product.durabilityNote}</div>}
+          {product.delicateNote&&<div style={{fontSize:14,color:"var(--gold)",lineHeight:1.8,padding:"10px 14px",background:"rgba(184,145,60,.05)",borderLeft:"2px solid rgba(184,145,60,.4)",marginBottom:8,fontStyle:"italic"}}>{product.delicateNote}</div>}
 
           {product.sizes&&product.sizes.length>0&&<div style={{marginBottom:10}}>
-            <div style={{fontSize:8,letterSpacing:".2em",textTransform:"uppercase",color:"var(--ink3)",marginBottom:7}}>Size</div>
+            <div style={{fontSize:13,letterSpacing:".12em",textTransform:"uppercase",color:"var(--ink3)",marginBottom:7}}>Size</div>
             <div style={{display:"flex",gap:6}}>
-              {product.sizes.map(sz=><button key={sz} onClick={()=>setSelSize(sz)} style={{padding:"7px 20px",fontFamily:"var(--sans)",fontSize:8,letterSpacing:".14em",textTransform:"uppercase",background:selSize===sz?"var(--g)":"transparent",color:selSize===sz?"var(--cr)":"var(--ink3)",border:"1px solid",borderColor:selSize===sz?"var(--g)":"rgba(26,18,10,.2)",cursor:"pointer",transition:"all .2s"}}>{sz}</button>)}
+              {product.sizes.map(sz=><button key={sz} onClick={()=>setSelSize(sz)} style={{padding:"7px 20px",fontFamily:"var(--sans)",fontSize:13,letterSpacing:".14em",textTransform:"uppercase",background:selSize===sz?"var(--g)":"transparent",color:selSize===sz?"var(--cr)":"var(--ink3)",border:"1px solid",borderColor:selSize===sz?"var(--g)":"rgba(26,18,10,.2)",cursor:"pointer",transition:"all .2s"}}>{sz}</button>)}
             </div>
           </div>}
 
@@ -1394,11 +1394,11 @@ function DetailPage({product,initStone,onBack,onA}){
 
           {(product.type==="Bracelet"||product.type==="Necklace")&&(
             <div style={{marginBottom:16}}>
-              <div style={{fontSize:10,letterSpacing:".16em",textTransform:"uppercase",color:"var(--gold)",marginBottom:8}}>Wire Finish</div>
+              <div style={{fontSize:14,letterSpacing:".16em",textTransform:"uppercase",color:"var(--gold)",marginBottom:8}}>Wire Finish</div>
               <div style={{display:"flex",gap:8}}>
                 {[{id:"gold",label:"Gold-Toned"},{id:"silver",label:"Silver-Toned"}].map(b=>(
                   <button key={b.id} onClick={()=>setBaseMetal(b.id)}
-                    style={{flex:1,padding:"9px 8px",fontSize:12,letterSpacing:".06em",background:baseMetal===b.id?"var(--g)":"transparent",color:baseMetal===b.id?"var(--cr)":"var(--ink3)",border:"1px solid",borderColor:baseMetal===b.id?"var(--g)":"rgba(26,18,10,.15)",cursor:"pointer",transition:"all .2s"}}>
+                    style={{flex:1,padding:"9px 8px",fontSize:15,letterSpacing:".06em",background:baseMetal===b.id?"var(--g)":"transparent",color:baseMetal===b.id?"var(--cr)":"var(--ink3)",border:"1px solid",borderColor:baseMetal===b.id?"var(--g)":"rgba(26,18,10,.15)",cursor:"pointer",transition:"all .2s"}}>
                     {b.label}
                   </button>
                 ))}
@@ -1406,15 +1406,15 @@ function DetailPage({product,initStone,onBack,onA}){
             </div>
           )}
           <button onClick={()=>onA({...product,wireColor:baseMetal},swaps,price,selSize)}
-            style={{width:"100%",padding:"14px",fontFamily:"var(--sans)",fontSize:9,letterSpacing:".2em",textTransform:"uppercase",background:"var(--g)",color:"var(--gold)",border:"none",cursor:"pointer",transition:"all .25s",marginBottom:10}}
+            style={{width:"100%",padding:"14px",fontFamily:"var(--sans)",fontSize:13,letterSpacing:".12em",textTransform:"uppercase",background:"var(--g)",color:"var(--gold)",border:"none",cursor:"pointer",transition:"all .25s",marginBottom:10}}
             onMouseEnter={e=>{e.currentTarget.style.background="var(--gold)";e.currentTarget.style.color="var(--g)";}}
             onMouseLeave={e=>{e.currentTarget.style.background="var(--g)";e.currentTarget.style.color="var(--gold)";}}>
             Add to Cart &nbsp; {fmt(price)}
           </button>
 
           {product.care&&<div style={{borderTop:"1px solid rgba(26,18,10,.08)",paddingTop:14}}>
-            <div style={{fontSize:8,letterSpacing:".2em",textTransform:"uppercase",color:"var(--gold)",marginBottom:6}}>Care</div>
-            <p style={{fontSize:11,color:"var(--ink3)",lineHeight:1.85,fontWeight:300}}>{product.care}</p>
+            <div style={{fontSize:13,letterSpacing:".12em",textTransform:"uppercase",color:"var(--gold)",marginBottom:6}}>Care</div>
+            <p style={{fontSize:14,color:"var(--ink3)",lineHeight:1.85,fontWeight:300}}>{product.care}</p>
           </div>}
 
         </div>
@@ -1430,13 +1430,13 @@ function CartDrawer({cart,onClose,onQty,onPkg,onCk}){
     <div className="cart-overlay" onClick={onClose}>
       <div className="cart-drawer" onClick={e=>e.stopPropagation()}>
         <div className="cart-head">
-          <button onClick={onClose} style={{background:"none",border:"none",cursor:"pointer",fontSize:11,color:"var(--ink3)",letterSpacing:".1em",textTransform:"uppercase",display:"flex",alignItems:"center",gap:5,padding:0}}>&#8592; Shop</button>
+          <button onClick={onClose} style={{background:"none",border:"none",cursor:"pointer",fontSize:14,color:"var(--ink3)",letterSpacing:".1em",textTransform:"uppercase",display:"flex",alignItems:"center",gap:5,padding:0}}>&#8592; Shop</button>
           <span className="cart-title">Cart</span>
           <button className="cart-close" onClick={onClose} style={{fontSize:20,fontWeight:300,lineHeight:1}}>&#x2715;</button>
         </div>
         <div style={{padding:"52px 24px",textAlign:"center"}}>
           <p style={{fontFamily:"var(--serif)",fontSize:22,fontWeight:300,color:"var(--ink)",marginBottom:8}}>Your cart is empty.</p>
-          <p style={{fontSize:12,color:"var(--ink3)"}}>Add a piece to begin.</p>
+          <p style={{fontSize:15,color:"var(--ink3)"}}>Add a piece to begin.</p>
         </div>
       </div>
     </div>
@@ -1452,7 +1452,7 @@ function CartDrawer({cart,onClose,onQty,onPkg,onCk}){
               <div className="cart-item-info">
                 <div className="cart-item-name">{item.product.name}</div>
                 <div className="cart-item-stone">{Array.isArray(item.swapStone)?item.swapStone.join(", "):item.swapStone}{item.size&&item.product.sizes?" - "+item.size:""}</div>
-                {item.product.isFromScratch&&<span style={{fontSize:8,color:"var(--gold)",letterSpacing:".1em",textTransform:"uppercase"}}>Bespoke</span>}
+                {item.product.isFromScratch&&<span style={{fontSize:13,color:"var(--gold)",letterSpacing:".1em",textTransform:"uppercase"}}>Bespoke</span>}
                 <div className="cart-item-foot">
                   <span className="cart-item-price">{fmt(item.price*item.qty)}</span>
                   <div className="qty-ctrl">
@@ -1467,7 +1467,7 @@ function CartDrawer({cart,onClose,onQty,onPkg,onCk}){
         </div>
         <div className="cart-foot">
           <div className="cart-total-row"><span className="cart-total-label">Total</span><span className="cart-total-val">{fmt(total)}</span></div>
-          <button className="btn btn-gold btn-full" style={{padding:"14px",fontSize:9,letterSpacing:".22em",marginTop:12,padding:"15px",fontSize:10}} onClick={onCk}>Proceed to Checkout</button>
+          <button className="btn btn-gold btn-full" style={{padding:"14px",fontSize:13,letterSpacing:".12em",marginTop:12,padding:"15px",fontSize:10}} onClick={onCk}>Proceed to Checkout</button>
         </div>
       </div>
     </div>
@@ -1544,22 +1544,22 @@ function Checkout({cart,onClose,onOk,setLastOrder}){
     <div className="order-summary">
       <div className="order-summary-title">Order Summary</div>
       {standardItems.map((i,idx2)=><div key={"s"+idx2} className="order-row"><span>{i.product.name}{i.size?" - "+i.size:""} x{i.qty}</span><span>{fmt(i.price*i.qty)}</span></div>)}
-      {customItems.map((i,idx2)=><div key={"c"+idx2} className="order-row"><span style={{color:"var(--gold)"}}>{i.product.name} x{i.qty} <span style={{fontSize:9,opacity:.7}}>(bespoke)</span></span><span>{fmt(i.price*i.qty)}</span></div>)}
+      {customItems.map((i,idx2)=><div key={"c"+idx2} className="order-row"><span style={{color:"var(--gold)"}}>{i.product.name} x{i.qty} <span style={{fontSize:13,opacity:.7}}>(bespoke)</span></span><span>{fmt(i.price*i.qty)}</span></div>)}
       <div className="order-row"><span>Shipping</span><span>EGP {ship}</span></div>
       <div className="order-total-row"><span className="order-total-label">Total</span><span className="order-total-val">{fmt(tot)}</span></div>
       {hasFromScratch&&customSub>0&&<div style={{marginTop:10,padding:"11px 13px",background:"rgba(184,145,60,.07)",borderLeft:"2px solid rgba(184,145,60,.28)"}}>
-        <div style={{fontSize:8,letterSpacing:".2em",textTransform:"uppercase",color:"var(--ink3)",marginBottom:8}}>Payment Breakdown</div>
-        <div style={{display:"flex",justifyContent:"space-between",fontSize:11,marginBottom:4}}><span style={{color:"var(--ink3)"}}>Bespoke deposit (40%)</span><span>{fmt(customDep)}</span></div>
-        {standardSub>0&&!isCOD&&<div style={{display:"flex",justifyContent:"space-between",fontSize:11,marginBottom:4}}><span style={{color:"var(--ink3)"}}>Standard items</span><span>{fmt(standardSub)}</span></div>}
-        <div style={{display:"flex",justifyContent:"space-between",paddingTop:7,borderTop:"1px solid rgba(26,18,10,.09)",fontWeight:500}}><span style={{fontSize:11,color:"var(--ink)"}}>Due now</span><span style={{fontFamily:"var(--serif)",fontSize:18}}>{fmt(dueNow)}</span></div>
-        {dueOnDelivery>0&&<div style={{display:"flex",justifyContent:"space-between",fontSize:11,marginTop:4}}><span style={{color:"var(--ink3)"}}>Due on delivery</span><span style={{color:"var(--ink3)"}}>{fmt(dueOnDelivery)}</span></div>}
+        <div style={{fontSize:13,letterSpacing:".12em",textTransform:"uppercase",color:"var(--ink3)",marginBottom:8}}>Payment Breakdown</div>
+        <div style={{display:"flex",justifyContent:"space-between",fontSize:14,marginBottom:4}}><span style={{color:"var(--ink3)"}}>Bespoke deposit (40%)</span><span>{fmt(customDep)}</span></div>
+        {standardSub>0&&!isCOD&&<div style={{display:"flex",justifyContent:"space-between",fontSize:14,marginBottom:4}}><span style={{color:"var(--ink3)"}}>Standard items</span><span>{fmt(standardSub)}</span></div>}
+        <div style={{display:"flex",justifyContent:"space-between",paddingTop:7,borderTop:"1px solid rgba(26,18,10,.09)",fontWeight:500}}><span style={{fontSize:14,color:"var(--ink)"}}>Due now</span><span style={{fontFamily:"var(--serif)",fontSize:18}}>{fmt(dueNow)}</span></div>
+        {dueOnDelivery>0&&<div style={{display:"flex",justifyContent:"space-between",fontSize:14,marginTop:4}}><span style={{color:"var(--ink3)"}}>Due on delivery</span><span style={{color:"var(--ink3)"}}>{fmt(dueOnDelivery)}</span></div>}
       </div>}
     </div>
   );
 
   const PayOpt=({opt})=>(
     <button onClick={()=>setPay(opt.id)} style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"11px 14px",background:pay===opt.id?"var(--g)":"var(--cr2)",border:pay===opt.id?"1px solid rgba(184,145,60,.4)":"1px solid rgba(26,18,10,.1)",cursor:"pointer",textAlign:"left",width:"100%",marginBottom:4,transition:"all .2s"}}>
-      <div><div style={{fontFamily:"var(--serif)",fontSize:15,color:pay===opt.id?"var(--cr)":"var(--ink)"}}>{opt.label}</div><div style={{fontSize:10,color:pay===opt.id?"rgba(245,239,227,.5)":"var(--ink3)",marginTop:1}}>{opt.sub}</div></div>
+      <div><div style={{fontFamily:"var(--serif)",fontSize:15,color:pay===opt.id?"var(--cr)":"var(--ink)"}}>{opt.label}</div><div style={{fontSize:14,color:pay===opt.id?"rgba(245,239,227,.5)":"var(--ink3)",marginTop:1}}>{opt.sub}</div></div>
       <div style={{width:14,height:14,borderRadius:"50%",border:"1px solid",borderColor:pay===opt.id?"var(--gold)":"rgba(26,18,10,.2)",background:pay===opt.id?"var(--gold)":"transparent",flexShrink:0}}/>
     </button>
   );
@@ -1573,7 +1573,7 @@ function Checkout({cart,onClose,onOk,setLastOrder}){
             <div style={{flex:1}}>
             <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:4}}>
               <h2 className="modal-title">Checkout</h2>
-              <button onClick={onClose} style={{background:"none",border:"none",cursor:"pointer",fontSize:11,color:"var(--ink3)",letterSpacing:".1em",textTransform:"uppercase",display:"flex",alignItems:"center",gap:5,padding:0}}>&#8592; Keep Shopping</button>
+              <button onClick={onClose} style={{background:"none",border:"none",cursor:"pointer",fontSize:14,color:"var(--ink3)",letterSpacing:".1em",textTransform:"uppercase",display:"flex",alignItems:"center",gap:5,padding:0}}>&#8592; Keep Shopping</button>
             </div>
             <div className="step-bar" style={{paddingTop:16}}>
               {["Details","Payment","Confirm"].map((s,i)=>[
@@ -1608,28 +1608,28 @@ function Checkout({cart,onClose,onOk,setLastOrder}){
               if(!address.trim()){setFieldErr("Please enter your delivery address.");return;}
               setFieldErr("");setStep(2);
             }}>Continue to Payment</button>
-            {!ok1&&<p style={{fontSize:10,color:"var(--ink3)",textAlign:"center",marginTop:6}}>Please fill in all required fields with a valid email and address.</p>}
+            {!ok1&&<p style={{fontSize:14,color:"var(--ink3)",textAlign:"center",marginTop:6}}>Please fill in all required fields with a valid email and address.</p>}
           </>}
 
           {step===2&&<>
             <Summary/>
             <div className="field">
               <label className="field-label">Payment Method</label>
-              {hasFromScratch&&<p style={{fontSize:8,letterSpacing:".14em",textTransform:"uppercase",color:"var(--ink3)",marginBottom:7,marginTop:4}}>Deposit Options (40% now)</p>}
-              {hasFromScratch?<>{payOptions.filter(o=>o.group==="deposit").map(opt=><PayOpt key={opt.id} opt={opt}/>)}<p style={{fontSize:8,letterSpacing:".14em",textTransform:"uppercase",color:"var(--ink3)",marginBottom:7,marginTop:10}}>Pay Full Now</p>{payOptions.filter(o=>o.group==="full").map(opt=><PayOpt key={opt.id} opt={opt}/>)}</>:payOptions.map(opt=><PayOpt key={opt.id} opt={opt}/>)}
+              {hasFromScratch&&<p style={{fontSize:13,letterSpacing:".14em",textTransform:"uppercase",color:"var(--ink3)",marginBottom:7,marginTop:4}}>Deposit Options (40% now)</p>}
+              {hasFromScratch?<>{payOptions.filter(o=>o.group==="deposit").map(opt=><PayOpt key={opt.id} opt={opt}/>)}<p style={{fontSize:13,letterSpacing:".14em",textTransform:"uppercase",color:"var(--ink3)",marginBottom:7,marginTop:10}}>Pay Full Now</p>{payOptions.filter(o=>o.group==="full").map(opt=><PayOpt key={opt.id} opt={opt}/>)}</>:payOptions.map(opt=><PayOpt key={opt.id} opt={opt}/>)}
             </div>
             {needRef&&<div className="pay-box">
               <div style={{background:"var(--cr)",padding:"13px 15px",borderLeft:"2px solid var(--gold)",marginBottom:11}}>
-                <p style={{fontSize:11,color:"var(--ink3)",marginBottom:4}}>Send {fmt(amountDue)} to Instapay:</p>
+                <p style={{fontSize:14,color:"var(--ink3)",marginBottom:4}}>Send {fmt(amountDue)} to Instapay:</p>
                 <p style={{fontFamily:"var(--serif)",fontSize:24,color:"var(--ink)",letterSpacing:".04em",marginBottom:4}}>01020624266</p>
-                <p style={{fontSize:10,color:"var(--gold)",fontWeight:400}}>Your order will NOT be processed until payment is confirmed and approved.</p>
+                <p style={{fontSize:14,color:"var(--gold)",fontWeight:400}}>Your order will NOT be processed until payment is confirmed and approved.</p>
               </div>
               <div className="field"><label className="field-label">Reference Number *</label><input className="field-input" placeholder="e.g. TXN123456789" value={instRef} onChange={e=>setInstRef(e.target.value)}/></div>
               <div className="field" style={{marginBottom:0}}>
-                <label className="field-label">Payment Screenshot * <span style={{fontSize:9,color:"var(--ink3)",fontWeight:300,letterSpacing:0,textTransform:"none"}}>(required)</span></label>
-                <p style={{fontSize:10,color:"var(--ink3)",marginBottom:8,lineHeight:1.65}}>Upload a screenshot of your transfer. Your order is processed after we verify it.</p>
-                <input type="file" accept="image/*" onChange={e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>setInstScreenshot(ev.target.result);r.readAsDataURL(f);}} style={{fontSize:12,color:"var(--ink3)"}}/>
-                {instScreenshot&&<div style={{marginTop:8,padding:"6px",background:"var(--cr2)",border:"1px solid rgba(184,145,60,.15)"}}><img src={instScreenshot} alt="payment proof" style={{maxHeight:140,maxWidth:"100%",objectFit:"contain",display:"block"}}/><p style={{fontSize:9,color:"var(--gold)",marginTop:4}}>Screenshot uploaded</p></div>}
+                <label className="field-label">Payment Screenshot * <span style={{fontSize:13,color:"var(--ink3)",fontWeight:300,letterSpacing:0,textTransform:"none"}}>(required)</span></label>
+                <p style={{fontSize:14,color:"var(--ink3)",marginBottom:8,lineHeight:1.65}}>Upload a screenshot of your transfer. Your order is processed after we verify it.</p>
+                <input type="file" accept="image/*" onChange={e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>setInstScreenshot(ev.target.result);r.readAsDataURL(f);}} style={{fontSize:15,color:"var(--ink3)"}}/>
+                {instScreenshot&&<div style={{marginTop:8,padding:"6px",background:"var(--cr2)",border:"1px solid rgba(184,145,60,.15)"}}><img src={instScreenshot} alt="payment proof" style={{maxHeight:140,maxWidth:"100%",objectFit:"contain",display:"block"}}/><p style={{fontSize:13,color:"var(--gold)",marginTop:4}}>Screenshot uploaded</p></div>}
               </div>
             </div>}
             {needCard&&<div className="pay-box">
@@ -1639,7 +1639,7 @@ function Checkout({cart,onClose,onOk,setLastOrder}){
                 <div className="field"><label className="field-label">CVV</label><input className="field-input" placeholder="123" maxLength={3} value={cardC} onChange={e=>setCardC(e.target.value.replace(/[^0-9]/g,""))}/></div>
               </div>
             </div>}
-            {pay==="full_cod"&&<div className="pay-box"><p style={{fontSize:12,color:"var(--ink3)",lineHeight:1.8}}>Pay <strong style={{color:"var(--ink)"}}>{fmt(tot)}</strong> in cash when your piece arrives.</p></div>}
+            {pay==="full_cod"&&<div className="pay-box"><p style={{fontSize:15,color:"var(--ink3)",lineHeight:1.8}}>Pay <strong style={{color:"var(--ink)"}}>{fmt(tot)}</strong> in cash when your piece arrives.</p></div>}
             <div style={{display:"flex",gap:8,marginTop:8}}>
               <button className="btn btn-dark" style={{padding:"12px 18px",fontSize:8.5}} onClick={()=>setStep(1)}>Back</button>
               <button className="submit-btn" style={{margin:0,flex:1}} onClick={()=>{
@@ -1661,7 +1661,7 @@ function Checkout({cart,onClose,onOk,setLastOrder}){
               <button className="btn btn-dark" style={{padding:"12px 18px",fontSize:8.5}} onClick={()=>setStep(2)}>Back</button>
               <button className="submit-btn" style={{margin:0,flex:1}} onClick={submit}>{pay==="full_cod"?"Place Order":"Confirm & Pay "+fmt(amountDue)}</button>
             </div>
-            <p style={{fontSize:10,color:"var(--ink3)",textAlign:"center",marginTop:8}}>Ref: {ref}</p>
+            <p style={{fontSize:14,color:"var(--ink3)",textAlign:"center",marginTop:8}}>Ref: {ref}</p>
           </>}
         </div>
       </div>
@@ -1678,17 +1678,17 @@ function OrderConfirm({order,onClose}){
           {IMGS.logo
             ?<img src={IMGS.logo} alt="Dorra" style={{height:56,width:"auto",objectFit:"contain",display:"inline-block"}}/>
             :<div style={{fontFamily:"var(--serif)",fontSize:32,color:"var(--gold)",fontWeight:300,fontStyle:"italic"}}>Dorra</div>}
-          <p style={{fontSize:8,letterSpacing:".38em",textTransform:"uppercase",color:"rgba(184,145,60,.6)",marginTop:10}}>Order Confirmed</p>
+          <p style={{fontSize:13,letterSpacing:".38em",textTransform:"uppercase",color:"rgba(184,145,60,.6)",marginTop:10}}>Order Confirmed</p>
         </div>
         <div style={{padding:"28px 24px",textAlign:"center"}}>
-          <span style={{fontSize:8,letterSpacing:".4em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:12}}>Order Confirmed</span>
+          <span style={{fontSize:13,letterSpacing:".4em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:12}}>Order Confirmed</span>
           <h2 style={{fontFamily:"var(--serif)",fontSize:28,fontWeight:300,color:"var(--ink)",marginBottom:8}}>Thank you, {order.customer.name.split(" ")[0]}.</h2>
-          <p style={{fontSize:12,color:"var(--ink3)",lineHeight:1.85,marginBottom:16}}>Your order <strong style={{color:"var(--ink)"}}>{order.ref}</strong> has been received. We will confirm by email within 24 hours and begin preparing your piece by hand in Egypt.</p>
+          <p style={{fontSize:15,color:"var(--ink3)",lineHeight:1.85,marginBottom:16}}>Your order <strong style={{color:"var(--ink)"}}>{order.ref}</strong> has been received. We will confirm by email within 24 hours and begin preparing your piece by hand in Egypt.</p>
           <div style={{background:"var(--cr2)",padding:"12px 16px",marginBottom:16,textAlign:"left"}}>
-            {order.items.map((it,i)=><div key={i} style={{display:"flex",justifyContent:"space-between",fontSize:12,marginBottom:4}}><span style={{color:"var(--ink3)"}}>{it.name} x{it.qty}</span><span>{fmt(it.price*it.qty)}</span></div>)}
-            <div style={{display:"flex",justifyContent:"space-between",fontSize:12,paddingTop:8,borderTop:"1px solid rgba(26,18,10,.08)",fontWeight:500}}><span>Total</span><span>{fmt(order.total)}</span></div>
+            {order.items.map((it,i)=><div key={i} style={{display:"flex",justifyContent:"space-between",fontSize:15,marginBottom:4}}><span style={{color:"var(--ink3)"}}>{it.name} x{it.qty}</span><span>{fmt(it.price*it.qty)}</span></div>)}
+            <div style={{display:"flex",justifyContent:"space-between",fontSize:15,paddingTop:8,borderTop:"1px solid rgba(26,18,10,.08)",fontWeight:500}}><span>Total</span><span>{fmt(order.total)}</span></div>
           </div>
-          {order.dueNow>0&&order.dueNow<order.total&&<p style={{fontSize:11,color:"var(--gold)",marginBottom:12}}>Amount due now: {fmt(order.dueNow)} - Remaining on delivery: {fmt(order.dueOnDelivery)}</p>}
+          {order.dueNow>0&&order.dueNow<order.total&&<p style={{fontSize:14,color:"var(--gold)",marginBottom:12}}>Amount due now: {fmt(order.dueNow)} - Remaining on delivery: {fmt(order.dueOnDelivery)}</p>}
           <button className="btn btn-dark btn-full" style={{padding:"13px"}} onClick={onClose}>Continue Shopping</button>
         </div>
       </div>
@@ -1705,7 +1705,7 @@ function AllPage({onP,onA}){
   const filtered=filter==="all"?featured:featured.filter(p=>p.type===filter);
   return(<div style={{paddingTop:64}}>
       <div style={{padding:"8px 24px",background:"var(--cr)",borderBottom:"1px solid rgba(26,18,10,.08)",position:"sticky",top:64,zIndex:500}}>
-        <button onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");}} style={{background:"none",border:"none",cursor:"pointer",fontSize:11,color:"var(--ink3)",letterSpacing:".1em",textTransform:"uppercase",display:"flex",alignItems:"center",gap:5,padding:0}}>&#8592; Home</button>
+        <button onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");}} style={{background:"none",border:"none",cursor:"pointer",fontSize:14,color:"var(--ink3)",letterSpacing:".1em",textTransform:"uppercase",display:"flex",alignItems:"center",gap:5,padding:0}}>&#8592; Home</button>
       </div>
       
     <div className="page-header">
@@ -1716,8 +1716,8 @@ function AllPage({onP,onA}){
     <div style={{background:"var(--cr)",borderBottom:"1px solid rgba(26,18,10,.08)",position:"sticky",top:64,zIndex:100}}>
       <div style={{display:"flex",gap:0,overflowX:"auto",padding:"0 72px",scrollbarWidth:"none"}}>
         {cats.map(cat=>(
-          <button key={cat.id} onClick={()=>setFilter(cat.id)} style={{flexShrink:0,fontFamily:"var(--sans)",fontSize:9,letterSpacing:".2em",textTransform:"uppercase",background:"none",border:"none",cursor:"pointer",padding:"18px 20px",color:filter===cat.id?"var(--ink)":"var(--ink3)",borderBottom:filter===cat.id?"2px solid var(--gold)":"2px solid transparent",transition:"all .2s",fontWeight:filter===cat.id?400:300}}>
-            {cat.label}{filter===cat.id&&<span style={{marginLeft:5,fontSize:8,opacity:.5}}>({filter==="all"?featured.length:featured.filter(p=>p.type===cat.id).length})</span>}
+          <button key={cat.id} onClick={()=>setFilter(cat.id)} style={{flexShrink:0,fontFamily:"var(--sans)",fontSize:13,letterSpacing:".12em",textTransform:"uppercase",background:"none",border:"none",cursor:"pointer",padding:"18px 20px",color:filter===cat.id?"var(--ink)":"var(--ink3)",borderBottom:filter===cat.id?"2px solid var(--gold)":"2px solid transparent",transition:"all .2s",fontWeight:filter===cat.id?400:300}}>
+            {cat.label}{filter===cat.id&&<span style={{marginLeft:5,fontSize:13,opacity:.5}}>({filter==="all"?featured.length:featured.filter(p=>p.type===cat.id).length})</span>}
           </button>
         ))}
       </div>
@@ -1741,7 +1741,7 @@ function ReturnsPage({setPage}){
   };
   return(<div style={{paddingTop:64}}>
       <div style={{padding:"8px 24px",background:"var(--cr)",borderBottom:"1px solid rgba(26,18,10,.08)",position:"sticky",top:64,zIndex:500}}>
-        <button onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");}} style={{background:"none",border:"none",cursor:"pointer",fontSize:11,color:"var(--ink3)",letterSpacing:".1em",textTransform:"uppercase",display:"flex",alignItems:"center",gap:5,padding:0}}>&#8592; Home</button>
+        <button onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");}} style={{background:"none",border:"none",cursor:"pointer",fontSize:14,color:"var(--ink3)",letterSpacing:".1em",textTransform:"uppercase",display:"flex",alignItems:"center",gap:5,padding:0}}>&#8592; Home</button>
       </div>
       
     <div className="page-header"><span className="page-header-tag" data-rv>After Your Order</span><h1 className="page-header-title" data-rv data-d="1">Returns</h1><p className="page-header-sub" data-rv data-d="2">We review every return request within 48 hours.</p></div>
@@ -1773,7 +1773,7 @@ function ExchangesPage({setPage}){
   };
   return(<div style={{paddingTop:64}}>
       <div style={{padding:"8px 24px",background:"var(--cr)",borderBottom:"1px solid rgba(26,18,10,.08)",position:"sticky",top:64,zIndex:500}}>
-        <button onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");}} style={{background:"none",border:"none",cursor:"pointer",fontSize:11,color:"var(--ink3)",letterSpacing:".1em",textTransform:"uppercase",display:"flex",alignItems:"center",gap:5,padding:0}}>&#8592; Home</button>
+        <button onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");}} style={{background:"none",border:"none",cursor:"pointer",fontSize:14,color:"var(--ink3)",letterSpacing:".1em",textTransform:"uppercase",display:"flex",alignItems:"center",gap:5,padding:0}}>&#8592; Home</button>
       </div>
       
     <div className="page-header"><span className="page-header-tag" data-rv>After Your Order</span><h1 className="page-header-title" data-rv data-d="1">Exchanges</h1><p className="page-header-sub" data-rv data-d="2">Sizing or stone adjustments handled with care.</p></div>
@@ -1825,7 +1825,7 @@ function ReviewsPage(){
   },[]);
   return(<div style={{paddingTop:64}}>
       <div style={{padding:"8px 24px",background:"var(--cr)",borderBottom:"1px solid rgba(26,18,10,.08)",position:"sticky",top:64,zIndex:500}}>
-        <button onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");}} style={{background:"none",border:"none",cursor:"pointer",fontSize:11,color:"var(--ink3)",letterSpacing:".1em",textTransform:"uppercase",display:"flex",alignItems:"center",gap:5,padding:0}}>&#8592; Home</button>
+        <button onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");}} style={{background:"none",border:"none",cursor:"pointer",fontSize:14,color:"var(--ink3)",letterSpacing:".1em",textTransform:"uppercase",display:"flex",alignItems:"center",gap:5,padding:0}}>&#8592; Home</button>
       </div>
       
     <div className="page-header"><span className="page-header-tag" data-rv>Voices</span><h1 className="page-header-title" data-rv data-d="1">From Our Wearers</h1><p className="page-header-sub" data-rv data-d="2">Every Dorra piece finds the person it was meant for. Here is what they say.</p></div>
@@ -1837,7 +1837,7 @@ function ReviewsPage(){
             {rev.img&&<img src={rev.img} alt={rev.name} style={{width:"100%",maxHeight:200,objectFit:"cover",marginBottom:12,display:"block"}}/>}
             <div style={{display:"flex",alignItems:"baseline",justifyContent:"space-between"}}>
               <span style={{fontFamily:"var(--serif)",fontSize:13,color:"var(--ink)",letterSpacing:".04em"}}>{rev.name}</span>
-              {rev.piece&&<span style={{fontSize:8,letterSpacing:".18em",textTransform:"uppercase",color:"var(--gold)",opacity:.7}}>{rev.piece}</span>}
+              {rev.piece&&<span style={{fontSize:13,letterSpacing:".18em",textTransform:"uppercase",color:"var(--gold)",opacity:.7}}>{rev.piece}</span>}
             </div>
           </div>
         ))}
@@ -1853,7 +1853,7 @@ function ReviewsPage(){
           <div className="field"><label className="field-label" style={{color:"rgba(245,239,227,.45)"}}>Your Name *</label><input className="field-input" style={{background:"rgba(245,239,227,.05)",color:"var(--cr)",borderBottomColor:"rgba(184,145,60,.2)"}} placeholder="Your name" value={form.name} onChange={e=>setForm({...form,name:e.target.value})}/></div>
           <div className="field"><label className="field-label" style={{color:"rgba(245,239,227,.45)"}}>Which piece?</label><input className="field-input" style={{background:"rgba(245,239,227,.05)",color:"var(--cr)",borderBottomColor:"rgba(184,145,60,.2)"}} placeholder="e.g. Sinai Bracelet" value={form.piece} onChange={e=>setForm({...form,piece:e.target.value})}/></div>
           <div className="field"><label className="field-label" style={{color:"rgba(245,239,227,.45)"}}>Your Words *</label><textarea className="field-textarea" style={{background:"rgba(245,239,227,.05)",color:"var(--cr)",border:"1px solid rgba(184,145,60,.15)",minHeight:120}} placeholder="How does it feel to wear it?" value={form.text} onChange={e=>setForm({...form,text:e.target.value})}/></div>
-          <div className="field"><label className="field-label" style={{color:"rgba(245,239,227,.45)"}}>A Photo (optional)</label><input type="file" accept="image/*" onChange={handleImg} style={{fontSize:12,color:"rgba(245,239,227,.35)",paddingTop:4}}/>{form.imgPreview&&<img src={form.imgPreview} alt="preview" style={{marginTop:12,maxHeight:160,maxWidth:"100%",objectFit:"contain",display:"block"}}/>}</div>
+          <div className="field"><label className="field-label" style={{color:"rgba(245,239,227,.45)"}}>A Photo (optional)</label><input type="file" accept="image/*" onChange={handleImg} style={{fontSize:15,color:"rgba(245,239,227,.35)",paddingTop:4}}/>{form.imgPreview&&<img src={form.imgPreview} alt="preview" style={{marginTop:12,maxHeight:160,maxWidth:"100%",objectFit:"contain",display:"block"}}/>}</div>
           <button className="btn btn-gold btn-full" style={{padding:"14px",marginTop:6}} onClick={submit} disabled={!form.name||!form.text}>Share Your Experience</button>
         </div>}
       </div>
@@ -1870,13 +1870,13 @@ function AdminDashboard(){
     <div style={{minHeight:"100vh",background:"#062318",display:"flex",alignItems:"center",justifyContent:"center",fontFamily:"'Helvetica Neue',Arial,sans-serif"}}>
       <div style={{background:"#0a2d1a",padding:"40px 32px",width:"90%",maxWidth:320,textAlign:"center",boxSizing:"border-box"}}>
         <div style={{fontFamily:"Georgia,serif",fontSize:28,fontWeight:300,color:"#f5efe3",marginBottom:4}}>Dorra</div>
-        <div style={{fontSize:10,color:"rgba(184,145,60,.6)",letterSpacing:".2em",marginBottom:28}}>ADMIN</div>
+        <div style={{fontSize:14,color:"rgba(184,145,60,.6)",letterSpacing:".12em",marginBottom:28}}>ADMIN</div>
         <input type="password" value={pwInput} onChange={e=>setPwInput(e.target.value)}
           onKeyDown={e=>e.key==="Enter"&&doLogin()}
           placeholder="Password"
           style={{width:"100%",background:"rgba(245,239,227,.06)",border:"1px solid rgba(184,145,60,.2)",color:"#f5efe3",padding:"12px 14px",fontSize:15,outline:"none",boxSizing:"border-box",marginBottom:8}}/>
-        {pwErr&&<p style={{fontSize:12,color:"#e74c3c",marginBottom:8}}>Incorrect password</p>}
-        <button onClick={doLogin} style={{width:"100%",background:"#b8913c",border:"none",color:"#062318",padding:"13px",fontSize:11,letterSpacing:".2em",textTransform:"uppercase",cursor:"pointer"}}>Enter</button>
+        {pwErr&&<p style={{fontSize:15,color:"#e74c3c",marginBottom:8}}>Incorrect password</p>}
+        <button onClick={doLogin} style={{width:"100%",background:"#b8913c",border:"none",color:"#062318",padding:"13px",fontSize:14,letterSpacing:".12em",textTransform:"uppercase",cursor:"pointer"}}>Enter</button>
       </div>
     </div>
   );
@@ -1960,9 +1960,9 @@ function AdminDashboard(){
       <div style={{background:"rgba(0,0,0,.3)",padding:"16px",display:"flex",alignItems:"center",justifyContent:"space-between",borderBottom:"1px solid rgba(184,145,60,.15)"}}>
         <div>
           <div style={{fontFamily:"Georgia,serif",fontSize:22,fontWeight:300,color:G.cream,letterSpacing:".04em"}}>Dorra Admin</div>
-          <div style={{fontSize:11,color:G.faint,marginTop:2}}>dorrastone.shop</div>
+          <div style={{fontSize:14,color:G.faint,marginTop:2}}>dorrastone.shop</div>
         </div>
-        <button onClick={load} style={{background:"none",border:"1px solid rgba(184,145,60,.3)",color:G.gold,fontSize:11,letterSpacing:".1em",padding:"8px 16px",cursor:"pointer"}}>
+        <button onClick={load} style={{background:"none",border:"1px solid rgba(184,145,60,.3)",color:G.gold,fontSize:14,letterSpacing:".1em",padding:"8px 16px",cursor:"pointer"}}>
           {loading?"Loading...":"Refresh"}
         </button>
       </div>
@@ -1970,7 +1970,7 @@ function AdminDashboard(){
       {/* Tabs */}
       <div style={{display:"flex",gap:0,borderBottom:"1px solid rgba(184,145,60,.12)",padding:"0 16px",overflowX:"auto",WebkitOverflowScrolling:"touch",scrollbarWidth:"none"}}>
         {tabs.map(t=>(
-          <button key={t} onClick={()=>setTab(t)} style={{background:"none",border:"none",borderBottom:tab===t?"2px solid "+G.gold:"2px solid transparent",color:tab===t?G.gold:G.faint,fontSize:12,letterSpacing:".1em",textTransform:"uppercase",padding:"16px 20px",cursor:"pointer",transition:"all .2s"}}>
+          <button key={t} onClick={()=>setTab(t)} style={{background:"none",border:"none",borderBottom:tab===t?"2px solid "+G.gold:"2px solid transparent",color:tab===t?G.gold:G.faint,fontSize:15,letterSpacing:".1em",textTransform:"uppercase",padding:"16px 20px",cursor:"pointer",transition:"all .2s"}}>
             {t==="orders"?"Orders ("+orders.length+")":t==="reviews"?"Pending Reviews ("+reviews.length+")":t==="published"?"Published Reviews ("+published.length+")":t==="returns"?"Returns ("+returns.length+")":"Exchanges ("+exchanges.length+")"}
           </button>
         ))}
@@ -1989,34 +1989,34 @@ function AdminDashboard(){
                   <div>
                     <div style={{fontSize:14,color:G.cream,fontWeight:500,marginBottom:4}}>{o.ref}</div>
                     <div style={{fontSize:13,color:G.ink,marginBottom:2}}>{o.customer&&o.customer.name}  {o.customer&&o.customer.phone}</div>
-                    <div style={{fontSize:12,color:G.faint,marginBottom:2}}>{o.customer&&o.customer.email}</div>
-                    <div style={{fontSize:12,color:G.faint,marginBottom:6}}>{o.customer&&o.customer.address}</div>
+                    <div style={{fontSize:15,color:G.faint,marginBottom:2}}>{o.customer&&o.customer.email}</div>
+                    <div style={{fontSize:15,color:G.faint,marginBottom:6}}>{o.customer&&o.customer.address}</div>
                     <div style={{fontSize:13,color:G.gold,fontFamily:"Georgia,serif"}}>{fmt2(o.total)}</div>
                     {o.items&&o.items.map((item,i)=>(
                       <div key={i} style={{marginTop:6}}>
-                        <div style={{fontSize:11,color:item.isCustom?G.gold:G.faint}}>
+                        <div style={{fontSize:14,color:item.isCustom?G.gold:G.faint}}>
                           {item.isCustom?"[BESPOKE] ":""}{item.name}{item.size?" ("+item.size+")":""} x{item.qty}  EGP {item.price}
                         </div>
-                        {item.isCustom&&item.stones&&<div style={{fontSize:10,color:G.faint,marginLeft:8}}>Stones: {(item.stones||[]).join(", ")}</div>}
-                        {item.isCustom&&item.wireColor&&<div style={{fontSize:10,color:G.faint,marginLeft:8}}>Wire: {item.wireColor}</div>}
+                        {item.isCustom&&item.stones&&<div style={{fontSize:14,color:G.faint,marginLeft:8}}>Stones: {(item.stones||[]).join(", ")}</div>}
+                        {item.isCustom&&item.wireColor&&<div style={{fontSize:14,color:G.faint,marginLeft:8}}>Wire: {item.wireColor}</div>}
                       </div>
                     ))}
                   </div>
                   <div style={{textAlign:"right"}}>
-                    <div style={{fontSize:11,padding:"4px 10px",background:"rgba(0,0,0,.3)",color:statusColors[o.status]||G.gold,letterSpacing:".08em",textTransform:"uppercase",marginBottom:10,display:"inline-block"}}>{o.status||"pending"}</div>
-                    <div style={{fontSize:11,color:G.faint,marginBottom:10}}>{o.payment}</div>
+                    <div style={{fontSize:14,padding:"4px 10px",background:"rgba(0,0,0,.3)",color:statusColors[o.status]||G.gold,letterSpacing:".08em",textTransform:"uppercase",marginBottom:10,display:"inline-block"}}>{o.status||"pending"}</div>
+                    <div style={{fontSize:14,color:G.faint,marginBottom:10}}>{o.payment}</div>
                     <div style={{display:"flex",flexDirection:"column",gap:6}}>
                       {["confirmed","processing","shipped","delivered","cancelled"].map(s=>(
                         <button key={s} onClick={()=>updateStatus(o.ref,s)}
                           disabled={o.status===s||updating===o.ref}
-                          style={{background:o.status===s?"rgba(184,145,60,.15)":"none",border:"1px solid rgba(184,145,60,.2)",color:o.status===s?G.gold:G.faint,fontSize:10,letterSpacing:".08em",padding:"5px 12px",cursor:o.status===s?"default":"pointer",textTransform:"uppercase",opacity:updating===o.ref?.6:1}}>
+                          style={{background:o.status===s?"rgba(184,145,60,.15)":"none",border:"1px solid rgba(184,145,60,.2)",color:o.status===s?G.gold:G.faint,fontSize:14,letterSpacing:".08em",padding:"5px 12px",cursor:o.status===s?"default":"pointer",textTransform:"uppercase",opacity:updating===o.ref?.6:1}}>
                           {s}
                         </button>
                       ))}
                     </div>
                   </div>
                 </div>
-                <div style={{fontSize:11,color:G.faint,marginTop:8,borderTop:"1px solid rgba(184,145,60,.08)",paddingTop:8}}>
+                <div style={{fontSize:14,color:G.faint,marginTop:8,borderTop:"1px solid rgba(184,145,60,.08)",paddingTop:8}}>
                   {new Date(o.createdAt).toLocaleString("en-GB")}
                 </div>
               </div>
@@ -2036,9 +2036,9 @@ function AdminDashboard(){
                   <div style={{flex:1}}>
                     <div style={{fontSize:14,color:G.cream,fontWeight:500,marginBottom:4}}>{r.name}{r.piece?"  "+r.piece:""}</div>
                     <p style={{fontSize:13,color:G.ink,lineHeight:1.8,fontStyle:"italic",marginBottom:6}}>"{r.text}"</p>
-                    <div style={{fontSize:11,color:G.faint}}>{r.approvedAt?new Date(r.approvedAt).toLocaleString("en-GB"):""}</div>
+                    <div style={{fontSize:14,color:G.faint}}>{r.approvedAt?new Date(r.approvedAt).toLocaleString("en-GB"):""}</div>
                   </div>
-                  <button onClick={()=>deleteReview(r._id)&&setPublished(p=>p.filter(x=>x._id!==r._id))} style={{background:"rgba(231,76,60,.08)",border:"1px solid rgba(231,76,60,.3)",color:"#e74c3c",fontSize:11,letterSpacing:".08em",padding:"8px 16px",cursor:"pointer",textTransform:"uppercase",flexShrink:0}}>
+                  <button onClick={()=>deleteReview(r._id)&&setPublished(p=>p.filter(x=>x._id!==r._id))} style={{background:"rgba(231,76,60,.08)",border:"1px solid rgba(231,76,60,.3)",color:"#e74c3c",fontSize:14,letterSpacing:".08em",padding:"8px 16px",cursor:"pointer",textTransform:"uppercase",flexShrink:0}}>
                     Remove
                   </button>
                 </div>
@@ -2056,14 +2056,14 @@ function AdminDashboard(){
                 <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:12,flexWrap:"wrap"}}>
                   <div>
                     <div style={{fontSize:13,color:G.cream,fontWeight:500,marginBottom:4}}>{r.name}  <span style={{color:G.gold}}>{r.ref}</span></div>
-                    <div style={{fontSize:12,color:G.faint,marginBottom:4}}>{r.address}</div>
+                    <div style={{fontSize:15,color:G.faint,marginBottom:4}}>{r.address}</div>
                     <div style={{fontSize:13,color:G.ink,lineHeight:1.7,marginBottom:6}}>Reason: {r.reason}</div>
-                    <div style={{fontSize:11,color:G.faint}}>{new Date(r.createdAt).toLocaleString("en-GB")}</div>
-                    <div style={{fontSize:11,padding:"3px 10px",display:"inline-block",marginTop:6,background:"rgba(0,0,0,.3)",color:r.status==="accepted"?"#4a9e6b":r.status==="denied"?"#e74c3c":G.gold,textTransform:"uppercase",letterSpacing:".08em"}}>{r.status||"pending"}</div>
+                    <div style={{fontSize:14,color:G.faint}}>{new Date(r.createdAt).toLocaleString("en-GB")}</div>
+                    <div style={{fontSize:14,padding:"3px 10px",display:"inline-block",marginTop:6,background:"rgba(0,0,0,.3)",color:r.status==="accepted"?"#4a9e6b":r.status==="denied"?"#e74c3c":G.gold,textTransform:"uppercase",letterSpacing:".08em"}}>{r.status||"pending"}</div>
                   </div>
                   {(!r.status||r.status==="pending")&&<div style={{display:"flex",flexDirection:"column",gap:8}}>
-                    <button onClick={()=>updateRequest("returns-list",r._id,"accepted")} style={{background:"rgba(74,158,107,.15)",border:"1px solid rgba(74,158,107,.4)",color:"#4a9e6b",fontSize:11,letterSpacing:".08em",padding:"8px 16px",cursor:"pointer",textTransform:"uppercase"}}>Accept</button>
-                    <button onClick={()=>updateRequest("returns-list",r._id,"denied")} style={{background:"rgba(231,76,60,.08)",border:"1px solid rgba(231,76,60,.3)",color:"#e74c3c",fontSize:11,letterSpacing:".08em",padding:"8px 16px",cursor:"pointer",textTransform:"uppercase"}}>Deny</button>
+                    <button onClick={()=>updateRequest("returns-list",r._id,"accepted")} style={{background:"rgba(74,158,107,.15)",border:"1px solid rgba(74,158,107,.4)",color:"#4a9e6b",fontSize:14,letterSpacing:".08em",padding:"8px 16px",cursor:"pointer",textTransform:"uppercase"}}>Accept</button>
+                    <button onClick={()=>updateRequest("returns-list",r._id,"denied")} style={{background:"rgba(231,76,60,.08)",border:"1px solid rgba(231,76,60,.3)",color:"#e74c3c",fontSize:14,letterSpacing:".08em",padding:"8px 16px",cursor:"pointer",textTransform:"uppercase"}}>Deny</button>
                   </div>}
                 </div>
               </div>
@@ -2080,14 +2080,14 @@ function AdminDashboard(){
                 <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:12,flexWrap:"wrap"}}>
                   <div>
                     <div style={{fontSize:13,color:G.cream,fontWeight:500,marginBottom:4}}>{r.name}  <span style={{color:G.gold}}>{r.ref}</span></div>
-                    <div style={{fontSize:12,color:G.faint,marginBottom:4}}>{r.address}</div>
+                    <div style={{fontSize:15,color:G.faint,marginBottom:4}}>{r.address}</div>
                     <div style={{fontSize:13,color:G.ink,lineHeight:1.7,marginBottom:6}}>Reason: {r.reason}</div>
-                    <div style={{fontSize:11,color:G.faint}}>{new Date(r.createdAt).toLocaleString("en-GB")}</div>
-                    <div style={{fontSize:11,padding:"3px 10px",display:"inline-block",marginTop:6,background:"rgba(0,0,0,.3)",color:r.status==="accepted"?"#4a9e6b":r.status==="denied"?"#e74c3c":G.gold,textTransform:"uppercase",letterSpacing:".08em"}}>{r.status||"pending"}</div>
+                    <div style={{fontSize:14,color:G.faint}}>{new Date(r.createdAt).toLocaleString("en-GB")}</div>
+                    <div style={{fontSize:14,padding:"3px 10px",display:"inline-block",marginTop:6,background:"rgba(0,0,0,.3)",color:r.status==="accepted"?"#4a9e6b":r.status==="denied"?"#e74c3c":G.gold,textTransform:"uppercase",letterSpacing:".08em"}}>{r.status||"pending"}</div>
                   </div>
                   {(!r.status||r.status==="pending")&&<div style={{display:"flex",flexDirection:"column",gap:8}}>
-                    <button onClick={()=>updateRequest("exchanges-list",r._id,"accepted")} style={{background:"rgba(74,158,107,.15)",border:"1px solid rgba(74,158,107,.4)",color:"#4a9e6b",fontSize:11,letterSpacing:".08em",padding:"8px 16px",cursor:"pointer",textTransform:"uppercase"}}>Accept</button>
-                    <button onClick={()=>updateRequest("exchanges-list",r._id,"denied")} style={{background:"rgba(231,76,60,.08)",border:"1px solid rgba(231,76,60,.3)",color:"#e74c3c",fontSize:11,letterSpacing:".08em",padding:"8px 16px",cursor:"pointer",textTransform:"uppercase"}}>Deny</button>
+                    <button onClick={()=>updateRequest("exchanges-list",r._id,"accepted")} style={{background:"rgba(74,158,107,.15)",border:"1px solid rgba(74,158,107,.4)",color:"#4a9e6b",fontSize:14,letterSpacing:".08em",padding:"8px 16px",cursor:"pointer",textTransform:"uppercase"}}>Accept</button>
+                    <button onClick={()=>updateRequest("exchanges-list",r._id,"denied")} style={{background:"rgba(231,76,60,.08)",border:"1px solid rgba(231,76,60,.3)",color:"#e74c3c",fontSize:14,letterSpacing:".08em",padding:"8px 16px",cursor:"pointer",textTransform:"uppercase"}}>Deny</button>
                   </div>}
                 </div>
               </div>
@@ -2105,14 +2105,14 @@ function AdminDashboard(){
                   <div style={{flex:1}}>
                     <div style={{fontSize:14,color:G.cream,fontWeight:500,marginBottom:4}}>{r.name}{r.piece?"  "+r.piece:""}</div>
                     <p style={{fontSize:13,color:G.ink,lineHeight:1.8,fontStyle:"italic",marginBottom:8}}>"{r.text}"</p>
-                    {r.img&&<div style={{fontSize:11,color:G.faint}}>Has photo</div>}
-                    <div style={{fontSize:11,color:G.faint}}>{new Date(r.createdAt).toLocaleString("en-GB")}</div>
+                    {r.img&&<div style={{fontSize:14,color:G.faint}}>Has photo</div>}
+                    <div style={{fontSize:14,color:G.faint}}>{new Date(r.createdAt).toLocaleString("en-GB")}</div>
                   </div>
                   <div style={{display:"flex",flexDirection:"column",gap:8}}>
-                    <button onClick={()=>approveReview(r._id)} style={{background:"rgba(74,158,107,.15)",border:"1px solid rgba(74,158,107,.4)",color:"#4a9e6b",fontSize:11,letterSpacing:".08em",padding:"8px 16px",cursor:"pointer",textTransform:"uppercase"}}>
+                    <button onClick={()=>approveReview(r._id)} style={{background:"rgba(74,158,107,.15)",border:"1px solid rgba(74,158,107,.4)",color:"#4a9e6b",fontSize:14,letterSpacing:".08em",padding:"8px 16px",cursor:"pointer",textTransform:"uppercase"}}>
                       Approve
                     </button>
-                    <button onClick={()=>deleteReview(r._id)} style={{background:"rgba(231,76,60,.08)",border:"1px solid rgba(231,76,60,.3)",color:"#e74c3c",fontSize:11,letterSpacing:".08em",padding:"8px 16px",cursor:"pointer",textTransform:"uppercase"}}>
+                    <button onClick={()=>deleteReview(r._id)} style={{background:"rgba(231,76,60,.08)",border:"1px solid rgba(231,76,60,.3)",color:"#e74c3c",fontSize:14,letterSpacing:".08em",padding:"8px 16px",cursor:"pointer",textTransform:"uppercase"}}>
                       Reject
                     </button>
                   </div>
@@ -2128,10 +2128,10 @@ function AdminDashboard(){
 
 
 function Footer({setPage}){
-  const lnk={display:"block",background:"none",border:"none",cursor:"pointer",fontFamily:"var(--sans)",fontSize:12,fontWeight:300,color:"rgba(245,239,227,.52)",padding:0,textAlign:"left",transition:"color .2s",lineHeight:1};
+  const lnk={display:"block",background:"none",border:"none",cursor:"pointer",fontFamily:"var(--sans)",fontSize:15,fontWeight:300,color:"rgba(245,239,227,.52)",padding:0,textAlign:"left",transition:"color .2s",lineHeight:1};
   const h=e=>e.currentTarget.style.color="rgba(245,239,227,.88)";
   const l=e=>e.currentTarget.style.color="rgba(245,239,227,.52)";
-  const col=title=>(<div style={{fontFamily:"var(--sans)",fontSize:8,fontWeight:300,letterSpacing:".32em",textTransform:"uppercase",color:"rgba(184,145,60,.6)",marginBottom:16}}>{title}</div>);
+  const col=title=>(<div style={{fontFamily:"var(--sans)",fontSize:13,fontWeight:300,letterSpacing:".32em",textTransform:"uppercase",color:"rgba(184,145,60,.6)",marginBottom:16}}>{title}</div>);
   return(
     <footer style={{background:"#041a0f",borderTop:"1px solid rgba(184,145,60,.1)"}}>
       <div style={{maxWidth:1080,margin:"0 auto",padding:"52px 48px 40px"}}>
@@ -2147,10 +2147,10 @@ function Footer({setPage}){
           {/* About */}
           <div>
             {col("About")}
-            <p style={{fontFamily:"var(--sans)",fontSize:12,fontWeight:300,color:"rgba(245,239,227,.38)",lineHeight:1.9,maxWidth:240,marginBottom:0}}>
+            <p style={{fontFamily:"var(--sans)",fontSize:15,fontWeight:300,color:"rgba(245,239,227,.38)",lineHeight:1.9,maxWidth:240,marginBottom:0}}>
               Handcrafted copper jewelry with natural gemstones. Made entirely by hand in Egypt.
             </p>
-            <p style={{fontFamily:"var(--serif)",fontStyle:"italic",fontSize:12,color:"rgba(184,145,60,.4)",marginTop:16}}>The Luxury of Nature</p>
+            <p style={{fontFamily:"var(--serif)",fontStyle:"italic",fontSize:15,color:"rgba(184,145,60,.4)",marginTop:16}}>The Luxury of Nature</p>
           </div>
 
           {/* Shop */}
@@ -2177,8 +2177,8 @@ function Footer({setPage}){
 
         {/* Bottom */}
         <div style={{marginTop:40,paddingTop:16,borderTop:"1px solid rgba(184,145,60,.07)",display:"flex",justifyContent:"space-between"}}>
-          <span style={{fontFamily:"var(--sans)",fontSize:10,fontWeight:300,color:"rgba(245,239,227,.18)"}}>2025 Dorra. All rights reserved.</span>
-          <span style={{fontFamily:"var(--sans)",fontSize:10,fontWeight:300,color:"rgba(245,239,227,.18)"}}>dorrastonejewelry@gmail.com</span>
+          <span style={{fontFamily:"var(--sans)",fontSize:14,fontWeight:300,color:"rgba(245,239,227,.18)"}}>2025 Dorra. All rights reserved.</span>
+          <span style={{fontFamily:"var(--sans)",fontSize:14,fontWeight:300,color:"rgba(245,239,227,.18)"}}>dorrastonejewelry@gmail.com</span>
         </div>
 
       </div>
@@ -2231,7 +2231,7 @@ export default function App(){
           {IMGS.logo?<img src={IMGS.logo} alt="Dorra" style={{height:"clamp(52px,9vw,88px)",width:"auto",objectFit:"contain",marginBottom:16,animation:"fade-in .8s ease both"}}/>
             :<div style={{fontFamily:"Cormorant Garamond,serif",fontSize:"clamp(48px,8vw,88px)",fontWeight:300,color:"#f5efe3",letterSpacing:".04em"}}>Dorra</div>}
           <div style={{height:1,background:"rgba(184,145,60,.5)",width:60,animation:"line-grow 1s .3s cubic-bezier(.16,1,.3,1) both"}}/>
-          <p style={{fontFamily:"Jost,sans-serif",fontSize:8,letterSpacing:".44em",textTransform:"uppercase",color:"rgba(184,145,60,.6)",marginTop:12,animation:"fade-in .9s .7s ease both"}}>The Luxury of Nature</p>
+          <p style={{fontFamily:"Jost,sans-serif",fontSize:13,letterSpacing:".44em",textTransform:"uppercase",color:"rgba(184,145,60,.6)",marginTop:12,animation:"fade-in .9s .7s ease both"}}>The Luxury of Nature</p>
         </div>
       </div>
     )}
