@@ -408,6 +408,8 @@ const CSS_LINES=[
   ".pc-arrow:hover{background:rgba(6,35,24,.85);}",
   ".pc-arrow-l{left:8px;}",
   ".pc-arrow-r{right:8px;}",
+  "form{margin:0;}",
+  "@media(max-width:1023px){.hero-arrow{display:none!important;}}",
   "@media(max-width:1023px){.pc-arrow{display:none!important;}}",
   ".pc:hover .pc-ov{opacity:1;}",
   ".pc-body{padding:16px 16px 16px;display:flex;flex-direction:column;flex:1;}",
@@ -992,8 +994,8 @@ function HeroCarousel({onV}){
         );
       })}
       {/* Arrows */}
-      <button onClick={e=>{e.stopPropagation();goTo(i=>i-1);}} style={{position:"absolute",left:20,top:"50%",transform:"translateY(-50%)",background:"rgba(6,35,24,.4)",border:"1px solid rgba(184,145,60,.2)",color:"#f5efe3",width:44,height:44,borderRadius:"50%",cursor:"pointer",fontSize:18,display:"flex",alignItems:"center",justifyContent:"center",zIndex:5}}>&#8592;</button>
-      <button onClick={e=>{e.stopPropagation();goTo(i=>i+1);}} style={{position:"absolute",right:20,top:"50%",transform:"translateY(-50%)",background:"rgba(6,35,24,.4)",border:"1px solid rgba(184,145,60,.2)",color:"#f5efe3",width:44,height:44,borderRadius:"50%",cursor:"pointer",fontSize:18,display:"flex",alignItems:"center",justifyContent:"center",zIndex:5}}>&#8594;</button>
+      <button className="hero-arrow" onClick={e=>{e.stopPropagation();goTo(i=>i-1);}} style={{position:"absolute",left:20,top:"50%",transform:"translateY(-50%)",background:"rgba(6,35,24,.4)",border:"1px solid rgba(184,145,60,.2)",color:"#f5efe3",width:44,height:44,borderRadius:"50%",cursor:"pointer",fontSize:18,display:"flex",alignItems:"center",justifyContent:"center",zIndex:5}}>&#8592;</button>
+      <button className="hero-arrow" onClick={e=>{e.stopPropagation();goTo(i=>i+1);}} style={{position:"absolute",right:20,top:"50%",transform:"translateY(-50%)",background:"rgba(6,35,24,.4)",border:"1px solid rgba(184,145,60,.2)",color:"#f5efe3",width:44,height:44,borderRadius:"50%",cursor:"pointer",fontSize:18,display:"flex",alignItems:"center",justifyContent:"center",zIndex:5}}>&#8594;</button>
       {/* Dots */}
       <div style={{position:"absolute",bottom:20,left:"50%",transform:"translateX(-50%)",display:"flex",gap:8,zIndex:5}}>
         {items.map((_,i)=><div key={i} onClick={e=>{e.stopPropagation();goTo(i);}} style={{width:i===idx?24:6,height:6,borderRadius:3,background:i===idx?"var(--gold)":"rgba(245,239,227,.3)",transition:"all .3s ease",cursor:"pointer"}}/>)}
@@ -1830,6 +1832,7 @@ function Checkout({cart,onClose,onOk,setLastOrder}){
         <div className="modal-body">
           {step===1&&<>
             <Summary/>
+            <form onSubmit={e=>e.preventDefault()} autoComplete="on">
             <div className="field-grid">
               <div className="field"><label className="field-label">Full Name *</label><input className="field-input" type="text" name="name" autoComplete="name" id="checkout-name" autoCapitalize="words" placeholder="Your name" value={name} style={{borderColor:fieldErr&&!name.trim()?"#c0392b":undefined}} onChange={e=>{setName(e.target.value);if(fieldErr)setFieldErr("");}}/></div>
               <div className="field"><label className="field-label">Phone *</label><input className="field-input" type="tel" name="tel" autoComplete="tel" id="checkout-tel" inputMode="tel" placeholder="+20 1xx xxx xxxx" value={phone} style={{borderColor:fieldErr&&!phone.trim()?"#c0392b":undefined}} onChange={e=>{setPhone(e.target.value);if(fieldErr)setFieldErr("");}}/></div>
@@ -1838,17 +1841,18 @@ function Checkout({cart,onClose,onOk,setLastOrder}){
             <div className="field"><label className="field-label">Delivery Address *</label><input className="field-input" type="text" name="street-address" autoComplete="street-address" id="checkout-address" autoCapitalize="words" placeholder="Street, building, apartment" value={address} style={{borderColor:fieldErr&&!address.trim()?"#c0392b":undefined}} onChange={e=>{setAddress(e.target.value);if(fieldErr)setFieldErr("");}}/></div>
             <div className="field">
               <label className="field-label">City</label>
-              <select className="field-select" value={city} onChange={e=>setCity(e.target.value)}>{cities.map(ct=><option key={ct}>{ct}</option>)}</select>
+              <select className="field-select" name="address-level2" autoComplete="address-level2" value={city} onChange={e=>setCity(e.target.value)}>{cities.map(ct=><option key={ct}>{ct}</option>)}</select>
               <div className="field-note">Shipping: EGP {ship}</div>
             </div>
             <div className="field"><label className="field-label">Notes</label><textarea className="field-textarea" style={{minHeight:52}} placeholder="Special instructions..." value={notes} onChange={e=>setNotes(e.target.value)}/></div>
-            <button className="submit-btn" onClick={()=>{
+            <button type="button" className="submit-btn" onClick={()=>{
               if(!name.trim()){setFieldErr("Please enter your full name.");return;}
               if(!phone.trim()){setFieldErr("Please enter your phone number.");return;}
               if(!email.includes("@")){setFieldErr("Please enter a valid email address.");return;}
               if(!address.trim()){setFieldErr("Please enter your delivery address.");return;}
               setFieldErr("");setStep(2);
             }}>Continue to Payment</button>
+            </form>
             {!ok1&&<p style={{fontSize:14,color:"var(--ink3)",textAlign:"center",marginTop:6}}>Please fill in all required fields with a valid email and address.</p>}
           </>}
 
