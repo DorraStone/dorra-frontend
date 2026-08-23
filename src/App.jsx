@@ -1762,7 +1762,10 @@ function Checkout({cart,onClose,onOk,setLastOrder}){
 
   const[submitting,setSubmitting]=useState(false);
   const submit=async()=>{
-    if(!ok1||!ok2||submitting)return;
+    if(submitting)return;
+    if(!ok1){setFieldErr("Some contact details are missing or invalid - please go back and check.");return;}
+    if(!ok2){setFieldErr(needRef?"Please upload your Instapay screenshot before confirming.":"Please select a payment method.");return;}
+    setFieldErr("");
     setSubmitting(true);
     const order={ref,date:new Date().toISOString(),status:"pending",
       customer:{name,phone,email,address,city,notes},
@@ -1887,8 +1890,8 @@ function Checkout({cart,onClose,onOk,setLastOrder}){
             </div>}
             {pay==="full_cod"&&<div className="pay-box"><p style={{fontSize:15,color:"var(--ink3)",lineHeight:1.8}}>Pay <strong style={{color:"var(--ink)"}}>{fmt(tot)}</strong> in cash when your piece arrives.</p></div>}
             <div style={{display:"flex",gap:8,marginTop:8}}>
-              <button className="btn btn-dark" style={{padding:"12px 18px",fontSize:8.5}} onClick={()=>setStep(1)}>Back</button>
-              <button className="submit-btn" style={{margin:0,flex:1}} onClick={()=>{
+              <button type="button" className="btn btn-dark" style={{padding:"12px 18px",fontSize:8.5}} onClick={()=>setStep(1)}>Back</button>
+              <button type="button" className="submit-btn" style={{margin:0,flex:1}} onClick={()=>{
               if(needRef&&instScreenshot.length===0){setFieldErr("Please upload your Instapay screenshot.");return;}
               setFieldErr("");setStep(3);
             }}>Review Order</button>
@@ -1904,9 +1907,10 @@ function Checkout({cart,onClose,onOk,setLastOrder}){
               ))}
             </div>
             <div style={{display:"flex",gap:8,marginTop:8}}>
-              <button className="btn btn-dark" style={{padding:"12px 18px",fontSize:8.5}} onClick={()=>setStep(2)}>Back</button>
-              <button className="submit-btn" style={{margin:0,flex:1}} onClick={submit}>{pay==="full_cod"?"Place Order":"Confirm & Pay "+fmt(amountDue)}</button>
+              <button type="button" className="btn btn-dark" style={{padding:"12px 18px",fontSize:8.5}} onClick={()=>setStep(2)}>Back</button>
+              <button type="button" className="submit-btn" style={{margin:0,flex:1}} onClick={submit} disabled={submitting}>{submitting?"Placing order...":(pay==="full_cod"?"Place Order":"Confirm & Pay "+fmt(amountDue))}</button>
             </div>
+            {fieldErr&&<p style={{fontSize:14,color:"#c0392b",textAlign:"center",marginTop:8,fontWeight:500}}>{fieldErr}</p>}
             <p style={{fontSize:14,color:"var(--ink3)",textAlign:"center",marginTop:8}}>Ref: {ref}</p>
           </>}
         </div>
