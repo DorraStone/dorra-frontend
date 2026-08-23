@@ -473,14 +473,16 @@ const CSS_LINES=[
   "@keyframes fade-in{from{opacity:0}to{opacity:1}}",
   ".cart-drawer{position:fixed;z-index:9500;top:64px;right:0;bottom:0;width:390px;background:var(--cr);overflow-y:auto;display:flex;flex-direction:column;animation:slide-right .38s var(--ease);box-shadow:-12px 0 40px rgba(6,35,24,.18);}",
   "@keyframes slide-right{from{transform:translateX(100%)}to{transform:none}}",
-  ".cart-head{padding:18px 20px 14px;border-bottom:1px solid rgba(26,18,10,.09);display:flex;align-items:center;justify-content:space-between;}",
+  ".cart-head{padding:18px 26px 14px;border-bottom:1px solid rgba(26,18,10,.09);display:flex;align-items:center;justify-content:space-between;}",
   ".cart-title{font-family:var(--serif);font-size:16px;font-weight:300;color:var(--ink);}",
   ".cart-close{background:none;border:none;color:var(--ink3);cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:15px;transition:color .2s;;min-width:36px;min-height:36px;display:flex;align-items:center;justify-content:center;}",
   ".cart-close:hover{color:var(--ink);}",
-  ".cart-items{flex:1;overflow-y:auto;padding:16px 22px;display:flex;flex-direction:column;gap:13px;}",
+  ".cart-items{flex:1;overflow-y:auto;padding:16px 26px;display:flex;flex-direction:column;gap:13px;}",
   ".cart-item{display:flex;gap:12px;padding-bottom:13px;border-bottom:1px solid rgba(26,18,10,.07);}",
   ".cart-thumb{width:44px;height:54px;background:var(--cr2);overflow:hidden;flex-shrink:0;}",
   ".cart-thumb img{width:100%;height:100%;object-fit:cover;}",
+  ".cart-item-img{width:52px;height:62px;background:var(--cr2);overflow:hidden;flex-shrink:0;}",
+  ".cart-item-img img{width:100%;height:100%;object-fit:cover;display:block;}",
   ".cart-item-info{flex:1;}",
   ".cart-item-name{font-family:var(--serif);font-size:clamp(14px,3.5vw,15px);color:var(--ink);margin-bottom:2px;}",
   ".cart-item-stone{font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;opacity:.82;}",
@@ -492,6 +494,7 @@ const CSS_LINES=[
   ".qty-num{font-size:14px;color:var(--ink);width:15px;text-align:center;}",
   ".cart-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:140px;gap:9px;}",
   ".cart-footer{padding:12px 22px 20px;border-top:1px solid rgba(26,18,10,.08);}",
+  ".cart-foot{padding:14px 26px 22px;border-top:1px solid rgba(26,18,10,.08);}",
   ".cart-total-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;}",
   ".cart-total-label{font-size:8.5px;letter-spacing:.12em;color:var(--ink3);}",
   ".cart-total-val{font-family:var(--serif);font-size:16px;color:var(--ink);}",
@@ -620,7 +623,7 @@ const CSS_LINES=[
   
   ".nav{padding:0 16px;height:56px;}",
   ".hero{grid-template-columns:1fr;height:auto;min-height:0;}",
-  ".hero-l{padding:56px 16px 28px;}",
+  ".hero-l{padding:76px 16px 28px;}",
   ".hero-img{display:block;overflow:hidden;position:relative;height:64vw;min-height:320px;max-height:460px;}",
   ".page-fade-in{animation:page-in .4s cubic-bezier(.16,1,.3,1) both;}",
   "@keyframes page-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}",
@@ -643,7 +646,7 @@ const CSS_LINES=[
 
   /*  MOBILE TEXT SIZES  */
   ".hero-title{font-size:clamp(38px,10vw,62px);}",
-  ".hero-tag{font-size:12px;letter-spacing:.28em;margin-bottom:16px;}",
+  ".hero-tag{font-size:12px;letter-spacing:.28em;margin-bottom:22px;}",
   ".hero-sub{font-size:15px;line-height:1.85;color:rgba(245,239,227,.6);max-width:360px;}",
   ".page-header-title{font-size:clamp(26px,7vw,40px);}",
   ".page-header-tag{font-size:11px;letter-spacing:.3em;}",
@@ -1069,8 +1072,8 @@ function HomePage({setPage,onV,onA}){
         <style>{`.ae-carousel::-webkit-scrollbar{display:none}`}</style>
         {CATALOG.filter(p=>p.type==="Anklet"||p.type==="Earring").map(p=>(
           <div key={p.id} style={{
-            flex:"0 0 calc(50% - 11px)",
-            minWidth:"calc(50% - 11px)",
+            flex:"0 0 min(88%,420px)",
+            minWidth:"min(88%,420px)",
             scrollSnapAlign:"start"
           }}>
             <PC product={p} onV={onV} onA={onA}/>
@@ -1527,6 +1530,18 @@ function DetailPage({product,initStone,onBack,onA}){
         {/* RIGHT - info */}
         <div className="detail-info">
 
+          <span className="detail-tag">{product.type}</span>
+          <h1 className="detail-name">{product.name}</h1>
+          <div className="detail-price">{fmt(price)}</div>
+          {product.desc&&<p className="detail-desc">{product.desc}</p>}
+
+          <div style={{marginBottom:16,paddingBottom:14,borderBottom:"1px solid rgba(26,18,10,.08)"}}>
+            <div style={{fontSize:13,letterSpacing:".02em",textTransform:"uppercase",color:"var(--gold)",marginBottom:6}}>Materials</div>
+            <p style={{fontSize:14,color:"var(--ink3)",lineHeight:1.85,fontWeight:300}}>
+              Copper base{product.type==="Necklace"?", stainless steel chain":""}{product.stones&&product.stones.length>0?", "+product.stones.join(", "):""}.
+            </p>
+          </div>
+
           {product.stones&&product.stones.length>0&&<div style={{marginBottom:10}}>
             <SwapPanel stones={product.stones} swaps={swaps} setSwaps={setSwaps} price={product.price} currentPrice={price}/>
           </div>}
@@ -1606,7 +1621,7 @@ function CartDrawer({cart,onClose,onQty,onPkg,onCk}){
         </div>
         <div className="cart-foot">
           <div className="cart-total-row"><span className="cart-total-label">Total</span><span className="cart-total-val">{fmt(total)}</span></div>
-          <button className="btn btn-gold btn-full" style={{padding:"14px",fontSize:13,letterSpacing:".02em",marginTop:12,padding:"15px",fontSize:10}} onClick={onCk}>Proceed to Checkout</button>
+          <button className="btn btn-gold btn-full" style={{padding:"15px",fontSize:13,letterSpacing:".02em",marginTop:12}} onClick={onCk}>Proceed to Checkout</button>
         </div>
       </div>
     </div>
@@ -2377,7 +2392,7 @@ export default function App(){
     <Nav page={activePage} setPage={go} cc={cc} setCO={setCO}/>
     <div id="app-root" className="main-layout-wrapper" style={{position:"relative"}}>
       {activePage==="_detail"&&detail
-        ?<DetailPage product={detail} initStone={detailStone} onBack={()=>go("bracelets")} onA={addCart}/>
+        ?<DetailPage product={detail} initStone={detailStone} onBack={()=>go({Bracelet:"bracelets",Necklace:"necklaces",Anklet:"anklets",Earring:"earrings"}[detail.type]||"all")} onA={addCart}/>
         :<>
           {activePage==="home"&&<HomePage setPage={go} onV={showDetail} onA={addCart}/>}
           {activePage==="bracelets"&&<TypePage type="Bracelet" title="Bracelets" sub="Hand-wound copper with real stones. Each piece is unique." onV={showDetail} onA={addCart}/>}
