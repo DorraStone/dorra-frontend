@@ -1757,7 +1757,7 @@ function Checkout({cart,onClose,onOk,setLastOrder}){
   const ok2=pay==="full_cod"||(needRef&&instScreenshot.length>0)||pay==="apple"||pay==="full_apple"||pay==="apple_full";
   const cities=["Cairo","Giza","Alexandria","Al Sharkia","10th of Ramadan City","Luxor","Aswan","Hurghada","Other"];
   const payOptions=hasFromScratch
-    ?[{id:"instapay",label:"Instapay",sub:"40% Deposit "+fmt(customDep)+" now  "+fmt(dueOnDelivery)+" on delivery",group:"deposit"},{id:"instapay_full",label:"Instapay",sub:"Pay full "+fmt(tot)+" now",group:"full"},{id:"full_cod",label:"Cash on Delivery",sub:"Pay "+fmt(standardSub+ship)+" on delivery (bespoke deposit via Instapay required)",group:"full"}]
+    ?[{id:"instapay",label:"Instapay",sub:"40% Deposit "+fmt(customDep)+" now  "+fmt(dueOnDelivery)+" on delivery",group:"deposit"},{id:"instapay_full",label:"Instapay",sub:"Pay full "+fmt(tot)+" now",group:"full"}]
     :[{id:"full_instapay",label:"Instapay",sub:"Pay "+fmt(tot)+" now"},{id:"full_cod",label:"Cash on Delivery",sub:"Pay on delivery"}]
 
   const[submitting,setSubmitting]=useState(false);
@@ -1853,7 +1853,7 @@ function Checkout({cart,onClose,onOk,setLastOrder}){
               setFieldErr("");setStep(2);
             }}>Continue to Payment</button>
             </form>
-            {!ok1&&<p style={{fontSize:14,color:"var(--ink3)",textAlign:"center",marginTop:6}}>Please fill in all required fields with a valid email and address.</p>}
+            {fieldErr&&<p style={{fontSize:14,color:"#c0392b",textAlign:"center",marginTop:8,fontWeight:500}}>{fieldErr}</p>}
           </>}
 
           {step===2&&<>
@@ -1862,6 +1862,7 @@ function Checkout({cart,onClose,onOk,setLastOrder}){
               <label className="field-label">Payment Method</label>
               {hasFromScratch&&<p style={{fontSize:13,letterSpacing:".14em",textTransform:"uppercase",color:"var(--ink3)",marginBottom:7,marginTop:4}}>Deposit Options (40% now)</p>}
               {hasFromScratch?<>{payOptions.filter(o=>o.group==="deposit").map(opt=><PayOpt key={opt.id} opt={opt}/>)}<p style={{fontSize:13,letterSpacing:".14em",textTransform:"uppercase",color:"var(--ink3)",marginBottom:7,marginTop:10}}>Pay Full Now</p>{payOptions.filter(o=>o.group==="full").map(opt=><PayOpt key={opt.id} opt={opt}/>)}</>:payOptions.map(opt=><PayOpt key={opt.id} opt={opt}/>)}
+              {hasFromScratch&&<p style={{fontSize:13,color:"var(--ink3)",marginTop:8,lineHeight:1.7}}>Bespoke pieces are made to order, so Cash on Delivery isn't available  a deposit or full payment is required upfront to begin crafting.</p>}
             </div>
             {needRef&&<div className="pay-box">
               <div style={{background:"var(--cr)",padding:"13px 15px",borderLeft:"2px solid var(--gold)",marginBottom:11}}>
