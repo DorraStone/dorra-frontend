@@ -247,7 +247,7 @@ function SwapPanel({stones,swaps,setSwaps,price,currentPrice}){
 
 
 const CSS_LINES=[
-  "@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap');",
+  "@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap');",
   "*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}",
   ":root{",
   "--g:#062318;",
@@ -259,7 +259,7 @@ const CSS_LINES=[
   "--gold:#b8913c;",
   "--gold2:#d4aa58;",
   "--serif:'Cormorant Garamond',Georgia,serif;",
-  "--sans:'Raleway',sans-serif;",
+  "--sans:'Cormorant Garamond',Georgia,serif;",
   "--ease:cubic-bezier(.16,1,.3,1);",
   "--ink:#0d2116;",
   "--ink2:#1a3328;",
@@ -377,10 +377,19 @@ const CSS_LINES=[
   ".sec-title-light{color:var(--ink);}",
   ".sec-rule{display:none;}",
   ".sec-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:24px;}",
-  ".pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(272px,1fr));gap:2px;}",
-  ".pc{background:var(--cr2);position:relative;overflow:hidden;cursor:pointer;transition:box-shadow .3s;}",
+  ".bespoke-panel{position:relative;max-width:1040px;margin:0 auto;padding:64px 72px;overflow:hidden;border:1px solid rgba(184,145,60,.22);background:linear-gradient(135deg,rgba(184,145,60,.06),transparent 55%);}",
+  ".bespoke-corner{position:absolute;width:18px;height:18px;border:1px solid var(--gold);opacity:.55;}",
+  ".bespoke-corner-tl{top:14px;left:14px;border-right:none;border-bottom:none;}",
+  ".bespoke-corner-tr{top:14px;right:14px;border-left:none;border-bottom:none;}",
+  ".bespoke-corner-bl{bottom:14px;left:14px;border-right:none;border-top:none;}",
+  ".bespoke-corner-br{bottom:14px;right:14px;border-left:none;border-top:none;}",
+  ".bespoke-mono{position:absolute;right:36px;top:50%;transform:translateY(-50%);font-family:var(--serif);font-style:italic;font-size:min(22vw,260px);line-height:1;color:rgba(184,145,60,.08);pointer-events:none;user-select:none;}",
+  ".bespoke-content{position:relative;z-index:1;max-width:460px;}",
+  "@media(max-width:768px){.bespoke-panel{padding:44px 26px;}.bespoke-mono{font-size:44vw;right:-6vw;opacity:.5;}}",
+  ".pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(272px,300px));gap:2px;justify-content:center;}",
+  ".pc{background:var(--cr2);position:relative;overflow:hidden;cursor:pointer;transition:box-shadow .3s;display:flex;flex-direction:column;height:100%;}",
   ".pc:hover{box-shadow:0 12px 40px rgba(6,35,24,.1);}",
-  ".pc-img{aspect-ratio:1/1;overflow:hidden;position:relative;background:var(--cr2);}",,
+  ".pc-img{aspect-ratio:1/1;overflow:hidden;position:relative;background:var(--cr2);flex-shrink:0;}",
   ".pc-img img{width:100%;height:100%;object-fit:cover;object-position:center center;display:block;transition:transform .6s cubic-bezier(.16,1,.3,1);}",".pc:hover .pc-img img{transform:scale(1.04);}",
   ".pc-badge{position:absolute;top:11px;left:11px;z-index:3;font-size:7.5px;letter-spacing:.18em;text-transform:uppercase;padding:3px 9px;}",
   ".badge-new{background:var(--gold);color:var(--g);}",
@@ -774,16 +783,14 @@ function PC({product,onV,onA}){
         <div className="pc-name">{product.name}</div>
         {product.subtype&&<div style={{fontSize:11,color:"var(--ink3)",letterSpacing:".01em",textTransform:"none",marginBottom:2}}>{product.subtype}</div>}
         <div className="pc-price">{fmt(price)}</div>
-        {product.sizes&&product.sizes.length>0&&(
-          <div style={{display:"flex",gap:5,marginBottom:8}}>
-            {product.sizes.map(sz=>(
-              <button key={sz} onClick={()=>setSelSize(sz)} style={{flex:1,fontSize:11,letterSpacing:".08em",textTransform:"uppercase",padding:"4px 0",background:"transparent",color:selSize===sz?"var(--gold)":"var(--ink3)",border:"1px solid",borderColor:selSize===sz?"var(--gold)":"rgba(26,18,10,.15)",cursor:"pointer",transition:"all .15s"}}>
-                {sz}
-              </button>
-            ))}
-          </div>
-        )}
-        <button className="pc-add" style={{marginTop:8}} onClick={()=>{
+        <div style={{display:"flex",gap:5,marginBottom:8,minHeight:26}}>
+          {product.sizes&&product.sizes.length>0&&product.sizes.map(sz=>(
+            <button key={sz} onClick={()=>setSelSize(sz)} style={{flex:1,fontSize:11,letterSpacing:".08em",textTransform:"uppercase",padding:"4px 0",background:"transparent",color:selSize===sz?"var(--gold)":"var(--ink3)",border:"1px solid",borderColor:selSize===sz?"var(--gold)":"rgba(26,18,10,.15)",cursor:"pointer",transition:"all .15s"}}>
+              {sz}
+            </button>
+          ))}
+        </div>
+        <button className="pc-add" style={{marginTop:"auto"}} onClick={()=>{
           if(product.sizes&&product.sizes.length>0&&!selSize){setSizeErr(true);setTimeout(()=>setSizeErr(false),3000);return;}
           onA(product,product.stones,price,selSize);}}>Add to Cart</button>
         {sizeErr&&<p style={{fontSize:11,color:"#c0392b",textAlign:"center",marginTop:4,padding:"2px 8px",fontFamily:"var(--sans)"}}>Please select a size</p>}
@@ -819,7 +826,7 @@ function BraceletSection({onV,onA,setPage}){
         <button onClick={()=>setShowAll(true)} style={{background:"none",border:"none",cursor:"none",fontFamily:"var(--sans)",fontSize:13,letterSpacing:".28em",textTransform:"uppercase",color:"var(--ink3)",padding:"10px 0",borderBottom:"1px solid rgba(26,18,10,.18)",transition:"color .2s,border-color .2s"}}
           onMouseEnter={e=>{e.currentTarget.style.color="var(--ink)";e.currentTarget.style.borderBottomColor="var(--gold)";}}
           onMouseLeave={e=>{e.currentTarget.style.color="var(--ink3)";e.currentTarget.style.borderBottomColor="rgba(26,18,10,.18)";}}>
-          View {all.length-3} More Bracelets
+          View {all.length-2} More Bracelets
         </button>
       </div>
     )}
@@ -871,37 +878,68 @@ function BackBtn({label,onClick}){
 }
 
 
+function heroImgSrc(p){
+  if(!p)return null;
+  const imgs=[p.img,p.img2,p.img3].filter(k=>k&&IMGS[k]);
+  return imgs.length>0?IMGS[imgs[0]]:null;
+}
+
 function HeroCarousel({onV}){
   const[idx,setIdx]=useState(0);
   const[tx,setTx]=useState(null);
+  const[prevSrc,setPrevSrc]=useState(null);
+  const[splitOut,setSplitOut]=useState(false);
   const items=CATALOG.filter(p=>["The Original","Mediterranean","Onyx"].includes(p.name));
+
+  const goTo=idxOrFn=>{
+    setIdx(i=>{
+      const next=typeof idxOrFn==="function"?idxOrFn(i):idxOrFn;
+      if(next===i)return i;
+      setPrevSrc(heroImgSrc(items[i]));
+      setSplitOut(false);
+      return next;
+    });
+  };
+
   useEffect(()=>{
-    const t=setInterval(()=>setIdx(i=>(i+1)%items.length),4000);
+    const t=setInterval(()=>goTo(i=>(i+1)%items.length),4500);
     return()=>clearInterval(t);
   },[]);
+
+  useEffect(()=>{
+    if(!prevSrc)return;
+    const raf=requestAnimationFrame(()=>setSplitOut(true));
+    const done=setTimeout(()=>{setPrevSrc(null);setSplitOut(false);},720);
+    return()=>{cancelAnimationFrame(raf);clearTimeout(done);};
+  },[idx,prevSrc]);
+
   if(!items.length)return null;
   const cur=items[idx];
-  const imgs=[cur.img,cur.img2,cur.img3].filter(k=>k&&IMGS[k]);
-  const imgSrc=imgs.length>0?IMGS[imgs[0]]:null;
+  const imgSrc=heroImgSrc(cur);
   return(
     <div style={{position:"relative",height:"100%",minHeight:"100%",overflow:"hidden",background:"var(--g)",cursor:"pointer"}}
       onTouchStart={e=>setTx(e.touches[0].clientX)}
-      onTouchEnd={e=>{if(tx===null)return;const d=e.changedTouches[0].clientX-tx;const swiped=Math.abs(d)>=40;if(swiped)setIdx(i=>d<0?(i+1)%items.length:(i-1+items.length)%items.length);setTx(null);}}
+      onTouchEnd={e=>{if(tx===null)return;const d=e.changedTouches[0].clientX-tx;const swiped=Math.abs(d)>=40;if(swiped)goTo(i=>d<0?(i+1)%items.length:(i-1+items.length)%items.length);setTx(null);}}
       onClick={()=>onV(cur,cur.stones)}>
-      {imgSrc&&<img src={imgSrc} alt={cur.name} style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center center",display:"block",opacity:.92,transition:"opacity .8s ease"}}/>}
-      <div style={{position:"absolute",inset:0,background:"linear-gradient(to bottom,rgba(6,35,24,.05) 0%,rgba(6,35,24,.55) 100%)"}}/>
-      <div style={{position:"absolute",bottom:"10%",left:"8%",right:"8%"}}>
+      {imgSrc&&<img src={imgSrc} alt={cur.name} style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center center",display:"block"}}/>}
+      {prevSrc&&<>
+        <div style={{position:"absolute",top:0,left:0,width:"50%",height:"100%",zIndex:2,backgroundImage:"url("+prevSrc+")",backgroundSize:"200% 100%",backgroundPosition:"left center",transition:"transform .7s cubic-bezier(.65,0,.35,1)",transform:splitOut?"translateY(-100%)":"translateY(0)"}}/>
+        <div style={{position:"absolute",top:0,right:0,width:"50%",height:"100%",zIndex:2,backgroundImage:"url("+prevSrc+")",backgroundSize:"200% 100%",backgroundPosition:"right center",transition:"transform .7s cubic-bezier(.65,0,.35,1)",transform:splitOut?"translateY(100%)":"translateY(0)"}}/>
+        <div style={{position:"absolute",top:0,bottom:0,left:"50%",width:1,marginLeft:-.5,background:"rgba(184,145,60,.55)",zIndex:3,opacity:splitOut?0:1,transition:"opacity .25s ease .1s"}}/>
+      </>}
+      <div style={{position:"absolute",inset:0,background:"linear-gradient(to bottom,rgba(6,35,24,.05) 0%,rgba(6,35,24,.55) 100%)",zIndex:1}}/>
+      <div style={{position:"absolute",bottom:"10%",left:"8%",right:"8%",zIndex:1}}>
         <span style={{fontSize:13,letterSpacing:".36em",textTransform:"uppercase",color:"rgba(245,239,227,.85)",display:"block",marginBottom:10,letterSpacing:".3em"}}>{cur.type}</span>
         <h2 style={{fontFamily:"var(--serif)",fontSize:"clamp(32px,5vw,64px)",fontWeight:300,color:"#f5efe3",lineHeight:1.05,marginBottom:12,letterSpacing:".01em"}}>{cur.name}</h2>
         <p style={{fontFamily:"var(--serif)",fontSize:"clamp(16px,1.8vw,20px)",color:"rgba(245,239,227,.6)",fontStyle:"italic",marginBottom:20}}>{fmt(cur.price)} EGP</p>
         <span style={{fontSize:13,letterSpacing:".02em",textTransform:"uppercase",color:"rgba(245,239,227,.5)",borderBottom:"1px solid rgba(184,145,60,.4)",paddingBottom:4}}>Discover the piece</span>
       </div>
       {/* Arrows */}
-      <button onClick={e=>{e.stopPropagation();setIdx(i=>(i-1+items.length)%items.length);}} style={{position:"absolute",left:20,top:"50%",transform:"translateY(-50%)",background:"rgba(6,35,24,.4)",border:"1px solid rgba(184,145,60,.2)",color:"#f5efe3",width:44,height:44,borderRadius:"50%",cursor:"pointer",fontSize:18,display:"flex",alignItems:"center",justifyContent:"center"}}>&#8592;</button>
-      <button onClick={e=>{e.stopPropagation();setIdx(i=>(i+1)%items.length);}} style={{position:"absolute",right:20,top:"50%",transform:"translateY(-50%)",background:"rgba(6,35,24,.4)",border:"1px solid rgba(184,145,60,.2)",color:"#f5efe3",width:44,height:44,borderRadius:"50%",cursor:"pointer",fontSize:18,display:"flex",alignItems:"center",justifyContent:"center"}}>&#8594;</button>
+      <button onClick={e=>{e.stopPropagation();goTo(i=>(i-1+items.length)%items.length);}} style={{position:"absolute",left:20,top:"50%",transform:"translateY(-50%)",background:"rgba(6,35,24,.4)",border:"1px solid rgba(184,145,60,.2)",color:"#f5efe3",width:44,height:44,borderRadius:"50%",cursor:"pointer",fontSize:18,display:"flex",alignItems:"center",justifyContent:"center",zIndex:5}}>&#8592;</button>
+      <button onClick={e=>{e.stopPropagation();goTo(i=>(i+1)%items.length);}} style={{position:"absolute",right:20,top:"50%",transform:"translateY(-50%)",background:"rgba(6,35,24,.4)",border:"1px solid rgba(184,145,60,.2)",color:"#f5efe3",width:44,height:44,borderRadius:"50%",cursor:"pointer",fontSize:18,display:"flex",alignItems:"center",justifyContent:"center",zIndex:5}}>&#8594;</button>
       {/* Dots */}
-      <div style={{position:"absolute",bottom:20,left:"50%",transform:"translateX(-50%)",display:"flex",gap:8}}>
-        {items.map((_,i)=><div key={i} onClick={e=>{e.stopPropagation();setIdx(i);}} style={{width:i===idx?24:6,height:6,borderRadius:3,background:i===idx?"var(--gold)":"rgba(245,239,227,.3)",transition:"all .3s ease",cursor:"pointer"}}/>)}
+      <div style={{position:"absolute",bottom:20,left:"50%",transform:"translateX(-50%)",display:"flex",gap:8,zIndex:5}}>
+        {items.map((_,i)=><div key={i} onClick={e=>{e.stopPropagation();goTo(i);}} style={{width:i===idx?24:6,height:6,borderRadius:3,background:i===idx?"var(--gold)":"rgba(245,239,227,.3)",transition:"all .3s ease",cursor:"pointer"}}/>)}
       </div>
     </div>
   );
@@ -925,8 +963,8 @@ function HomePage({setPage,onV,onA}){
         <div className="hero-rule"/>
         <p className="hero-sub">Natural stones. No two pieces alike. Every piece shaped entirely by hand in Egypt.</p>
         <div className="hero-btns">
-          <button className="btn btn-gold" style={{padding:"10px 24px",fontSize:11,letterSpacing:".02em",minWidth:160,justifyContent:"center"}} onClick={()=>setPage("all")}>Shop Now</button>
-          <button className="btn btn-ghost" style={{padding:"10px 24px",fontSize:11,letterSpacing:".02em",minWidth:160,justifyContent:"center"}} onClick={()=>setPage("customize")}>Design Your Dorra Piece</button>
+          <button className="btn btn-gold" style={{padding:"10px 24px",fontSize:11,letterSpacing:".02em",justifyContent:"flex-start",textAlign:"left"}} onClick={()=>setPage("all")}>Shop Now</button>
+          <button className="btn btn-ghost" style={{padding:"10px 24px",fontSize:11,letterSpacing:".02em",justifyContent:"flex-start",textAlign:"left"}} onClick={()=>setPage("customize")}>Design Your Dorra Piece</button>
         </div>
       </div>
       <div className="hero-img" style={{overflow:"hidden",position:"relative"}}>
@@ -937,13 +975,21 @@ function HomePage({setPage,onV,onA}){
     </div>
 
     {/* -- DESIGN YOUR PIECE - Luxury editorial banner -- */}
-    <div style={{background:"var(--cr2)",borderTop:"1px solid rgba(184,145,60,.14)",borderBottom:"1px solid rgba(184,145,60,.14)",padding:"64px 72px"}}>
-      <div style={{maxWidth:640,margin:"0 auto",textAlign:"center"}} data-rv>
-        <span style={{fontSize:13,letterSpacing:".6em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:18}}>Bespoke</span>
-        <h2 style={{fontFamily:"var(--serif)",fontSize:"clamp(26px,3.2vw,52px)",fontWeight:300,color:"var(--ink)",lineHeight:1.04,marginBottom:16}}>Nothing made only for you<br/>exists anywhere else.</h2>
-        <div style={{width:36,height:1,background:"var(--gold)",margin:"0 auto 18px",opacity:.5}}/>
-        <p style={{fontSize:13,color:"var(--ink3)",lineHeight:2.0,maxWidth:420,margin:"0 auto 28px",fontWeight:300}}>Your vision. Your stones. Your piece  crafted by hand in Egypt.</p>
-        <button className="btn btn-dark" style={{padding:"10px 24px",fontSize:11,letterSpacing:".02em"}} onClick={()=>setPage("customize")}>Design Your Dorra Piece</button>
+    <div style={{background:"var(--g)",padding:"20px"}}>
+      <div className="bespoke-panel" data-rv>
+        {/* corner ticks */}
+        <span className="bespoke-corner bespoke-corner-tl"/>
+        <span className="bespoke-corner bespoke-corner-tr"/>
+        <span className="bespoke-corner bespoke-corner-bl"/>
+        <span className="bespoke-corner bespoke-corner-br"/>
+        <div className="bespoke-mono" aria-hidden="true">D</div>
+        <div className="bespoke-content">
+          <span style={{fontSize:12,letterSpacing:".5em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:16}}>Bespoke</span>
+          <h2 style={{fontFamily:"var(--serif)",fontSize:"clamp(26px,3.2vw,48px)",fontWeight:300,color:"var(--cr)",lineHeight:1.08,marginBottom:16,textAlign:"left"}}>Nothing made only for you<br/>exists anywhere else.</h2>
+          <div style={{width:36,height:1,background:"var(--gold)",margin:"0 0 18px",opacity:.6}}/>
+          <p style={{fontSize:13,color:"rgba(245,239,227,.55)",lineHeight:2.0,maxWidth:380,margin:"0 0 28px",fontWeight:300,textAlign:"left"}}>Your vision. Your stones. Your piece  crafted by hand in Egypt.</p>
+          <button className="btn btn-gold" style={{padding:"10px 24px",fontSize:11,letterSpacing:".02em",justifyContent:"flex-start"}} onClick={()=>setPage("customize")}>Design Your Dorra Piece</button>
+        </div>
       </div>
     </div>
     <div className="section-cream" style={{paddingTop:60,paddingBottom:52}}>
@@ -1620,11 +1666,11 @@ function Checkout({cart,onClose,onOk,setLastOrder}){
           {step===1&&<>
             <Summary/>
             <div className="field-grid">
-              <div className="field"><label className="field-label">Full Name *</label><input className="field-input" autoComplete="name" id="checkout-name" autoCapitalize="words" placeholder="Your name" value={name} style={{borderColor:fieldErr&&!name.trim()?"#c0392b":undefined}} onChange={e=>{setName(e.target.value);if(fieldErr)setFieldErr("");}}/></div>
-              <div className="field"><label className="field-label">Phone *</label><input className="field-input" autoComplete="tel" id="checkout-tel" inputMode="tel" placeholder="+20 1xx xxx xxxx" value={phone} style={{borderColor:fieldErr&&!phone.trim()?"#c0392b":undefined}} onChange={e=>{setPhone(e.target.value);if(fieldErr)setFieldErr("");}}/></div>
+              <div className="field"><label className="field-label">Full Name *</label><input className="field-input" type="text" name="name" autoComplete="name" id="checkout-name" autoCapitalize="words" placeholder="Your name" value={name} style={{borderColor:fieldErr&&!name.trim()?"#c0392b":undefined}} onChange={e=>{setName(e.target.value);if(fieldErr)setFieldErr("");}}/></div>
+              <div className="field"><label className="field-label">Phone *</label><input className="field-input" type="tel" name="tel" autoComplete="tel" id="checkout-tel" inputMode="tel" placeholder="+20 1xx xxx xxxx" value={phone} style={{borderColor:fieldErr&&!phone.trim()?"#c0392b":undefined}} onChange={e=>{setPhone(e.target.value);if(fieldErr)setFieldErr("");}}/></div>
             </div>
-            <div className="field"><label className="field-label">Email *</label><input className="field-input" type="email" autoComplete="email" id="checkout-email" inputMode="email" autoCapitalize="none" placeholder="your@email.com" value={email} style={{borderColor:fieldErr&&!email.includes("@")?"#c0392b":undefined}} onChange={e=>{setEmail(e.target.value);if(fieldErr)setFieldErr("");}}/></div>
-            <div className="field"><label className="field-label">Delivery Address *</label><input className="field-input" autoComplete="street-address" id="checkout-address" autoCapitalize="words" placeholder="Street, building, apartment" value={address} style={{borderColor:fieldErr&&!address.trim()?"#c0392b":undefined}} onChange={e=>{setAddress(e.target.value);if(fieldErr)setFieldErr("");}}/></div>
+            <div className="field"><label className="field-label">Email *</label><input className="field-input" type="email" name="email" autoComplete="email" id="checkout-email" inputMode="email" autoCapitalize="none" autoCorrect="off" spellCheck="false" placeholder="your@email.com" value={email} style={{borderColor:fieldErr&&!email.includes("@")?"#c0392b":undefined}} onChange={e=>{setEmail(e.target.value);if(fieldErr)setFieldErr("");}}/></div>
+            <div className="field"><label className="field-label">Delivery Address *</label><input className="field-input" type="text" name="street-address" autoComplete="street-address" id="checkout-address" autoCapitalize="words" placeholder="Street, building, apartment" value={address} style={{borderColor:fieldErr&&!address.trim()?"#c0392b":undefined}} onChange={e=>{setAddress(e.target.value);if(fieldErr)setFieldErr("");}}/></div>
             <div className="field">
               <label className="field-label">City</label>
               <select className="field-select" value={city} onChange={e=>setCity(e.target.value)}>{cities.map(ct=><option key={ct}>{ct}</option>)}</select>
