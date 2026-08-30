@@ -161,6 +161,14 @@ const CATALOG=[
 
 
 const STONES=["Coral","Malachite","Turquoise","Tigers Eye","Amethyst","Pearl","Rose Quartz","Agate","Hematite","Ruby Jade","Crystal Quartz","Lava Stone"];
+// Promo codes: percent off the product subtotal (not shipping). expires:null means no expiry.
+// oneTime:true codes can only be used once per browser (tracked in localStorage once an order is placed).
+const PROMO_CODES={
+  "LOLY15":{percent:0.15,expires:null,oneTime:false},
+  "HAITHAM10":{percent:0.10,expires:new Date("2027-08-30T00:00:00Z"),oneTime:false},
+  "WELCOME10":{percent:0.10,expires:null,oneTime:true}
+};
+const MAX_PROMOS=2;
 // Rarity tiers researched relative to typical gem-trade abundance, ordered rarest to most
 // common within each tier: Coral, Malachite, Turquoise, Tiger's Eye, Amethyst and Pearl are
 // naturally-colored/organic and least common of the set; Rose Quartz, Agate and Hematite are
@@ -1708,9 +1716,28 @@ function DetailPage({product,initStone,onBack,onA}){
   );
 }
 
-function CartDrawer({cart,onClose,onQty,onPkg,onCk}){
+function CartDrawer({cart,onClose,onQty,onPkg,onCk,promos,onApplyPromo,onRemovePromo}){
   const velvetCount=0;
   const total=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const[promoInput,setPromoInput]=useState("");
+  const[promoErr,setPromoErr]=useState("");
+  const totalPercent=promos.reduce((s,p)=>s+p.percent,0);
+  const discount=Math.round(total*totalPercent);
+  const finalTotal=total-discount;
+  const usedOneTime=()=>{try{return JSON.parse(localStorage.getItem("dorra_used_promos")||"[]");}catch(e){return[];}};
+  const tryApply=()=>{
+    const code=promoInput.trim().toUpperCase();
+    if(!code){setPromoErr("Enter a code first.");return;}
+    if(promos.length>=MAX_PROMOS){setPromoErr("You can only use up to "+MAX_PROMOS+" codes at once.");return;}
+    if(promos.some(p=>p.code===code)){setPromoErr("That code is already applied.");return;}
+    const found=PROMO_CODES[code];
+    if(!found){setPromoErr("That code isn't valid.");return;}
+    if(found.expires&&new Date()>found.expires){setPromoErr("That code has expired.");return;}
+    if(found.oneTime&&usedOneTime().includes(code)){setPromoErr("That code has already been used.");return;}
+    setPromoErr("");
+    onApplyPromo({code,percent:found.percent});
+    setPromoInput("");
+  };
   if(cart.length===0)return(
     <div className="cart-overlay" onClick={onClose}>
       <div className="cart-drawer" onClick={e=>e.stopPropagation()}>
@@ -1751,7 +1778,20 @@ function CartDrawer({cart,onClose,onQty,onPkg,onCk}){
           ))}
         </div>
         <div className="cart-foot">
-          <div className="cart-total-row"><span className="cart-total-label">Total</span><span className="cart-total-val">{fmt(total)}</span></div>
+          {promos.length<MAX_PROMOS&&<div style={{display:"flex",gap:6,marginBottom:12}}>
+            <input value={promoInput} onChange={e=>setPromoInput(e.target.value)} placeholder="Promo code" style={{flex:1,padding:"9px 10px",fontSize:14,border:"1px solid rgba(26,18,10,.15)",background:"var(--cr)",color:"var(--ink)"}}/>
+            <button type="button" className="btn btn-dark" style={{padding:"9px 16px",fontSize:13}} onClick={tryApply}>Apply</button>
+          </div>}
+          {promoErr&&<p style={{fontSize:13,color:"#c0392b",marginTop:-6,marginBottom:10}}>{promoErr}</p>}
+          {promos.map(p=>(
+            <div key={p.code} style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:8,padding:"8px 10px",background:"rgba(6,35,24,.05)"}}>
+              <span style={{fontSize:14,color:"var(--gold)"}}>Code {p.code} applied (-{Math.round(p.percent*100)}%)</span>
+              <button type="button" onClick={()=>onRemovePromo(p.code)} style={{background:"none",border:"none",color:"var(--ink3)",fontSize:13,cursor:"pointer",textDecoration:"underline"}}>Remove</button>
+            </div>
+          ))}
+          {promos.length>0&&<div className="cart-total-row"><span className="cart-total-label">Subtotal</span><span className="cart-total-val">{fmt(total)}</span></div>}
+          {promos.length>0&&<div className="cart-total-row"><span className="cart-total-label">Discount</span><span className="cart-total-val" style={{color:"var(--gold)"}}>-{fmt(discount)}</span></div>}
+          <div className="cart-total-row"><span className="cart-total-label">Total</span><span className="cart-total-val">{fmt(finalTotal)}</span></div>
           <button className="btn btn-gold btn-full" style={{padding:"15px",fontSize:13,letterSpacing:".02em",marginTop:12}} onClick={onCk}>Proceed to Checkout</button>
         </div>
       </div>
@@ -1759,7 +1799,7 @@ function CartDrawer({cart,onClose,onQty,onPkg,onCk}){
   );
 }
 
-function Checkout({cart,onClose,onOk,setLastOrder}){
+function Checkout({cart,onClose,onOk,setLastOrder,promos}){
   const[step,setStep]=useState(1);
   const[name,setName]=useState("");
   const[fieldErr,setFieldErr]=useState("");
@@ -1784,7 +1824,9 @@ function Checkout({cart,onClose,onOk,setLastOrder}){
   const customSub=customItems.reduce((s,i)=>s+i.price*i.qty,0);
   const standardSub=standardItems.reduce((s,i)=>s+i.price*i.qty,0);
   const sub=customSub+standardSub;
-  const tot=sub+ship;
+  const promoPercent=promos.reduce((s,p)=>s+p.percent,0);
+  const discount=Math.round(sub*promoPercent);
+  const tot=sub-discount+ship;
   const customDep=Math.round(customSub*0.4);
   const customBal=customSub-customDep;
   const hasFromScratch=customItems.length>0;
@@ -1813,6 +1855,7 @@ function Checkout({cart,onClose,onOk,setLastOrder}){
       customer:{name,phone,email,address,city,notes},
       items:cart.map(i=>({name:i.product.name,stone:Array.isArray(i.swapStone)?i.swapStone.join(", "):i.swapStone,qty:i.qty,price:i.price,size:i.size||"",wireColor:i.product.wireColor||"",isCustom:!!i.product.isFromScratch,stones:i.product.stones||[],customNote:i.product.desc||""})),
       packaging:pkg,shipping:ship,subtotal:sub,total:tot,
+      promoCode:promos.map(p=>p.code).join(", "),discount:discount,
       payment:pay,instapayRef:needRef?instRef:"",instapayScreenshot:needRef?instScreenshot:"",
       isCustom:hasFromScratch,deposit:customDep,balance:customBal,dueNow,dueOnDelivery,
       adminStatus:"new",createdAt:new Date().toISOString()};
@@ -1827,6 +1870,12 @@ function Checkout({cart,onClose,onOk,setLastOrder}){
       return;
     }
     setLastOrder(order);
+    // Mark any one-time-use codes as used in this browser, now that the order genuinely succeeded
+    try{
+      const used=JSON.parse(localStorage.getItem("dorra_used_promos")||"[]");
+      promos.forEach(p=>{if(PROMO_CODES[p.code]&&PROMO_CODES[p.code].oneTime&&!used.includes(p.code))used.push(p.code);});
+      localStorage.setItem("dorra_used_promos",JSON.stringify(used));
+    }catch(e){}
     setTimeout(onOk,50);
     // Save to localStorage as a local record too
     try{const ex=JSON.parse(localStorage.getItem("dorra_orders")||"[]");ex.push(order);localStorage.setItem("dorra_orders",JSON.stringify(ex));window.dispatchEvent(new Event("storage"));}catch(e){}
@@ -1838,6 +1887,7 @@ function Checkout({cart,onClose,onOk,setLastOrder}){
       {standardItems.map((i,idx2)=><div key={"s"+idx2} className="order-row"><span>{i.product.name}{i.size?" - "+i.size:""} x{i.qty}</span><span>{fmt(i.price*i.qty)}</span></div>)}
       {customItems.map((i,idx2)=><div key={"c"+idx2} className="order-row"><span style={{color:"var(--gold)"}}>{i.product.name} x{i.qty} <span style={{fontSize:13,opacity:.7}}>(bespoke)</span></span><span>{fmt(i.price*i.qty)}</span></div>)}
       <div className="order-row"><span>Shipping</span><span>EGP {ship}</span></div>
+      {promos.length>0&&<div className="order-row"><span style={{color:"var(--gold)"}}>Promo {promos.map(p=>p.code).join(" + ")} (-{Math.round(promoPercent*100)}%)</span><span style={{color:"var(--gold)"}}>-{fmt(discount)}</span></div>}
       <div className="order-total-row"><span className="order-total-label">Total</span><span className="order-total-val">{fmt(tot)}</span></div>
       {hasFromScratch&&customSub>0&&<div style={{marginTop:10,padding:"11px 13px",background:"rgba(184,145,60,.07)",borderLeft:"2px solid rgba(184,145,60,.28)"}}>
         <div style={{fontSize:13,letterSpacing:".02em",textTransform:"uppercase",color:"var(--ink3)",marginBottom:8}}>Payment Breakdown</div>
@@ -2497,6 +2547,7 @@ export default function App(){
   const[cart,setCart]=useState([]);
   const[cO,setCO]=useState(false);
   const[ck,setCk]=useState(false);
+  const[promos,setPromos]=useState([]);
   const[lastOrder,setLastOrder]=useState(null);
   const[toast,setToast]=useState(null);
   const[loading,setLoading]=useState(true);
@@ -2558,8 +2609,8 @@ export default function App(){
         </>}
     </div>
     <Footer setPage={go}/>
-    {cO&&<CartDrawer cart={cart} onClose={()=>setCO(false)} onQty={upQ} onPkg={updPkg} onCk={()=>{setCO(false);setCk(true);}}/>}
-    {ck&&<Checkout cart={cart} onClose={()=>setCk(false)} onOk={()=>{setCk(false);setCart([]);}} setLastOrder={setLastOrder}/>}
+    {cO&&<CartDrawer cart={cart} onClose={()=>setCO(false)} onQty={upQ} onPkg={updPkg} onCk={()=>{setCO(false);setCk(true);}} promos={promos} onApplyPromo={p=>setPromos(prev=>[...prev,p])} onRemovePromo={code=>setPromos(prev=>prev.filter(p=>p.code!==code))}/>}
+    {ck&&<Checkout cart={cart} onClose={()=>setCk(false)} onOk={()=>{setCk(false);setCart([]);setPromos([]);}} setLastOrder={setLastOrder} promos={promos}/>}
     {lastOrder&&<OrderConfirm order={lastOrder} onClose={()=>{setLastOrder(null);if(window.__dorraGo)window.__dorraGo("home");}}/>}
     {toast&&<div className="toast"><span className="toast-dot"/>{toast}</div>}
   </>);
