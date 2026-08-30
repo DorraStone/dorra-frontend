@@ -8,7 +8,7 @@ const API_BASE = "https://dorra-backend-3.onrender.com";
 async function apiPost(path, body) {
   try {
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 45000);
+    const timeout = setTimeout(() => controller.abort(), 65000);
     const res = await fetch(API_BASE + path, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -1816,16 +1816,20 @@ function Checkout({cart,onClose,onOk,setLastOrder}){
       payment:pay,instapayRef:needRef?instRef:"",instapayScreenshot:needRef?instScreenshot:"",
       isCustom:hasFromScratch,deposit:customDep,balance:customBal,dueNow,dueOnDelivery,
       adminStatus:"new",createdAt:new Date().toISOString()};
-    // Save to backend (real database + email)
-    // Show confirmation immediately - don't wait for backend
-    setLastOrder(order);
+    // Wait for real backend confirmation before showing success - a Render free-tier
+    // cold start can take 50+ seconds, and previously we showed "Order Confirmed"
+    // immediately regardless of whether the save actually succeeded, which meant
+    // customers could see a false confirmation while nothing was saved or emailed.
+    const result = await apiPost("/api/orders", order);
     setSubmitting(false);
+    if(!result || result.error || result.success===false){
+      setFieldErr("We couldn't confirm your order - the server may be waking up, please wait a moment and press the button again. If this keeps happening, contact us directly on Instagram @dorrastones so we don't miss your order.");
+      return;
+    }
+    setLastOrder(order);
     setTimeout(onOk,50);
-    // Save to localStorage
+    // Save to localStorage as a local record too
     try{const ex=JSON.parse(localStorage.getItem("dorra_orders")||"[]");ex.push(order);localStorage.setItem("dorra_orders",JSON.stringify(ex));window.dispatchEvent(new Event("storage"));}catch(e){}
-    // Send to backend in background (non-blocking)
-    const orderToSend={...order,instapayScreenshot:""};
-    apiPost("/api/orders",orderToSend).catch(e=>console.error("Order save:",e));
   };
 
   const Summary=()=>(
@@ -2298,6 +2302,10 @@ function AdminDashboard(){
                   <div style={{textAlign:"right"}}>
                     <div style={{fontSize:14,padding:"4px 10px",background:"rgba(0,0,0,.3)",color:statusColors[o.status]||G.gold,letterSpacing:".08em",textTransform:"uppercase",marginBottom:10,display:"inline-block"}}>{o.status||"pending"}</div>
                     <div style={{fontSize:14,color:G.faint,marginBottom:10}}>{o.payment}</div>
+                    {o.instapayRef&&<div style={{fontSize:14,color:G.gold,marginBottom:6,maxWidth:180,wordBreak:"break-word"}}>Ref: {o.instapayRef}</div>}
+                    {o.instapayScreenshot&&<a href={o.instapayScreenshot} target="_blank" rel="noopener noreferrer">
+                      <img src={o.instapayScreenshot} alt="Payment proof" style={{width:100,height:100,objectFit:"cover",border:"1px solid rgba(184,145,60,.3)",marginBottom:10,display:"block",cursor:"pointer"}}/>
+                    </a>}
                     <div style={{display:"flex",flexDirection:"column",gap:6}}>
                       {["confirmed","processing","shipped","delivered","cancelled"].map(s=>(
                         <button key={s} onClick={()=>updateStatus(o.ref,s)}
