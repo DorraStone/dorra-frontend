@@ -2247,8 +2247,9 @@ function AdminDashboard(){
                         <div style={{fontSize:14,color:item.isCustom?G.gold:G.faint}}>
                           {item.isCustom?"[BESPOKE] ":""}{item.name}{item.size?" ("+item.size+")":""} x{item.qty}  EGP {item.price}
                         </div>
-                        {item.isCustom&&item.stones&&<div style={{fontSize:14,color:G.faint,marginLeft:8}}>Stones: {(item.stones||[]).join(", ")}</div>}
-                        {item.isCustom&&item.wireColor&&<div style={{fontSize:14,color:G.faint,marginLeft:8}}>Wire: {item.wireColor}</div>}
+                        {item.stones&&item.stones.length>0&&<div style={{fontSize:14,color:G.faint,marginLeft:8}}>Stones: {item.stones.join(", ")}</div>}
+                        {item.wireColor&&<div style={{fontSize:14,color:G.faint,marginLeft:8}}>Wire finish: {item.wireColor==="gold"?"Gold-toned":item.wireColor==="silver"?"Silver-toned":item.wireColor}</div>}
+                        {item.isCustom&&item.customNote&&<div style={{fontSize:14,color:G.gold,marginLeft:8,fontStyle:"italic"}}>{item.customNote}</div>}
                       </div>
                     ))}
                   </div>
