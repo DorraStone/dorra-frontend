@@ -1329,12 +1329,16 @@ function CustomizePage({onAddCart,onGoCart}){
   const[cqShade,setCqShade]=useState("Light Blue");
   const[lavaColor,setLavaColor]=useState("Black");
   const toggleDecoWire=w=>{
-    if(pt==="Earring")return;
+    if(pt==="Earring"||pt==="Ring")return;
     setDecoWires(prev=>prev.includes(w)?prev.filter(x=>x!==w):(prev.length<3?[...prev,w]:prev));
   };
   useRv();
 
-  const tog=s=>setPicked(p=>p.includes(s)?p.filter(x=>x!==s):[...p,s]);
+  const tog=s=>setPicked(p=>{
+    if(p.includes(s))return p.filter(x=>x!==s);
+    if(pt==="Ring"&&p.length>=2)return p; // Ring is limited to 1-2 stones
+    return[...p,s];
+  });
   const handleInspo=e=>{
     const file=e.target.files[0];
     if(!file)return;
@@ -1344,7 +1348,7 @@ function CustomizePage({onAddCart,onGoCart}){
     reader.readAsDataURL(file);
   };
 
-  const BASE={"Bracelet":299,"Statement Bracelet":399,"Necklace":419,"Anklet":299,"Earring":199};
+  const BASE={"Bracelet":299,"Statement Bracelet":399,"Necklace":419,"Anklet":299,"Earring":199,"Ring":129};
   const DECO_COST={"thin_gold":0,"thin_silver":0,"thick_gold":80,"thick_silver":80};
   const STONE_EXTRA={"Coral":55,"Malachite":55,"Turquoise":55,"Tigers Eye":55,"Amethyst":55,"Pearl":55,"Rose Quartz":40,"Agate":40,"Hematite":40,"Ruby Jade":25,"Crystal Quartz":25,"Lava Stone":25};
   const base=BASE[pt]||299;
@@ -1354,14 +1358,14 @@ function CustomizePage({onAddCart,onGoCart}){
   const raw=base+wireCost+stoneExtra;
   const est=Math.ceil(raw/50)*50-1;
   const dep=Math.round(est*0.4);
-  const needsSize=pt==="Bracelet"||pt==="Statement Bracelet";
+  const needsSize=pt==="Bracelet"||pt==="Statement Bracelet"||pt==="Ring";
 
   const doAdd=()=>{
     if(!picked.length)return;
     const stoneNotes=[];
     if(picked.includes("Crystal Quartz"))stoneNotes.push("Crystal Quartz shade: "+cqShade);
     if(picked.includes("Lava Stone"))stoneNotes.push("Lava Stone color: "+lavaColor);
-    const p={id:Date.now(),name:"Bespoke "+pt,type:pt.includes("Bracelet")?"Bracelet":pt==="Anklet"?"Anklet":pt==="Necklace"?"Necklace":"Earring",price:est,stones:picked,img:"",img2:"",img3:"",desc:"Bespoke "+pt+". Base: "+baseColor+". Wire: "+(decoWires.length?decoWires.join(", "):"none")+". Stones: "+picked.join(", ")+"."+(stoneNotes.length?" "+stoneNotes.join(". ")+".":"")+(note?" Notes: "+note:""),care:"Handle with care.",isFromScratch:true,size:needsSize?size:"",wireColor:baseColor,decoWires:decoWires,inspoImg:inspoB64||null};
+    const p={id:Date.now(),name:"Bespoke "+pt,type:pt.includes("Bracelet")?"Bracelet":pt==="Anklet"?"Anklet":pt==="Necklace"?"Necklace":pt==="Ring"?"Ring":"Earring",price:est,stones:picked,img:"",img2:"",img3:"",desc:"Bespoke "+pt+". Base: "+baseColor+". Wire: "+(decoWires.length?decoWires.join(", "):"none")+". Stones: "+picked.join(", ")+"."+(stoneNotes.length?" "+stoneNotes.join(". ")+".":"")+(note?" Notes: "+note:""),care:"Handle with care.",isFromScratch:true,size:needsSize?size:"",wireColor:baseColor,decoWires:decoWires,inspoImg:inspoB64||null};
     if(onAddCart)onAddCart(p,picked,est,needsSize?size:"");
   };
 
@@ -1383,8 +1387,8 @@ function CustomizePage({onAddCart,onGoCart}){
             <span style={{fontSize:11,letterSpacing:".02em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:10}}>Piece Type</span>
             <div className="sec-rule" style={{marginBottom:14}}/>
             <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
-              {["Bracelet","Statement Bracelet","Necklace","Anklet","Earring"].map(t=>(
-                <button key={t} onClick={()=>{setPt(t);setSize("Medium");}}
+              {["Bracelet","Statement Bracelet","Necklace","Anklet","Earring","Ring"].map(t=>(
+                <button key={t} onClick={()=>{setPt(t);setSize(t==="Ring"?"7":"Medium");if(t==="Ring")setPicked(p=>p.slice(0,2));}}
                   style={{padding:"10px 18px",fontFamily:"var(--sans)",fontSize:13,letterSpacing:".06em",background:pt===t?"var(--g)":"transparent",color:pt===t?"var(--cr)":"var(--ink3)",border:"1px solid",borderColor:pt===t?"var(--g)":"rgba(26,18,10,.15)",cursor:"pointer",transition:"all .2s",fontSize:13,padding:"9px 16px"}}>
                   {t}
                 </button>
@@ -1393,6 +1397,7 @@ function CustomizePage({onAddCart,onGoCart}){
             {/* Piece type description */}
             {pt==="Bracelet"&&<p style={{fontSize:15,color:"var(--ink3)",lineHeight:1.8,marginTop:10,padding:"10px 14px",background:"rgba(26,18,10,.04)",borderLeft:"2px solid rgba(184,145,60,.2)"}}>All stones are the same size, wound evenly around the copper wire.</p>}
             {pt==="Statement Bracelet"&&<p style={{fontSize:15,color:"var(--ink3)",lineHeight:1.8,marginTop:10,padding:"10px 14px",background:"rgba(26,18,10,.04)",borderLeft:"2px solid var(--gold)"}}>One stone is chosen as a centrepiece  larger in size and placed at the front. The remaining stones complement it.</p>}
+            {pt==="Ring"&&<p style={{fontSize:15,color:"var(--ink3)",lineHeight:1.8,marginTop:10,padding:"10px 14px",background:"rgba(26,18,10,.04)",borderLeft:"2px solid var(--gold)"}}>Our most cost-effective piece to design. Choose 1 or 2 stones only, set on a slim hand-wound copper band.</p>}
           </div>
 
           
@@ -1413,7 +1418,7 @@ function CustomizePage({onAddCart,onGoCart}){
           </div>
 
           {/* DECORATIVE WIRE */}
-          {pt!=="Earring"&&(
+          {pt!=="Earring"&&pt!=="Ring"&&(
             <div style={{marginBottom:24}}>
               <span style={{fontSize:11,letterSpacing:".02em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:8}}>Decorative Wire <span style={{fontSize:10,opacity:.55,textTransform:"none",letterSpacing:0,fontFamily:"var(--sans)"}}> up to 3</span></span>
               <div className="sec-rule" style={{marginBottom:10}}/>
@@ -1488,13 +1493,13 @@ function CustomizePage({onAddCart,onGoCart}){
             <div style={{marginBottom:28}}>
               <div style={{display:"flex",alignItems:"baseline",justifyContent:"space-between",marginBottom:10}}>
                 <span style={{fontSize:11,letterSpacing:".02em",textTransform:"uppercase",color:"var(--gold)"}}>Size</span>
-                <span style={{fontSize:15,color:"var(--ink3)",fontStyle:"italic"}}>S: 5 cm &bull; M: 5.5 cm &bull; L: 6.5 cm (inner diameter)</span>
+                <span style={{fontSize:15,color:"var(--ink3)",fontStyle:"italic"}}>{pt==="Ring"?"US ring sizes":"S: 5 cm \u2022 M: 5.5 cm \u2022 L: 6.5 cm (inner diameter)"}</span>
               </div>
               <div className="sec-rule" style={{marginBottom:14}}/>
-              <div style={{display:"flex",gap:8}}>
-                {["Small","Medium","Large"].map(sz=>(
+              <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
+                {(pt==="Ring"?["6","7","8","9"]:["Small","Medium","Large"]).map(sz=>(
                   <button key={sz} onClick={()=>setSize(sz)}
-                    style={{flex:1,padding:"10px",fontSize:13,letterSpacing:".08em",textTransform:"uppercase",background:size===sz?"var(--g)":"transparent",color:size===sz?"var(--cr)":"var(--ink3)",border:"1px solid",borderColor:size===sz?"var(--g)":"rgba(26,18,10,.15)",cursor:"pointer",transition:"all .2s"}}>
+                    style={{flex:pt==="Ring"?"0 0 22%":1,padding:"10px",fontSize:13,letterSpacing:".08em",textTransform:"uppercase",background:size===sz?"var(--g)":"transparent",color:size===sz?"var(--cr)":"var(--ink3)",border:"1px solid",borderColor:size===sz?"var(--g)":"rgba(26,18,10,.15)",cursor:"pointer",transition:"all .2s"}}>
                     {sz}
                   </button>
                 ))}
