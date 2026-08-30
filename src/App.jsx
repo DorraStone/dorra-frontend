@@ -1360,8 +1360,12 @@ function CustomizePage({onAddCart,onGoCart}){
   const dep=Math.round(est*0.4);
   const needsSize=pt==="Bracelet"||pt==="Statement Bracelet"||pt==="Ring";
 
+  const addedRef=useRef(0);
   const doAdd=()=>{
     if(!picked.length)return;
+    const now=Date.now();
+    if(now-addedRef.current<800)return; // guard against double-fire from touch+click both triggering on mobile
+    addedRef.current=now;
     const stoneNotes=[];
     if(picked.includes("Crystal Quartz"))stoneNotes.push("Crystal Quartz shade: "+cqShade);
     if(picked.includes("Lava Stone"))stoneNotes.push("Lava Stone color: "+lavaColor);
@@ -1548,7 +1552,7 @@ function CustomizePage({onAddCart,onGoCart}){
                 </div>
               </div>}
           </div>
-          <button className="btn btn-gold btn-full" style={{padding:"15px",fontSize:15,letterSpacing:".02em",marginTop:16}} onClick={doAdd} disabled={!picked.length}>
+          <button type="button" className="btn btn-gold btn-full" style={{padding:"15px",fontSize:15,letterSpacing:".02em",marginTop:16}} onClick={doAdd} disabled={!picked.length}>
             Add to Cart
           </button>
           {!picked.length&&<p style={{fontSize:15,color:"var(--ink3)",textAlign:"center",marginTop:8}}>Select at least one stone to continue.</p>}
@@ -1830,15 +1834,20 @@ function Checkout({cart,onClose,onOk,setLastOrder,promos}){
   const standardSub=standardItems.reduce((s,i)=>s+i.price*i.qty,0);
   const sub=customSub+standardSub;
   const promoPercent=promos.reduce((s,p)=>s+p.percent,0);
-  const discount=Math.round(sub*promoPercent);
-  const tot=sub-discount+ship;
-  const customDep=Math.round(customSub*0.4);
-  const customBal=customSub-customDep;
+  // Apply the discount to bespoke and standard items separately so the 40% deposit is
+  // calculated on what the customer actually owes after any promo code, not the
+  // pre-discount price - previously the deposit ignored discounts entirely.
+  const discountedCustomSub=Math.round(customSub*(1-promoPercent));
+  const discountedStandardSub=Math.round(standardSub*(1-promoPercent));
+  const discount=(customSub-discountedCustomSub)+(standardSub-discountedStandardSub);
+  const tot=discountedCustomSub+discountedStandardSub+ship;
+  const customDep=Math.round(discountedCustomSub*0.4);
+  const customBal=discountedCustomSub-customDep;
   const hasFromScratch=customItems.length>0;
   const isCOD=pay==="full_cod";
   const isFullOnline=pay.endsWith("_full")||pay==="full_instapay"||pay==="full_card"||pay==="full_apple";
-  const dueNow=isCOD?customDep:(isFullOnline?tot:(customDep+standardSub+ship));
-  const dueOnDelivery=isCOD?(standardSub+customBal+ship):(isFullOnline?0:customBal);
+  const dueNow=isCOD?customDep:(isFullOnline?tot:(customDep+discountedStandardSub+ship));
+  const dueOnDelivery=isCOD?(discountedStandardSub+customBal+ship):(isFullOnline?0:customBal);
   const amountDue=dueNow;
   const ok1=!!(name&&phone&&email&&email.includes("@")&&email.includes(".")&&address&&address.length>5);
   const needRef=pay.includes("instapay")||pay==="full_instapay";
@@ -1894,12 +1903,16 @@ function Checkout({cart,onClose,onOk,setLastOrder,promos}){
       <div className="order-row"><span>Shipping</span><span>EGP {ship}</span></div>
       {promos.length>0&&<div className="order-row"><span style={{color:"var(--gold)"}}>Promo {promos.map(p=>p.code).join(" + ")} (-{Math.round(promoPercent*100)}%)</span><span style={{color:"var(--gold)"}}>-{fmt(discount)}</span></div>}
       <div className="order-total-row"><span className="order-total-label">Total</span><span className="order-total-val">{fmt(tot)}</span></div>
-      {hasFromScratch&&customSub>0&&<div style={{marginTop:10,padding:"11px 13px",background:"rgba(184,145,60,.07)",borderLeft:"2px solid rgba(184,145,60,.28)"}}>
-        <div style={{fontSize:13,letterSpacing:".02em",textTransform:"uppercase",color:"var(--ink3)",marginBottom:8}}>Payment Breakdown</div>
-        <div style={{display:"flex",justifyContent:"space-between",fontSize:14,marginBottom:4}}><span style={{color:"var(--ink3)"}}>Bespoke deposit (40%)</span><span>{fmt(customDep)}</span></div>
-        {standardSub>0&&!isCOD&&<div style={{display:"flex",justifyContent:"space-between",fontSize:14,marginBottom:4}}><span style={{color:"var(--ink3)"}}>Standard items</span><span>{fmt(standardSub)}</span></div>}
-        <div style={{display:"flex",justifyContent:"space-between",paddingTop:7,borderTop:"1px solid rgba(26,18,10,.09)",fontWeight:500}}><span style={{fontSize:14,color:"var(--ink)"}}>Due now</span><span style={{fontFamily:"var(--serif)",fontSize:18}}>{fmt(dueNow)}</span></div>
+      {hasFromScratch&&customSub>0&&!isFullOnline&&<div style={{marginTop:10,padding:"11px 13px",background:"rgba(184,145,60,.07)",borderLeft:"2px solid rgba(184,145,60,.28)"}}>
+        <div style={{fontSize:13,letterSpacing:".02em",textTransform:"uppercase",color:"var(--ink3)",marginBottom:8}}>Payment Breakdown - what's due now, itemized</div>
+        <div style={{display:"flex",justifyContent:"space-between",fontSize:14,marginBottom:4}}><span style={{color:"var(--ink3)"}}>Bespoke deposit - 40% of {fmt(discountedCustomSub)}</span><span>{fmt(customDep)}</span></div>
+        {!isCOD&&standardSub>0&&<div style={{display:"flex",justifyContent:"space-between",fontSize:14,marginBottom:4}}><span style={{color:"var(--ink3)"}}>Standard items - paid in full now</span><span>{fmt(discountedStandardSub)}</span></div>}
+        {!isCOD&&<div style={{display:"flex",justifyContent:"space-between",fontSize:14,marginBottom:4}}><span style={{color:"var(--ink3)"}}>Shipping - paid now</span><span>{fmt(ship)}</span></div>}
+        <div style={{display:"flex",justifyContent:"space-between",paddingTop:7,borderTop:"1px solid rgba(26,18,10,.09)",fontWeight:500}}><span style={{fontSize:14,color:"var(--ink)"}}>Due now (total of the above)</span><span style={{fontFamily:"var(--serif)",fontSize:18}}>{fmt(dueNow)}</span></div>
         {dueOnDelivery>0&&<div style={{display:"flex",justifyContent:"space-between",fontSize:14,marginTop:4}}><span style={{color:"var(--ink3)"}}>Due on delivery</span><span style={{color:"var(--ink3)"}}>{fmt(dueOnDelivery)}</span></div>}
+      </div>}
+      {hasFromScratch&&customSub>0&&isFullOnline&&<div style={{marginTop:10,padding:"11px 13px",background:"rgba(184,145,60,.07)",borderLeft:"2px solid rgba(184,145,60,.28)"}}>
+        <p style={{fontSize:14,color:"var(--ink3)",margin:0}}>Paying in full today - no deposit or balance-on-delivery for this payment method.</p>
       </div>}
     </div>
   );
