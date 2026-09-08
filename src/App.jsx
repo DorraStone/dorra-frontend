@@ -148,15 +148,15 @@ const CATALOG=[
   {id:3,name:"Sun & Salt",type:"Bracelet",price:449,sizes:["Small","Medium","Large"],stones:["Tigers Eye","Pearl"],img:"sunsalt_1",img2:"sunsalt_2",img3:"sunsalt_3",desc:"Tiger's Eye and freshwater pearls alternating on doubled twisted copper wire. Fire and water, held simultaneously. Renamed and reimagined.",care:"Keep away from water. Pearls always last on, first off.",delicateNote:"Artisanal Note: Designed with a single, delicate layer of pure copper. This piece possesses a flexible, delicate fluidity that contours elegantly to your form - handle with care as a true statement of minimalist luxury."},
   {id:4,name:"Sahl Hasheesh",type:"Bracelet",price:399,sizes:["Small","Medium","Large"],stones:["Tigers Eye","Crystal"],img:"sahlhasheesh_1",img2:"sahlhasheesh_2",img3:"sahlhasheesh_3",desc:"Tiger's Eye and crystal threaded across a copper wire structure, anchored by hand-wound spiral clasps for added strength. Textured, earthy, made to wear every day.",care:"Copper patinas naturally. Polish with a dry cloth or lemon juice.",durabilityNote:"Crafted with extra structural wire spirals for enhanced durability and a resilient shape."},
   {id:5,name:"The Citadel",type:"Bracelet",price:599,sizes:["Small","Medium","Large"],stones:["Crystal Quartz","Pearl","Ruby Jade","Turquoise"],img:"citadel_1",img2:"citadel_2",img3:"citadel_3",desc:"Crystal Quartz anchors this piece, surrounded by freshwater pearls, ruby-dyed jade, and turquoise on a doubled copper wire base with gold accents.",care:"Crystal Quartz - keep away from water. Remove before washing hands."},
-  {id:6,name:"Rosetta",type:"Bracelet",price:436,sizes:["Small","Medium","Large"],stones:["Rose Quartz","Agate","Pearl"],img:"rosetta_1",img2:"rosetta_2",img3:"rosetta_3",desc:"Rose quartz at the heart of a hand-coiled copper spiral, with agate and freshwater pearl beads. Shaped over three days.",care:"Remove before washing hands. Apply products first, then wear.",delicateNote:"Artisanal Note: Designed with a single, delicate layer of pure copper. This piece possesses a flexible, delicate fluidity that contours elegantly to your form - handle with care as a true statement of minimalist luxury."},
+  {id:6,name:"Rosetta",type:"Bracelet",price:436,sizes:["Small","Medium","Large"],stones:["Rose Quartz","Amethyst","Pearl"],img:"rosetta_1",img2:"rosetta_2",img3:"rosetta_3",desc:"Rose quartz at the heart of a hand-coiled copper spiral, with agate and freshwater pearl beads. Shaped over three days.",care:"Remove before washing hands. Apply products first, then wear.",delicateNote:"Artisanal Note: Designed with a single, delicate layer of pure copper. This piece possesses a flexible, delicate fluidity that contours elegantly to your form - handle with care as a true statement of minimalist luxury."},
   {id:7,name:"Mediterranean",type:"Necklace",price:659,stones:["Pearl","Crystal Quartz"],img:"mediterranean_1",img2:"mediterranean_2",img3:"mediterranean_3",desc:"Three luminous pearls cradled in hand-wound gold copper wire, flanked by soft Crystal Quartz rondelles. A quiet statement on a gold stainless steel chain.",care:"Pearl must not contact perfume or water. Put on last, take off first."},
-  {id:8,name:"Alexandria",type:"Necklace",price:659,stones:["Pearl","Ruby Jade","Crystal Quartz","Amethyst","Purple Agate"],img:"alexandria_1",img2:"alexandria_2",img3:"alexandria_3",desc:"Freshwater pearls at the heart of this necklace, joined by ruby-dyed jade, crystal quartz, amethyst, and purple agate on a gold-toned stainless steel chain.",care:"Pearl must not contact perfume, water, or oils. Put on last."},
-  {id:9,name:"Fossil Coast",type:"Necklace",price:659,stones:["Crystal Quartz"],img:"fossilcoast_1",img2:"fossilcoast_2",img3:"fossilcoast_3",desc:"A layered necklace on a gold-toned stainless steel chain, mainly hand-selected glass beads with Crystal Quartz.",care:"Remove before water."},
+  {id:8,name:"Alexandria",type:"Necklace",price:659,variesPerOrder:true,stones:["Pearl","Ruby Jade","Crystal Quartz","Amethyst","Agate"],img:"alexandria_1",img2:"alexandria_2",img3:"alexandria_3",desc:"Freshwater pearls at the heart of this necklace, joined by ruby-dyed jade, crystal quartz, amethyst, and agate on a gold-toned stainless steel chain. Exact stone selection varies with each piece.",care:"Pearl must not contact perfume, water, or oils. Put on last."},
+  {id:9,name:"Fossil Coast",type:"Necklace",price:659,variesPerOrder:true,stones:["Crystal Quartz"],img:"fossilcoast_1",img2:"fossilcoast_2",img3:"fossilcoast_3",desc:"A layered necklace on a gold-toned stainless steel chain, mainly hand-selected glass beads with Crystal Quartz. Exact bead selection varies with each piece.",care:"Remove before water."},
   {id:10,name:"Wadi",type:"Necklace",price:659,stones:["Turquoise","Amethyst"],img:"wadi_1",img2:"wadi_2",desc:"Turquoise and deep amethyst spheres on a stainless steel and copper chain.",care:"Turquoise is sensitive to moisture. Put on after applying perfume."},
   {id:11,name:"Reef Anklet",type:"Anklet",price:385,sizes:[],stones:["Crystal Quartz"],img:"reefanklet_1",img2:"reefanklet_2",desc:"Silver-toned copper wire wound delicately with Crystal Quartz beads. Lightweight and luminous, like the sea caught on your ankle Adjustable clasp  fits all." ,care:"Remove before swimming. Wipe with a dry cloth after wear."},
   {id:12,name:"Onyx",type:"Earring",price:377,stones:["Pearl","Hematite","Crystal Quartz"],img:"onyx_1",img2:"onyx_2",img3:"onyx_3",desc:"Freshwater pearl, deep hematite, and Crystal Quartz rondelles on gold stainless steel hooks. Three stones, one intention - worn light, felt deeply.",care:"Pearl must not contact perfume or water. Put on last, take off first."},
   {id:13,name:"Copper Care Kit",type:"Care",price:179,stones:[],img:"",img2:"",desc:"Every Dorra order arrives with an anti-rust spray and a soft polishing cloth in a Dorra pouch. The Care Kit is a full replenishment set  an additional spray, cloth, and copper cleaning solution  to keep your piece exactly as you first received it.",care:"Apply a few drops to the cloth. Rub gently. Rinse. Dry immediately."},
-  {id:14,name:"Snow",type:"Bracelet",subtype:"Statement",price:549,sizes:["Small","Medium","Large"],stones:["Turquoise","Crystal","Pearl","Amethyst"],img:"snow_1",img2:"snow_2",img3:"snow_3",desc:"Turquoise in varying shades on hand-wound copper wire, with crystal, freshwater pearl and amethyst. Ethereal, clean, and effortlessly refined.",care:"Turquoise - avoid water, perfume and direct sunlight. Pearl must not contact liquids or perfume."}
+  {id:14,name:"Snow",type:"Bracelet",subtype:"Statement",price:549,sizes:["Small","Medium","Large"],stones:["Turquoise","Crystal Quartz","Pearl","Amethyst"],img:"snow_1",img2:"snow_2",img3:"snow_3",desc:"Turquoise in varying shades on hand-wound copper wire, with crystal quartz, freshwater pearl and amethyst. Ethereal, clean, and effortlessly refined.",care:"Turquoise - avoid water, perfume and direct sunlight. Pearl must not contact liquids or perfume."}
 ];
 
 
@@ -221,7 +221,7 @@ const fmt=p=>"EGP "+Number(p).toLocaleString();
 const ADMIN_PASS="dorra2026";
 
 
-function SwapPanel({stones,swaps,setSwaps,price,currentPrice}){
+function SwapPanel({stones,swaps,setSwaps,price,currentPrice,shades,setShades}){
   const[open,setOpen]=useState(false);
   const isSwapped=stones.some((s,i)=>(swaps[i]||s)!==s);
   const diff=currentPrice-price;
@@ -259,6 +259,18 @@ function SwapPanel({stones,swaps,setSwaps,price,currentPrice}){
                   style={{width:"100%",fontFamily:"var(--sans)",fontSize:15,background:"var(--cr)",border:"1px solid rgba(26,18,10,.15)",color:"var(--ink)",padding:"7px 10px",outline:"none",cursor:"pointer",WebkitAppearance:"menulist",appearance:"menulist",display:"block",boxSizing:"border-box"}}>
                   {STONES.map(s=><option key={s} value={s}>{s}{s===orig?" (original)":""}</option>)}
                 </select>
+                {cur==="Crystal Quartz"&&<div style={{marginTop:8,display:"flex",flexWrap:"wrap",gap:5}}>
+                  {["Light Blue","Green Blue","Purple Blue","Purple","Brownish","Beigish"].map(shade=>(
+                    <button key={shade} onClick={()=>setShades(p=>({...p,[i]:shade}))}
+                      style={{padding:"5px 10px",fontSize:12,border:"1px solid",borderColor:(shades[i]||"Light Blue")===shade?"var(--g)":"rgba(26,18,10,.15)",background:(shades[i]||"Light Blue")===shade?"rgba(6,35,24,.06)":"var(--cr)",color:"var(--ink)",cursor:"pointer"}}>{shade}</button>
+                  ))}
+                </div>}
+                {cur==="Lava Stone"&&<div style={{marginTop:8,display:"flex",gap:5}}>
+                  {["Black","Colorful"].map(c=>(
+                    <button key={c} onClick={()=>setShades(p=>({...p,[i]:c}))}
+                      style={{padding:"5px 12px",fontSize:12,border:"1px solid",borderColor:(shades[i]||"Black")===c?"var(--g)":"rgba(26,18,10,.15)",background:(shades[i]||"Black")===c?"rgba(6,35,24,.06)":"var(--cr)",color:"var(--ink)",cursor:"pointer"}}>{c}</button>
+                  ))}
+                </div>}
               </div>
             );
           })}
@@ -1462,16 +1474,21 @@ function CustomizePage({onAddCart,onGoCart}){
                 const rarity=STONE_RARITY[s];
                 return(
                   <button key={s} onClick={()=>tog(s)}
-                    style={{border:"2px solid",borderColor:sel?(isExtra?"var(--gold)":"var(--g)"):"rgba(26,18,10,.12)",background:sel?(isExtra?"rgba(184,145,60,.06)":"rgba(6,35,24,.04)"):"var(--cr2)",cursor:"pointer",padding:0,overflow:"hidden",textAlign:"left",transition:"all .2s"}}>
+                    style={{position:"relative",border:"2px solid",borderColor:sel?(isExtra?"var(--gold)":"var(--g)"):"rgba(26,18,10,.12)",background:sel?(isExtra?"rgba(184,145,60,.1)":"rgba(6,35,24,.08)"):"var(--cr2)",cursor:"pointer",padding:0,overflow:"hidden",textAlign:"left",transition:"all .2s",boxShadow:sel?"0 0 0 1px "+(isExtra?"var(--gold)":"var(--g)"):"none"}}>
+                    {sel&&<div style={{position:"absolute",top:6,right:6,width:22,height:22,borderRadius:"50%",background:isExtra?"var(--gold)":"var(--g)",color:"var(--cr)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:13,fontWeight:700,zIndex:2,boxShadow:"0 1px 3px rgba(0,0,0,.3)"}}>&#10003;</div>}
                     {SP[s]&&<div style={{height:72,overflow:"hidden"}}><img src={SP[s]} alt={s} style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}} onError={e=>e.currentTarget.style.display="none"}/></div>}
                     <div style={{padding:"8px 10px"}}>
-                      <div style={{fontFamily:"var(--serif)",fontSize:14,color:"var(--ink)",marginBottom:2}}>{s}</div>
+                      <div style={{fontFamily:"var(--serif)",fontSize:14,color:sel?"var(--g)":"var(--ink)",fontWeight:sel?600:400,marginBottom:2}}>{s}</div>
                       {rarity&&<div style={{fontSize:12,color:RARITY_COLOR[rarity],letterSpacing:".1em",textTransform:"uppercase"}}>{rarity}</div>}
                     </div>
                   </button>
                 );
               })}
             </div>
+            {picked.length>0&&<div style={{marginTop:2,marginBottom:14,padding:"10px 14px",background:"rgba(6,35,24,.05)",borderLeft:"2px solid var(--g)"}}>
+              <span style={{fontSize:13,color:"var(--ink3)"}}>Selected: </span>
+              <span style={{fontSize:14,color:"var(--g)",fontWeight:600}}>{picked.join(", ")}</span>
+            </div>}
             {picked.includes("Crystal Quartz")&&<div style={{marginTop:4,marginBottom:14,padding:"12px 14px",background:"var(--cr2)",border:"1px solid rgba(26,18,10,.1)"}}>
               <label className="field-label" style={{marginBottom:8,display:"block"}}>Crystal Quartz Shade</label>
               <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
@@ -1537,9 +1554,13 @@ function CustomizePage({onAddCart,onGoCart}){
               ?<p style={{fontSize:14,color:"rgba(245,239,227,.4)",lineHeight:1.8}}>Select a piece type and at least one stone to see your estimated price.</p>
               :<div>
                 <div className="estimate-row"><span className="estimate-key">Type</span><span className="estimate-val">{pt}</span></div>
-                <div className="estimate-row"><span className="estimate-key">Stones</span><span className="estimate-val">{picked.length} selected</span></div>
+                <div className="estimate-row"><span className="estimate-key">Stones</span><span className="estimate-val">{picked.join(", ")}</span></div>
+                {picked.includes("Crystal Quartz")&&<div className="estimate-row"><span className="estimate-key">Crystal Quartz Shade</span><span className="estimate-val">{cqShade}</span></div>}
+                {picked.includes("Lava Stone")&&<div className="estimate-row"><span className="estimate-key">Lava Color</span><span className="estimate-val">{lavaColor}</span></div>}
                 <div className="estimate-row"><span className="estimate-key">Base</span><span className="estimate-val">{baseColor==="gold"?"Gold-Toned":"Silver-Toned"}</span></div>
+                {needsSize&&<div className="estimate-row"><span className="estimate-key">Size</span><span className="estimate-val">{size}</span></div>}
                 {decoWires.length>0&&<div className="estimate-row"><span className="estimate-key">Dec. Wire</span><span className="estimate-val">{decoWires.map(w=>w.replace("_"," ")).join(", ")}</span></div>}
+                {note&&<div className="estimate-row"><span className="estimate-key">Notes</span><span className="estimate-val" style={{textAlign:"right",maxWidth:"60%"}}>{note}</span></div>}
                 {wireCost>0&&<div className="estimate-row"><span className="estimate-key">Wire add-ons</span><span className="estimate-val">+{wireCost} EGP</span></div>}
                 {extraStones>0&&<div className="estimate-row"><span className="estimate-key">Extra stones</span><span className="estimate-val">+{stoneExtra} EGP</span></div>}
                 <div style={{height:1,background:"rgba(184,145,60,.15)",margin:"12px 0"}}/>
@@ -1573,6 +1594,7 @@ function DetailPage({product,initStone,onBack,onA}){
   const[selSize,setSelSize]=useState("");const[sizeErr,setSizeErr]=useState(false);
   const[baseMetal,setBaseMetal]=useState("gold");
   const[swaps,setSwaps]=useState(()=>product.stones?[...product.stones]:[]);
+  const[stoneShades,setStoneShades]=useState({});
   const swapCount=product.stones?product.stones.filter((s,i)=>(swaps[i]||s)!==s).length:0;
   const price=swapCount>0?Math.round(product.price*(1+swapCount*0.08)):product.price;
   const imgs=[product.img,product.img2,product.img3,product.img4].filter(k=>k&&IMGS[k]);
@@ -1687,11 +1709,12 @@ function DetailPage({product,initStone,onBack,onA}){
             <div style={{fontSize:13,letterSpacing:".02em",textTransform:"uppercase",color:"var(--gold)",marginBottom:6}}>Materials</div>
             <p style={{fontSize:14,color:"var(--ink3)",lineHeight:1.85,fontWeight:300}}>
               Copper base{product.type==="Necklace"?", stainless steel chain":""}{product.stones&&product.stones.length>0?", "+product.stones.join(", "):""}.
+              {product.variesPerOrder&&<span style={{display:"block",marginTop:6,fontStyle:"italic",color:"var(--gold)"}}>Exact stone selection varies with each piece - every one is one of a kind.</span>}
             </p>
           </div>
 
           {product.stones&&product.stones.length>0&&<div style={{marginBottom:10}}>
-            <SwapPanel stones={product.stones} swaps={swaps} setSwaps={setSwaps} price={product.price} currentPrice={price}/>
+            <SwapPanel stones={product.stones} swaps={swaps} setSwaps={setSwaps} price={product.price} currentPrice={price} shades={stoneShades} setShades={setStoneShades}/>
           </div>}
 
           {(product.type==="Bracelet"||product.type==="Necklace")&&(
@@ -1707,7 +1730,13 @@ function DetailPage({product,initStone,onBack,onA}){
               </div>
             </div>
           )}
-          <button onClick={()=>onA({...product,wireColor:baseMetal},swaps,price,selSize)}
+          <button onClick={()=>{
+            const annotatedSwaps=swaps.map((s,i)=>{
+              if(s==="Crystal Quartz"||s==="Lava Stone")return s+" ("+(stoneShades[i]||(s==="Crystal Quartz"?"Light Blue":"Black"))+")";
+              return s;
+            });
+            onA({...product,wireColor:baseMetal},annotatedSwaps,price,selSize);
+          }}
             style={{width:"100%",padding:"14px",fontFamily:"var(--sans)",fontSize:13,letterSpacing:".02em",textTransform:"uppercase",background:"var(--g)",color:"var(--gold)",border:"none",cursor:"pointer",transition:"all .25s",marginBottom:10}}
             onMouseEnter={e=>{e.currentTarget.style.background="var(--gold)";e.currentTarget.style.color="var(--g)";}}
             onMouseLeave={e=>{e.currentTarget.style.background="var(--g)";e.currentTarget.style.color="var(--gold)";}}>
