@@ -1841,19 +1841,28 @@ function CartDrawer({cart,onClose,onQty,onPkg,onCk,promos,onApplyPromo,onRemoveP
 }
 
 function Checkout({cart,onClose,onOk,setLastOrder,promos,onAddCart}){
-  // Dynamic cross-sell: prioritizes items of the same type as what's already in the
-  // cart (proven interest), then fills remaining slots with the lowest-priced items not
-  // already in cart. Purely catalog-driven - as new products get added to CATALOG this
-  // automatically picks them up with no code changes needed. A product can be marked
-  // featured:true in CATALOG to be hand-promoted ahead of the price-based fill.
+  // Dynamic cross-sell: blends three signals, all driven live from the catalog and
+  // real order history - nothing here is hardcoded to specific products, so it keeps
+  // working correctly as products are added, removed, or change over time.
+  //  1. Relatedness - shares a type OR at least one stone with something already in cart
+  //  2. Real popularity - actual purchase counts pulled from order history (best-sellers)
+  //  3. Lower price as a gentle tiebreaker, to make the "add one more" easy
+  const[bestSellers,setBestSellers]=useState([]);
+  useEffect(()=>{apiGet("/api/orders/best-sellers").then(d=>{if(Array.isArray(d))setBestSellers(d);});},[]);
+  const bestSellerCounts=Object.fromEntries(bestSellers.map(b=>[b.name,b.count]));
+  const maxCount=Math.max(1,...bestSellers.map(b=>b.count));
   const getSuggestions=(count=4)=>{
     const inCartIds=new Set(cart.map(i=>i.product&&i.product.id).filter(Boolean));
     const cartTypes=new Set(cart.map(i=>i.product&&i.product.type).filter(Boolean));
+    const cartStones=new Set(cart.flatMap(i=>(i.product&&i.product.stones)||[]));
     const pool=CATALOG.filter(p=>p.type!=="Care"&&!inCartIds.has(p.id));
-    const scored=pool.map(p=>({
-      p,
-      score:(p.featured?100:0)+(cartTypes.has(p.type)?50:0)-(p.price/50)
-    }));
+    const scored=pool.map(p=>{
+      const sharesType=cartTypes.has(p.type);
+      const sharesStone=(p.stones||[]).some(s=>cartStones.has(s));
+      const popularity=(bestSellerCounts[p.name]||0)/maxCount; // normalized 0-1
+      const score=(p.featured?60:0)+(sharesType?35:0)+(sharesStone?30:0)+(popularity*45)-(p.price/60);
+      return{p,score};
+    });
     scored.sort((a,b)=>b.score-a.score);
     return scored.slice(0,count).map(s=>s.p);
   };
