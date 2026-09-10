@@ -166,7 +166,10 @@ const STONES=["Coral","Malachite","Turquoise","Tigers Eye","Amethyst","Pearl","R
 const PROMO_CODES={
   "LOLY15":{percent:0.15,expires:null,oneTime:false},
   "HAITHAM10":{percent:0.10,expires:new Date("2027-08-30T00:00:00Z"),oneTime:false},
-  "WELCOME10":{percent:0.10,expires:null,oneTime:true}
+  "WELCOME10":{percent:0.10,expires:null,oneTime:true},
+  "HAIDY10":{percent:0.10,expires:null,oneTime:false},
+  "HANEEN10":{percent:0.10,expires:null,oneTime:false},
+  "SALMA10":{percent:0.10,expires:null,oneTime:false}
 };
 const MAX_PROMOS=2;
 // Rarity tiers researched relative to typical gem-trade abundance, ordered rarest to most
