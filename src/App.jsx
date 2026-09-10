@@ -1840,7 +1840,23 @@ function CartDrawer({cart,onClose,onQty,onPkg,onCk,promos,onApplyPromo,onRemoveP
   );
 }
 
-function Checkout({cart,onClose,onOk,setLastOrder,promos}){
+function Checkout({cart,onClose,onOk,setLastOrder,promos,onAddCart}){
+  // Dynamic cross-sell: prioritizes items of the same type as what's already in the
+  // cart (proven interest), then fills remaining slots with the lowest-priced items not
+  // already in cart. Purely catalog-driven - as new products get added to CATALOG this
+  // automatically picks them up with no code changes needed. A product can be marked
+  // featured:true in CATALOG to be hand-promoted ahead of the price-based fill.
+  const getSuggestions=(count=4)=>{
+    const inCartIds=new Set(cart.map(i=>i.product&&i.product.id).filter(Boolean));
+    const cartTypes=new Set(cart.map(i=>i.product&&i.product.type).filter(Boolean));
+    const pool=CATALOG.filter(p=>p.type!=="Care"&&!inCartIds.has(p.id));
+    const scored=pool.map(p=>({
+      p,
+      score:(p.featured?100:0)+(cartTypes.has(p.type)?50:0)-(p.price/50)
+    }));
+    scored.sort((a,b)=>b.score-a.score);
+    return scored.slice(0,count).map(s=>s.p);
+  };
   const[step,setStep]=useState(1);
   const[name,setName]=useState("");
   const[fieldErr,setFieldErr]=useState("");
@@ -1994,6 +2010,28 @@ function Checkout({cart,onClose,onOk,setLastOrder,promos}){
               <div className="field-note">Shipping: EGP {ship}</div>
             </div>
             <div className="field"><label className="field-label">Notes</label><textarea className="field-textarea" style={{minHeight:52}} placeholder="Special instructions..." value={notes} onChange={e=>setNotes(e.target.value)}/></div>
+            {(()=>{
+              const sugg=getSuggestions(4);
+              if(sugg.length===0)return null;
+              return(
+                <div style={{marginTop:6,marginBottom:18}}>
+                  <div style={{fontSize:13,letterSpacing:".08em",textTransform:"uppercase",color:"var(--gold)",marginBottom:10}}>You might also like</div>
+                  <div style={{display:"flex",gap:10,overflowX:"auto",paddingBottom:4,WebkitOverflowScrolling:"touch"}}>
+                    {sugg.map(p=>(
+                      <div key={p.id} style={{flex:"0 0 118px",background:"var(--cr2)",border:"1px solid rgba(26,18,10,.1)"}}>
+                        {IMGS[p.img]&&<div style={{height:90,overflow:"hidden"}}><img src={IMGS[p.img]} alt={p.name} style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}}/></div>}
+                        <div style={{padding:"7px 8px"}}>
+                          <div style={{fontFamily:"var(--serif)",fontSize:13,color:"var(--ink)",marginBottom:2,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{p.name}</div>
+                          <div style={{fontSize:13,color:"var(--ink3)",marginBottom:6}}>{fmt(p.price)}</div>
+                          <button type="button" onClick={()=>onAddCart&&onAddCart({...p,wireColor:"gold"},p.stones,p.price,p.sizes&&p.sizes.length?p.sizes[Math.floor(p.sizes.length/2)]:"")}
+                            style={{width:"100%",padding:"6px",fontSize:12,letterSpacing:".06em",textTransform:"uppercase",background:"var(--g)",color:"var(--cr)",border:"none",cursor:"pointer"}}>+ Add</button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+            })()}
             <button type="button" className="submit-btn" onClick={()=>{
               if(!name.trim()){setFieldErr("Please enter your full name.");return;}
               if(!phone.trim()){setFieldErr("Please enter your phone number.");return;}
@@ -2660,7 +2698,7 @@ export default function App(){
     </div>
     <Footer setPage={go}/>
     {cO&&<CartDrawer cart={cart} onClose={()=>setCO(false)} onQty={upQ} onPkg={updPkg} onCk={()=>{setCO(false);setCk(true);}} promos={promos} onApplyPromo={p=>setPromos(prev=>[...prev,p])} onRemovePromo={code=>setPromos(prev=>prev.filter(p=>p.code!==code))}/>}
-    {ck&&<Checkout cart={cart} onClose={()=>setCk(false)} onOk={()=>{setCk(false);setCart([]);setPromos([]);}} setLastOrder={setLastOrder} promos={promos}/>}
+    {ck&&<Checkout cart={cart} onClose={()=>setCk(false)} onOk={()=>{setCk(false);setCart([]);setPromos([]);}} setLastOrder={setLastOrder} promos={promos} onAddCart={addCart}/>}
     {lastOrder&&<OrderConfirm order={lastOrder} onClose={()=>{setLastOrder(null);if(window.__dorraGo)window.__dorraGo("home");}}/>}
     {toast&&<div className="toast"><span className="toast-dot"/>{toast}</div>}
   </>);
