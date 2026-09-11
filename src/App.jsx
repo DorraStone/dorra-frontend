@@ -190,8 +190,8 @@ const PROMO_CODES={
   "HAIDY10":{percent:0.10,expires:null,oneTime:false},
   "HANEEN10":{percent:0.10,expires:null,oneTime:false},
   "SALMA10":{percent:0.10,expires:null,oneTime:false},
-  "SET15":{percent:0.15,expires:null,oneTime:false}, // applied automatically by the Set page, not typed by customers
-  "JOIN5":{percent:0.05,expires:null,oneTime:true} // advertised in the welcome popup for creating an account
+  "SET20":{percent:0.20,expires:null,oneTime:false}, // applied automatically by the Set page, not typed by customers
+  "JOIN5":{percent:0.05,expires:null,oneTime:true,requiresAccount:true} // advertised in the welcome popup - only usable once logged in, since it's a signup incentive
 };
 const MAX_PROMOS=2;
 // Crystal Quartz shade options - rings get an expanded, more playful palette than
@@ -996,12 +996,12 @@ function heroImgSrc(p){
   return imgs.length>0?IMGS[imgs[0]]:null;
 }
 
-function HeroCarousel({onV}){
+function HeroCarousel({onV,setPage}){
   const[idx,setIdx]=useState(0);
   const[drag,setDrag]=useState(0);
   const dragRef=useRef({startX:0,dragging:false,moved:false,width:600});
   const wrapRef=useRef(null);
-  const items=CATALOG.filter(p=>["Dahab","Céleste","Marsa"].includes(p.name));
+  const items=[...CATALOG.filter(p=>["Dahab","Céleste","Marsa"].includes(p.name)),{id:"SET_PROMO",isSetPromo:true}];
 
   const goTo=idxOrFn=>{
     setIdx(i=>{
@@ -1039,8 +1039,24 @@ function HeroCarousel({onV}){
       onTouchStart={hTouchStart}
       onTouchMove={hTouchMove}
       onTouchEnd={hTouchEnd}
-      onClick={()=>{if(dragRef.current.moved)return;onV(items[idx],items[idx].stones);}}>
+      onClick={()=>{if(dragRef.current.moved)return;const cur=items[idx];if(cur.isSetPromo){if(setPage)setPage("set");}else{onV(cur,cur.stones);}}}>
       {items.map((p,i)=>{
+        if(p.isSetPromo){
+          return(
+            <div key="set-promo" style={{
+              position:"absolute",inset:0,
+              transform:"translateX(calc("+((i-idx)*100)+"% + "+drag+"px))",
+              transition:dragRef.current.dragging?"none":"transform .55s cubic-bezier(.22,.61,.36,1)",
+              background:"var(--g)",display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"flex-start",padding:"0 8% "
+            }}>
+              <div style={{background:"var(--gold)",color:"var(--g)",padding:"5px 16px",fontSize:13,letterSpacing:".08em",textTransform:"uppercase",fontWeight:600,marginBottom:18}}>20% Off</div>
+              <span style={{fontSize:13,letterSpacing:".36em",textTransform:"uppercase",color:"rgba(245,239,227,.85)",display:"block",marginBottom:10}}>The Set</span>
+              <h2 style={{fontFamily:"var(--serif)",fontSize:"clamp(30px,4.6vw,56px)",fontWeight:300,color:"#f5efe3",lineHeight:1.08,marginBottom:14,letterSpacing:".01em"}}>Three Pieces,<br/>One Discount</h2>
+              <p style={{fontFamily:"var(--serif)",fontSize:"clamp(15px,1.6vw,18px)",color:"rgba(245,239,227,.6)",fontStyle:"italic",marginBottom:20,maxWidth:420}}>Pick any 3 pieces - or design your own - and save 20% on the total.</p>
+              <span style={{fontSize:13,letterSpacing:".02em",textTransform:"uppercase",color:"var(--gold)",borderBottom:"1px solid rgba(184,145,60,.5)",paddingBottom:4}}>Explore the Set</span>
+            </div>
+          );
+        }
         const imgSrc=heroImgSrc(p);
         return(
           <div key={p.id} style={{
@@ -1094,7 +1110,7 @@ function HomePage({setPage,onV,onA}){
       </div>
       <div className="hero-img" style={{overflow:"hidden",position:"relative"}}>
         <div className="hero-carousel-wrap" style={{width:"100%",height:"100%"}}>
-          <HeroCarousel onV={onV}/>
+          <HeroCarousel onV={onV} setPage={setPage}/>
         </div>
       </div>
     </div>
@@ -1149,24 +1165,6 @@ function HomePage({setPage,onV,onA}){
         scrollSnapType:"x mandatory"
       }}>
         <style>{`.ae-carousel::-webkit-scrollbar{display:none}`}</style>
-        <div onClick={()=>setPage("set")} style={{
-            flex:"0 0 min(88%,420px)",
-            minWidth:"min(88%,420px)",
-            scrollSnapAlign:"start",
-            background:"var(--g)",
-            padding:"28px 24px",
-            cursor:"pointer",
-            display:"flex",
-            flexDirection:"column",
-            justifyContent:"center",
-            position:"relative"
-          }}>
-          <div style={{position:"absolute",top:14,right:14,background:"var(--gold)",color:"var(--g)",padding:"4px 12px",fontSize:12,letterSpacing:".08em",textTransform:"uppercase",fontWeight:600}}>15% Off</div>
-          <span style={{fontSize:13,letterSpacing:".12em",textTransform:"uppercase",color:"var(--gold)",marginBottom:8}}>The Set</span>
-          <h3 style={{fontFamily:"var(--serif)",fontSize:22,fontWeight:300,color:"#f5efe3",margin:"0 0 10px",lineHeight:1.25}}>Three Pieces,<br/>One Discount</h3>
-          <p style={{fontSize:14,color:"rgba(245,239,227,.55)",lineHeight:1.7,marginBottom:16}}>Pick any 3 pieces - or design your own - and save 15% on the total.</p>
-          <span style={{fontSize:13,letterSpacing:".08em",textTransform:"uppercase",color:"var(--gold)",textDecoration:"underline"}}>Explore the Set &rarr;</span>
-        </div>
         {CATALOG.filter(p=>p.type==="Anklet"||p.type==="Earring"||p.type==="Ring").map(p=>(
           <div key={p.id} style={{
             flex:"0 0 min(88%,420px)",
@@ -1231,7 +1229,7 @@ function TypePage({type,title,sub,onV,onA,setPage}){
       <div className="section-cream">
         <div style={{display:"flex",gap:6,marginBottom:24,flexWrap:"wrap",alignItems:"center"}}>
           <span style={{fontSize:13,letterSpacing:".02em",color:"var(--ink3)",textTransform:"uppercase"}}>Sort:</span>
-          {[["best","Best Rated"],["price_asc","Price: Low to High"],["price_desc","Price: High to Low"]].map(([val,lbl])=>(
+          {[["best","Best Sellers"],["rated","Best Rated"],["price_asc","Price: Low to High"],["price_desc","Price: High to Low"]].map(([val,lbl])=>(
             <button key={val} onClick={()=>setTpSort(val)}
               style={{fontSize:13,letterSpacing:".1em",padding:"5px 14px",
                 background:tpSort===val?"var(--g)":"transparent",
@@ -1245,7 +1243,6 @@ function TypePage({type,title,sub,onV,onA,setPage}){
         <p style={{fontSize:14,color:"var(--ink3)",lineHeight:1.85,marginBottom:28,fontStyle:"italic",letterSpacing:".01em",maxWidth:560}}>
           Each image is an inspiration  a reflection of the copper winding style and stone selection. As every piece is shaped entirely by hand, no two are exactly alike. What you receive will carry the same soul, never the same mark.
         </p>
-        <p style={{fontSize:14,color:"var(--ink3)",lineHeight:1.85,marginBottom:28,fontStyle:"italic",maxWidth:560}}>Each image is an inspiration. A reflection of the copper style and stone selection. Every piece is shaped by hand  no two exactly alike. What you receive will carry the same soul, never the same mark.</p>
         <div className="pgrid" data-rv>
           {products.map(p=><PC key={p.id} product={p} onV={onV} onA={onA}/>)}
         </div>
@@ -1829,18 +1826,36 @@ function DetailPage({product,initStone,onBack,onA}){
 }
 
 function WelcomePopup({onClose,onCreateAccount}){
+  const[copied,setCopied]=useState(false);
+  const copyCode=()=>{
+    try{
+      navigator.clipboard.writeText("JOIN5");
+      setCopied(true);
+      setTimeout(()=>setCopied(false),2000);
+    }catch(e){}
+  };
   return(
-    <div style={{position:"fixed",inset:0,zIndex:9997,background:"rgba(6,35,24,.55)",display:"flex",alignItems:"center",justifyContent:"center",padding:16}} onClick={onClose}>
-      <div style={{background:"var(--g)",maxWidth:400,width:"100%",padding:"36px 28px",position:"relative",textAlign:"center",border:"1px solid rgba(184,145,60,.25)"}} onClick={e=>e.stopPropagation()}>
-        <button onClick={onClose} style={{position:"absolute",top:14,right:14,background:"none",border:"none",fontSize:20,color:"rgba(245,239,227,.5)",cursor:"pointer"}}>&times;</button>
-        <span style={{fontSize:13,letterSpacing:".2em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:14}}>Welcome to Dorra</span>
-        <h2 style={{fontFamily:"var(--serif)",fontSize:26,fontWeight:300,color:"#f5efe3",margin:"0 0 14px",lineHeight:1.3}}>Create an account,<br/>get 5% off</h2>
-        <p style={{fontSize:14,color:"rgba(245,239,227,.55)",lineHeight:1.8,marginBottom:22}}>Sign up and we'll give you a one-time code for 5% off your first order - plus faster checkout and your order history saved, every time you come back.</p>
-        <div style={{background:"rgba(184,145,60,.1)",border:"1px dashed rgba(184,145,60,.4)",padding:"10px 16px",marginBottom:22,display:"inline-block"}}>
-          <span style={{fontFamily:"var(--serif)",fontSize:18,color:"var(--gold)",letterSpacing:".06em"}}>JOIN5</span>
+    <div style={{position:"fixed",inset:0,zIndex:9997,background:"rgba(6,35,24,.6)",display:"flex",alignItems:"center",justifyContent:"center",padding:16}} onClick={onClose}>
+      <div style={{background:"var(--g)",maxWidth:420,width:"100%",padding:0,position:"relative",textAlign:"center",border:"1px solid rgba(184,145,60,.3)",overflow:"hidden"}} onClick={e=>e.stopPropagation()}>
+        <button onClick={onClose} style={{position:"absolute",top:14,right:14,background:"rgba(245,239,227,.08)",border:"none",borderRadius:"50%",width:28,height:28,fontSize:16,color:"rgba(245,239,227,.7)",cursor:"pointer",zIndex:2}}>&times;</button>
+        <div style={{padding:"14px 0",background:"rgba(184,145,60,.1)",borderBottom:"1px solid rgba(184,145,60,.2)"}}>
+          <span style={{fontSize:13,letterSpacing:".28em",textTransform:"uppercase",color:"var(--gold)"}}>Welcome to Dorra</span>
         </div>
-        <button type="button" onClick={onCreateAccount} className="btn btn-gold btn-full" style={{padding:"13px",fontSize:14,letterSpacing:".04em",marginBottom:12}}>Create My Account</button>
-        <button onClick={onClose} style={{background:"none",border:"none",color:"rgba(245,239,227,.5)",fontSize:14,textDecoration:"underline",cursor:"pointer",padding:0}}>Maybe later</button>
+        <div style={{padding:"32px 28px 28px"}}>
+          <span style={{fontFamily:"var(--serif)",fontSize:15,fontStyle:"italic",color:"rgba(245,239,227,.5)",display:"block",marginBottom:6}}>A gift, just for joining</span>
+          <h2 style={{fontFamily:"var(--serif)",fontSize:30,fontWeight:300,color:"#f5efe3",margin:"0 0 16px",lineHeight:1.25}}>Get 5% off<br/>your first order</h2>
+          <p style={{fontSize:14,color:"rgba(245,239,227,.55)",lineHeight:1.8,marginBottom:24,maxWidth:320,marginLeft:"auto",marginRight:"auto"}}>Create a free account and this code is yours - plus faster checkout and every order saved to your profile, ready whenever you're back.</p>
+
+          <div onClick={copyCode} style={{cursor:"pointer",background:"rgba(245,239,227,.06)",border:"1px dashed rgba(184,145,60,.5)",padding:"14px 18px",marginBottom:22,display:"flex",alignItems:"center",justifyContent:"space-between",gap:12}}>
+            <span style={{fontFamily:"var(--serif)",fontSize:20,color:"var(--gold)",letterSpacing:".1em"}}>JOIN5</span>
+            <span style={{fontSize:13,letterSpacing:".04em",textTransform:"uppercase",color:copied?"var(--gold)":"rgba(245,239,227,.5)",display:"flex",alignItems:"center",gap:5,whiteSpace:"nowrap"}}>
+              {copied?"Copied":"Tap to copy"}
+            </span>
+          </div>
+
+          <button type="button" onClick={onCreateAccount} className="btn btn-gold btn-full" style={{padding:"14px",fontSize:14,letterSpacing:".04em",marginBottom:12}}>Create My Account</button>
+          <button onClick={onClose} style={{background:"none",border:"none",color:"rgba(245,239,227,.45)",fontSize:14,textDecoration:"underline",cursor:"pointer",padding:0}}>Maybe later</button>
+        </div>
       </div>
     </div>
   );
@@ -1857,6 +1872,7 @@ function AccountModal({customer,authToken,onClose,onLoggedIn,onLogout,initialMod
   const[err,setErr]=useState("");
   const[busy,setBusy]=useState(false);
   const[orders,setOrders]=useState(null);
+  const[justSignedUp,setJustSignedUp]=useState(false);
 
   useEffect(()=>{
     if(!customer||!authToken)return;
@@ -1877,6 +1893,7 @@ function AccountModal({customer,authToken,onClose,onLoggedIn,onLogout,initialMod
       const data=await res.json();
       setBusy(false);
       if(!data||!data.success){setErr((data&&data.error)||"Something went wrong - please try again.");return;}
+      if(mode==="signup")setJustSignedUp(true);
       onLoggedIn(data.token,data.customer);
     }catch(e){setBusy(false);setErr("Couldn't reach the server - please try again.");}
   };
@@ -1895,6 +1912,13 @@ function AccountModal({customer,authToken,onClose,onLoggedIn,onLogout,initialMod
               <div style={{fontSize:14,color:"var(--ink3)"}}>{customer.email}</div>
               {customer.phone&&<div style={{fontSize:14,color:"var(--ink3)"}}>{customer.phone}</div>}
             </div>
+            {justSignedUp&&<div style={{marginBottom:20,padding:"14px",background:"rgba(184,145,60,.08)",border:"1px dashed var(--gold)",textAlign:"center"}}>
+              <p style={{fontSize:14,color:"var(--ink3)",marginBottom:8}}>Welcome! Your 5% off code is ready to use:</p>
+              <div onClick={()=>{try{navigator.clipboard.writeText("JOIN5");}catch(e){}}} style={{cursor:"pointer",display:"inline-flex",alignItems:"center",gap:10}}>
+                <span style={{fontFamily:"var(--serif)",fontSize:19,color:"var(--gold)",letterSpacing:".08em"}}>JOIN5</span>
+                <span style={{fontSize:13,color:"var(--ink3)",textDecoration:"underline"}}>Tap to copy</span>
+              </div>
+            </div>}
             <div style={{fontSize:13,letterSpacing:".08em",textTransform:"uppercase",color:"var(--gold)",marginBottom:10}}>Order History</div>
             {orders===null&&<p style={{fontSize:14,color:"var(--ink3)"}}>Loading your orders...</p>}
             {orders&&orders.length===0&&<p style={{fontSize:14,color:"var(--ink3)"}}>No orders yet - your first piece is waiting.</p>}
@@ -1960,10 +1984,10 @@ function SetPage({onAddCart,onGoCart,onApplyPromo,setPage}){
     return picks;
   })[0];
   const bundleTotal=bundleSet.reduce((s,p)=>s+p.price,0);
-  const bundleDiscounted=Math.round(bundleTotal*0.85);
+  const bundleDiscounted=Math.round(bundleTotal*0.80);
   const addSetToCart=()=>{
     bundleSet.forEach(p=>onAddCart&&onAddCart({...p,wireColor:"gold"},p.stones,p.price,p.sizes&&p.sizes.length?p.sizes[Math.floor(p.sizes.length/2)]:""));
-    if(onApplyPromo)onApplyPromo({code:"SET15",percent:0.15});
+    if(onApplyPromo)onApplyPromo({code:"SET20",percent:0.20});
     if(onGoCart)onGoCart();
   };
   const[customSetPicks,setCustomSetPicks]=useState([]); // array of {id, stone}
@@ -1981,17 +2005,17 @@ function SetPage({onAddCart,onGoCart,onApplyPromo,setPage}){
     <div style={{padding:"8px 16px",background:"var(--cr)",borderBottom:"1px solid rgba(26,18,10,.08)",position:"sticky",top:64,zIndex:500}}>
       <BackBtn label="Back to Home" onClick={()=>setPage&&setPage("home")}/>
     </div>
-    <div className="page-header" style={{textAlign:"center",padding:"48px 40px 32px"}}>
-      <span className="page-header-tag" data-rv>15% Off</span>
+    <div className="page-header" style={{textAlign:"center",padding:"32px 20px 8px"}}>
+      <span className="page-header-tag" data-rv>20% Off</span>
       <h1 className="page-header-title" data-rv data-d="1">The Set</h1>
       <p className="page-header-sub" data-rv data-d="2">Three pieces, one discount - pick our suggestion or design your own.</p>
     </div>
 
-    {bundleSet.length===3&&<div style={{maxWidth:720,margin:"0 auto 40px",padding:"0 20px"}}>
+    {bundleSet.length===3&&<div style={{maxWidth:720,margin:"0 auto 32px",padding:"0 20px"}}>
       <div style={{background:"var(--g)",padding:"32px 28px",position:"relative",overflow:"hidden"}}>
         <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:6}}>
           <div style={{fontSize:13,letterSpacing:".12em",textTransform:"uppercase",color:"var(--gold)"}}>Suggested for You</div>
-          <div style={{background:"var(--gold)",color:"var(--g)",padding:"5px 14px",fontSize:13,letterSpacing:".08em",textTransform:"uppercase",fontWeight:600,flexShrink:0}}>15% Off</div>
+          <div style={{background:"var(--gold)",color:"var(--g)",padding:"5px 14px",fontSize:13,letterSpacing:".08em",textTransform:"uppercase",fontWeight:600,flexShrink:0}}>20% Off</div>
         </div>
         <h3 style={{fontFamily:"var(--serif)",fontSize:24,fontWeight:300,color:"#f5efe3",margin:"0 0 22px"}}>Three Pieces, One Discount</h3>
         <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:14,marginBottom:22}}>
@@ -2041,7 +2065,7 @@ function SetPage({onAddCart,onGoCart,onApplyPromo,setPage}){
         {customSetPicks.length===3&&(()=>{
           const chosen=customSetPicks.map(cp=>CATALOG.find(p=>p.id===cp.id));
           const chosenTotal=chosen.reduce((s,p)=>s+p.price,0);
-          const chosenDiscounted=Math.round(chosenTotal*0.85);
+          const chosenDiscounted=Math.round(chosenTotal*0.80);
           return(
             <div style={{textAlign:"center",paddingTop:16,borderTop:"1px solid rgba(26,18,10,.08)"}}>
               <div style={{display:"flex",alignItems:"baseline",justifyContent:"center",gap:12,marginBottom:14}}>
@@ -2053,7 +2077,7 @@ function SetPage({onAddCart,onGoCart,onApplyPromo,setPage}){
                   const p=CATALOG.find(x=>x.id===cp.id);
                   if(p&&onAddCart)onAddCart({...p,wireColor:"gold",stones:[cp.stone]},[cp.stone],p.price,p.sizes&&p.sizes.length?p.sizes[Math.floor(p.sizes.length/2)]:"");
                 });
-                if(onApplyPromo)onApplyPromo({code:"SET15",percent:0.15});
+                if(onApplyPromo)onApplyPromo({code:"SET20",percent:0.20});
                 if(onGoCart)onGoCart();
               }} className="btn btn-gold btn-full" style={{padding:"14px",fontSize:14,letterSpacing:".04em",maxWidth:320,margin:"0 auto",display:"block"}}>Add My Set to Cart</button>
             </div>
@@ -2064,7 +2088,7 @@ function SetPage({onAddCart,onGoCart,onApplyPromo,setPage}){
   </div>);
 }
 
-function CartDrawer({cart,onClose,onQty,onPkg,onCk,promos,onApplyPromo,onRemovePromo}){
+function CartDrawer({cart,onClose,onQty,onPkg,onCk,promos,onApplyPromo,onRemovePromo,customer}){
   const velvetCount=0;
   const total=cart.reduce((s,i)=>s+i.price*i.qty,0);
   const[promoInput,setPromoInput]=useState("");
@@ -2081,6 +2105,7 @@ function CartDrawer({cart,onClose,onQty,onPkg,onCk,promos,onApplyPromo,onRemoveP
     const found=PROMO_CODES[code];
     if(!found){setPromoErr("That code isn't valid.");return;}
     if(found.expires&&new Date()>found.expires){setPromoErr("That code has expired.");return;}
+    if(found.requiresAccount&&!customer){setPromoErr("This code is for account holders - please log in or create an account first.");return;}
     if(found.oneTime&&usedOneTime().includes(code)){setPromoErr("That code has already been used.");return;}
     setPromoErr("");
     onApplyPromo({code,percent:found.percent});
@@ -2461,11 +2486,14 @@ function OrderConfirm({order,onClose}){
 
 function AllPage({onP,onA}){
   const[filter,setFilter]=useState("all");
+  const[sort,setSort]=useState("best");
   useRv();
   useEffect(()=>{document.documentElement.scrollTop=0;document.body.scrollTop=0;},[]);
   const cats=[{id:"all",label:"All Pieces"},{id:"Bracelet",label:"Bracelets"},{id:"Necklace",label:"Necklaces"},{id:"Anklet",label:"Anklets"},{id:"Earring",label:"Earrings"},{id:"Ring",label:"Rings"}];
   const featured=CATALOG.filter(p=>p.type!=="Care");
-  const filtered=filter==="all"?featured:featured.filter(p=>p.type===filter);
+  let filtered=filter==="all"?featured:featured.filter(p=>p.type===filter);
+  if(sort==="price_asc")filtered=[...filtered].sort((a,b)=>a.price-b.price);
+  else if(sort==="price_desc")filtered=[...filtered].sort((a,b)=>b.price-a.price);
   return(<div style={{paddingTop:64}}>
       <div style={{padding:"8px 16px",background:"var(--cr)",borderBottom:"1px solid rgba(26,18,10,.08)",position:"sticky",top:64,zIndex:500}}>
         <button onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");}} style={{background:"none",border:"none",cursor:"pointer",fontSize:15,color:"var(--ink3)",letterSpacing:".07em",textTransform:"uppercase",display:"flex",alignItems:"center",gap:6,padding:"6px 0"}}>&#8592; Home</button>
@@ -2486,6 +2514,19 @@ function AllPage({onP,onA}){
       </div>
     </div>
     <div style={{background:"var(--cr)",padding:"40px 72px 64px"}}>
+      <div style={{display:"flex",gap:6,marginBottom:24,flexWrap:"wrap",alignItems:"center"}}>
+        <span style={{fontSize:13,letterSpacing:".02em",color:"var(--ink3)",textTransform:"uppercase"}}>Sort:</span>
+        {[["best","Best Sellers"],["rated","Best Rated"],["price_asc","Price: Low to High"],["price_desc","Price: High to Low"]].map(([val,lbl])=>(
+          <button key={val} onClick={()=>setSort(val)}
+            style={{fontSize:13,letterSpacing:".1em",padding:"5px 14px",
+              background:sort===val?"var(--g)":"transparent",
+              color:sort===val?"var(--cr)":"var(--ink3)",
+              border:"1px solid",borderColor:sort===val?"var(--g)":"rgba(26,18,10,.14)",
+              cursor:"pointer",transition:"all .2s"}}>
+            {lbl}
+          </button>
+        ))}
+      </div>
       {filtered.length===0
         ?<p style={{textAlign:"center",padding:"52px 0",color:"var(--ink3)",fontFamily:"var(--serif)",fontSize:18,fontWeight:300}}>No pieces in this category yet.</p>
         :<div className="pgrid" data-rv>{filtered.map(p=><PC key={p.id} product={p} onV={onP} onA={onA}/>)}</div>}
@@ -3081,7 +3122,7 @@ export default function App(){
         </>}
     </div>
     <Footer setPage={go}/>
-    {cO&&<CartDrawer cart={cart} onClose={()=>setCO(false)} onQty={upQ} onPkg={updPkg} onCk={()=>{setCO(false);setCk(true);}} promos={promos} onApplyPromo={p=>setPromos(prev=>[...prev,p])} onRemovePromo={code=>setPromos(prev=>prev.filter(p=>p.code!==code))}/>}
+    {cO&&<CartDrawer cart={cart} onClose={()=>setCO(false)} onQty={upQ} onPkg={updPkg} onCk={()=>{setCO(false);setCk(true);}} promos={promos} onApplyPromo={p=>setPromos(prev=>[...prev,p])} onRemovePromo={code=>setPromos(prev=>prev.filter(p=>p.code!==code))} customer={customer}/>}
     {ck&&<Checkout cart={cart} onClose={()=>setCk(false)} onOk={()=>{setCk(false);setCart([]);setPromos([]);}} setLastOrder={setLastOrder} promos={promos} onAddCart={addCart} customer={customer} authToken={authToken}/>}
     {lastOrder&&<OrderConfirm order={lastOrder} onClose={()=>{setLastOrder(null);if(window.__dorraGo)window.__dorraGo("home");}}/>}
     {toast&&<div className="toast"><span className="toast-dot"/>{toast}</div>}
