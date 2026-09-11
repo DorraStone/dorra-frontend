@@ -156,7 +156,13 @@ const CATALOG=[
   {id:11,name:"Reef Anklet",type:"Anklet",price:385,sizes:[],stones:["Crystal Quartz"],img:"reefanklet_1",img2:"reefanklet_2",desc:"Silver-toned copper wire wound delicately with Crystal Quartz beads. Lightweight and luminous, like the sea caught on your ankle Adjustable clasp  fits all." ,care:"Remove before swimming. Wipe with a dry cloth after wear."},
   {id:12,name:"Onyx",type:"Earring",price:377,stones:["Pearl","Hematite","Crystal Quartz"],img:"onyx_1",img2:"onyx_2",img3:"onyx_3",desc:"Freshwater pearl, deep hematite, and Crystal Quartz rondelles on gold stainless steel hooks. Three stones, one intention - worn light, felt deeply.",care:"Pearl must not contact perfume or water. Put on last, take off first."},
   {id:13,name:"Copper Care Kit",type:"Care",price:179,stones:[],img:"",img2:"",desc:"Every Dorra order arrives with an anti-rust spray and a soft polishing cloth in a Dorra pouch. The Care Kit is a full replenishment set  an additional spray, cloth, and copper cleaning solution  to keep your piece exactly as you first received it.",care:"Apply a few drops to the cloth. Rub gently. Rinse. Dry immediately."},
-  {id:14,name:"Snow",type:"Bracelet",subtype:"Statement",price:549,sizes:["Small","Medium","Large"],stones:["Turquoise","Crystal Quartz","Pearl","Amethyst"],img:"snow_1",img2:"snow_2",img3:"snow_3",desc:"Turquoise in varying shades on hand-wound copper wire, with crystal quartz, freshwater pearl and amethyst. Ethereal, clean, and effortlessly refined.",care:"Turquoise - avoid water, perfume and direct sunlight. Pearl must not contact liquids or perfume."}
+  {id:14,name:"Snow",type:"Bracelet",subtype:"Statement",price:549,sizes:["Small","Medium","Large"],stones:["Turquoise","Crystal Quartz","Pearl","Amethyst"],img:"snow_1",img2:"snow_2",img3:"snow_3",desc:"Turquoise in varying shades on hand-wound copper wire, with crystal quartz, freshwater pearl and amethyst. Ethereal, clean, and effortlessly refined.",care:"Turquoise - avoid water, perfume and direct sunlight. Pearl must not contact liquids or perfume."},
+  {id:15,name:"Turquoise Ring",subtype:"Statement",type:"Ring",price:200,sizes:["6","7","8","9"],stones:["Turquoise"],img:"",desc:"A statement ring set with turquoise, hand-wound on a slim copper band. (Placeholder name - final name to be confirmed.)",care:"Porous stone - avoid water, perfume, lotions and direct sunlight. Wipe with a soft dry cloth only."},
+  {id:16,name:"Crystal Quartz Ring",subtype:"Statement",type:"Ring",price:200,sizes:["6","7","8","9"],stones:["Crystal Quartz"],img:"",desc:"A statement ring set with crystal quartz, hand-wound on a slim copper band. Choose your shade at checkout. (Placeholder name - final name to be confirmed.)",care:"Handle gently. Rinse with cool water occasionally. Avoid harsh chemicals."},
+  {id:17,name:"Crystal Quartz Pinky Ring",subtype:"Standard",type:"Ring",price:100,sizes:["6","7","8","9"],stones:["Crystal Quartz"],img:"",desc:"Our most delicate ring - a single crystal quartz stone on a fine copper band. Wear it as a pinky ring or any finger you like, whichever fits best. Choose your shade at checkout. (Placeholder name - final name to be confirmed.)",care:"Handle gently. Rinse with cool water occasionally. Avoid harsh chemicals."},
+  {id:18,name:"Céleste",type:"Necklace",price:999,stones:["Turquoise","Pearl"],img:"",desc:"Turquoise and freshwater pearl on a gold-toned stainless steel chain. A quiet luxury piece for everyday wear.",care:"Turquoise - avoid water, perfume and direct sunlight. Pearl must not contact liquids or perfume."},
+  {id:19,name:"Alexandria Mini",type:"Necklace",price:450,variesPerOrder:true,stones:["Pearl","Ruby Jade","Crystal Quartz","Amethyst","Agate"],img:"",desc:"A smaller-scale take on Alexandria - freshwater pearls, ruby-dyed jade, crystal quartz, amethyst and agate on a gold-toned stainless steel chain. Exact stone selection varies with each piece.",care:"Pearl must not contact perfume or water. Handle gently."},
+  {id:20,name:"Siwa",type:"Necklace",price:299,freeSwap:true,stones:["Rose Quartz"],img:"",desc:"A single stone, quietly stated - rose quartz on a gold-toned stainless steel chain. The stone can be swapped for any other at no extra cost.",care:"Avoid prolonged sunlight. Clean gently with cool water."}
 ];
 
 
@@ -173,6 +179,10 @@ const PROMO_CODES={
   "SET15":{percent:0.15,expires:null,oneTime:false} // applied automatically by the 3-piece Set suggestion, not typed by customers
 };
 const MAX_PROMOS=2;
+// Crystal Quartz shade options - rings get an expanded, more playful palette than
+// other pieces, per the brand's request.
+const CQ_SHADES_DEFAULT=["Light Blue","Green Blue","Purple Blue","Purple","Brownish","Beigish"];
+const CQ_SHADES_RING=["Ruby Red","Green Blue","Baby Blue","Orange","Green","Purple"];
 // Rarity tiers researched relative to typical gem-trade abundance, ordered rarest to most
 // common within each tier: Coral, Malachite, Turquoise, Tiger's Eye, Amethyst and Pearl are
 // naturally-colored/organic and least common of the set; Rose Quartz, Agate and Hematite are
@@ -225,7 +235,7 @@ const fmt=p=>"EGP "+Number(p).toLocaleString();
 const ADMIN_PASS="dorra2026";
 
 
-function SwapPanel({stones,swaps,setSwaps,price,currentPrice,shades,setShades}){
+function SwapPanel({stones,swaps,setSwaps,price,currentPrice,shades,setShades,freeSwap,isRing}){
   const[open,setOpen]=useState(false);
   const isSwapped=stones.some((s,i)=>(swaps[i]||s)!==s);
   const diff=currentPrice-price;
@@ -248,7 +258,7 @@ function SwapPanel({stones,swaps,setSwaps,price,currentPrice,shades,setShades}){
       </button>
       {open&&(
         <div style={{border:"1px solid rgba(26,18,10,.1)",borderTop:"none",background:"var(--cr2)",padding:"12px 14px",overflow:"visible",width:"100%",boxSizing:"border-box"}}>
-          <p style={{fontSize:14,color:"var(--ink3)",marginBottom:12,lineHeight:1.7}}>Every stone can be replaced. Each swap adds +8% to the base price.</p>
+          <p style={{fontSize:14,color:"var(--ink3)",marginBottom:12,lineHeight:1.7}}>{freeSwap?"Swap the stone for any other at no extra cost.":"Every stone can be replaced. Each swap adds +8% to the base price."}</p>
           {stones.map((orig,i)=>{
             const cur=swaps[i]||orig;
             const changed=cur!==orig;
@@ -264,9 +274,9 @@ function SwapPanel({stones,swaps,setSwaps,price,currentPrice,shades,setShades}){
                   {STONES.map(s=><option key={s} value={s}>{s}{s===orig?" (original)":""}</option>)}
                 </select>
                 {cur==="Crystal Quartz"&&<div style={{marginTop:8,display:"flex",flexWrap:"wrap",gap:5}}>
-                  {["Light Blue","Green Blue","Purple Blue","Purple","Brownish","Beigish"].map(shade=>(
+                  {(isRing?CQ_SHADES_RING:CQ_SHADES_DEFAULT).map(shade=>(
                     <button key={shade} onClick={()=>setShades(p=>({...p,[i]:shade}))}
-                      style={{padding:"5px 10px",fontSize:12,border:"1px solid",borderColor:(shades[i]||"Light Blue")===shade?"var(--g)":"rgba(26,18,10,.15)",background:(shades[i]||"Light Blue")===shade?"rgba(6,35,24,.06)":"var(--cr)",color:"var(--ink)",cursor:"pointer"}}>{shade}</button>
+                      style={{padding:"5px 10px",fontSize:12,border:"1px solid",borderColor:(shades[i]||(isRing?CQ_SHADES_RING[0]:CQ_SHADES_DEFAULT[0]))===shade?"var(--g)":"rgba(26,18,10,.15)",background:(shades[i]||(isRing?CQ_SHADES_RING[0]:CQ_SHADES_DEFAULT[0]))===shade?"rgba(6,35,24,.06)":"var(--cr)",color:"var(--ink)",cursor:"pointer"}}>{shade}</button>
                   ))}
                 </div>}
                 {cur==="Lava Stone"&&<div style={{marginTop:8,display:"flex",gap:5}}>
@@ -1364,6 +1374,8 @@ function CustomizePage({onAddCart,onGoCart,onApplyPromo,promos}){
   })[0];
   const bundleTotal=bundleSet.reduce((s,p)=>s+p.price,0);
   const bundleDiscounted=Math.round(bundleTotal*0.85);
+  const[showSetBuilder,setShowSetBuilder]=useState(false);
+  const[customSetPicks,setCustomSetPicks]=useState([]);
   const addSetToCart=()=>{
     bundleSet.forEach(p=>onAddCart&&onAddCart({...p,wireColor:"gold"},p.stones,p.price,p.sizes&&p.sizes.length?p.sizes[Math.floor(p.sizes.length/2)]:""));
     if(onApplyPromo)onApplyPromo({code:"SET15",percent:0.15});
@@ -1434,15 +1446,17 @@ function CustomizePage({onAddCart,onGoCart,onApplyPromo,promos}){
       <p className="page-header-sub" data-rv data-d="2">Every detail chosen by you, made entirely by hand in Egypt.</p>
     </div>
     {bundleSet.length===3&&<div style={{maxWidth:720,margin:"0 auto 40px",padding:"0 20px"}}>
-      <div style={{background:"var(--g)",padding:"28px 24px",position:"relative",overflow:"hidden"}}>
-        <div style={{position:"absolute",top:0,right:0,background:"var(--gold)",color:"var(--g)",padding:"6px 18px",fontSize:13,letterSpacing:".1em",textTransform:"uppercase",fontWeight:600}}>15% Off</div>
-        <div style={{fontSize:13,letterSpacing:".12em",textTransform:"uppercase",color:"var(--gold)",marginBottom:6}}>Suggested Set</div>
-        <h3 style={{fontFamily:"var(--serif)",fontSize:24,fontWeight:300,color:"#f5efe3",margin:"0 0 18px"}}>Three Pieces, Beautifully Together</h3>
-        <div style={{display:"flex",gap:14,marginBottom:20,flexWrap:"wrap",justifyContent:"center"}}>
+      <div style={{background:"var(--g)",padding:"32px 28px",position:"relative",overflow:"hidden"}}>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:6}}>
+          <div style={{fontSize:13,letterSpacing:".12em",textTransform:"uppercase",color:"var(--gold)"}}>The Set</div>
+          <div style={{background:"var(--gold)",color:"var(--g)",padding:"5px 14px",fontSize:13,letterSpacing:".08em",textTransform:"uppercase",fontWeight:600,flexShrink:0}}>15% Off</div>
+        </div>
+        <h3 style={{fontFamily:"var(--serif)",fontSize:24,fontWeight:300,color:"#f5efe3",margin:"0 0 22px"}}>Three Pieces, One Discount</h3>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:14,marginBottom:22}}>
           {bundleSet.map(p=>(
-            <div key={p.id} style={{flex:"0 0 100px",textAlign:"center"}}>
-              {IMGS[p.img]&&<div style={{width:100,height:100,overflow:"hidden",marginBottom:8,border:"1px solid rgba(184,145,60,.25)"}}><img src={IMGS[p.img]} alt={p.name} style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}}/></div>}
-              <div style={{fontFamily:"var(--serif)",fontSize:14,color:"#f5efe3"}}>{p.name}</div>
+            <div key={p.id} style={{textAlign:"center"}}>
+              {IMGS[p.img]&&<div style={{width:"100%",aspectRatio:"1/1",overflow:"hidden",marginBottom:8,border:"1px solid rgba(184,145,60,.25)"}}><img src={IMGS[p.img]} alt={p.name} style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}}/></div>}
+              <div style={{fontFamily:"var(--serif)",fontSize:14,color:"#f5efe3",lineHeight:1.3}}>{p.name}</div>
               <div style={{fontSize:13,color:"rgba(245,239,227,.5)"}}>{p.type}</div>
             </div>
           ))}
@@ -1452,7 +1466,46 @@ function CustomizePage({onAddCart,onGoCart,onApplyPromo,promos}){
           <span style={{fontFamily:"var(--serif)",fontSize:30,color:"var(--gold)"}}>{fmt(bundleDiscounted)}</span>
         </div>
         <button type="button" onClick={addSetToCart} className="btn btn-gold btn-full" style={{padding:"14px",fontSize:14,letterSpacing:".04em",maxWidth:320,margin:"0 auto",display:"block"}}>Add Set to Cart - Save {fmt(bundleTotal-bundleDiscounted)}</button>
-        <p style={{fontSize:13,color:"rgba(245,239,227,.4)",textAlign:"center",marginTop:10}}>Discount applied automatically at checkout.</p>
+        <p style={{fontSize:13,color:"rgba(245,239,227,.4)",textAlign:"center",marginTop:10,marginBottom:0}}>Discount applied automatically at checkout.</p>
+
+        <div style={{marginTop:24,paddingTop:20,borderTop:"1px solid rgba(184,145,60,.15)",textAlign:"center"}}>
+          {!showSetBuilder?
+            <button type="button" onClick={()=>setShowSetBuilder(true)} style={{background:"none",border:"none",color:"rgba(245,239,227,.65)",fontSize:14,textDecoration:"underline",cursor:"pointer",padding:0}}>Prefer to choose your own? Build a 3-piece set and save 15%</button>
+            :<div style={{textAlign:"left"}}>
+              <div style={{fontSize:14,color:"rgba(245,239,227,.65)",marginBottom:12,textAlign:"center"}}>Pick any 3 pieces ({customSetPicks.length}/3 selected)</div>
+              <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(84px,1fr))",gap:8,maxHeight:280,overflowY:"auto",padding:"2px"}}>
+                {CATALOG.filter(p=>p.type!=="Care").map(p=>{
+                  const picked=customSetPicks.includes(p.id);
+                  const disabled=!picked&&customSetPicks.length>=3;
+                  return(
+                    <button key={p.id} type="button" disabled={disabled} onClick={()=>setCustomSetPicks(prev=>picked?prev.filter(id=>id!==p.id):[...prev,p.id])}
+                      style={{padding:0,border:"2px solid",borderColor:picked?"var(--gold)":"rgba(245,239,227,.15)",background:"rgba(245,239,227,.04)",cursor:disabled?"default":"pointer",opacity:disabled?.4:1,textAlign:"center",overflow:"hidden"}}>
+                      {IMGS[p.img]&&<div style={{width:"100%",aspectRatio:"1/1",overflow:"hidden"}}><img src={IMGS[p.img]} alt={p.name} style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}}/></div>}
+                      <div style={{fontSize:12,color:"#f5efe3",padding:"5px 4px",lineHeight:1.3}}>{p.name}</div>
+                    </button>
+                  );
+                })}
+              </div>
+              {customSetPicks.length===3&&(()=>{
+                const chosen=CATALOG.filter(p=>customSetPicks.includes(p.id));
+                const chosenTotal=chosen.reduce((s,p)=>s+p.price,0);
+                const chosenDiscounted=Math.round(chosenTotal*0.85);
+                return(
+                  <div style={{marginTop:16,textAlign:"center"}}>
+                    <div style={{display:"flex",alignItems:"baseline",justifyContent:"center",gap:12,marginBottom:12}}>
+                      <span style={{fontSize:15,color:"rgba(245,239,227,.4)",textDecoration:"line-through"}}>{fmt(chosenTotal)}</span>
+                      <span style={{fontFamily:"var(--serif)",fontSize:24,color:"var(--gold)"}}>{fmt(chosenDiscounted)}</span>
+                    </div>
+                    <button type="button" onClick={()=>{
+                      chosen.forEach(p=>onAddCart&&onAddCart({...p,wireColor:"gold"},p.stones,p.price,p.sizes&&p.sizes.length?p.sizes[Math.floor(p.sizes.length/2)]:""));
+                      if(onApplyPromo)onApplyPromo({code:"SET15",percent:0.15});
+                      if(onGoCart)onGoCart();
+                    }} className="btn btn-gold btn-full" style={{padding:"13px",fontSize:14,letterSpacing:".04em",maxWidth:320,margin:"0 auto",display:"block"}}>Add My Set to Cart</button>
+                  </div>
+                );
+              })()}
+            </div>}
+        </div>
       </div>
     </div>}
     <div className="section-cream">
@@ -1465,7 +1518,7 @@ function CustomizePage({onAddCart,onGoCart,onApplyPromo,promos}){
             <div className="sec-rule" style={{marginBottom:14}}/>
             <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
               {["Bracelet","Statement Bracelet","Necklace","Anklet","Earring","Ring"].map(t=>(
-                <button key={t} onClick={()=>{setPt(t);setSize(t==="Ring"?"7":"Medium");if(t==="Ring")setPicked(p=>p.slice(0,2));}}
+                <button key={t} onClick={()=>{setPt(t);setSize(t==="Ring"?"7":"Medium");if(t==="Ring")setPicked(p=>p.slice(0,2));setCqShade(t==="Ring"?CQ_SHADES_RING[0]:CQ_SHADES_DEFAULT[0]);}}
                   style={{padding:"10px 18px",fontFamily:"var(--sans)",fontSize:13,letterSpacing:".06em",background:pt===t?"var(--g)":"transparent",color:pt===t?"var(--cr)":"var(--ink3)",border:"1px solid",borderColor:pt===t?"var(--g)":"rgba(26,18,10,.15)",cursor:"pointer",transition:"all .2s",fontSize:13,padding:"9px 16px"}}>
                   {t}
                 </button>
@@ -1553,7 +1606,7 @@ function CustomizePage({onAddCart,onGoCart,onApplyPromo,promos}){
             {picked.includes("Crystal Quartz")&&<div style={{marginTop:4,marginBottom:14,padding:"12px 14px",background:"var(--cr2)",border:"1px solid rgba(26,18,10,.1)"}}>
               <label className="field-label" style={{marginBottom:8,display:"block"}}>Crystal Quartz Shade</label>
               <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
-                {["Light Blue","Green Blue","Purple Blue","Purple","Brownish","Beigish"].map(shade=>(
+                {(pt==="Ring"?CQ_SHADES_RING:CQ_SHADES_DEFAULT).map(shade=>(
                   <button key={shade} onClick={()=>setCqShade(shade)}
                     style={{padding:"7px 12px",fontSize:14,border:"1px solid",borderColor:cqShade===shade?"var(--g)":"rgba(26,18,10,.15)",background:cqShade===shade?"rgba(6,35,24,.06)":"var(--cr)",color:"var(--ink)",cursor:"pointer"}}>{shade}</button>
                 ))}
@@ -1657,7 +1710,7 @@ function DetailPage({product,initStone,onBack,onA}){
   const[swaps,setSwaps]=useState(()=>product.stones?[...product.stones]:[]);
   const[stoneShades,setStoneShades]=useState({});
   const swapCount=product.stones?product.stones.filter((s,i)=>(swaps[i]||s)!==s).length:0;
-  const price=swapCount>0?Math.round(product.price*(1+swapCount*0.08)):product.price;
+  const price=(swapCount>0&&!product.freeSwap)?Math.round(product.price*(1+swapCount*0.08)):product.price;
   const imgs=[product.img,product.img2,product.img3,product.img4].filter(k=>k&&IMGS[k]);
 
   const dTouchStart=e=>{
@@ -1775,11 +1828,10 @@ function DetailPage({product,initStone,onBack,onA}){
           </div>
 
           {product.stones&&product.stones.length>0&&<div style={{marginBottom:10}}>
-            <SwapPanel stones={product.stones} swaps={swaps} setSwaps={setSwaps} price={product.price} currentPrice={price} shades={stoneShades} setShades={setStoneShades}/>
+            <SwapPanel stones={product.stones} swaps={swaps} setSwaps={setSwaps} price={product.price} currentPrice={price} shades={stoneShades} setShades={setStoneShades} freeSwap={product.freeSwap} isRing={product.type==="Ring"}/>
           </div>}
 
-          {(product.type==="Bracelet"||product.type==="Necklace")&&(
-            <div style={{marginBottom:16}}>
+          <div style={{marginBottom:16}}>
               <div style={{fontSize:14,letterSpacing:".02em",textTransform:"uppercase",color:"var(--gold)",marginBottom:8}}>Wire Finish</div>
               <div style={{display:"flex",gap:8}}>
                 {[{id:"gold",label:"Gold-Toned"},{id:"silver",label:"Silver-Toned"}].map(b=>(
@@ -1790,7 +1842,6 @@ function DetailPage({product,initStone,onBack,onA}){
                 ))}
               </div>
             </div>
-          )}
           <button onClick={()=>{
             const annotatedSwaps=swaps.map((s,i)=>{
               if(s==="Crystal Quartz"||s==="Lava Stone")return s+" ("+(stoneShades[i]||(s==="Crystal Quartz"?"Light Blue":"Black"))+")";
