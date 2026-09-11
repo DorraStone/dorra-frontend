@@ -169,7 +169,8 @@ const PROMO_CODES={
   "WELCOME10":{percent:0.10,expires:null,oneTime:true},
   "HAIDY10":{percent:0.10,expires:null,oneTime:false},
   "HANEEN10":{percent:0.10,expires:null,oneTime:false},
-  "SALMA10":{percent:0.10,expires:null,oneTime:false}
+  "SALMA10":{percent:0.10,expires:null,oneTime:false},
+  "SET15":{percent:0.15,expires:null,oneTime:false} // applied automatically by the 3-piece Set suggestion, not typed by customers
 };
 const MAX_PROMOS=2;
 // Rarity tiers researched relative to typical gem-trade abundance, ordered rarest to most
@@ -724,7 +725,7 @@ const SP={
 
 function useRv(){useEffect(()=>{const els=document.querySelectorAll("[data-rv]");if(!els.length)return;const o=new IntersectionObserver(en=>{en.forEach(e=>{if(e.isIntersecting){e.target.classList.add("vis");o.unobserve(e.target);}});},{threshold:.06,rootMargin:"0px 0px -40px 0px"});els.forEach(el=>o.observe(el));return()=>o.disconnect();});}
 
-function Nav({page,setPage,cc,setCO}){
+function Nav({page,setPage,cc,setCO,customer,onOpenAccount}){
   const[mob,setMob]=useState(false);
   const[ss,setSs]=useState(false);
   const[q,setQ]=useState("");
@@ -788,6 +789,9 @@ function Nav({page,setPage,cc,setCO}){
         <button className="nav-icon" onClick={()=>{setSs(s=>!s);setMob(false);}}>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
         </button>
+        <button className="nav-icon" onClick={onOpenAccount} title={customer?customer.name:"Account"}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
+        </button>
         <button className="nav-cart" onClick={()=>setCO(true)}>Cart{cc>0&&<span className="cart-ct">{cc}</span>}</button>
       </div>
     </nav>
@@ -799,6 +803,7 @@ function Nav({page,setPage,cc,setCO}){
       <input className="mob-search" autoFocus placeholder="Search..." value={q} onChange={e=>setQ(e.target.value)}/>
       {results.length>0&&<div className="search-results" style={{marginBottom:16}}>{results.map(p=><button key={p.id} className="search-row" onClick={()=>{go("_d_"+p.id);setMob(false);}}>{IMGS[p.img]&&<img className="search-thumb" src={IMGS[p.img]} alt={p.name}/>}<div><span className="search-name">{p.name}</span><span className="search-meta">{p.stones.join(" - ")}</span></div></button>)}</div>}
       {links.map(l=><button key={l.id} className={"mob-link"+(page===l.id?" on":"")} onClick={()=>go(l.id)}>{l.l}</button>)}
+      <button className="mob-link" onClick={()=>{onOpenAccount();setMob(false);}}>{customer?"My Account":"Log In / Sign Up"}</button>
       <button className="mob-cta" onClick={()=>go("customize")}>Design Your Dorra Piece</button>
     </div>}
   </>);
@@ -1332,7 +1337,38 @@ function StoryPage(){useRv();return(<div style={{paddingTop:64}}>
 
 function ContactPage(){const[form,setForm]=useState({name:"",email:"",subject:"",message:""}),[sent,setSent]=useState(false);useRv();const send=()=>{if(!form.name||!form.email||!form.message)return;window.location.href="mailto:dorrastonejewelry@gmail.com?subject="+encodeURIComponent(form.subject||"Message from "+form.name)+"&body="+encodeURIComponent("Name: "+form.name+"\nEmail: "+form.email+"\n\n"+form.message);setSent(true);};return(<div style={{paddingTop:64}}><div className="contact-split"><div className="contact-dark"><span className="sec-label sec-label-dark" data-rv>Get in Touch</span><h1 className="sec-title sec-title-dark" data-rv data-d="1">We would love to hear from you</h1><div className="sec-rule"/>{[{l:"Email",v:"dorrastonejewelry@gmail.com"},{l:"Instagram",v:"@dorrastones"},{l:"Location",v:"Cairo"},{l:"WhatsApp",v:"+20 102 062 4266"}].map((d,i)=><div key={d.l} data-rv data-d={String(i+2)}><div className="contact-label">{d.l}</div><div className="contact-val">{d.v}</div></div>)}<blockquote className="blockquote" data-rv data-d="4">"The Luxury of Nature."</blockquote></div><div className="contact-light">{sent?<div className="success-block"><div className="success-icon">*</div><div className="success-title">Message Sent</div><p style={{fontSize:13,color:"var(--ink3)"}}>We reply within 24 hours.</p><button className="btn btn-dark" onClick={()=>setSent(false)}>Send Another</button></div>:<div data-rv><h2 style={{fontFamily:"var(--serif)",fontSize:23,fontWeight:300,color:"var(--ink)",marginBottom:20}}>Send a Message</h2><div className="field"><label className="field-label">Your Name</label><input className="field-input" placeholder="Full name" value={form.name} onChange={e=>setForm({...form,name:e.target.value})}/></div><div className="field"><label className="field-label">Email</label><input className="field-input" type="email" placeholder="your@email.com" value={form.email} onChange={e=>setForm({...form,email:e.target.value})}/></div><div className="field"><label className="field-label">Subject</label><input className="field-input" placeholder="Subject" value={form.subject} onChange={e=>setForm({...form,subject:e.target.value})}/></div><div className="field"><label className="field-label">Message</label><textarea className="field-textarea" style={{minHeight:96}} placeholder="Your message..." value={form.message} onChange={e=>setForm({...form,message:e.target.value})}/></div><button className="btn btn-dark btn-full" style={{padding:"13px",marginTop:4}} onClick={send}>Send Message</button></div>}</div></div></div>);}
 
-function CustomizePage({onAddCart,onGoCart}){
+function CustomizePage({onAddCart,onGoCart,onApplyPromo,promos}){
+  // Suggested 3-piece Set: always includes at least one Necklace or Bracelet (per business
+  // rule), fills the rest with varied types for a well-rounded set, and re-picks itself
+  // each time the page loads - fully catalog-driven so it adapts automatically as products
+  // are added or removed, with no hardcoded product names.
+  const bundleSet=useState(()=>{
+    const pool=CATALOG.filter(p=>p.type!=="Care");
+    const anchorPool=pool.filter(p=>p.type==="Necklace"||p.type==="Bracelet");
+    if(anchorPool.length===0)return[];
+    const anchor=anchorPool[Math.floor(Math.random()*anchorPool.length)];
+    const rest=pool.filter(p=>p.id!==anchor.id);
+    // Prefer variety - fill remaining 2 slots favoring different types than already picked
+    const picks=[anchor];
+    const usedTypes=new Set([anchor.type]);
+    const shuffled=[...rest].sort(()=>Math.random()-0.5);
+    for(const p of shuffled){
+      if(picks.length>=3)break;
+      if(!usedTypes.has(p.type)){picks.push(p);usedTypes.add(p.type);}
+    }
+    for(const p of shuffled){
+      if(picks.length>=3)break;
+      if(!picks.some(x=>x.id===p.id))picks.push(p);
+    }
+    return picks;
+  })[0];
+  const bundleTotal=bundleSet.reduce((s,p)=>s+p.price,0);
+  const bundleDiscounted=Math.round(bundleTotal*0.85);
+  const addSetToCart=()=>{
+    bundleSet.forEach(p=>onAddCart&&onAddCart({...p,wireColor:"gold"},p.stones,p.price,p.sizes&&p.sizes.length?p.sizes[Math.floor(p.sizes.length/2)]:""));
+    if(onApplyPromo)onApplyPromo({code:"SET15",percent:0.15});
+    if(onGoCart)onGoCart();
+  };
   const[pt,setPt]=useState("Bracelet");
   const[picked,setPicked]=useState([]);
   const[note,setNote]=useState("");
@@ -1397,6 +1433,28 @@ function CustomizePage({onAddCart,onGoCart}){
       <h1 className="page-header-title" data-rv data-d="1">Design Your Dorra Piece</h1>
       <p className="page-header-sub" data-rv data-d="2">Every detail chosen by you, made entirely by hand in Egypt.</p>
     </div>
+    {bundleSet.length===3&&<div style={{maxWidth:720,margin:"0 auto 40px",padding:"0 20px"}}>
+      <div style={{background:"var(--g)",padding:"28px 24px",position:"relative",overflow:"hidden"}}>
+        <div style={{position:"absolute",top:0,right:0,background:"var(--gold)",color:"var(--g)",padding:"6px 18px",fontSize:13,letterSpacing:".1em",textTransform:"uppercase",fontWeight:600}}>15% Off</div>
+        <div style={{fontSize:13,letterSpacing:".12em",textTransform:"uppercase",color:"var(--gold)",marginBottom:6}}>Suggested Set</div>
+        <h3 style={{fontFamily:"var(--serif)",fontSize:24,fontWeight:300,color:"#f5efe3",margin:"0 0 18px"}}>Three Pieces, Beautifully Together</h3>
+        <div style={{display:"flex",gap:14,marginBottom:20,flexWrap:"wrap",justifyContent:"center"}}>
+          {bundleSet.map(p=>(
+            <div key={p.id} style={{flex:"0 0 100px",textAlign:"center"}}>
+              {IMGS[p.img]&&<div style={{width:100,height:100,overflow:"hidden",marginBottom:8,border:"1px solid rgba(184,145,60,.25)"}}><img src={IMGS[p.img]} alt={p.name} style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}}/></div>}
+              <div style={{fontFamily:"var(--serif)",fontSize:14,color:"#f5efe3"}}>{p.name}</div>
+              <div style={{fontSize:13,color:"rgba(245,239,227,.5)"}}>{p.type}</div>
+            </div>
+          ))}
+        </div>
+        <div style={{display:"flex",alignItems:"baseline",justifyContent:"center",gap:12,marginBottom:18}}>
+          <span style={{fontSize:16,color:"rgba(245,239,227,.4)",textDecoration:"line-through"}}>{fmt(bundleTotal)}</span>
+          <span style={{fontFamily:"var(--serif)",fontSize:30,color:"var(--gold)"}}>{fmt(bundleDiscounted)}</span>
+        </div>
+        <button type="button" onClick={addSetToCart} className="btn btn-gold btn-full" style={{padding:"14px",fontSize:14,letterSpacing:".04em",maxWidth:320,margin:"0 auto",display:"block"}}>Add Set to Cart - Save {fmt(bundleTotal-bundleDiscounted)}</button>
+        <p style={{fontSize:13,color:"rgba(245,239,227,.4)",textAlign:"center",marginTop:10}}>Discount applied automatically at checkout.</p>
+      </div>
+    </div>}
     <div className="section-cream">
       <div className="customize-grid">
         <div data-rv>
@@ -1757,6 +1815,97 @@ function DetailPage({product,initStone,onBack,onA}){
   );
 }
 
+function AccountModal({customer,authToken,onClose,onLoggedIn,onLogout}){
+  const[mode,setMode]=useState("login"); // login | signup
+  const[email,setEmail]=useState("");
+  const[password,setPassword]=useState("");
+  const[name,setName]=useState("");
+  const[phone,setPhone]=useState("");
+  const[address,setAddress]=useState("");
+  const[city,setCity]=useState("Cairo");
+  const[err,setErr]=useState("");
+  const[busy,setBusy]=useState(false);
+  const[orders,setOrders]=useState(null);
+
+  useEffect(()=>{
+    if(!customer||!authToken)return;
+    fetch(API_BASE+"/api/customers/my-orders",{headers:{Authorization:"Bearer "+authToken}})
+      .then(r=>r.json()).then(d=>{if(Array.isArray(d))setOrders(d);})
+      .catch(()=>{});
+  },[customer,authToken]);
+
+  const submit=async()=>{
+    setErr("");
+    if(!email||!password){setErr("Email and password are required.");return;}
+    if(mode==="signup"&&!name){setErr("Name is required.");return;}
+    setBusy(true);
+    const path=mode==="login"?"/api/customers/login":"/api/customers/signup";
+    const body=mode==="login"?{email,password}:{email,password,name,phone,address,city};
+    try{
+      const res=await fetch(API_BASE+path,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
+      const data=await res.json();
+      setBusy(false);
+      if(!data||!data.success){setErr((data&&data.error)||"Something went wrong - please try again.");return;}
+      onLoggedIn(data.token,data.customer);
+    }catch(e){setBusy(false);setErr("Couldn't reach the server - please try again.");}
+  };
+
+  return(
+    <div style={{position:"fixed",inset:0,zIndex:9998,background:"rgba(6,35,24,.5)",display:"flex",alignItems:"center",justifyContent:"center",padding:16}} onClick={onClose}>
+      <div style={{background:"var(--cr)",maxWidth:420,width:"100%",maxHeight:"88vh",overflowY:"auto",padding:"28px 24px"}} onClick={e=>e.stopPropagation()}>
+        {customer?(
+          <>
+            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:20}}>
+              <h2 style={{fontFamily:"var(--serif)",fontSize:24,fontWeight:300,color:"var(--ink)",margin:0}}>My Account</h2>
+              <button onClick={onClose} style={{background:"none",border:"none",fontSize:22,color:"var(--ink3)",cursor:"pointer"}}>&times;</button>
+            </div>
+            <div style={{marginBottom:20,padding:"12px 14px",background:"var(--cr2)"}}>
+              <div style={{fontFamily:"var(--serif)",fontSize:17,color:"var(--ink)"}}>{customer.name}</div>
+              <div style={{fontSize:14,color:"var(--ink3)"}}>{customer.email}</div>
+              {customer.phone&&<div style={{fontSize:14,color:"var(--ink3)"}}>{customer.phone}</div>}
+            </div>
+            <div style={{fontSize:13,letterSpacing:".08em",textTransform:"uppercase",color:"var(--gold)",marginBottom:10}}>Order History</div>
+            {orders===null&&<p style={{fontSize:14,color:"var(--ink3)"}}>Loading your orders...</p>}
+            {orders&&orders.length===0&&<p style={{fontSize:14,color:"var(--ink3)"}}>No orders yet - your first piece is waiting.</p>}
+            {orders&&orders.map(o=>(
+              <div key={o._id||o.ref} style={{marginBottom:10,padding:"10px 12px",background:"var(--cr2)",border:"1px solid rgba(26,18,10,.08)"}}>
+                <div style={{display:"flex",justifyContent:"space-between",fontSize:14}}>
+                  <span style={{color:"var(--ink)",fontWeight:500}}>{o.ref}</span>
+                  <span style={{color:"var(--ink3)"}}>{fmt(o.total)}</span>
+                </div>
+                <div style={{fontSize:13,color:"var(--ink3)",marginTop:2}}>{(o.items||[]).map(i=>i.name).join(", ")}</div>
+                <div style={{fontSize:13,color:"var(--gold)",marginTop:2,textTransform:"capitalize"}}>{o.status}</div>
+              </div>
+            ))}
+            <button onClick={onLogout} style={{marginTop:16,background:"none",border:"none",color:"var(--ink3)",fontSize:14,textDecoration:"underline",cursor:"pointer",padding:0}}>Log Out</button>
+          </>
+        ):(
+          <>
+            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:20}}>
+              <h2 style={{fontFamily:"var(--serif)",fontSize:24,fontWeight:300,color:"var(--ink)",margin:0}}>{mode==="login"?"Log In":"Create Account"}</h2>
+              <button onClick={onClose} style={{background:"none",border:"none",fontSize:22,color:"var(--ink3)",cursor:"pointer"}}>&times;</button>
+            </div>
+            <p style={{fontSize:14,color:"var(--ink3)",marginBottom:16,lineHeight:1.7}}>{mode==="login"?"Log in to see your past orders and skip re-entering your details at checkout.":"Create an account once, and future checkouts remember your details automatically."}</p>
+            {mode==="signup"&&<div className="field" style={{marginBottom:10}}><label className="field-label">Full Name</label><input className="field-input" value={name} onChange={e=>setName(e.target.value)}/></div>}
+            <div className="field" style={{marginBottom:10}}><label className="field-label">Email</label><input className="field-input" type="email" value={email} onChange={e=>setEmail(e.target.value)}/></div>
+            <div className="field" style={{marginBottom:10}}><label className="field-label">Password</label><input className="field-input" type="password" value={password} onChange={e=>setPassword(e.target.value)}/></div>
+            {mode==="signup"&&<>
+              <div className="field" style={{marginBottom:10}}><label className="field-label">Phone</label><input className="field-input" value={phone} onChange={e=>setPhone(e.target.value)}/></div>
+              <div className="field" style={{marginBottom:10}}><label className="field-label">Address</label><input className="field-input" value={address} onChange={e=>setAddress(e.target.value)}/></div>
+            </>}
+            {err&&<p style={{fontSize:14,color:"#c0392b",marginBottom:10}}>{err}</p>}
+            <button type="button" className="submit-btn" style={{width:"100%",marginTop:6}} disabled={busy} onClick={submit}>{busy?"Please wait...":(mode==="login"?"Log In":"Create Account")}</button>
+            <p style={{fontSize:14,color:"var(--ink3)",marginTop:14,textAlign:"center"}}>
+              {mode==="login"?"New here? ":"Already have an account? "}
+              <button onClick={()=>{setMode(mode==="login"?"signup":"login");setErr("");}} style={{background:"none",border:"none",color:"var(--gold)",textDecoration:"underline",cursor:"pointer",padding:0,fontSize:14}}>{mode==="login"?"Create an account":"Log in"}</button>
+            </p>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function CartDrawer({cart,onClose,onQty,onPkg,onCk,promos,onApplyPromo,onRemovePromo}){
   const velvetCount=0;
   const total=cart.reduce((s,i)=>s+i.price*i.qty,0);
@@ -1840,7 +1989,7 @@ function CartDrawer({cart,onClose,onQty,onPkg,onCk,promos,onApplyPromo,onRemoveP
   );
 }
 
-function Checkout({cart,onClose,onOk,setLastOrder,promos,onAddCart}){
+function Checkout({cart,onClose,onOk,setLastOrder,promos,onAddCart,customer,authToken}){
   // Dynamic cross-sell: blends three signals, all driven live from the catalog and
   // real order history - nothing here is hardcoded to specific products, so it keeps
   // working correctly as products are added, removed, or change over time.
@@ -1851,6 +2000,17 @@ function Checkout({cart,onClose,onOk,setLastOrder,promos,onAddCart}){
   useEffect(()=>{apiGet("/api/orders/best-sellers").then(d=>{if(Array.isArray(d))setBestSellers(d);});},[]);
   const bestSellerCounts=Object.fromEntries(bestSellers.map(b=>[b.name,b.count]));
   const maxCount=Math.max(1,...bestSellers.map(b=>b.count));
+  const[myOrders,setMyOrders]=useState([]);
+  useEffect(()=>{
+    if(!authToken)return;
+    fetch(API_BASE+"/api/customers/my-orders",{headers:{Authorization:"Bearer "+authToken}})
+      .then(r=>r.json()).then(d=>{if(Array.isArray(d))setMyOrders(d);}).catch(()=>{});
+  },[authToken]);
+  const myStones=new Set(myOrders.flatMap(o=>(o.items||[]).flatMap(i=>i.stones||[])));
+  const myTypes=new Set(myOrders.flatMap(o=>(o.items||[]).map(i=>{
+    const match=CATALOG.find(p=>p.name===i.name.replace(/^Bespoke\s+/,""));
+    return match?match.type:null;
+  }).filter(Boolean)));
   const getSuggestions=(count=4)=>{
     const inCartIds=new Set(cart.map(i=>i.product&&i.product.id).filter(Boolean));
     const cartTypes=new Set(cart.map(i=>i.product&&i.product.type).filter(Boolean));
@@ -1859,20 +2019,22 @@ function Checkout({cart,onClose,onOk,setLastOrder,promos,onAddCart}){
     const scored=pool.map(p=>{
       const sharesType=cartTypes.has(p.type);
       const sharesStone=(p.stones||[]).some(s=>cartStones.has(s));
+      const matchesMyStone=(p.stones||[]).some(s=>myStones.has(s));
+      const matchesMyType=myTypes.has(p.type);
       const popularity=(bestSellerCounts[p.name]||0)/maxCount; // normalized 0-1
-      const score=(p.featured?60:0)+(sharesType?35:0)+(sharesStone?30:0)+(popularity*45)-(p.price/60);
+      const score=(p.featured?60:0)+(sharesType?35:0)+(sharesStone?30:0)+(popularity*45)+(matchesMyStone?25:0)+(matchesMyType?20:0)-(p.price/60);
       return{p,score};
     });
     scored.sort((a,b)=>b.score-a.score);
     return scored.slice(0,count).map(s=>s.p);
   };
   const[step,setStep]=useState(1);
-  const[name,setName]=useState("");
+  const[name,setName]=useState(()=>customer?customer.name:"");
   const[fieldErr,setFieldErr]=useState("");
-  const[phone,setPhone]=useState("");
-  const[email,setEmail]=useState("");
-  const[address,setAddress]=useState("");
-  const[city,setCity]=useState("Cairo");
+  const[phone,setPhone]=useState(()=>customer?customer.phone:"");
+  const[email,setEmail]=useState(()=>customer?customer.email:"");
+  const[address,setAddress]=useState(()=>customer?customer.address:"");
+  const[city,setCity]=useState(()=>customer&&customer.city?customer.city:"Cairo");
   const[notes,setNotes]=useState("");
   const[pkg,setPkg]=useState("standard");
   const[pay,setPay]=useState(()=>cart.some(i=>i.product&&i.product.isFromScratch)?"instapay":"full_cod");
@@ -2328,6 +2490,7 @@ function AdminDashboard(){
   const[published,setPublished]=useState([]);
   const[returns,setReturns]=useState([]);
   const[exchanges,setExchanges]=useState([]);
+  const[customerInsights,setCustomerInsights]=useState([]);
   const[tab,setTab]=useState("orders");
   const[loading,setLoading]=useState(true);
   const[updating,setUpdating]=useState(null);
@@ -2337,23 +2500,26 @@ function AdminDashboard(){
   const load=async()=>{
     setLoading(true);
     try{
-      const[oRes,rRes,pubRes,retRes,excRes]=await Promise.all([
+      const[oRes,rRes,pubRes,retRes,excRes,insRes]=await Promise.all([
         fetch(API_BASE+"/api/orders",{headers}),
         fetch(API_BASE+"/api/reviews/pending",{headers}),
         fetch(API_BASE+"/api/reviews/published",{headers}),
         fetch(API_BASE+"/api/orders/returns-list",{headers}).catch(()=>({json:()=>[]})),
         fetch(API_BASE+"/api/orders/exchanges-list",{headers}).catch(()=>({json:()=>[]})),
+        fetch(API_BASE+"/api/customers/insights",{headers}).catch(()=>({json:()=>[]})),
       ]);
       const o=await oRes.json();
       const r=await rRes.json();
       const pub=await pubRes.json();
       const ret=await retRes.json();
       const exc=await excRes.json();
+      const ins=await insRes.json();
       if(Array.isArray(o))setOrders(o);
       if(Array.isArray(r))setReviews(r);
       if(Array.isArray(pub))setPublished(pub);
       if(Array.isArray(ret))setReturns(ret);
       if(Array.isArray(exc))setExchanges(exc);
+      if(Array.isArray(ins))setCustomerInsights(ins);
     }catch(e){console.error("Admin load:",e);}
     setLoading(false);
   };
@@ -2395,7 +2561,7 @@ function AdminDashboard(){
   const fmt2=n=>"EGP "+Number(n||0).toLocaleString();
   const statusColors={pending:"#b8913c",confirmed:"#4a9e6b",processing:"#4a7fb5",shipped:"#9b59b6",delivered:"#27ae60",cancelled:"#e74c3c"};
 
-  const tabs=["orders","reviews","published","returns","exchanges"];
+  const tabs=["orders","reviews","published","returns","exchanges","customers"];
   
   return(
     <div style={{minHeight:"100vh",background:G.bg,color:G.ink,fontFamily:"'Helvetica Neue',Arial,sans-serif",padding:"0 0 60px",overflowX:"hidden",WebkitOverflowScrolling:"touch",maxWidth:"100vw",boxSizing:"border-box"}}>
@@ -2543,6 +2709,28 @@ function AdminDashboard(){
           </div>
         )}
 
+        {/* CUSTOMERS TAB - real purchase analytics computed from order history */}
+        {!loading&&tab==="customers"&&(
+          <div>
+            {customerInsights.length===0&&<p style={{color:G.faint,fontSize:14,textAlign:"center",padding:"40px 0"}}>No customer data yet.</p>}
+            {customerInsights.map(c=>(
+              <div key={c.email} style={{background:G.card,marginBottom:10,padding:"16px 20px",borderLeft:"2px solid "+G.gold}}>
+                <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:8}}>
+                  <div>
+                    <div style={{fontSize:15,color:G.cream,fontWeight:500}}>{c.name}</div>
+                    <div style={{fontSize:14,color:G.faint}}>{c.email}</div>
+                  </div>
+                  <div style={{textAlign:"right"}}>
+                    <div style={{fontSize:17,color:G.gold,fontFamily:"Georgia,serif"}}>{fmt(c.totalSpent)}</div>
+                    <div style={{fontSize:14,color:G.faint}}>{c.orders} order{c.orders===1?"":"s"}</div>
+                  </div>
+                </div>
+                {c.favoriteStone&&<div style={{fontSize:14,color:G.ink,marginTop:8}}>Favorite stone: <span style={{color:G.gold}}>{c.favoriteStone}</span></div>}
+              </div>
+            ))}
+          </div>
+        )}
+
         {/* REVIEWS TAB */}
         {!loading&&tab==="reviews"&&(
           <div>
@@ -2645,6 +2833,18 @@ export default function App(){
   const[cO,setCO]=useState(false);
   const[ck,setCk]=useState(false);
   const[promos,setPromos]=useState([]);
+  const[authToken,setAuthToken]=useState(()=>{try{return localStorage.getItem("dorra_token")||null;}catch(e){return null;}});
+  const[customer,setCustomer]=useState(null);
+  const[accountOpen,setAccountOpen]=useState(false);
+  useEffect(()=>{
+    if(!authToken)return;
+    fetch(API_BASE+"/api/customers/me",{headers:{Authorization:"Bearer "+authToken}})
+      .then(r=>r.json()).then(d=>{
+        if(d&&d.success)setCustomer(d.customer);
+        else{setAuthToken(null);try{localStorage.removeItem("dorra_token");}catch(e){}}
+      }).catch(()=>{});
+  },[authToken]);
+  const doLogout=()=>{setAuthToken(null);setCustomer(null);try{localStorage.removeItem("dorra_token");}catch(e){}};
   const[lastOrder,setLastOrder]=useState(null);
   const[toast,setToast]=useState(null);
   const[loading,setLoading]=useState(true);
@@ -2684,7 +2884,10 @@ export default function App(){
         </div>
       </div>
     )}
-    <Nav page={activePage} setPage={go} cc={cc} setCO={setCO}/>
+    <Nav page={activePage} setPage={go} cc={cc} setCO={setCO} customer={customer} onOpenAccount={()=>setAccountOpen(true)}/>
+    {accountOpen&&<AccountModal customer={customer} authToken={authToken} onClose={()=>setAccountOpen(false)}
+      onLoggedIn={(token,cust)=>{setAuthToken(token);setCustomer(cust);try{localStorage.setItem("dorra_token",token);}catch(e){}}}
+      onLogout={()=>{doLogout();setAccountOpen(false);}}/>}
     <div id="app-root" className="main-layout-wrapper" style={{position:"relative"}}>
       {activePage==="_detail"&&detail
         ?<DetailPage product={detail} initStone={detailStone} onBack={()=>go({Bracelet:"bracelets",Necklace:"necklaces",Anklet:"anklets",Earring:"earrings"}[detail.type]||"all")} onA={addCart}/>
@@ -2702,12 +2905,12 @@ export default function App(){
           {activePage==="returns"&&<ReturnsPage setPage={go}/>}
           {activePage==="exchanges"&&<ExchangesPage setPage={go}/>}
           {activePage==="reviews"&&<ReviewsPage/>}
-          {activePage==="customize"&&<CustomizePage onAddCart={addCart} onGoCart={()=>{scrollTop();setCO(true);}}/>}
+          {activePage==="customize"&&<CustomizePage onAddCart={addCart} onGoCart={()=>{scrollTop();setCO(true);}} onApplyPromo={p=>setPromos(prev=>prev.some(x=>x.code===p.code)||prev.length>=MAX_PROMOS?prev:[...prev,p])} promos={promos}/>}
         </>}
     </div>
     <Footer setPage={go}/>
     {cO&&<CartDrawer cart={cart} onClose={()=>setCO(false)} onQty={upQ} onPkg={updPkg} onCk={()=>{setCO(false);setCk(true);}} promos={promos} onApplyPromo={p=>setPromos(prev=>[...prev,p])} onRemovePromo={code=>setPromos(prev=>prev.filter(p=>p.code!==code))}/>}
-    {ck&&<Checkout cart={cart} onClose={()=>setCk(false)} onOk={()=>{setCk(false);setCart([]);setPromos([]);}} setLastOrder={setLastOrder} promos={promos} onAddCart={addCart}/>}
+    {ck&&<Checkout cart={cart} onClose={()=>setCk(false)} onOk={()=>{setCk(false);setCart([]);setPromos([]);}} setLastOrder={setLastOrder} promos={promos} onAddCart={addCart} customer={customer} authToken={authToken}/>}
     {lastOrder&&<OrderConfirm order={lastOrder} onClose={()=>{setLastOrder(null);if(window.__dorraGo)window.__dorraGo("home");}}/>}
     {toast&&<div className="toast"><span className="toast-dot"/>{toast}</div>}
   </>);
