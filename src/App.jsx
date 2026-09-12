@@ -1001,7 +1001,7 @@ function HeroCarousel({onV,setPage}){
   const[drag,setDrag]=useState(0);
   const dragRef=useRef({startX:0,dragging:false,moved:false,width:600});
   const wrapRef=useRef(null);
-  const items=[...CATALOG.filter(p=>["Dahab","Céleste","Marsa"].includes(p.name)),{id:"SET_PROMO",isSetPromo:true}];
+  const items=[{id:"SET_PROMO",isSetPromo:true},...CATALOG.filter(p=>["Dahab","Céleste","Marsa"].includes(p.name))];
 
   const goTo=idxOrFn=>{
     setIdx(i=>{
