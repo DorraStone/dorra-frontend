@@ -2858,6 +2858,12 @@ function AdminDashboard(){
   const[returns,setReturns]=useState([]);
   const[exchanges,setExchanges]=useState([]);
   const[customerInsights,setCustomerInsights]=useState([]);
+  const[selectedEmails,setSelectedEmails]=useState([]);
+  const[composeOpen,setComposeOpen]=useState(false);
+  const[msgSubject,setMsgSubject]=useState("");
+  const[msgBody,setMsgBody]=useState("");
+  const[sending,setSending]=useState(false);
+  const[sendResult,setSendResult]=useState(null);
   const[tab,setTab]=useState("orders");
   const[loading,setLoading]=useState(true);
   const[updating,setUpdating]=useState(null);
@@ -3080,24 +3086,85 @@ function AdminDashboard(){
         {!loading&&tab==="customers"&&(
           <div>
             {customerInsights.length===0&&<p style={{color:G.faint,fontSize:14,textAlign:"center",padding:"40px 0"}}>No customer data yet.</p>}
-            {customerInsights.map(c=>(
-              <div key={c.email} style={{background:G.card,marginBottom:10,padding:"16px 20px",borderLeft:"2px solid "+G.gold}}>
-                <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:8}}>
-                  <div>
-                    <div style={{fontSize:15,color:G.cream,fontWeight:500}}>{c.name}</div>
-                    <div style={{fontSize:14,color:G.faint}}>{c.email}</div>
-                  </div>
-                  <div style={{textAlign:"right"}}>
-                    <div style={{fontSize:17,color:G.gold,fontFamily:"Georgia,serif"}}>{fmt(c.totalSpent)}</div>
-                    <div style={{fontSize:14,color:G.faint}}>{c.orders} order{c.orders===1?"":"s"}</div>
+            {customerInsights.length>0&&<div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:16,flexWrap:"wrap",gap:10}}>
+              <label style={{display:"flex",alignItems:"center",gap:8,fontSize:14,color:G.cream,cursor:"pointer"}}>
+                <input type="checkbox" checked={selectedEmails.length===customerInsights.length&&customerInsights.length>0}
+                  onChange={e=>setSelectedEmails(e.target.checked?customerInsights.map(c=>c.email):[])}/>
+                Select all ({selectedEmails.length}/{customerInsights.length} selected)
+              </label>
+              <button disabled={selectedEmails.length===0} onClick={()=>{setComposeOpen(true);setSendResult(null);}}
+                style={{background:selectedEmails.length===0?"rgba(184,145,60,.15)":G.gold,color:selectedEmails.length===0?G.faint:G.dark,border:"none",padding:"9px 18px",fontSize:14,letterSpacing:".04em",cursor:selectedEmails.length===0?"default":"pointer"}}>
+                Message Selected ({selectedEmails.length})
+              </button>
+            </div>}
+            {customerInsights.map(c=>{
+              const checked=selectedEmails.includes(c.email);
+              return(
+                <div key={c.email} style={{background:G.card,marginBottom:10,padding:"16px 20px",borderLeft:"2px solid "+(checked?G.gold:"transparent"),display:"flex",gap:14,alignItems:"flex-start"}}>
+                  <input type="checkbox" checked={checked} style={{marginTop:4,cursor:"pointer"}}
+                    onChange={()=>setSelectedEmails(prev=>checked?prev.filter(e=>e!==c.email):[...prev,c.email])}/>
+                  <div style={{flex:1}}>
+                    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:8}}>
+                      <div>
+                        <div style={{fontSize:15,color:G.cream,fontWeight:500}}>{c.name}</div>
+                        <div style={{fontSize:14,color:G.faint}}>{c.email}</div>
+                      </div>
+                      <div style={{textAlign:"right"}}>
+                        <div style={{fontSize:17,color:G.gold,fontFamily:"Georgia,serif"}}>{fmt(c.totalSpent)}</div>
+                        <div style={{fontSize:14,color:G.faint}}>{c.orders} order{c.orders===1?"":"s"}</div>
+                      </div>
+                    </div>
+                    {c.favoriteStone&&<div style={{fontSize:14,color:G.ink,marginTop:8}}>Favorite stone: <span style={{color:G.gold}}>{c.favoriteStone}</span></div>}
                   </div>
                 </div>
-                {c.favoriteStone&&<div style={{fontSize:14,color:G.ink,marginTop:8}}>Favorite stone: <span style={{color:G.gold}}>{c.favoriteStone}</span></div>}
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
 
+        {composeOpen&&(
+          <div style={{position:"fixed",inset:0,zIndex:9996,background:"rgba(0,0,0,.6)",display:"flex",alignItems:"center",justifyContent:"center",padding:16}} onClick={()=>!sending&&setComposeOpen(false)}>
+            <div style={{background:G.dark,border:"1px solid rgba(184,145,60,.3)",maxWidth:480,width:"100%",padding:"28px 24px",maxHeight:"85vh",overflowY:"auto"}} onClick={e=>e.stopPropagation()}>
+              <div style={{fontSize:18,color:G.cream,marginBottom:4}}>Message {selectedEmails.length} Customer{selectedEmails.length===1?"":"s"}</div>
+              <p style={{fontSize:14,color:G.faint,marginBottom:18}}>This sends an individual email to each selected recipient.</p>
+              {!sendResult?(
+                <>
+                  <label style={{fontSize:13,color:G.faint,display:"block",marginBottom:6}}>Subject</label>
+                  <input value={msgSubject} onChange={e=>setMsgSubject(e.target.value)} placeholder="e.g. New pieces just dropped"
+                    style={{width:"100%",padding:"10px 12px",fontSize:15,background:"rgba(255,255,255,.05)",border:"1px solid rgba(184,145,60,.25)",color:G.cream,marginBottom:16,boxSizing:"border-box"}}/>
+                  <label style={{fontSize:13,color:G.faint,display:"block",marginBottom:6}}>Message</label>
+                  <textarea value={msgBody} onChange={e=>setMsgBody(e.target.value)} placeholder="Write your message..." rows={7}
+                    style={{width:"100%",padding:"10px 12px",fontSize:15,background:"rgba(255,255,255,.05)",border:"1px solid rgba(184,145,60,.25)",color:G.cream,marginBottom:20,boxSizing:"border-box",fontFamily:"inherit",resize:"vertical"}}/>
+                  <div style={{display:"flex",gap:10}}>
+                    <button onClick={()=>setComposeOpen(false)} disabled={sending}
+                      style={{flex:1,background:"none",border:"1px solid rgba(255,255,255,.15)",color:G.faint,padding:"11px",cursor:"pointer"}}>Cancel</button>
+                    <button disabled={sending||!msgSubject.trim()||!msgBody.trim()} onClick={async()=>{
+                      setSending(true);
+                      try{
+                        const recipients=customerInsights.filter(c=>selectedEmails.includes(c.email)).map(c=>({email:c.email,name:c.name}));
+                        const res=await fetch(API_BASE+"/api/customers/batch-message",{method:"POST",headers,body:JSON.stringify({recipients,subject:msgSubject,message:msgBody})});
+                        const data=await res.json();
+                        setSendResult(data);
+                      }catch(e){setSendResult({error:"Couldn't reach the server - please try again."});}
+                      setSending(false);
+                    }} style={{flex:1,background:G.gold,color:G.dark,border:"none",padding:"11px",cursor:"pointer",opacity:(sending||!msgSubject.trim()||!msgBody.trim())?.5:1}}>
+                      {sending?"Sending...":"Send"}
+                    </button>
+                  </div>
+                </>
+              ):(
+                <>
+                  {sendResult.error?
+                    <p style={{color:"#e74c3c",fontSize:15,marginBottom:20}}>{sendResult.error}</p>
+                    :<p style={{color:G.cream,fontSize:15,marginBottom:20}}>Sent to {sendResult.sent} customer{sendResult.sent===1?"":"s"}{sendResult.failed>0?`, ${sendResult.failed} failed`:""}.</p>
+                  }
+                  <button onClick={()=>{setComposeOpen(false);setMsgSubject("");setMsgBody("");setSelectedEmails([]);setSendResult(null);}}
+                    style={{width:"100%",background:G.gold,color:G.dark,border:"none",padding:"11px",cursor:"pointer"}}>Done</button>
+                </>
+              )}
+            </div>
+          </div>
+        )}
         {/* REVIEWS TAB */}
         {!loading&&tab==="reviews"&&(
           <div>
