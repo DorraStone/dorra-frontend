@@ -161,27 +161,32 @@ const IMGS={
 // ================================================================
 
 const CATALOG=[
-  {id:1,name:"The Original",type:"Bracelet",price:499,sizes:["Small","Medium","Large"],stones:["Crystal Quartz","Pearl"],img:"original_1",img2:"original_2",img3:"original_3",desc:"Delicate copper wirework with crystal quartz and freshwater pearls. The piece that started it all - minimal, intentional, complete.",care:"Crystal Quartz - handle gently. Pearl must not contact liquids."},
-  {id:2,name:"Dahab",type:"Bracelet",price:599,sizes:["Small","Medium","Large"],stones:["Turquoise","Pearl","Tigers Eye"],img:"dahab_2",img2:"dahab_1",img3:"dahab_3",desc:"A large raw Turquoise stone at the centre of a doubled copper spiral, with Tiger's Eye spheres and freshwater pearl clusters. Every detail shaped by hand over four days.",care:"Turquoise - handle gently, avoid water and perfume. Pearl must not contact liquids. Dry cloth only."},
-  {id:3,name:"Sun & Salt",type:"Bracelet",price:449,sizes:["Small","Medium","Large"],stones:["Tigers Eye","Pearl"],img:"sunsalt_1",img2:"sunsalt_2",img3:"sunsalt_3",desc:"Tiger's Eye and freshwater pearls alternating on doubled twisted copper wire. Fire and water, held simultaneously. Renamed and reimagined.",care:"Keep away from water. Pearls always last on, first off.",delicateNote:"Artisanal Note: Designed with a single, delicate layer of pure copper. This piece possesses a flexible, delicate fluidity that contours elegantly to your form - handle with care as a true statement of minimalist luxury."},
-  {id:4,name:"Sahl Hasheesh",type:"Bracelet",price:399,sizes:["Small","Medium","Large"],stones:["Tigers Eye","Crystal Quartz"],img:"sahlhasheesh_4",img2:"sahlhasheesh_5",img3:"sahlhasheesh_1",img4:"sahlhasheesh_2",img5:"sahlhasheesh_3",desc:"Tiger's Eye and crystal quartz threaded across a copper wire structure, anchored by hand-wound spiral clasps for added strength. Textured, earthy, made to wear every day.",care:"Copper patinas naturally. Polish with a dry cloth or lemon juice.",durabilityNote:"Crafted with extra structural wire spirals for enhanced durability and a resilient shape."},
-  {id:5,name:"The Citadel",type:"Bracelet",price:599,sizes:["Small","Medium","Large"],stones:["Crystal Quartz","Pearl","Hematite","Turquoise"],img:"citadel_1",img2:"citadel_2",img3:"citadel_3",desc:"Crystal Quartz anchors this piece, surrounded by freshwater pearls, hematite, and turquoise on a doubled copper wire base with gold accents.",care:"Crystal Quartz - keep away from water. Remove before washing hands."},
-  {id:6,name:"Rosetta",type:"Bracelet",price:436,sizes:["Small","Medium","Large"],stones:["Rose Quartz","Amethyst","Pearl"],img:"rosetta_4",img2:"rosetta_1",img3:"rosetta_2",img4:"rosetta_3",desc:"Rose quartz at the heart of a hand-coiled copper spiral, with agate and freshwater pearl beads. Shaped over three days.",care:"Remove before washing hands. Apply products first, then wear.",delicateNote:"Artisanal Note: Designed with a single, delicate layer of pure copper. This piece possesses a flexible, delicate fluidity that contours elegantly to your form - handle with care as a true statement of minimalist luxury."},
   {id:18,name:"Céleste",type:"Necklace",price:999,stones:["Turquoise","Pearl"],img:"celeste_1",img2:"celeste_2",img3:"celeste_3",desc:"Turquoise and freshwater pearl on a gold-toned stainless steel chain. A quiet luxury piece for everyday wear.",care:"Turquoise - avoid water, perfume and direct sunlight. Pearl must not contact liquids or perfume."},
-  {id:20,name:"Nour",type:"Necklace",price:299,freeSwap:true,stones:["Rose Quartz"],img:"rose_1",img2:"rose_2",desc:"A single stone, quietly stated - rose quartz on a gold-toned stainless steel chain. The stone can be swapped for any other at no extra cost.",care:"Avoid prolonged sunlight. Clean gently with cool water."},
   {id:8,name:"Alexandria",type:"Necklace",price:659,variesPerOrder:true,stones:["Pearl","Crystal Quartz","Amethyst","Agate"],img:"alexandria_1",img2:"alexandria_2",img3:"alexandria_3",img4:"alexandria_silver_1",desc:"Freshwater pearls at the heart of this necklace, joined by crystal quartz, amethyst, and agate on a gold or silver-toned stainless steel chain. Exact stone selection varies with each piece.",care:"Pearl must not contact perfume, water, or oils. Put on last."},
-  {id:19,name:"Alexandria Mini",type:"Necklace",price:450,variesPerOrder:true,stones:["Pearl","Crystal Quartz","Amethyst","Agate"],img:"alexmini_1",img2:"alexmini_2",desc:"A smaller-scale take on Alexandria - freshwater pearls, crystal quartz, amethyst and agate on a gold-toned stainless steel chain. Exact stone selection varies with each piece.",care:"Pearl must not contact perfume or water. Handle gently."},
+  {id:20,name:"Nour",type:"Necklace",price:299,freeSwap:true,stones:["Rose Quartz"],img:"rose_1",img2:"rose_2",desc:"A single stone, quietly stated - rose quartz on a gold-toned stainless steel chain. The stone can be swapped for any other at no extra cost.",care:"Avoid prolonged sunlight. Clean gently with cool water."},
   {id:7,name:"Mediterranean",type:"Necklace",price:659,stones:["Pearl","Crystal Quartz"],img:"mediterranean_1",img2:"mediterranean_2",img3:"mediterranean_3",desc:"Three luminous pearls cradled in hand-wound gold copper wire, flanked by soft Crystal Quartz rondelles. A quiet statement on a gold stainless steel chain.",care:"Pearl must not contact perfume or water. Put on last, take off first."},
-  {id:9,name:"Fossil Coast",type:"Necklace",price:659,variesPerOrder:true,stones:["Crystal Quartz"],img:"fossilcoast_1",img2:"fossilcoast_2",img3:"fossilcoast_3",desc:"A layered necklace on a gold-toned stainless steel chain, mainly hand-selected glass beads with Crystal Quartz. Exact bead selection varies with each piece.",care:"Remove before water."},
   {id:10,name:"Wadi",type:"Necklace",price:659,stones:["Turquoise","Amethyst"],img:"wadi_1",img2:"wadi_2",desc:"Turquoise and deep amethyst spheres on a stainless steel and copper chain.",care:"Turquoise is sensitive to moisture. Put on after applying perfume."},
+  {id:9,name:"Fossil Coast",type:"Necklace",price:659,variesPerOrder:true,stones:["Crystal Quartz"],img:"fossilcoast_1",img2:"fossilcoast_2",img3:"fossilcoast_3",desc:"A layered necklace on a gold-toned stainless steel chain, mainly hand-selected glass beads with Crystal Quartz. Exact bead selection varies with each piece.",care:"Remove before water."},
+  {id:19,name:"Alexandria Mini",type:"Necklace",price:450,variesPerOrder:true,stones:["Pearl","Crystal Quartz","Amethyst","Agate"],img:"alexmini_1",img2:"alexmini_2",desc:"A smaller-scale take on Alexandria - freshwater pearls, crystal quartz, amethyst and agate on a gold-toned stainless steel chain. Exact stone selection varies with each piece.",care:"Pearl must not contact perfume or water. Handle gently."},
+  {id:21,name:"Hurghada",type:"Bracelet",price:599,sizes:["Small","Medium","Large"],stones:["Coral","Turquoise"],img:"hurghada_1",img2:"hurghada_2",desc:"Coral and turquoise threaded together on hand-wound copper wire - a warm, coastal pairing inspired by the Red Sea.",care:"Coral and turquoise are porous - avoid water, perfume, lotions and direct sunlight."},
+  {id:2,name:"Dahab",type:"Bracelet",price:599,sizes:["Small","Medium","Large"],stones:["Turquoise","Pearl","Tigers Eye"],img:"dahab_2",img2:"dahab_1",img3:"dahab_3",desc:"A large raw Turquoise stone at the centre of a doubled copper spiral, with Tiger's Eye spheres and freshwater pearl clusters. Every detail shaped by hand over four days.",care:"Turquoise - handle gently, avoid water and perfume. Pearl must not contact liquids. Dry cloth only."},
+  {id:4,name:"Sahl Hasheesh",type:"Bracelet",price:399,sizes:["Small","Medium","Large"],stones:["Tigers Eye","Crystal Quartz"],img:"sahlhasheesh_4",img2:"sahlhasheesh_5",img3:"sahlhasheesh_1",img4:"sahlhasheesh_2",img5:"sahlhasheesh_3",desc:"Tiger's Eye and crystal quartz threaded across a copper wire structure, anchored by hand-wound spiral clasps for added strength. Textured, earthy, made to wear every day.",care:"Copper patinas naturally. Polish with a dry cloth or lemon juice.",durabilityNote:"Crafted with extra structural wire spirals for enhanced durability and a resilient shape."},
+  {id:6,name:"Rosetta",type:"Bracelet",price:436,sizes:["Small","Medium","Large"],stones:["Rose Quartz","Amethyst","Pearl"],img:"rosetta_4",img2:"rosetta_1",img3:"rosetta_2",img4:"rosetta_3",desc:"Rose quartz at the heart of a hand-coiled copper spiral, with agate and freshwater pearl beads. Shaped over three days.",care:"Remove before washing hands. Apply products first, then wear.",delicateNote:"Artisanal Note: Designed with a single, delicate layer of pure copper. This piece possesses a flexible, delicate fluidity that contours elegantly to your form - handle with care as a true statement of minimalist luxury."},
+  {id:3,name:"Sun & Salt",type:"Bracelet",price:449,sizes:["Small","Medium","Large"],stones:["Tigers Eye","Pearl"],img:"sunsalt_1",img2:"sunsalt_2",img3:"sunsalt_3",desc:"Tiger's Eye and freshwater pearls alternating on doubled twisted copper wire. Fire and water, held simultaneously. Renamed and reimagined.",care:"Keep away from water. Pearls always last on, first off.",delicateNote:"Artisanal Note: Designed with a single, delicate layer of pure copper. This piece possesses a flexible, delicate fluidity that contours elegantly to your form - handle with care as a true statement of minimalist luxury."},
+  {id:14,name:"Snow",type:"Bracelet",subtype:"Statement",price:549,sizes:["Small","Medium","Large"],stones:["Turquoise","Crystal Quartz","Pearl","Amethyst"],img:"snow_1",img2:"snow_2",img3:"snow_3",desc:"Turquoise in varying shades on hand-wound copper wire, with crystal quartz, freshwater pearl and amethyst. Ethereal, clean, and effortlessly refined.",care:"Turquoise - avoid water, perfume and direct sunlight. Pearl must not contact liquids or perfume."},
+  {id:1,name:"The Original",hidden:true,type:"Bracelet",price:499,sizes:["Small","Medium","Large"],stones:["Crystal Quartz","Pearl"],img:"original_1",img2:"original_2",img3:"original_3",desc:"Delicate copper wirework with crystal quartz and freshwater pearls. The piece that started it all - minimal, intentional, complete.",care:"Crystal Quartz - handle gently. Pearl must not contact liquids."},
+  {id:5,name:"The Citadel",hidden:true,type:"Bracelet",price:599,sizes:["Small","Medium","Large"],stones:["Crystal Quartz","Pearl","Hematite","Turquoise"],img:"citadel_1",img2:"citadel_2",img3:"citadel_3",desc:"Crystal Quartz anchors this piece, surrounded by freshwater pearls, hematite, and turquoise on a doubled copper wire base with gold accents.",care:"Crystal Quartz - keep away from water. Remove before washing hands."},
+  {id:22,name:"Siwa",subtype:"Statement",type:"Ring",price:199,sizes:["Small","Medium","Large","Pinky"],stones:["Agate"],img:"siwa_1",img2:"siwa_2",img3:"siwa_3",desc:"A statement ring set with a single agate stone, hand-wound on a slim copper band. Agate comes in naturally varied colors and patterns - no two stones are exactly alike.",care:"Handle gently. Wipe with a soft dry cloth. Avoid harsh chemicals and prolonged water exposure."},
   {id:15,name:"Marsa",subtype:"Statement",type:"Ring",price:199,sizes:["Small","Medium","Large","Pinky"],stones:["Turquoise"],allowedSwaps:["Turquoise","Amethyst","Pearl","Malachite","Lava Stone","Crystal Quartz","Agate","Hematite","Coral"],img:"marsa_1",img2:"marsa_2",desc:"A statement ring set with turquoise, hand-wound on a slim copper band.",care:"Porous stone - avoid water, perfume, lotions and direct sunlight. Wipe with a soft dry cloth only."},
   {id:17,name:"Mira",subtype:"Standard",type:"Ring",price:99,sizes:["Small","Medium","Large","Pinky"],stones:["Crystal Quartz","Crystal Quartz","Crystal Quartz"],lockedStone:true,img:"mira_1",img2:"mira_2",desc:"Our most delicate ring - three crystal quartz stones on a fine copper band. Wear it as a pinky ring or on any finger you like, whichever fits best. Choose your shade at checkout.",care:"Handle gently. Rinse with cool water occasionally. Avoid harsh chemicals."},
-  {id:12,name:"Onyx",type:"Earring",price:377,stones:["Pearl","Hematite","Crystal Quartz"],img:"onyx_1",img2:"onyx_2",img3:"onyx_3",desc:"Freshwater pearl, deep hematite, and Crystal Quartz rondelles on gold stainless steel hooks. Three stones, one intention - worn light, felt deeply.",care:"Pearl must not contact perfume or water. Put on last, take off first."},
-  {id:13,name:"Copper Care Kit",type:"Care",price:179,stones:[],img:"",img2:"",desc:"Every Dorra order arrives with an anti-rust spray and a soft polishing cloth in a Dorra pouch. The Care Kit is a full replenishment set  an additional spray, cloth, and copper cleaning solution  to keep your piece exactly as you first received it.",care:"Apply a few drops to the cloth. Rub gently. Rinse. Dry immediately."},
-  {id:14,name:"Snow",type:"Bracelet",subtype:"Statement",price:549,sizes:["Small","Medium","Large"],stones:["Turquoise","Crystal Quartz","Pearl","Amethyst"],img:"snow_1",img2:"snow_2",img3:"snow_3",desc:"Turquoise in varying shades on hand-wound copper wire, with crystal quartz, freshwater pearl and amethyst. Ethereal, clean, and effortlessly refined.",care:"Turquoise - avoid water, perfume and direct sunlight. Pearl must not contact liquids or perfume."},
-  {id:21,name:"Hurghada",type:"Bracelet",price:599,sizes:["Small","Medium","Large"],stones:["Coral","Turquoise"],img:"hurghada_1",img2:"hurghada_2",desc:"Coral and turquoise threaded together on hand-wound copper wire - a warm, coastal pairing inspired by the Red Sea.",care:"Coral and turquoise are porous - avoid water, perfume, lotions and direct sunlight."},
-  {id:22,name:"Siwa",subtype:"Statement",type:"Ring",price:199,sizes:["Small","Medium","Large","Pinky"],stones:["Agate"],img:"siwa_1",img2:"siwa_2",img3:"siwa_3",desc:"A statement ring set with a single agate stone, hand-wound on a slim copper band. Agate comes in naturally varied colors and patterns - no two stones are exactly alike.",care:"Handle gently. Wipe with a soft dry cloth. Avoid harsh chemicals and prolonged water exposure."},
+  {id:12,name:"Onyx",hidden:true,type:"Earring",price:377,stones:["Pearl","Hematite","Crystal Quartz"],img:"onyx_1",img2:"onyx_2",img3:"onyx_3",desc:"Freshwater pearl, deep hematite, and Crystal Quartz rondelles on gold stainless steel hooks. Three stones, one intention - worn light, felt deeply.",care:"Pearl must not contact perfume or water. Put on last, take off first."},
+  {id:13,name:"Copper Care Kit",type:"Care",price:179,stones:[],img:"",img2:"",desc:"Every Dorra order arrives with an anti-rust spray and a soft polishing cloth in a Dorra pouch. The Care Kit is a full replenishment set  an additional spray, cloth, and copper cleaning solution  to keep your piece exactly as you first received it. Comes as a free gift with every order over 700 EGP.",care:"Apply a few drops to the cloth. Rub gently. Rinse. Dry immediately."},
 ];
+
+const VISIBLE_CATALOG=CATALOG.filter(p=>!p.hidden);
+// Temporarily hides the "20% Off / The Set" promo slide from the home hero carousel.
+// Flip back to true to bring it back - the Set page and its discount logic are untouched.
+const SHOW_SET_PROMO=false;
 
 
 const STONES=["Coral","Malachite","Turquoise","Tigers Eye","Amethyst","Pearl","Rose Quartz","Agate","Hematite","Crystal Quartz","Lava Stone"];
@@ -795,8 +800,8 @@ function Nav({page,setPage,cc,setCO,customer,onOpenAccount}){
     window.addEventListener("popstate",onPop);
     return()=>window.removeEventListener("popstate",onPop);
   },[]);
-  const links=[{id:"home",l:"Home"},{id:"all",l:"The Collection"},{id:"bracelets",l:"Bracelets"},{id:"necklaces",l:"Necklaces"},{id:"rings",l:"Rings"},{id:"earrings",l:"Earrings"},{id:"stones",l:"Stones"},{id:"care",l:"Care"},{id:"reviews",l:"Reviews"},{id:"returns",l:"Returns"},{id:"exchanges",l:"Exchanges"},{id:"story",l:"Our Story"},{id:"contact",l:"Contact"}];
-  const results=q.length>1?CATALOG.filter(p=>p.type!=="Care"&&(p.name.toLowerCase().includes(q.toLowerCase())||p.stones.some(s=>s.toLowerCase().includes(q.toLowerCase())))):[];
+  const links=[{id:"home",l:"Home"},{id:"all",l:"The Collection"},{id:"necklaces",l:"Necklaces"},{id:"bracelets",l:"Bracelets"},{id:"rings",l:"Rings"},{id:"mens",l:"Men"},{id:"stones",l:"Stones"},{id:"care",l:"Care"},{id:"reviews",l:"Reviews"},{id:"returns",l:"Returns"},{id:"exchanges",l:"Exchanges"},{id:"story",l:"Our Story"},{id:"contact",l:"Contact"}];
+  const results=q.length>1?VISIBLE_CATALOG.filter(p=>p.type!=="Care"&&(p.name.toLowerCase().includes(q.toLowerCase())||p.stones.some(s=>s.toLowerCase().includes(q.toLowerCase())))):[];
   useEffect(()=>{
     if(!ss)return;
     const close=e=>{if(!e.target.closest(".search-drop")&&!e.target.closest(".nav-icon")){setSs(false);setQ("");}};
@@ -937,14 +942,14 @@ function PC({product,onV,onA}){
 
 function CatalogGrid({type,onV,onA}){
   useRv();
-  const items=CATALOG.filter(p=>p.type===type);
+  const items=VISIBLE_CATALOG.filter(p=>p.type===type);
   return items.length===0?<p style={{color:"var(--ink3)",padding:"40px 0",textAlign:"center"}}>Coming soon.</p>
     :<div className="pgrid" data-rv>{items.map(p=><PC key={p.id} product={p} onV={onV} onA={onA}/>)}</div>;
 }
 
 function BraceletSection({onV,onA,setPage}){
   const[showAll,setShowAll]=useState(false);
-  const all=CATALOG.filter(p=>p.type==="Bracelet");
+  const all=VISIBLE_CATALOG.filter(p=>p.type==="Bracelet");
   const visible=showAll?all:all.slice(0,2);
   return(<>
     <div style={{display:"flex",alignItems:"flex-end",justifyContent:"space-between",marginBottom:28}} data-rv>
@@ -970,7 +975,7 @@ function BraceletSection({onV,onA,setPage}){
 
 function NecklaceSection({onV,onA,setPage}){
   const[showAll,setShowAll]=useState(false);
-  const all=CATALOG.filter(p=>p.type==="Necklace");
+  const all=VISIBLE_CATALOG.filter(p=>p.type==="Necklace");
   const visible=showAll?all:all.slice(0,2);
   return(<>
     <div style={{display:"flex",alignItems:"flex-end",justifyContent:"space-between",marginBottom:28}} data-rv>
@@ -1024,7 +1029,7 @@ function HeroCarousel({onV,setPage}){
   const[drag,setDrag]=useState(0);
   const dragRef=useRef({startX:0,dragging:false,moved:false,width:600});
   const wrapRef=useRef(null);
-  const items=[{id:"SET_PROMO",isSetPromo:true},...CATALOG.filter(p=>["Dahab","Céleste","Marsa"].includes(p.name))];
+  const items=[...(SHOW_SET_PROMO?[{id:"SET_PROMO",isSetPromo:true}]:[]),...VISIBLE_CATALOG.filter(p=>["Dahab","Céleste","Marsa"].includes(p.name))];
 
   const goTo=idxOrFn=>{
     setIdx(i=>{
@@ -1112,9 +1117,9 @@ function HeroCarousel({onV,setPage}){
 
 function HomePage({setPage,onV,onA}){
   useRv();
-  const bracelets=CATALOG.filter(p=>p.type==="Bracelet");
-  const necklaces=CATALOG.filter(p=>p.type==="Necklace");
-  const earrings=CATALOG.filter(p=>p.type==="Earring");
+  const bracelets=VISIBLE_CATALOG.filter(p=>p.type==="Bracelet");
+  const necklaces=VISIBLE_CATALOG.filter(p=>p.type==="Necklace");
+  const earrings=VISIBLE_CATALOG.filter(p=>p.type==="Earring");
   return(<div>
     <div className="hero">
       <div className="hero-l">
@@ -1163,17 +1168,17 @@ function HomePage({setPage,onV,onA}){
           <div style={{width:36,height:1,background:"rgba(184,145,60,.4)",margin:"20px auto 0"}}/>
         </div>
       </div>
-      <BraceletSection onV={onV} onA={onA} setPage={setPage}/>
-    </div>
-
-    <div className="section-cream2" style={{paddingTop:52,paddingBottom:52}}>
       <NecklaceSection onV={onV} onA={onA} setPage={setPage}/>
     </div>
 
-        {/* Rings & Earrings - swipeable carousel same card size */}
+    <div className="section-cream2" style={{paddingTop:52,paddingBottom:52}}>
+      <BraceletSection onV={onV} onA={onA} setPage={setPage}/>
+    </div>
+
+        {/* Rings - swipeable carousel same card size (Earrings temporarily excluded while Onyx is hidden) */}
     <div style={{background:"var(--cr)",paddingTop:40,paddingBottom:40}}>
       <div style={{padding:"0 16px 16px"}}>
-        <span className="sec-label" style={{color:"var(--gold)"}}>Also in the collection</span>
+        <span className="sec-label" style={{color:"var(--gold)"}}>Rings</span>
       </div>
       <div style={{
         overflowX:"auto",
@@ -1187,7 +1192,7 @@ function HomePage({setPage,onV,onA}){
         scrollSnapType:"x mandatory"
       }}>
         <style>{`.ae-carousel::-webkit-scrollbar{display:none}`}</style>
-        {CATALOG.filter(p=>p.type==="Ring"||p.type==="Earring").map(p=>(
+        {VISIBLE_CATALOG.filter(p=>p.type==="Ring").map(p=>(
           <div key={p.id} style={{
             flex:"0 0 min(88%,420px)",
             minWidth:"min(88%,420px)",
@@ -1207,7 +1212,7 @@ function HomePage({setPage,onV,onA}){
           <p style={{fontSize:14,color:"rgba(245,239,227,.5)",lineHeight:1.85,marginBottom:24,maxWidth:480,margin:"0 auto 24px"}}>Anti-rust spray, soft polishing cloth, Dorra pouch. Keep your piece exactly as you first received it.</p>
           <div style={{display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap",marginTop:8}}>
             <button className="btn btn-outline-gold" onClick={()=>setPage("care")} style={{fontSize:13,letterSpacing:".02em",padding:"13px 0",width:200,textAlign:"center",minHeight:42,boxSizing:"border-box"}}>Care Instructions</button>
-            <button className="btn btn-gold" onClick={()=>onV(CATALOG.find(p=>p.name==="Copper Care Kit"),[])} style={{fontSize:13,letterSpacing:".02em",padding:"13px 0",width:200,textAlign:"center",minHeight:42,boxSizing:"border-box"}}>Shop Care Kit  149 EGP</button>
+            <button className="btn btn-gold" onClick={()=>onV(VISIBLE_CATALOG.find(p=>p.name==="Copper Care Kit"),[])} style={{fontSize:13,letterSpacing:".02em",padding:"13px 0",width:200,textAlign:"center",minHeight:42,boxSizing:"border-box"}}>Shop Care Kit  Free over 700 EGP</button>
           </div>
       </div>
     </div>
@@ -1231,11 +1236,25 @@ function HomePage({setPage,onV,onA}){
     );
 }
 
+function ComingSoonPage({title}){
+  useRv();
+  useEffect(()=>{document.documentElement.scrollTop=0;document.body.scrollTop=0;},[]);
+  return(
+    <div style={{paddingTop:64,minHeight:"60vh",display:"flex",alignItems:"center",justifyContent:"center",textAlign:"center",padding:"120px 24px"}}>
+      <div data-rv>
+        <span style={{fontSize:13,letterSpacing:".4em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:18}}>Coming Soon</span>
+        <h1 style={{fontFamily:"var(--serif)",fontSize:"clamp(28px,4vw,44px)",fontWeight:300,color:"var(--ink)",marginBottom:16}}>{title}</h1>
+        <p style={{fontSize:15,color:"var(--ink3)",lineHeight:1.8,maxWidth:420,margin:"0 auto"}}>We're hand-crafting something new. Check back soon.</p>
+      </div>
+    </div>
+  );
+}
+
 function TypePage({type,title,sub,onV,onA,setPage}){
   const[tpSort,setTpSort]=useState("best");
   useRv();
   useEffect(()=>{window.scrollTo(0,0);document.documentElement.scrollTop=0;document.body.scrollTop=0;},[]);
-  let products=CATALOG.filter(p=>p.type===type);
+  let products=VISIBLE_CATALOG.filter(p=>p.type===type);
   if(tpSort==="price_asc") products=[...products].sort((a,b)=>a.price-b.price);
   else if(tpSort==="price_desc") products=[...products].sort((a,b)=>b.price-a.price);
   return(
@@ -1276,10 +1295,10 @@ function TypePage({type,title,sub,onV,onA,setPage}){
 function StonesPage({onV,onA}){
   const[active,setActive]=useState(null);
   useRv();
-  const used=[...new Set(CATALOG.filter(p=>p.type!=="Care").flatMap(p=>p.stones))].sort();
+  const used=[...new Set(VISIBLE_CATALOG.filter(p=>p.type!=="Care").flatMap(p=>p.stones))].sort();
 
   if(active){
-    const products=CATALOG.filter(p=>p.type!=="Care"&&p.stones.includes(active));
+    const products=VISIBLE_CATALOG.filter(p=>p.type!=="Care"&&p.stones.includes(active));
     const lore=STONE_LORE[active];
     return(
       <div style={{paddingTop:64}}>
@@ -1337,7 +1356,7 @@ function StonesPage({onV,onA}){
       <div className="section-cream">
         <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(240px,1fr))",gap:1}} data-rv>
           {used.map(stone=>{
-            const pcs=CATALOG.filter(p=>p.type!=="Care"&&p.stones.includes(stone));
+            const pcs=VISIBLE_CATALOG.filter(p=>p.type!=="Care"&&p.stones.includes(stone));
             const lore=STONE_LORE[stone];
             return(
               <button key={stone} onClick={()=>setActive(stone)} style={{background:"var(--cr2)",padding:"22px 20px",textAlign:"left",border:"none",cursor:"pointer",transition:"background .22s",borderTop:"2px solid transparent"}}
@@ -1360,7 +1379,7 @@ function CarePage({setPage,onA}){useRv();return(<div style={{paddingTop:64}}>
         <button onClick={()=>{if(window.__dorraGo)window.__dorraGo("home");}} style={{background:"none",border:"none",cursor:"pointer",fontSize:15,color:"var(--ink3)",letterSpacing:".07em",textTransform:"uppercase",display:"flex",alignItems:"center",gap:6,padding:"6px 0"}}>&#8592; Home</button>
       </div>
       <div className="page-header"><span className="page-header-tag" data-rv>Care</span><h1 className="page-header-title" data-rv data-d="1">Keep your copper alive</h1><p className="page-header-sub" data-rv data-d="2">Every Dorra piece ships with a copper care kit - polish liquid and soft cloth. Use them when your piece begins to darken.</p></div><div className="section-cream"><div className="care-steps" data-rv>{[["Apply","A few drops of polish to the soft cloth."],["Rub","Gently along the copper wire in small circles."],["Rinse","Briefly with cool water."],["Dry","Pat dry immediately. Never leave wet."]].map((s,i)=><div key={s[0]} className="care-step"><div className="care-step-icon">0{i+1}</div><div className="care-step-title">{s[0]}</div><p className="care-step-text">{s[1]}</p></div>)}</div><div style={{maxWidth:560,margin:"40px auto 0",textAlign:"center"}} data-rv data-d="2"><p style={{fontSize:13,color:"var(--ink3)",lineHeight:2.0,marginBottom:20,fontWeight:300}}>The darkening of copper is a natural process called a patina - it is not damage. Your care kit lets you choose when to restore.</p><button className="btn btn-dark" onClick={()=>{
-              const kit=CATALOG.find(p=>p.type==="Care");
+              const kit=VISIBLE_CATALOG.find(p=>p.type==="Care");
               if(kit&&onA){onA(kit,[],kit.price);}
             }}>Add Copper Care Kit to Cart</button></div></div></div>);}
 
@@ -1833,6 +1852,9 @@ function DetailPage({product,initStone,onBack,onA}){
           {product.variesPerOrder&&<div style={{marginBottom:16,padding:"14px 16px",background:"rgba(184,145,60,.06)",borderLeft:"2px solid var(--gold)"}}>
             <p style={{fontSize:14,color:"var(--ink3)",lineHeight:1.8,fontStyle:"italic",margin:0}}>This piece is a variation on the design above, made from the same family of stones. As with all handmade jewelry, the exact arrangement is one of a kind - no two pieces are ever 100% alike.</p>
           </div>}
+          <div style={{marginBottom:16,padding:"12px 14px",background:"rgba(184,145,60,.05)",borderLeft:"2px solid rgba(184,145,60,.3)"}}>
+            <p style={{fontSize:13,color:"var(--ink3)",lineHeight:1.75,margin:0}}>This piece is entirely handmade - the one you receive may vary slightly from the photos shown, and no two pieces are ever perfectly identical. This page is a faithful reference, not an exact guarantee.</p>
+          </div>
 
           {product.stones&&product.stones.length>0&&<div style={{marginBottom:10}}>
             <SwapPanel stones={product.stones} swaps={swaps} setSwaps={setSwaps} price={product.price} currentPrice={price} shades={stoneShades} setShades={setStoneShades} freeSwap={product.freeSwap} isRing={product.type==="Ring"} lockedStone={product.lockedStone} allowedSwaps={product.allowedSwaps}/>
@@ -2013,7 +2035,7 @@ function SetPage({onAddCart,onGoCart,onApplyPromo,setPage}){
   useRv();
   useEffect(()=>{window.scrollTo(0,0);document.documentElement.scrollTop=0;document.body.scrollTop=0;},[]);
   const bundleSet=useState(()=>{
-    const pool=CATALOG.filter(p=>p.type!=="Care");
+    const pool=VISIBLE_CATALOG.filter(p=>p.type!=="Care");
     const anchorPool=pool.filter(p=>p.type==="Necklace"||p.type==="Bracelet");
     if(anchorPool.length===0)return[];
     const anchor=anchorPool[Math.floor(Math.random()*anchorPool.length)];
@@ -2215,7 +2237,7 @@ function SetBuilder({onAddCart,onApplyPromo,onGoCart}){
           </div>
           <div style={{fontSize:13,color:"var(--ink3)",marginBottom:8}}>Or choose an existing piece:</div>
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(100px,1fr))",gap:8,maxHeight:260,overflowY:"auto"}}>
-            {CATALOG.filter(p=>p.type!=="Care").map(p=>(
+            {VISIBLE_CATALOG.filter(p=>p.type!=="Care").map(p=>(
               <button key={p.id} type="button" onClick={()=>addCatalogSlot(p)} style={{padding:0,border:"1px solid rgba(26,18,10,.12)",background:"var(--cr)",cursor:"pointer",overflow:"hidden",textAlign:"center"}}>
                 {IMGS[p.img]&&<div style={{width:"100%",aspectRatio:"1/1",overflow:"hidden"}}><img src={IMGS[p.img]} alt={p.name} style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}}/></div>}
                 <div style={{fontSize:12,color:"var(--ink)",padding:"5px 4px",lineHeight:1.3}}>{p.name}</div>
@@ -2349,14 +2371,14 @@ function Checkout({cart,onClose,onOk,setLastOrder,promos,onAddCart,customer,auth
   },[authToken]);
   const myStones=new Set(myOrders.flatMap(o=>(o.items||[]).flatMap(i=>i.stones||[])));
   const myTypes=new Set(myOrders.flatMap(o=>(o.items||[]).map(i=>{
-    const match=CATALOG.find(p=>p.name===i.name.replace(/^Bespoke\s+/,""));
+    const match=VISIBLE_CATALOG.find(p=>p.name===i.name.replace(/^Bespoke\s+/,""));
     return match?match.type:null;
   }).filter(Boolean)));
   const getSuggestions=(count=4)=>{
     const inCartIds=new Set(cart.map(i=>i.product&&i.product.id).filter(Boolean));
     const cartTypes=new Set(cart.map(i=>i.product&&i.product.type).filter(Boolean));
     const cartStones=new Set(cart.flatMap(i=>(i.product&&i.product.stones)||[]));
-    const pool=CATALOG.filter(p=>p.type!=="Care"&&!inCartIds.has(p.id));
+    const pool=VISIBLE_CATALOG.filter(p=>p.type!=="Care"&&!inCartIds.has(p.id));
     const scored=pool.map(p=>{
       const sharesType=cartTypes.has(p.type);
       const sharesStone=(p.stones||[]).some(s=>cartStones.has(s));
@@ -2659,8 +2681,8 @@ function AllPage({onP,onA}){
   const[sort,setSort]=useState("best");
   useRv();
   useEffect(()=>{document.documentElement.scrollTop=0;document.body.scrollTop=0;},[]);
-  const cats=[{id:"all",label:"All Pieces"},{id:"Bracelet",label:"Bracelets"},{id:"Necklace",label:"Necklaces"},{id:"Ring",label:"Rings"},{id:"Earring",label:"Earrings"}];
-  const featured=CATALOG.filter(p=>p.type!=="Care");
+  const cats=[{id:"all",label:"All Pieces"},{id:"Necklace",label:"Necklaces"},{id:"Bracelet",label:"Bracelets"},{id:"Ring",label:"Rings"}];
+  const featured=VISIBLE_CATALOG.filter(p=>p.type!=="Care");
   let filtered=filter==="all"?featured:featured.filter(p=>p.type===filter);
   if(sort==="price_asc")filtered=[...filtered].sort((a,b)=>a.price-b.price);
   else if(sort==="price_desc")filtered=[...filtered].sort((a,b)=>b.price-a.price);
@@ -3229,7 +3251,7 @@ function Footer({setPage}){
           <div>
             {col("Shop")}
             <div style={{display:"flex",flexDirection:"column",gap:12}}>
-              {[["all","All Pieces"],["bracelets","Bracelets"],["necklaces","Necklaces"],["rings","Rings"],["earrings","Earrings"],["stones","Shop by Stone"]].map(([p,t])=>(
+              {[["all","All Pieces"],["necklaces","Necklaces"],["bracelets","Bracelets"],["rings","Rings"],["mens","Men"],["stones","Shop by Stone"]].map(([p,t])=>(
                 <button key={p} style={lnk} onClick={()=>setPage(p)} onMouseEnter={h} onMouseLeave={l}>{t}</button>
               ))}
             </div>
@@ -3247,8 +3269,13 @@ function Footer({setPage}){
 
         </div>
 
+        {/* Handmade disclaimer - shown on every page */}
+        <div style={{marginTop:32,padding:"16px 20px",background:"rgba(184,145,60,.06)",borderLeft:"2px solid var(--gold)"}}>
+          <p style={{fontFamily:"var(--sans)",fontSize:13,fontWeight:300,color:"rgba(245,239,227,.55)",lineHeight:1.8,margin:0}}>Every Dorra piece is entirely handmade - the product you receive may vary slightly from the photos shown, and no two pieces are ever perfectly identical. Images across this website are a faithful reference, not an exact guarantee, of the piece that will be made for you.</p>
+        </div>
+
         {/* Bottom */}
-        <div style={{marginTop:40,paddingTop:16,borderTop:"1px solid rgba(184,145,60,.07)",display:"flex",justifyContent:"space-between"}}>
+        <div style={{marginTop:24,paddingTop:16,borderTop:"1px solid rgba(184,145,60,.07)",display:"flex",justifyContent:"space-between"}}>
           <span style={{fontFamily:"var(--sans)",fontSize:14,fontWeight:300,color:"rgba(245,239,227,.18)"}}>2025 Dorra. All rights reserved.</span>
           <span style={{fontFamily:"var(--sans)",fontSize:14,fontWeight:300,color:"rgba(245,239,227,.18)"}}>dorrastonejewelry@gmail.com</span>
         </div>
@@ -3315,7 +3342,7 @@ export default function App(){
   const cc=cart.reduce((s,i)=>s+i.qty,0);
   useEffect(()=>{
     document.documentElement.scrollTop=0;document.body.scrollTop=0;
-    if(page.startsWith("_d_")){const id=parseInt(page.replace("_d_",""));const prod=CATALOG.find(p=>p.id===id);if(prod){setDetail(prod);setDetailStone(prod.stones[0]||"");setPage("_detail");}}
+    if(page.startsWith("_d_")){const id=parseInt(page.replace("_d_",""));const prod=VISIBLE_CATALOG.find(p=>p.id===id);if(prod){setDetail(prod);setDetailStone(prod.stones[0]||"");setPage("_detail");}}
     [0,100,300].forEach(ms=>setTimeout(()=>{document.documentElement.scrollTop=0;document.body.scrollTop=0;},ms));
   },[page]);
   const activePage=page.startsWith("_d_")?"_detail":page;
@@ -3345,6 +3372,7 @@ export default function App(){
           {activePage==="necklaces"&&<TypePage type="Necklace" title="Necklaces" sub="Stone, copper & stainless steel chain." onV={showDetail} onA={addCart}/>}
           {activePage==="earrings"&&<TypePage type="Earring" title="Earrings" sub="Copper hook earrings with real stone drops." onV={showDetail} onA={addCart}/>}
           {activePage==="rings"&&<TypePage type="Ring" title="Rings" sub="Hand-wound copper rings with real stones." onV={showDetail} onA={addCart}/>}
+          {activePage==="mens"&&<ComingSoonPage title="Men's Collection"/>}
           {activePage==="all"&&<AllPage onP={showDetail} onA={addCart}/>}
           {activePage==="stones"&&<StonesPage onV={showDetail} onA={addCart}/>}
           {activePage==="care"&&<CarePage setPage={go} onA={addCart}/>}
