@@ -2288,6 +2288,7 @@ function CartDrawer({cart,onClose,onQty,onPkg,onCk,promos,onApplyPromo,onRemoveP
     if(found.expires&&new Date()>found.expires){setPromoErr("That code has expired.");return;}
     if(found.requiresAccount&&!customer){setPromoErr("This code is for account holders - please log in or create an account first.");return;}
     if(found.oneTime&&usedOneTime().includes(code)){setPromoErr("That code has already been used.");return;}
+    if(found.groupOf3&&cart.reduce((s,i)=>s+i.qty,0)<3){setPromoErr("This code needs at least 3 pieces in your cart to apply - add a couple more and it's yours.");return;}
     setPromoErr("");
     onApplyPromo({code,percent:found.percent});
     setPromoInput("");
