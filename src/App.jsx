@@ -180,7 +180,7 @@ const CATALOG=[
   {id:15,name:"Marsa",subtype:"Statement",type:"Ring",price:199,sizes:["Small","Medium","Large","Pinky"],stones:["Turquoise"],allowedSwaps:["Turquoise","Amethyst","Pearl","Malachite","Lava Stone","Crystal Quartz","Agate","Hematite","Coral"],img:"marsa_1",img2:"marsa_2",desc:"A statement ring set with turquoise, hand-wound on a slim copper band.",care:"Porous stone - avoid water, perfume, lotions and direct sunlight. Wipe with a soft dry cloth only."},
   {id:17,name:"Mira",subtype:"Standard",type:"Ring",price:99,sizes:["Small","Medium","Large","Pinky"],stones:["Crystal Quartz","Crystal Quartz","Crystal Quartz"],lockedStone:true,img:"mira_1",img2:"mira_2",desc:"Our most delicate ring - three crystal quartz stones on a fine copper band. Wear it as a pinky ring or on any finger you like, whichever fits best. Choose your shade at checkout.",care:"Handle gently. Rinse with cool water occasionally. Avoid harsh chemicals."},
   {id:12,name:"Onyx",hidden:true,type:"Earring",price:377,stones:["Pearl","Hematite","Crystal Quartz"],img:"onyx_1",img2:"onyx_2",img3:"onyx_3",desc:"Freshwater pearl, deep hematite, and Crystal Quartz rondelles on gold stainless steel hooks. Three stones, one intention - worn light, felt deeply.",care:"Pearl must not contact perfume or water. Put on last, take off first."},
-  {id:13,name:"Copper Care Kit",type:"Care",price:179,stones:[],img:"",img2:"",desc:"Every Dorra order arrives with an anti-rust spray and a soft polishing cloth in a Dorra pouch. The Care Kit is a full replenishment set  an additional spray, cloth, and copper cleaning solution  to keep your piece exactly as you first received it. Comes as a free gift with every order over 700 EGP.",care:"Apply a few drops to the cloth. Rub gently. Rinse. Dry immediately."},
+  {id:13,name:"Copper Care Kit",type:"Care",price:150,stones:[],img:"",img2:"",desc:"Every Dorra order arrives with an anti-rust spray and a soft polishing cloth in a Dorra pouch. The Care Kit is a full replenishment set  an additional spray, cloth, and copper cleaning solution  to keep your piece exactly as you first received it. Shop it separately for 150 EGP, or get it free as a gift with every order over 700 EGP.",care:"Apply a few drops to the cloth. Rub gently. Rinse. Dry immediately."},
 ];
 
 const VISIBLE_CATALOG=CATALOG.filter(p=>!p.hidden);
@@ -1212,8 +1212,9 @@ function HomePage({setPage,onV,onA}){
           <p style={{fontSize:14,color:"rgba(245,239,227,.5)",lineHeight:1.85,marginBottom:24,maxWidth:480,margin:"0 auto 24px"}}>Anti-rust spray, soft polishing cloth, Dorra pouch. Keep your piece exactly as you first received it.</p>
           <div style={{display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap",marginTop:8}}>
             <button className="btn btn-outline-gold" onClick={()=>setPage("care")} style={{fontSize:13,letterSpacing:".02em",padding:"13px 0",width:200,textAlign:"center",minHeight:42,boxSizing:"border-box"}}>Care Instructions</button>
-            <button className="btn btn-gold" onClick={()=>onV(VISIBLE_CATALOG.find(p=>p.name==="Copper Care Kit"),[])} style={{fontSize:13,letterSpacing:".02em",padding:"13px 0",width:200,textAlign:"center",minHeight:42,boxSizing:"border-box"}}>Shop Care Kit  Free over 700 EGP</button>
+            <button className="btn btn-gold" onClick={()=>onV(VISIBLE_CATALOG.find(p=>p.name==="Copper Care Kit"),[])} style={{fontSize:13,letterSpacing:".02em",padding:"13px 0",width:200,textAlign:"center",minHeight:42,boxSizing:"border-box"}}>Shop Care Kit  150 EGP</button>
           </div>
+          <p style={{fontSize:13,color:"rgba(184,145,60,.75)",marginTop:16,fontStyle:"italic"}}>Free as a gift with every order over 700 EGP.</p>
       </div>
     </div>
 
