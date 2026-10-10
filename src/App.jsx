@@ -2463,7 +2463,7 @@ function Checkout({cart,onClose,onOk,setLastOrder,promos,onAddCart,customer,auth
     setSubmitting(true);
     const order={ref,date:new Date().toISOString(),status:"pending",
       customer:{name,phone,email,address,city,notes},
-      items:cart.map(i=>({name:i.product.name,stone:Array.isArray(i.swapStone)?i.swapStone.join(", "):i.swapStone,qty:i.qty,price:i.price,size:i.size||"",wireColor:i.product.wireColor||"",isCustom:!!i.product.isFromScratch,stones:i.product.stones||[],customNote:i.product.desc||""})),
+      items:cart.map(i=>({name:i.product.name,stone:Array.isArray(i.swapStone)?i.swapStone.join(", "):i.swapStone,qty:i.qty,price:i.price,size:i.size||"",wireColor:i.product.wireColor||"",isCustom:!!i.product.isFromScratch,stones:i.product.stones||[],customNote:i.product.desc||"",decoWires:i.product.decoWires||[]})),
       packaging:pkg,shipping:ship,subtotal:sub,total:tot,
       promoCode:promos.map(p=>p.code).join(", "),discount:discount,
       payment:pay,instapayRef:needRef?instRef:"",instapayScreenshot:needRef?instScreenshot:"",
