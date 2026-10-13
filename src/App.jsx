@@ -207,7 +207,6 @@ const PROMO_CODES={
   "NOOR10":{percent:0.10,expires:null,oneTime:false},
   "SET20":{percent:0.20,expires:null,oneTime:false}, // applied automatically by the Set page, not typed by customers
   "TRIO20":{percent:0.20,expires:null,oneTime:false,groupOf3:true}, // 20% off, applies to any 3 items in cart (bespoke, catalog, or mixed) - discount scales with every complete group of 3
-  "JOIN5":{percent:0.05,expires:null,oneTime:true,requiresAccount:true} // advertised in the welcome popup - only usable once logged in, since it's a signup incentive
 };
 const MAX_PROMOS=2;
 // Crystal Quartz shade options - rings get an expanded, more playful palette than
@@ -712,7 +711,12 @@ const CSS_LINES=[
   "@media(max-width:1024px){",
   ".nav-links{display:none!important;}",
   
-  ".nav{padding:0 16px;height:56px;}",
+  ".nav{padding:0 12px;height:56px;}",
+  ".nav-logo-img{height:34px !important;max-width:110px !important;}",
+  ".nav-icon{width:36px;height:36px;}",
+  ".nav-cart{padding:7px 10px;font-size:10px;letter-spacing:.1em;}",
+  ".search-drop{top:56px;}",
+  ".mob-menu{top:56px;}",
   ".hero{grid-template-columns:1fr;height:auto;min-height:0;}",
   ".hero-l{padding:76px 16px 28px;}",
   ".hero-img{display:block;overflow:hidden;position:relative;height:64vw;min-height:320px;max-height:460px;}",
@@ -812,7 +816,7 @@ function Nav({page,setPage,cc,setCO,customer,onOpenAccount}){
   return(<>
     <nav className={"nav"+(scr?" scrolled":"")}>
       {/* LEFT: hamburger menu */}
-      <div style={{display:"flex",alignItems:"center",gap:8,flex:1}}>
+      <div className="nav-side" style={{display:"flex",alignItems:"center",gap:8,flex:1,minWidth:0}}>
         <button className={"ham"+(mob?" o":"")} onClick={()=>{setMob(m=>!m);setSs(false);}}><span/><span/><span/></button>
       </div>
 
@@ -828,7 +832,7 @@ function Nav({page,setPage,cc,setCO,customer,onOpenAccount}){
           setTimeout(()=>{window.scrollTo(0,0);document.documentElement.scrollTop=0;},50);
         }}
       >
-        {IMGS.logo?<img src={IMGS.logo} alt="Dorra" style={{height:44,width:"auto",maxWidth:160,objectFit:"contain",display:"block"}} draggable={false}/>:<span className="nav-logo-text">Dorra</span>}
+        {IMGS.logo?<img className="nav-logo-img" src={IMGS.logo} alt="Dorra" style={{height:44,width:"auto",maxWidth:160,objectFit:"contain",display:"block"}} draggable={false}/>:<span className="nav-logo-text">Dorra</span>}
       </button>
 
       {/* Desktop nav links - hidden on mobile */}
@@ -838,12 +842,9 @@ function Nav({page,setPage,cc,setCO,customer,onOpenAccount}){
       </div>
 
       {/* RIGHT: search + cart */}
-      <div style={{display:"flex",alignItems:"center",gap:8,flex:1,justifyContent:"flex-end"}}>
+      <div className="nav-side" style={{display:"flex",alignItems:"center",gap:4,flex:1,minWidth:0,justifyContent:"flex-end"}}>
         <button className="nav-icon" onClick={()=>{setSs(s=>!s);setMob(false);}}>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
-        </button>
-        <button className="nav-icon" onClick={onOpenAccount} title={customer?customer.name:"Account"}>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
         </button>
         <button className="nav-cart" onClick={()=>setCO(true)}>Cart{cc>0&&<span className="cart-ct">{cc}</span>}</button>
       </div>
@@ -856,7 +857,6 @@ function Nav({page,setPage,cc,setCO,customer,onOpenAccount}){
       <input className="mob-search" autoFocus placeholder="Search..." value={q} onChange={e=>setQ(e.target.value)}/>
       {results.length>0&&<div className="search-results" style={{marginBottom:16}}>{results.map(p=><button key={p.id} className="search-row" onClick={()=>{go("_d_"+p.id);setMob(false);}}>{IMGS[p.img]&&<img className="search-thumb" src={IMGS[p.img]} alt={p.name}/>}<div><span className="search-name">{p.name}</span><span className="search-meta">{p.stones.join(" - ")}</span></div></button>)}</div>}
       {links.map(l=><button key={l.id} className={"mob-link"+(page===l.id?" on":"")} onClick={()=>go(l.id)}>{l.l}</button>)}
-      <button className="mob-link" onClick={()=>{onOpenAccount();setMob(false);}}>{customer?"My Account":"Log In / Sign Up"}</button>
       <button className="mob-cta" onClick={()=>go("customize")}>Design Your Dorra Piece</button>
     </div>}
   </>);
@@ -3306,7 +3306,7 @@ export default function App(){
   useEffect(()=>{
     try{
       if(!localStorage.getItem("dorra_welcome_seen")&&!localStorage.getItem("dorra_token")){
-        const t=setTimeout(()=>setShowWelcome(true),1200);
+        const t=0;
         return()=>clearTimeout(t);
       }
     }catch(e){}
@@ -3361,10 +3361,6 @@ export default function App(){
       </div>
     )}
     <Nav page={activePage} setPage={go} cc={cc} setCO={setCO} customer={customer} onOpenAccount={()=>{setAccountOpenMode("login");setAccountOpen(true);}}/>
-    {accountOpen&&<AccountModal customer={customer} authToken={authToken} onClose={()=>setAccountOpen(false)} initialMode={accountOpenMode}
-      onLoggedIn={(token,cust)=>{setAuthToken(token);setCustomer(cust);try{localStorage.setItem("dorra_token",token);}catch(e){}}}
-      onLogout={()=>{doLogout();setAccountOpen(false);}}/>}
-    {showWelcome&&<WelcomePopup onClose={dismissWelcome} onCreateAccount={()=>{dismissWelcome();setAccountOpenMode("signup");setAccountOpen(true);}}/>}
     <div id="app-root" className="main-layout-wrapper" style={{position:"relative"}}>
       {activePage==="_detail"&&detail
         ?<DetailPage product={detail} initStone={detailStone} onBack={()=>go({Bracelet:"bracelets",Necklace:"necklaces",Earring:"earrings",Ring:"rings"}[detail.type]||"all")} onA={addCart}/>
