@@ -206,9 +206,25 @@ const PROMO_CODES={
   "HANIEN10":{percent:0.10,expires:null,oneTime:false},
   "NOOR10":{percent:0.10,expires:null,oneTime:false},
   "SET20":{percent:0.20,expires:null,oneTime:false}, // applied automatically by the Set page, not typed by customers
-  "TRIO20":{percent:0.20,expires:null,oneTime:false,groupOf3:true}, // 20% off, applies to any 3 items in cart (bespoke, catalog, or mixed) - discount scales with every complete group of 3
 };
 const MAX_PROMOS=2;
+
+/* ===== BLACK FRIDAY =====
+   Flip BLACK_FRIDAY to false to switch the whole thing off (banner, free items, mystery gifts).
+   Offer 1: for every 3 pieces in the cart the lowest-priced one is free (3 -> 1 free, 6 -> 2 free, 9 -> 3 free ...).
+   Offer 2: every EGP 1,000 spent on pieces (after discounts, shipping not counted) adds 1 mystery gift. */
+const BLACK_FRIDAY=true;
+const MYSTERY_STEP=1000;
+function bfCalc(cart){
+  const none={freeCount:0,value:0,custom:0,standard:0,toNext:3,units:0};
+  if(!BLACK_FRIDAY)return none;
+  const units=[];
+  cart.forEach(i=>{for(let k=0;k<i.qty;k++)units.push({p:i.price,c:!!(i.product&&i.product.isFromScratch)});});
+  const freeCount=Math.floor(units.length/3);
+  const lowest=units.slice().sort((a,b)=>a.p-b.p).slice(0,freeCount);
+  return{freeCount,value:lowest.reduce((s,u)=>s+u.p,0),custom:lowest.filter(u=>u.c).reduce((s,u)=>s+u.p,0),standard:lowest.filter(u=>!u.c).reduce((s,u)=>s+u.p,0),toNext:3-(units.length%3),units:units.length};
+}
+function giftCount(merchTotal){return BLACK_FRIDAY?Math.floor(Math.max(0,merchTotal)/MYSTERY_STEP):0;}
 // Crystal Quartz shade options - rings get an expanded, more playful palette than
 // other pieces, per the brand's request.
 const CQ_SHADES_DEFAULT=["Light Blue","Green Blue","Purple Blue","Purple","Brownish","Beigish"];
@@ -376,7 +392,15 @@ const CSS_LINES=[
   "[data-rv][data-d=\"2\"]{transition-delay:.2s;}",
   "[data-rv][data-d=\"3\"]{transition-delay:.3s;}",
   "[data-rv][data-d=\"4\"]{transition-delay:.4s;}",
-  ".nav{position:fixed;top:0;left:0;right:0;height:64px;z-index:9000;display:flex;align-items:center;justify-content:space-between;padding:0 32px;background:var(--g);border-bottom:1px solid rgba(184,145,60,.12);transition:background .4s,box-shadow .4s;}",
+  (BLACK_FRIDAY?":root{--bf:34px;}":":root{--bf:0px;}"),
+  "body{padding-top:var(--bf);}",
+  ".bf-banner{position:fixed;top:0;left:0;right:0;height:34px;z-index:9100;background:linear-gradient(90deg,#4a0b18,#6b1427 50%,#4a0b18);color:#f5efe3;overflow:hidden;display:flex;align-items:center;font-family:var(--serif);font-size:15px;letter-spacing:.12em;font-style:italic;border-bottom:1px solid rgba(184,145,60,.55);}",
+  ".bf-track{display:flex;width:max-content;white-space:nowrap;animation:bf-scroll 34s linear infinite;will-change:transform;}",
+  ".bf-track span{display:inline-flex;align-items:center;padding:0 22px;}",
+  ".bf-dot{display:inline-block;width:5px;height:5px;background:#d9b45a;transform:rotate(45deg);margin-left:44px;}",
+  "@keyframes bf-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}",
+  ".bf-box{margin:0 0 12px;padding:12px 14px;background:linear-gradient(135deg,#4a0b18,#6b1427);color:#f5efe3;border:1px solid rgba(184,145,60,.5);}",
+  ".nav{position:fixed;top:var(--bf);left:0;right:0;height:64px;z-index:9000;display:flex;align-items:center;justify-content:space-between;padding:0 32px;background:var(--g);border-bottom:1px solid rgba(184,145,60,.12);transition:background .4s,box-shadow .4s;}",
   ".nav.scrolled{background:rgba(6,35,24,.97);backdrop-filter:blur(16px);box-shadow:0 1px 32px rgba(0,0,0,.3);}",
   ".nav-logo{border:none;background:transparent !important;cursor:pointer;padding:0;line-height:0;pointer-events:all;z-index:10;-webkit-tap-highlight-color:transparent;user-select:none;}",
   ".nav-logo img{height:48px;width:auto;object-fit:contain;}",
@@ -402,14 +426,14 @@ const CSS_LINES=[
   ".ham.o span:nth-child(1){transform:rotate(45deg) translate(4px,4px);}",
   ".ham.o span:nth-child(2){opacity:0;}",
   ".ham.o span:nth-child(3){transform:rotate(-45deg) translate(4px,-4px);}",
-  ".mob-menu{position:fixed;top:64px;left:0;right:0;bottom:0;z-index:8999;background:var(--g);display:flex;flex-direction:column;padding:32px 28px 48px;overflow-y:auto;animation:slide-in .32s var(--ease);}",
+  ".mob-menu{position:fixed;top:calc(64px + var(--bf));left:0;right:0;bottom:0;z-index:8999;background:var(--g);display:flex;flex-direction:column;padding:32px 28px 48px;overflow-y:auto;animation:slide-in .32s var(--ease);}",
   "@keyframes slide-in{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}",
   ".mob-search{width:100%;background:transparent;border:none;border-bottom:1px solid rgba(184,145,60,.18);color:var(--cr);font-family:var(--sans);font-size:16px;font-weight:300;padding:10px 0;outline:none;margin-bottom:26px;letter-spacing:.02em;}",
   ".mob-search::placeholder{color:rgba(245,239,227,.22);}",
   ".mob-link{font-family:var(--sans);font-size:14px;letter-spacing:.22em;text-transform:uppercase;color:rgba(245,239,227,.52);background:none;border:none;cursor:pointer;padding:15px 0;border-bottom:1px solid rgba(184,145,60,.06);text-align:left;transition:color .2s;width:100%;}",
   ".mob-link:hover,.mob-link.on{color:var(--gold);}",
   ".mob-cta{margin-top:28px;background:var(--gold);color:var(--g);padding:14px;font-family:var(--sans);font-size:8.5px;letter-spacing:.22em;text-transform:uppercase;border:none;cursor:pointer;width:100%;font-weight:500;}",
-  ".search-drop{position:fixed;top:64px;left:0;right:0;z-index:8998;background:var(--g);border-bottom:1px solid rgba(184,145,60,.1);padding:14px 52px;animation:slide-in .2s var(--ease);}",
+  ".search-drop{position:fixed;top:calc(64px + var(--bf));left:0;right:0;z-index:8998;background:var(--g);border-bottom:1px solid rgba(184,145,60,.1);padding:14px 52px;animation:slide-in .2s var(--ease);}",
   ".search-input{width:100%;background:none;border:none;border-bottom:1px solid rgba(184,145,60,.2);color:var(--cr);font-family:var(--sans);font-size:16px;font-weight:300;padding:8px 0;outline:none;letter-spacing:.02em;}",
   ".search-input::placeholder{color:rgba(245,239,227,.2);}",
   ".search-results{max-height:48vh;overflow-y:auto;margin-top:10px;}",
@@ -559,9 +583,9 @@ const CSS_LINES=[
   ".detail-care-text{font-size:14px;color:var(--ink3);line-height:1.82;font-weight:300;}",
   ".detail-add{flex:1;padding:13px;font-family:var(--sans);font-size:13px;letter-spacing:.02em;text-transform:none;background:var(--g);color:var(--cr);border:none;cursor:pointer;transition:background .28s;}",
   ".detail-add:hover{background:var(--gold);color:var(--g);}",
-  ".cart-overlay{position:fixed;z-index:9400;top:64px;left:0;right:0;bottom:0;background:rgba(3,15,9,.7);animation:fade-in .22s;}",
+  ".cart-overlay{position:fixed;z-index:9400;top:calc(64px + var(--bf));left:0;right:0;bottom:0;background:rgba(3,15,9,.7);animation:fade-in .22s;}",
   "@keyframes fade-in{from{opacity:0}to{opacity:1}}",
-  ".cart-drawer{position:fixed;z-index:9500;top:64px;right:0;bottom:0;width:390px;background:var(--cr);overflow-y:auto;display:flex;flex-direction:column;animation:slide-right .38s var(--ease);box-shadow:-12px 0 40px rgba(6,35,24,.18);}",
+  ".cart-drawer{position:fixed;z-index:9500;top:calc(64px + var(--bf));right:0;bottom:0;width:390px;background:var(--cr);overflow-y:auto;display:flex;flex-direction:column;animation:slide-right .38s var(--ease);box-shadow:-12px 0 40px rgba(6,35,24,.18);}",
   "@keyframes slide-right{from{transform:translateX(100%)}to{transform:none}}",
   ".cart-head{padding:18px 26px 14px;border-bottom:1px solid rgba(26,18,10,.09);display:flex;align-items:center;justify-content:space-between;}",
   ".cart-title{font-family:var(--serif);font-size:16px;font-weight:300;color:var(--ink);}",
@@ -715,8 +739,9 @@ const CSS_LINES=[
   ".nav-logo-img{height:34px !important;max-width:110px !important;}",
   ".nav-icon{width:36px;height:36px;}",
   ".nav-cart{padding:7px 10px;font-size:10px;letter-spacing:.1em;}",
-  ".search-drop{top:56px;}",
-  ".mob-menu{top:56px;}",
+  ".search-drop{top:calc(56px + var(--bf));}",
+  ".mob-menu{top:calc(56px + var(--bf));}",
+  ".cart-overlay,.cart-drawer{top:calc(56px + var(--bf));}",
   ".hero{grid-template-columns:1fr;height:auto;min-height:0;}",
   ".hero-l{padding:76px 16px 28px;}",
   ".hero-img{display:block;overflow:hidden;position:relative;height:64vw;min-height:320px;max-height:460px;}",
@@ -781,6 +806,20 @@ const SP={
 
 
 function useRv(){useEffect(()=>{const els=document.querySelectorAll("[data-rv]");if(!els.length)return;const o=new IntersectionObserver(en=>{en.forEach(e=>{if(e.isIntersecting){e.target.classList.add("vis");o.unobserve(e.target);}});},{threshold:.06,rootMargin:"0px 0px -40px 0px"});els.forEach(el=>o.observe(el));return()=>o.disconnect();});}
+
+function BlackFridayBanner({onGo}){
+  if(!BLACK_FRIDAY)return null;
+  const msg=[
+    "Dorra Black Friday",
+    "Choose 3 pieces and one is on us",
+    "Six pieces, two on us. Nine, three on us",
+    "A mystery gift from Dorra with every EGP 1,000"
+  ];
+  const row=msg.map((m,i)=><span key={i}>{m}<i className="bf-dot"/></span>);
+  return(<div className="bf-banner" onClick={onGo} style={{cursor:"pointer"}} role="banner">
+    <div className="bf-track">{row}{row}{row}{row}</div>
+  </div>);
+}
 
 function Nav({page,setPage,cc,setCO,customer,onOpenAccount}){
   const[mob,setMob]=useState(false);
@@ -1698,29 +1737,9 @@ function CustomizePage({onAddCart,onGoCart}){
         </div>
       </div>
     </div>
-    <div style={{maxWidth:640,margin:"0 auto 60px",padding:"0 20px"}} data-rv>
-      <TrioPromoCard/>
-    </div>
   </div>);
 }
 
-function TrioPromoCard(){
-  const[copied,setCopied]=useState(false);
-  const copyCode=()=>{
-    try{navigator.clipboard.writeText("TRIO20");setCopied(true);setTimeout(()=>setCopied(false),2000);}catch(e){}
-  };
-  return(
-    <div style={{background:"var(--g)",padding:"28px 26px",textAlign:"center"}}>
-      <span style={{fontSize:13,letterSpacing:".14em",textTransform:"uppercase",color:"var(--gold)",display:"block",marginBottom:8}}>A Little Extra, Wherever You Design</span>
-      <h3 style={{fontFamily:"var(--serif)",fontSize:22,fontWeight:300,color:"#f5efe3",margin:"0 0 10px"}}>20% Off Any 3 Pieces</h3>
-      <p style={{fontSize:14,color:"rgba(245,239,227,.55)",lineHeight:1.7,marginBottom:18,maxWidth:420,marginLeft:"auto",marginRight:"auto"}}>Mix and match freely - bespoke pieces, ready-made pieces, or both. The discount scales with your cart: 3 pieces saves on 3, 6 pieces saves on 6, and so on.</p>
-      <div onClick={copyCode} style={{cursor:"pointer",display:"inline-flex",alignItems:"center",gap:12,background:"rgba(245,239,227,.06)",border:"1px dashed rgba(184,145,60,.5)",padding:"12px 20px"}}>
-        <span style={{fontFamily:"var(--serif)",fontSize:19,color:"var(--gold)",letterSpacing:".08em"}}>TRIO20</span>
-        <span style={{fontSize:13,letterSpacing:".04em",textTransform:"uppercase",color:copied?"var(--gold)":"rgba(245,239,227,.5)"}}>{copied?"Copied":"Tap to copy"}</span>
-      </div>
-    </div>
-  );
-}
 
 
 function DetailPage({product,initStone,onBack,onA}){
@@ -2275,8 +2294,12 @@ function CartDrawer({cart,onClose,onQty,onPkg,onCk,promos,onApplyPromo,onRemoveP
       return s+(isGroup?p.percent*eligibleFraction:p.percent);
     },0);
   })();
-  const discount=Math.round(total*totalPercent);
-  const finalTotal=total-discount;
+  const bf=bfCalc(cart);
+  const afterBf=total-bf.value;
+  const discount=Math.round(afterBf*totalPercent);
+  const finalTotal=afterBf-discount;
+  const gifts=giftCount(finalTotal);
+  const toNextGift=MYSTERY_STEP-(finalTotal%MYSTERY_STEP);
   const usedOneTime=()=>{try{return JSON.parse(localStorage.getItem("dorra_used_promos")||"[]");}catch(e){return[];}};
   const tryApply=()=>{
     const code=promoInput.trim().toUpperCase();
@@ -2344,8 +2367,21 @@ function CartDrawer({cart,onClose,onQty,onPkg,onCk,promos,onApplyPromo,onRemoveP
               <button type="button" onClick={()=>onRemovePromo(p.code)} style={{background:"none",border:"none",color:"var(--ink3)",fontSize:13,cursor:"pointer",textDecoration:"underline"}}>Remove</button>
             </div>
           ))}
-          {promos.length>0&&<div className="cart-total-row"><span className="cart-total-label">Subtotal</span><span className="cart-total-val">{fmt(total)}</span></div>}
+          {BLACK_FRIDAY&&<div className="bf-box">
+            <div style={{fontSize:12,letterSpacing:".2em",textTransform:"uppercase",color:"var(--gold)",marginBottom:6}}>&#10022; Black Friday</div>
+            <div style={{fontSize:14,lineHeight:1.6}}>{bf.freeCount>0
+              ?<>{bf.freeCount>1?bf.freeCount+" of your pieces are":"One of your pieces is"} <strong style={{color:"var(--gold)"}}>on us</strong> (-{fmt(bf.value)})</>
+              :<>Add {bf.toNext} more piece{bf.toNext>1?"s":""} and one is <strong style={{color:"var(--gold)"}}>on us</strong></>}</div>
+            {bf.freeCount>0&&<div style={{fontSize:12,opacity:.65,marginTop:2}}>{bf.toNext===3?"":"Add "+bf.toNext+" more and another is on us"}</div>}
+            <div style={{fontSize:14,lineHeight:1.6,marginTop:6}}>{gifts>0
+              ?<>&#127873; <strong style={{color:"var(--gold)"}}>{gifts} mystery gift{gifts>1?"s":""}</strong> will be added to your order</>
+              :<>&#127873; Spend {fmt(MYSTERY_STEP-finalTotal)} more to unlock a mystery gift</>}</div>
+            {gifts>0&&<div style={{fontSize:12,opacity:.65,marginTop:2}}>Another gift in {fmt(toNextGift)}</div>}
+          </div>}
+          {(promos.length>0||bf.value>0)&&<div className="cart-total-row"><span className="cart-total-label">Subtotal</span><span className="cart-total-val">{fmt(total)}</span></div>}
+          {bf.value>0&&<div className="cart-total-row"><span className="cart-total-label">Black Friday - {bf.freeCount} on us</span><span className="cart-total-val" style={{color:"var(--gold)"}}>-{fmt(bf.value)}</span></div>}
           {promos.length>0&&<div className="cart-total-row"><span className="cart-total-label">Discount</span><span className="cart-total-val" style={{color:"var(--gold)"}}>-{fmt(discount)}</span></div>}
+          {gifts>0&&<div className="cart-total-row"><span className="cart-total-label">Mystery gift x{gifts}</span><span className="cart-total-val" style={{color:"var(--gold)"}}>FREE</span></div>}
           <div className="cart-total-row"><span className="cart-total-label">Total</span><span className="cart-total-val">{fmt(finalTotal)}</span></div>
           <button className="btn btn-gold btn-full" style={{padding:"15px",fontSize:13,letterSpacing:".02em",marginTop:12}} onClick={onCk}>Proceed to Checkout</button>
         </div>
@@ -2433,9 +2469,11 @@ function Checkout({cart,onClose,onOk,setLastOrder,promos,onAddCart,customer,auth
   // Apply the discount to bespoke and standard items separately so the 40% deposit is
   // calculated on what the customer actually owes after any promo code, not the
   // pre-discount price - previously the deposit ignored discounts entirely.
-  const discountedCustomSub=Math.round(customSub*(1-promoPercent));
-  const discountedStandardSub=Math.round(standardSub*(1-promoPercent));
-  const discount=(customSub-discountedCustomSub)+(standardSub-discountedStandardSub);
+  const bf=bfCalc(cart);
+  const discountedCustomSub=Math.round((customSub-bf.custom)*(1-promoPercent));
+  const discountedStandardSub=Math.round((standardSub-bf.standard)*(1-promoPercent));
+  const discount=((customSub-bf.custom)-discountedCustomSub)+((standardSub-bf.standard)-discountedStandardSub);
+  const gifts=giftCount(discountedCustomSub+discountedStandardSub);
   const tot=discountedCustomSub+discountedStandardSub+ship;
   const customDep=Math.round(discountedCustomSub*0.4);
   const customBal=discountedCustomSub-customDep;
@@ -2466,6 +2504,7 @@ function Checkout({cart,onClose,onOk,setLastOrder,promos,onAddCart,customer,auth
       items:cart.map(i=>({name:i.product.name,stone:Array.isArray(i.swapStone)?i.swapStone.join(", "):i.swapStone,qty:i.qty,price:i.price,size:i.size||"",wireColor:i.product.wireColor||"",isCustom:!!i.product.isFromScratch,stones:i.product.stones||[],customNote:i.product.desc||"",decoWires:i.product.decoWires||[]})),
       packaging:pkg,shipping:ship,subtotal:sub,total:tot,
       promoCode:promos.map(p=>p.code).join(", "),discount:discount,
+      bfDiscount:bf.value,bfFreeCount:bf.freeCount,mysteryGifts:gifts,
       payment:pay,instapayRef:needRef?instRef:"",instapayScreenshot:needRef?instScreenshot:"",
       isCustom:hasFromScratch,deposit:customDep,balance:customBal,dueNow,dueOnDelivery,
       adminStatus:"new",createdAt:new Date().toISOString()};
@@ -2497,6 +2536,8 @@ function Checkout({cart,onClose,onOk,setLastOrder,promos,onAddCart,customer,auth
       {standardItems.map((i,idx2)=><div key={"s"+idx2} className="order-row"><span>{i.product.name}{i.size?" - "+i.size:""} x{i.qty}</span><span>{fmt(i.price*i.qty)}</span></div>)}
       {customItems.map((i,idx2)=><div key={"c"+idx2} className="order-row"><span style={{color:"var(--gold)"}}>{i.product.name} x{i.qty} <span style={{fontSize:13,opacity:.7}}>(bespoke)</span></span><span>{fmt(i.price*i.qty)}</span></div>)}
       <div className="order-row"><span>Shipping</span><span>EGP {ship}</span></div>
+      {bf.value>0&&<div className="order-row"><span style={{color:"var(--gold)"}}>Black Friday - {bf.freeCount>1?bf.freeCount+" pieces":"1 piece"} on us</span><span style={{color:"var(--gold)"}}>-{fmt(bf.value)}</span></div>}
+      {gifts>0&&<div className="order-row"><span style={{color:"var(--gold)"}}>&#127873; Mystery gift x{gifts}</span><span style={{color:"var(--gold)"}}>FREE</span></div>}
       {promos.length>0&&<div className="order-row"><span style={{color:"var(--gold)"}}>Promo {promos.map(p=>p.code).join(" + ")} (-{Math.round(promoPercent*100)}%)</span><span style={{color:"var(--gold)"}}>-{fmt(discount)}</span></div>}
       <div className="order-total-row"><span className="order-total-label">Total</span><span className="order-total-val">{fmt(tot)}</span></div>
       {hasFromScratch&&customSub>0&&!isFullOnline&&<div style={{marginTop:10,padding:"11px 13px",background:"rgba(184,145,60,.07)",borderLeft:"2px solid rgba(184,145,60,.28)"}}>
@@ -3360,6 +3401,7 @@ export default function App(){
         </div>
       </div>
     )}
+    <BlackFridayBanner onGo={()=>go("all")}/>
     <Nav page={activePage} setPage={go} cc={cc} setCO={setCO} customer={customer} onOpenAccount={()=>{setAccountOpenMode("login");setAccountOpen(true);}}/>
     <div id="app-root" className="main-layout-wrapper" style={{position:"relative"}}>
       {activePage==="_detail"&&detail
